@@ -1,0 +1,39 @@
+{
+  "name": "my-locket-cloudflare-workers-d1-database",
+  "description": "My Locket Backend - Cloudflare Workers with D1 Database",
+  "version": "1.0.0",
+  "cloudflare": {
+    "label": "Worker + D1 Database",
+    "products": [
+      "Workers",
+      "D1"
+    ],
+    "categories": [
+      "storage"
+    ],
+    "docs_url": "https://developers.cloudflare.com/d1/",
+    "preview_icon_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/6c63cca8-354a-4951-45a0-d58769ac6f00/public",
+    "preview_image_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/aa6158f1-7711-4485-f134-a8c802c0a800/preview",
+    "publish": true
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "jose": "^5.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "5.9.3",
+    "wrangler": "4.51.0"
+  },
+  "private": true,
+  "scripts": {
+    "cf-typegen": "wrangler types",
+    "check": "tsc && wrangler deploy --dry-run",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "migrate:local": "wrangler d1 migrations apply DB --local",
+    "migrate:remote": "wrangler d1 migrations apply DB --remote",
+    "predeploy": "npm run migrate:remote",
+    "seed:test": "bash scripts/seed-test-data.sh"
+  }
+}
