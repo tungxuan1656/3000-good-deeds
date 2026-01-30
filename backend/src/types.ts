@@ -1,155 +1,136 @@
-// Types cho API response
 export interface ApiResponse<T = any> {
-  success: boolean
-  data: T | null
-  error: ApiError | null
+    success: boolean
+    data: T | null
+    error: ApiError | null
 }
 
 export interface ApiError {
-  code: string
-  message: string
+    code: string
+    message: string
 }
 
-// Types cho User
+// User Entity
 export interface User {
-  id: number
-  firebaseUid: string
-  email: string
-  displayName: string | null
-  username: string | null
-  avatarUrl: string | null
-  bio: string | null
-  birthday: string | null
-  createdAt: number
-  updatedAt: number
-}
-
-// Types cho Post
-export interface Post {
-  id: number
-  userId: number
-  mediaPublicId: string
-  mediaUrl: string
-  mediaType: 'image' | 'video'
-  width: number | null
-  height: number | null
-  createdAt: number
-  updatedAt: number
-  deletedAt: number | null
-}
-
-// TagItem cho post attributes
-export interface TagItemDTO {
-  type: 'emotion' | 'location' | 'text' | 'time'
-  value: string
-}
-
-export interface PostAttributes {
-  postId: number
-  tags: TagItemDTO[] | null
-}
-
-export interface PostWithDetails extends Post {
-  user: {
     id: number
-    displayName: string
-    avatarUrl: string | null
-  }
-  tags?: TagItemDTO[]
-}
-
-// Types cho Friend
-export interface Friend {
-  id: number
-  requester_id: number
-  receiver_id: number
-  status: 0 | 1 // 0: pending, 1: accepted
-  createdAt: number
-  updatedAt: number
-}
-
-export interface FriendWithDetails {
-  id: number
-  displayName: string
-  email: string
-  avatarUrl: string | null
-}
-
-export interface UserWithFriendStatus {
-  id: number
-  displayName: string
-  email: string
-  avatarUrl: string | null
-  status: number | null // null: no relation, 0: pending, 1: accepted, 2: rejected
-}
-
-export interface FriendRequestWithDetails {
-  id: number
-  requester: {
-    id: number
-    displayName: string
-    avatarUrl: string | null
+    firebaseUid: string
     email: string
-  }
-  createdAt: number
+    displayName: string | null
+    avatarUrl: string | null
+    bio: string | null
+    createdAt: number
+    updatedAt: number
 }
 
-// Types cho Reaction
-export interface Reaction {
-  id: number
-  postId: number
-  userId: number
-  reactionType: string
-  createdAt: number
+// Category Entity
+export interface Category {
+    id: number
+    name: string
+    description: string | null
+    icon: string | null
+    color: string | null
+    isActive: boolean
+    createdAt: number
 }
 
-// Request body types
+// Good Deed Entity
+export interface GoodDeed {
+    id: number
+    userId: number
+    categoryId: number
+    description: string | null
+    performedAt: number
+    createdAt: number
+    updatedAt: number
+    // Expanded
+    category?: Category
+}
+
+// Goal Entity
+export interface Goal {
+    id: number
+    userId: number
+    type: 'daily' | 'weekly' | 'monthly'
+    targetCount: number
+    startDate: number
+    endDate: number | null
+    status: 'active' | 'completed' | 'archived'
+    createdAt: number
+    updatedAt: number
+}
+
+// Achievement Entity
+export interface AchievementDefinition {
+    id: string
+    name: string
+    description: string
+    criteriaType: 'count' | 'streak'
+    criteriaValue: number
+    icon: string | null
+}
+
+export interface UserAchievement {
+    id: number
+    userId: number
+    achievementId: string
+    earnedAt: number
+    // Expanded
+    details?: AchievementDefinition
+}
+
+// Stats DTO
+export interface UserStats {
+    totalDeeds: number
+    streakDays: number
+    todayCount: number
+}
+
+// Request Types
+export interface CreateDeedRequest {
+    categoryId: number
+    description?: string
+    performedAt?: number // defaults to now
+}
+
+export interface UpdateDeedRequest {
+    categoryId?: number
+    description?: string
+    performedAt?: number
+}
+
 export interface SyncUserRequest {
-  firebaseUid: string
-  email: string
-  displayName?: string
-  photoURL?: string
+    firebaseUid: string
+    email: string
+    displayName?: string
+    photoURL?: string
 }
 
 export interface UpdateUserRequest {
-  displayName?: string
-  avatarUrl?: string
-  birthday?: string
-  bio?: string
+    displayName?: string
+    avatarUrl?: string
+    bio?: string
 }
 
-export interface CreatePostRequest {
-  mediaPublicId: string
-  mediaUrl: string
-  mediaType: 'image' | 'video'
-  width?: number
-  height?: number
-  tags?: TagItemDTO[]
-  createdAt: number
-}
-
-export interface UpdatePostRequest {
-  tags?: TagItemDTO[]
-}
-
-export interface CreateReactionRequest {
-  reactionType: string
+export interface UpdateGoalRequest {
+    targetCount?: number
+    status?: 'active' | 'completed' | 'archived'
+    endDate?: number
 }
 
 export interface FirebaseJwtPayload {
-  name?: string
-  picture?: string
-  iss: string
-  aud: string
-  auth_time: number
-  user_id: string
-  sub: string
-  iat: number
-  exp: number
-  email?: string
-  email_verified?: boolean
-  firebase?: {
-    identities: Record<string, string[]>
-    sign_in_provider: string
-  }
+    name?: string
+    picture?: string
+    iss: string
+    aud: string
+    auth_time: number
+    user_id: string
+    sub: string
+    iat: number
+    exp: number
+    email?: string
+    email_verified?: boolean
+    firebase?: {
+        identities: Record<string, string[]>
+        sign_in_provider: string
+    }
 }
+
