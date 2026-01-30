@@ -8,6 +8,7 @@ A modern web application designed to inspire and track good deeds, personal grow
   - [Project Overview](#project-overview)
   - [Vision \& Philosophy](#vision--philosophy)
   - [Architecture](#architecture)
+  - [Skills](#skills)
   - [Backend](#backend)
   - [Frontend](#frontend)
   - [API \& Contracts](#api--contracts)
@@ -32,6 +33,9 @@ A platform to encourage, record, and celebrate good deeds. Users can log activit
 - **Docs:** Comprehensive documentation in `docs/`.
 
 See `docs/backend/02_architecture.md` and `docs/frontend/design/04_frontend_architecture.md` for details.
+
+## Skills
+- Using skills of project: `https://github.com/nextlevelbuilder/ui-ux-pro-max-skill`
 
 ## Backend
 - Auth (Google OAuth)
