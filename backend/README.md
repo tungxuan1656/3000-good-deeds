@@ -1,114 +1,59 @@
-# My Locket - Cloudflare Workers Backend
+# 3000 Good Deeds Backend
 
-Backend API cho ứng dụng My Locket, xây dựng trên Cloudflare Workers và D1 Database.
+API layer của 3000 Việc Thiện tập trung vào việc hỗ trợ người dùng ghi nhận những hành vi thiện lành, quán chiếu bản thân và duy trì thói quen bền bỉ thay vì xây dựng mạng xã hội hay hệ thống chấm điểm đạo đức. Backend này vận hành hoàn toàn trên Cloudflare Workers với D1 Database để giữ độ mỏng, nhanh và dễ vận hành.
 
-## 📁 Cấu trúc thư mục
+## Tinh thần định hướng
+- Định hướng “tĩnh tâm hơn phô trương, bền bỉ hơn rực rỡ”.
+- Mỗi quyết định kỹ thuật luôn trả lời: “Điều này có giúp người dùng sống thiện lành và tự do nội tâm hơn không?”.
+- MVP hiện tại bao gồm đăng ký/đăng nhập, check-in việc thiện, phân loại, thống kê/quán chiếu, mục tiêu, thành tựu và nhắc nhở.
 
+## Kiến trúc & stack
+- **Cloudflare Workers** với `wrangler` để deploy API edge.
+- **D1 Database** cho bảng người dùng, việc thiện, mục tiêu, hoạt động và phân loại. Các migration nằm trong `migrations/` và tuân thủ nguyên tắc không sửa migration cũ.
+- Backend viết bằng TypeScript, module chính ở `src/index.ts`, middleware `auth.ts`, helpers `utils.ts`, kiểu `types.ts` và handler theo từng miền (users, deeds, goals, categories, activities).
+- Cấu hình deploy & d1 trong `wrangler.json`, kiểm tra lint/tsc qua `npm run check`.
+
+## Bắt đầu
 ```
-cloudflare-backend/
-├── docs/              # Documentation
-│   ├── readme.md      # Main documentation
-│   ├── api-routes.md  # API endpoints reference
-│   └── setup-guide.md # Setup & deployment guide
-├── migrations/        # D1 database migrations
-├── scripts/           # Utility scripts
-│   └── test-local.sh  # Local testing script
-├── src/               # Source code
-│   ├── index.ts       # Main router
-│   ├── auth.ts        # Authentication middleware
-│   ├── types.ts       # TypeScript types
-│   ├── utils.ts       # Utilities & helpers
-│   └── handlers/      # API handlers
-│       ├── users.ts
-│       ├── posts.ts
-│       ├── activities.ts
-│       ├── friends.ts
-│       └── reactions.ts
-├── package.json
-├── tsconfig.json
-└── wrangler.json      # Cloudflare Workers config
-```
+# Cài dependency
+npm ci
 
-## 🚀 Quick Start
+# Tạo D1 database local (hoặc remote) và ghi `database_id` vào wrangler.json
+npx wrangler d1 create 3000-good-deeds
 
-```bash
-# Install dependencies
-npm install
-
-# Setup database
-npx wrangler d1 create my-locket-database
-# Update database_id in wrangler.json
-
-# Run migrations
+# Chạy migration mới nhất
 npm run migrate:local
 
-# Start dev server
+# Khởi động worker local
 npm run dev
 
-# Test APIs
-./scripts/test-local.sh
+# Kiểm tra trước khi deploy
+npm run check
 ```
 
-## 📚 Documentation
+## Migration và dữ liệu mẫu
+- `migrations/` chứa các bước thay đổi schema. Khi cần thay đổi cấu trúc, tạo file mới với tên tăng dần và viết SQL tương ứng.
+- `npm run db:reset` xóa và tạo lại database local rồi chạy toàn bộ migration.
+- `npm run seed:test` import dữ liệu mẫu (users, deeds, goals, reactions) để dễ kiểm thử trên local.
 
-- **[Main Documentation](./docs/readme.md)** - Tổng quan về backend
-- **[API Routes](./docs/api-routes.md)** - Chi tiết tất cả API endpoints
-- **[Setup Guide](./docs/setup-guide.md)** - Hướng dẫn setup và deploy
-- **[Database Migrations Guide](../docs/database-migrations-guide.md)** - Hướng dẫn tạo & cập nhật migrations ⭐
+## Tài liệu trọng yếu
+- [docs/00_overview.md](../docs/00_overview.md) mô tả tinh thần toàn cục của ứng dụng 3000 Việc Thiện.
+- [docs/backend/00_overview.md](../docs/backend/00_overview.md) hướng dẫn đọc nhanh backend, các tài liệu architecture/auth/database/ops/security.
+- [contract/api_overview.md](../contract/api_overview.md) và `contract/api/*` mô tả chi tiết các endpoint.
+- [contract/data](../contract/data) và [contract/features](../contract/features) dùng để đảm bảo các model dữ liệu phù hợp với yêu cầu sản phẩm.
 
-## 🛠 Commands
+## Scripts thường dùng
+| Lệnh                     | Mục đích                                               |
+| ------------------------ | ------------------------------------------------------ |
+| `npm run dev`            | Chạy API local (`wrangler dev`).                       |
+| `npm run check`          | Kiểm tra TypeScript và dry-run deploy.                 |
+| `npm run migrate:local`  | Áp migration vào D1 local.                             |
+| `npm run migrate:remote` | Áp migration vào D1 môi trường remote.                 |
+| `npm run db:reset`       | Xóa database local và chạy lại migration.              |
+| `npm run seed:test`      | Nhập dữ liệu test mẫu (ví dụ users, deeds, reactions). |
+| `npm run deploy`         | Deploy lên Cloudflare Workers production.              |
 
-```bash
-npm run dev              # Dev server (local)
-npm run db:reset         # Reset database (delete & re-run migrations)
-npm run migrate:local    # Run migrations (local)
-npm run migrate:remote   # Run migrations (remote)
-npm run deploy           # Deploy to Cloudflare
-npm run check            # TypeScript check & dry-run deploy
-npm run seed:test        # Seed test data vào database (local)
-```
-
-## 🌱 Seeding Test Data
-
-Để thêm dữ liệu test vào database cho testing:
-
-```bash
-# Chạy seed script
-npm run seed:test
-```
-
-**Dữ liệu test sẽ thêm:**
-- 👤 **User 1 (Tùng Xuân)** - Firebase UID: `piRPVX01bGc4XDDaKFXjCnfb8e12`
-- 👤 **User 2 (Friend User)** - accepted friend
-- 👤 **User 3 (Another Friend)** - pending friend request
-- 📸 **3 Posts** từ User 1 (cùng ngày, khác giờ)
-- ❤️ **Reactions** từ bạn bè
-
-**Chú ý:** Script sử dụng `INSERT OR IGNORE`, nên không làm mất dữ liệu hiện có.
-
-📝 Xem chi tiết trong `scripts/seed-test-data.sql`
-
-## 📝 Khi cần thay đổi Database Schema
-
-1. **Tạo migration file mới** (không sửa file cũ)
-   ```bash
-   cat > migrations/0010_description.sql << 'EOF'
-   -- Your SQL here
-   EOF
-   ```
-
-2. **Cập nhật TypeScript types** trong `src/types.ts`
-
-3. **Reset & test local**
-   ```bash
-   npm run db:reset
-   npm run dev
-   npx wrangler dev --port 8787 --local --ip 192.168.2.9
-   ./scripts/test-local.sh
-   ```
-
-👉 Chi tiết đầy đủ xem [Database Migrations Guide](../docs/database-migrations-guide.md)
-
-## 📝 License
-
-My Locket Project - Internal Use
+## Vận hành và an toàn
+- Luôn tham khảo [docs/backend/07_operations.md](../docs/backend/07_operations.md) trước khi thay đổi cấu hình hoặc deploy.
+- Dữ liệu production chỉ thay đổi qua các migration mới; không chỉnh sửa schema bằng tay.
+- Khi thêm endpoint mới, cập nhật contract tương ứng và đảm bảo có test/manual kiểm thử, đồng thời rà soát lại `docs/00_overview.md` để không lệch tinh thần sản phẩm.# My Locket - Cloudflare Workers Backend
