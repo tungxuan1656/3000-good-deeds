@@ -25,20 +25,20 @@ export function decodeJWTToken(token: string): {
 
     if (!firebaseUid) {
       console.warn('[Auth] Token không chứa firebaseUid (user_id)')
+
       return null
     }
 
     return { firebaseUid, payload }
   } catch (error) {
     console.error('[Auth] Error decoding JWT token:', error)
+
     return null
   }
 }
 
 // Middleware để verify Firebase token
-export async function verifyAuth(
-  request: Request,
-): Promise<AuthContext | null> {
+export async function verifyAuth(request: Request): Promise<AuthContext | null> {
   const authHeader = request.headers.get('Authorization')
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -57,6 +57,7 @@ export async function verifyAuth(
 
   if (!decoded || !decoded.firebaseUid) {
     console.warn('[Auth] Failed to decode token or extract firebaseUid')
+
     return null
   }
 
@@ -80,6 +81,7 @@ export async function getUserFromFirebaseUid(
   `)
 
   const result = await stmt.bind(firebaseUid).first<User>()
+
   return result || null
 }
 
@@ -87,9 +89,7 @@ export async function getUserFromFirebaseUid(
 export async function getAuthContext(
   db: D1Database,
   request: Request,
-): Promise<
-  { auth: AuthContext; user: User } | { error: string; code: string }
-> {
+): Promise<{ auth: AuthContext; user: User } | { error: string; code: string }> {
   const auth = await verifyAuth(request)
 
   if (!auth) {

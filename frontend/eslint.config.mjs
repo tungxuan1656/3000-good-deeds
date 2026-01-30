@@ -123,21 +123,13 @@ export default defineConfig([
       // Padding lines (from old config)
       'padding-line-between-statements': [
         'warn',
-        {
-          blankLine: 'always',
-          prev: '*',
-          next: 'return',
-        },
-        {
-          blankLine: 'always',
-          prev: ['const', 'let', 'var'],
-          next: '*',
-        },
-        {
-          blankLine: 'any',
-          prev: ['const', 'let', 'var'],
-          next: ['const', 'let', 'var'],
-        },
+        { blankLine: 'always', prev: 'import', next: '*' },
+        { blankLine: 'any', prev: 'import', next: 'import' },
+        { blankLine: 'always', prev: 'multiline-expression', next: '*' },
+        { blankLine: 'always', prev: '*', next: 'multiline-expression' },
+        { blankLine: 'always', prev: '*', next: ['const', 'let', 'var'] },
+        { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+        { blankLine: 'always', prev: '*', next: 'return' },
       ],
     },
   },

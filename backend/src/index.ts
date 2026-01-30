@@ -22,20 +22,20 @@ app.route('/activities', activities)
 
 // 404 Handler
 app.notFound((c) => {
-    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Không tìm thấy đường dẫn'), 404)
+  return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Không tìm thấy đường dẫn'), 404)
 })
 
 // Error Handler
 app.onError((err, c) => {
-    console.error('Error:', err)
-    return c.json(
-        errorResponse(
-            ErrorCodes.INTERNAL_ERROR,
-            err instanceof Error ? err.message : 'Lỗi máy chủ nội bộ',
-        ),
-        500,
-    )
+  console.error('Error:', err)
+
+  return c.json(
+    errorResponse(
+      ErrorCodes.INTERNAL_ERROR,
+      err instanceof Error ? err.message : 'Lỗi máy chủ nội bộ',
+    ),
+    500,
+  )
 })
 
 export default app
-

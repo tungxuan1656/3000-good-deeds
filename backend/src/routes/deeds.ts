@@ -10,59 +10,62 @@ const deeds = new Hono<{ Bindings: Env; Variables: { user: any } }>()
 deeds.use('/*', authMiddleware)
 
 deeds.get('/', async (c) => {
-    const currentUser = c.get('user')
-    const page = parseInt(c.req.query('page') || '1')
-    const limit = parseInt(c.req.query('limit') || '20')
-    const offset = (page - 1) * limit
+  const currentUser = c.get('user')
+  const page = parseInt(c.req.query('page') || '1')
+  const limit = parseInt(c.req.query('limit') || '20')
+  const offset = (page - 1) * limit
 
-    const result = await getDeeds(c.env.DB, currentUser.id, limit, offset)
-    return c.json(successResponse(result))
+  const result = await getDeeds(c.env.DB, currentUser.id, limit, offset)
+
+  return c.json(successResponse(result))
 })
 
 deeds.post('/', async (c) => {
-    const currentUser = c.get('user')
-    const body = await c.req.json<CreateDeedRequest>()
+  const currentUser = c.get('user')
+  const body = await c.req.json<CreateDeedRequest>()
 
-    if (!body || !body.categoryId) {
-        return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
-    }
+  if (!body || !body.categoryId) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
+  }
 
-    const result = await createDeed(c.env.DB, currentUser.id, body)
-    return c.json(successResponse(result))
+  const result = await createDeed(c.env.DB, currentUser.id, body)
+
+  return c.json(successResponse(result))
 })
 
 deeds.put('/:id', async (c) => {
-    const currentUser = c.get('user')
-    const deedId = parseInt(c.req.param('id'))
-    const body = await c.req.json<UpdateDeedRequest>()
+  const currentUser = c.get('user')
+  const deedId = parseInt(c.req.param('id'))
+  const body = await c.req.json<UpdateDeedRequest>()
 
-    if (isNaN(deedId)) {
-        return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'ID không hợp lệ'), 400)
-    }
+  if (isNaN(deedId)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'ID không hợp lệ'), 400)
+  }
 
-    try {
-        const result = await updateDeed(c.env.DB, currentUser.id, deedId, body)
-        return c.json(successResponse(result))
-    } catch (e) {
-        return c.json(errorResponse(ErrorCodes.NOT_MODIFIED, 'Sửa thất bại'), 400)
-    }
+  try {
+    const result = await updateDeed(c.env.DB, currentUser.id, deedId, body)
+
+    return c.json(successResponse(result))
+  } catch (_e) {
+    return c.json(errorResponse(ErrorCodes.NOT_MODIFIED, 'Sửa thất bại'), 400)
+  }
 })
 
 deeds.delete('/:id', async (c) => {
-    const currentUser = c.get('user')
-    const deedId = parseInt(c.req.param('id'))
+  const currentUser = c.get('user')
+  const deedId = parseInt(c.req.param('id'))
 
-    if (isNaN(deedId)) {
-        return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'ID không hợp lệ'), 400)
-    }
+  if (isNaN(deedId)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'ID không hợp lệ'), 400)
+  }
 
-    try {
-        await deleteDeed(c.env.DB, currentUser.id, deedId)
-        return c.json(successResponse(true))
-    } catch (e) {
-        return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Xoá thất bại'), 400)
-    }
+  try {
+    await deleteDeed(c.env.DB, currentUser.id, deedId)
+
+    return c.json(successResponse(true))
+  } catch (_e) {
+    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Xoá thất bại'), 400)
+  }
 })
 
 export default deeds
-
