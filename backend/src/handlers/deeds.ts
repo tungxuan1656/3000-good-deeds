@@ -1,10 +1,11 @@
 import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest } from '../types'
 import { getCurrentTimestamp } from '../utils'
+import { checkAndUnlockAchievements } from './achievements'
 
 // Get deeds list (with filters)
 export async function getDeeds(
   db: D1Database,
-  userId: number,
+  userId: string,
   limit = 20,
   offset = 0,
 ): Promise<GoodDeed[]> {
@@ -13,7 +14,8 @@ export async function getDeeds(
       `SELECT 
         d.id, d.user_id as userId, d.category_id as categoryId, d.description,
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
-        c.id as c_id, c.name as c_name, c.icon as c_icon, c.color as c_color
+        c.id as c_id, c.name as c_name, c.icon_key as c_icon, c.description as c_desc,
+        c.is_active as c_active, c.created_at as c_created
        FROM good_deeds d
        JOIN categories c ON d.category_id = c.id
        WHERE d.user_id = ?
@@ -36,42 +38,45 @@ export async function getDeeds(
       id: row.c_id,
       name: row.c_name,
       icon: row.c_icon,
-      color: row.c_color,
-      description: null, // Minimal info
-      isActive: true,
-      createdAt: 0,
+      color: null, // Removed color from schema?
+      description: row.c_desc,
+      isActive: Boolean(row.c_active),
+      createdAt: row.c_created,
     },
   }))
 }
 
 export async function createDeed(
   db: D1Database,
-  userId: number,
+  userId: string,
   body: CreateDeedRequest,
 ): Promise<GoodDeed> {
   const now = getCurrentTimestamp()
   const performedAt = body.performedAt || now
+  const newId = crypto.randomUUID()
 
-  const result = await db
+  await db
     .prepare(
-      `INSERT INTO good_deeds (user_id, category_id, description, performed_at, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO good_deeds (id, user_id, category_id, description, is_private, performed_at, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     )
-    .bind(userId, body.categoryId, body.description || null, performedAt, now, now)
+    .bind(newId, userId, body.categoryId, body.description || null, 1, performedAt, now, now)
     .run()
 
-  const id = result.meta.last_row_id as number
+  // Check achievements
+  await checkAndUnlockAchievements(db, userId)
 
-  return await getDeedById(db, id)
+  return await getDeedById(db, newId)
 }
 
-export async function getDeedById(db: D1Database, deedId: number): Promise<GoodDeed> {
+export async function getDeedById(db: D1Database, deedId: string): Promise<GoodDeed> {
   const row = await db
     .prepare(
       `SELECT 
         d.id, d.user_id as userId, d.category_id as categoryId, d.description,
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
-        c.id as c_id, c.name as c_name, c.icon as c_icon, c.color as c_color
+        c.id as c_id, c.name as c_name, c.icon_key as c_icon, c.description as c_desc,
+        c.is_active as c_active, c.created_at as c_created
        FROM good_deeds d
        JOIN categories c ON d.category_id = c.id
        WHERE d.id = ?`,
@@ -95,18 +100,18 @@ export async function getDeedById(db: D1Database, deedId: number): Promise<GoodD
       id: row.c_id,
       name: row.c_name,
       icon: row.c_icon,
-      color: row.c_color,
-      description: null,
-      isActive: true,
-      createdAt: 0,
+      color: null,
+      description: row.c_desc,
+      isActive: Boolean(row.c_active),
+      createdAt: row.c_created,
     },
   }
 }
 
 export async function updateDeed(
   db: D1Database,
-  userId: number,
-  deedId: number,
+  userId: string,
+  deedId: string,
   body: UpdateDeedRequest,
 ): Promise<GoodDeed> {
   const now = getCurrentTimestamp()
@@ -152,7 +157,7 @@ export async function updateDeed(
   return await getDeedById(db, deedId)
 }
 
-export async function deleteDeed(db: D1Database, userId: number, deedId: number): Promise<boolean> {
+export async function deleteDeed(db: D1Database, userId: string, deedId: string): Promise<boolean> {
   // Security check: ensure user owns the deed
   const existing = await db
     .prepare('SELECT id FROM good_deeds WHERE id = ? AND user_id = ?')

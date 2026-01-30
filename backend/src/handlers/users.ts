@@ -1,42 +1,17 @@
-import type { SyncUserRequest, UpdateUserRequest, User } from '../types'
+import type { UpdateUserRequest, User } from '../types'
 import { getCurrentTimestamp } from '../utils'
 
-// Sync user từ Firebase về D1
-export async function syncUser(db: D1Database, body: SyncUserRequest): Promise<User> {
-  const now = getCurrentTimestamp()
-
-  // Kiểm tra user đã tồn tại chưa
-  const existingUser = await db
-    .prepare('SELECT id FROM users WHERE firebase_uid = ?')
-    .bind(body.firebaseUid)
-    .first<{ id: number }>()
-
-  let userId = existingUser ? existingUser.id : 0
-
-  if (!existingUser) {
-    // Tạo user mới
-    const insertResult = await db
-      .prepare(
-        `INSERT INTO users (firebase_uid, email, display_name, avatar_url, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-      )
-      .bind(body.firebaseUid, body.email, body.displayName || null, body.photoURL || null, now, now)
-      .run()
-
-    userId = insertResult.meta.last_row_id as number
-  }
-
-  // Lấy user info
-  return await getUser(db, userId)
-}
+// SyncUser removed. Use Auth handler.
 
 // Lấy user by ID
-export async function getUser(db: D1Database, userId: number): Promise<User> {
+export async function getUser(db: D1Database, userId: string): Promise<User> {
   const user = await db
     .prepare(
       `SELECT 
-        id, firebase_uid as firebaseUid, email, display_name as displayName,
+        id, email, display_name as displayName,
         avatar_url as avatarUrl, bio,
+        reminder_time as reminderTime, reminder_enabled as reminderEnabled,
+        timezone, theme_preference as themePreference, privacy_mode as privacyMode,
         created_at as createdAt, updated_at as updatedAt
       FROM users
       WHERE id = ?`,
@@ -48,13 +23,17 @@ export async function getUser(db: D1Database, userId: number): Promise<User> {
     throw new Error('Không tìm thấy người dùng')
   }
 
-  return user
+  // Convert boolean fields manually because SQLite stores them as 0/1
+  return {
+    ...user,
+    reminderEnabled: Boolean(user.reminderEnabled),
+  }
 }
 
 // Update user profile
 export async function updateUser(
   db: D1Database,
-  userId: number,
+  userId: string,
   body: UpdateUserRequest,
 ): Promise<User> {
   const now = getCurrentTimestamp()
@@ -74,6 +53,32 @@ export async function updateUser(
   if (body.bio !== undefined) {
     updates.push('bio = ?')
     values.push(body.bio)
+  }
+
+  // Settings
+  if (body.reminderTime !== undefined) {
+    updates.push('reminder_time = ?')
+    values.push(body.reminderTime)
+  }
+
+  if (body.reminderEnabled !== undefined) {
+    updates.push('reminder_enabled = ?')
+    values.push(body.reminderEnabled ? 1 : 0)
+  }
+
+  if (body.timezone !== undefined) {
+    updates.push('timezone = ?')
+    values.push(body.timezone)
+  }
+
+  if (body.themePreference !== undefined) {
+    updates.push('theme_preference = ?')
+    values.push(body.themePreference)
+  }
+
+  if (body.privacyMode !== undefined) {
+    updates.push('privacy_mode = ?')
+    values.push(body.privacyMode)
   }
 
   if (updates.length > 0) {

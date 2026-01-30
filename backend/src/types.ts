@@ -11,19 +11,25 @@ export interface ApiError {
 
 // User Entity
 export interface User {
-  id: number
-  firebaseUid: string
+  id: string
+  googleId?: string // or generic provider_id
   email: string
   displayName: string | null
   avatarUrl: string | null
   bio: string | null
   createdAt: number
   updatedAt: number
+  // Settings
+  reminderTime: string | null
+  reminderEnabled: boolean
+  timezone: string
+  themePreference: 'light' | 'dark' | 'system'
+  privacyMode: 'private' | 'limited'
 }
 
 // Category Entity
 export interface Category {
-  id: number
+  id: string
   name: string
   description: string | null
   icon: string | null
@@ -34,9 +40,9 @@ export interface Category {
 
 // Good Deed Entity
 export interface GoodDeed {
-  id: number
-  userId: number
-  categoryId: number
+  id: string
+  userId: string
+  categoryId: string
   description: string | null
   performedAt: number
   createdAt: number
@@ -47,8 +53,8 @@ export interface GoodDeed {
 
 // Goal Entity
 export interface Goal {
-  id: number
-  userId: number
+  id: string
+  userId: string
   type: 'daily' | 'weekly' | 'monthly'
   targetCount: number
   startDate: number
@@ -63,14 +69,14 @@ export interface AchievementDefinition {
   id: string
   name: string
   description: string
-  criteriaType: 'count' | 'streak'
+  criteriaType: 'count' | 'streak' | 'unknown'
   criteriaValue: number
   icon: string | null
 }
 
 export interface UserAchievement {
-  id: number
-  userId: number
+  id: string
+  userId: string
   achievementId: string
   earnedAt: number
   // Expanded
@@ -86,28 +92,64 @@ export interface UserStats {
 
 // Request Types
 export interface CreateDeedRequest {
-  categoryId: number
+  categoryId: string
   description?: string
   performedAt?: number // defaults to now
 }
 
 export interface UpdateDeedRequest {
-  categoryId?: number
+  categoryId?: string
   description?: string
   performedAt?: number
 }
 
-export interface SyncUserRequest {
-  firebaseUid: string
+// Auth Types
+export interface GoogleAuthRequest {
+  code: string
+  redirectUri?: string
+}
+
+export interface RefreshTokenRequest {
+  refreshToken: string
+}
+
+export interface AuthResponse {
+  accessToken: string
+  refreshToken: string
+  user: User
+  expiresIn: number
+}
+
+export interface GoogleTokenResponse {
+  access_token: string
+  expires_in: number
+  refresh_token?: string
+  scope: string
+  token_type: string
+  id_token: string
+}
+
+export interface GoogleUserInfo {
+  id: string
   email: string
-  displayName?: string
-  photoURL?: string
+  verified_email: boolean
+  name: string
+  given_name: string
+  family_name: string
+  picture: string
+  locale: string
 }
 
 export interface UpdateUserRequest {
   displayName?: string
   avatarUrl?: string
   bio?: string
+  // Settings
+  reminderTime?: string
+  reminderEnabled?: boolean
+  timezone?: string
+  themePreference?: 'light' | 'dark' | 'system'
+  privacyMode?: 'private' | 'limited'
 }
 
 export interface UpdateGoalRequest {

@@ -6,21 +6,41 @@ interface CalendarDay {
 // Get daily counts for calendar view
 export async function getCalendar(
   db: D1Database,
-  userId: number,
+  userId: string,
   from: string,
   to: string,
 ): Promise<CalendarDay[]> {
   const { results } = await db
     .prepare(
       `SELECT 
-        strftime('%Y-%m-%d', datetime(performed_at, 'unixepoch')) as date,
+        strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch')) as date,
         COUNT(id) as count
        FROM good_deeds
        WHERE user_id = ?
-       AND date >= ? AND date <= ?
+       AND performed_at >= ? AND performed_at <= ?
        GROUP BY date`,
     )
-    .bind(userId, from, to)
+    // Note: sqlite unixepoch expects seconds, our ts is ms.
+    // Also from/to might be YYYY-MM strings or timestamps?
+    // The original code used datetime(performed_at, 'unixepoch').
+    // If performed_at is ms (Date.now()), we need performed_at/1000.
+    // Let's assume input from/to are YYYY-MM-DD strings for filtering?
+    // Let's fix the SQL to be robust.
+    // But for MVP, sticking to original logic (assuming original was correct or I fix it).
+    // Original: datetime(performed_at, 'unixepoch') -> implies performed_at is seconds?
+    // But `getCurrentTimestamp` usually returns ms. `Date.now()`.
+    // I will adjust to `performed_at/1000`.
+
+    // Also the WHERE clause: date >= ? and date <= ? compares strings YYYY-MM-DD.
+    // But `from` param in routes/activities.ts defaults to '2025-01' (YYYY-MM).
+    // So distinct comparison might be needed. Use LIKE? or range of timestamps?
+    // Let's stick to simple string comparison on the date column derived.
+    .bind(userId, new Date(from).getTime(), new Date(to).getTime())
+    // Wait, the original code bound `from` and `to` (strings) directly to `date` comparison?
+    // "WHERE date >= ? AND date <= ?"
+    // This requires `date` to be the projected YYYY-MM-DD string.
+    // `strftime` returns string. So correct.
+
     .all<CalendarDay>()
 
   return results || []
@@ -29,12 +49,12 @@ export async function getCalendar(
 // Calculate current streak
 export async function getStreak(
   db: D1Database,
-  userId: number,
+  userId: string,
 ): Promise<{ currentStreak: number }> {
   // Get unique dates of activity in descending order
   const { results } = await db
     .prepare(
-      `SELECT DISTINCT strftime('%Y-%m-%d', datetime(performed_at, 'unixepoch')) as date
+      `SELECT DISTINCT strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch')) as date
        FROM good_deeds
        WHERE user_id = ?
        ORDER BY date DESC

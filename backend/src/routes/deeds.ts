@@ -35,12 +35,8 @@ deeds.post('/', async (c) => {
 
 deeds.put('/:id', async (c) => {
   const currentUser = c.get('user')
-  const deedId = parseInt(c.req.param('id'))
+  const deedId = c.req.param('id')
   const body = await c.req.json<UpdateDeedRequest>()
-
-  if (isNaN(deedId)) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'ID không hợp lệ'), 400)
-  }
 
   try {
     const result = await updateDeed(c.env.DB, currentUser.id, deedId, body)
@@ -53,11 +49,7 @@ deeds.put('/:id', async (c) => {
 
 deeds.delete('/:id', async (c) => {
   const currentUser = c.get('user')
-  const deedId = parseInt(c.req.param('id'))
-
-  if (isNaN(deedId)) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'ID không hợp lệ'), 400)
-  }
+  const deedId = c.req.param('id')
 
   try {
     await deleteDeed(c.env.DB, currentUser.id, deedId)

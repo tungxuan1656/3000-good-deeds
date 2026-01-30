@@ -1,10 +1,14 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 
+import achievements from './routes/achievements'
 import activities from './routes/activities'
+import auth from './routes/auth'
 import categories from './routes/categories'
 import deeds from './routes/deeds'
 import goals from './routes/goals'
+import reminders from './routes/reminders'
+import stats from './routes/stats'
 import users from './routes/users'
 import { ErrorCodes, errorResponse } from './utils'
 
@@ -14,11 +18,23 @@ const app = new Hono<{ Bindings: Env }>()
 app.use('/*', cors())
 
 // Routes
-app.route('/users', users)
-app.route('/deeds', deeds)
-app.route('/categories', categories)
-app.route('/goals', goals)
-app.route('/activities', activities)
+app.route('/api/v1/users', users)
+app.route('/api/v1/deeds', deeds)
+app.route('/api/v1/categories', categories)
+app.route('/api/v1/goals', goals)
+app.route('/api/v1/activities', activities)
+app.route('/api/v1/achievements', achievements)
+app.route('/api/v1/stats', stats)
+app.route('/api/v1/reminders', reminders)
+app.route('/api/v1/auth', auth)
+
+import { seed } from './seed'
+
+app.post('/api/v1/seed', async (c) => {
+  await seed(c.env.DB)
+
+  return c.json({ success: true, message: 'Seeded' })
+})
 
 // 404 Handler
 app.notFound((c) => {
