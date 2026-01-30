@@ -38,3 +38,9 @@ Base URL: `/api/v1`
 ## 8. Reminders
 - `GET /reminders/settings`
 - `PUT /reminders/settings`
+
+## 9. Cultivation Tools
+- `GET /quotes/daily`
+- `GET /journal`
+- `POST /journal`
+- `GET /acts/random`

@@ -101,6 +101,28 @@ MVP được chia thành **5 giai đoạn chính**:
 
 ---
 
+### GIAI ĐOẠN 2.5 – TU TẬP NỘI TÂM
+
+**Mục tiêu:** Cung cấp công cụ để người dùng quay vào bên trong.
+
+**Phạm vi:**
+- Pháp ngữ mỗi ngày (Daily Dharma Quote)
+- Sổ tay Sám hối & Biết ơn
+- Hỗ trợ hành thiền (Timer)
+- Hướng dẫn thở (Breathing)
+- Gợi ý việc thiện (Random Acts)
+
+**Trải nghiệm trọng tâm:**
+- Bình an
+- Tỉnh thức
+- Không xao nhãng
+
+**Tiêu chí hoàn thành:**
+- Người dùng có thể thực hành thiền/thở ngay trên app
+- Có thể viết nhật ký sám hối
+
+---
+
 ### GIAI ĐOẠN 3 – DUY TRÌ THÓI QUEN
 
 **Mục tiêu:** Giúp người dùng quay lại đều đặn.
