@@ -1,12 +1,12 @@
 {
   "compatibility_date": "2025-10-08",
   "main": "src/index.ts",
-  "name": "my-locket-cloudflare-workers-d1-database",
+  "name": "3000-good-deeds-backend",
   "upload_source_maps": true,
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "my-locket-database",
+      "database_name": "3000-good-deeds-db",
       "database_id": "2d5eb897-3021-40bf-b081-b06b9d060b39"
     }
   ],
