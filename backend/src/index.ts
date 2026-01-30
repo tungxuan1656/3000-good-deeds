@@ -5,8 +5,10 @@ import achievements from './routes/achievements'
 import activities from './routes/activities'
 import auth from './routes/auth'
 import categories from './routes/categories'
+import cultivation from './routes/cultivation'
 import deeds from './routes/deeds'
 import goals from './routes/goals'
+import journal from './routes/journal'
 import reminders from './routes/reminders'
 import stats from './routes/stats'
 import users from './routes/users'
@@ -26,6 +28,8 @@ app.route('/api/v1/activities', activities)
 app.route('/api/v1/achievements', achievements)
 app.route('/api/v1/stats', stats)
 app.route('/api/v1/reminders', reminders)
+app.route('/api/v1/cultivation', cultivation)
+app.route('/api/v1/journal', journal)
 app.route('/api/v1/auth', auth)
 
 import { seed } from './seed'

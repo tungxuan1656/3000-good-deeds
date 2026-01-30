@@ -175,3 +175,32 @@ export interface FirebaseJwtPayload {
     sign_in_provider: string
   }
 }
+
+// Cultivation Entities
+export interface DharmaQuote {
+  id: string
+  content: string
+  author: string | null
+  source: string | null
+  tagsJson: string | null
+  createdAt: number
+  updatedAt: number
+}
+
+export interface JournalEntry {
+  id: string
+  userId: string
+  type: 'repentance' | 'gratitude'
+  content: string
+  emotion: string | null
+  isPrivate: boolean
+  createdAt: number
+  updatedAt: number
+}
+
+// Cultivation Requests
+export interface CreateJournalRequest {
+  type: 'repentance' | 'gratitude'
+  content: string
+  emotion?: string
+}

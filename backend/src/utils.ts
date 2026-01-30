@@ -33,6 +33,13 @@ export const ErrorCodes = {
   USER_NOT_FOUND: 'USER_NOT_FOUND',
   DEED_NOT_FOUND: 'DEED_NOT_FOUND',
   NOT_MODIFIED: 'NOT_MODIFIED',
+  INVALID_REQUEST: 'INVALID_REQUEST',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+}
+
+// Generate unique ID
+export function generateId(prefix: string = ''): string {
+  return prefix + crypto.randomUUID()
 }
 
 // Tạo JSON response với status code
