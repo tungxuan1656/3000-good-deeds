@@ -57,6 +57,11 @@ export async function updateUser(
 
   // Settings
   if (body.reminderTime !== undefined) {
+    // Validate HH:mm format
+    const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
+    if (!timeRegex.test(body.reminderTime)) {
+      throw new Error('Định dạng thời gian nhắc nhở không hợp lệ. Vui lòng dùng HH:mm')
+    }
     updates.push('reminder_time = ?')
     values.push(body.reminderTime)
   }

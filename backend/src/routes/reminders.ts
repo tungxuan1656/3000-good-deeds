@@ -27,7 +27,7 @@ reminders.put('/settings', async (c) => {
   const body = await c.req.json<{ reminderEnabled?: boolean; reminderTime?: string }>()
 
   if (body.reminderEnabled === undefined && body.reminderTime === undefined) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'No settings provided'), 400)
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Không có cấu hình nào được cung cấp'), 400)
   }
 
   const updateBody: UpdateUserRequest = {

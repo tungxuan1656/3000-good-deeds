@@ -41,7 +41,10 @@ goals.put('/:id', async (c) => {
   } catch (e) {
     console.error('Update failed or Goal not found', e)
 
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Update failed or Goal not found'), 400)
+    return c.json(
+      errorResponse(ErrorCodes.BAD_REQUEST, 'Cập nhật thất bại hoặc không tìm thấy mục tiêu'),
+      400,
+    )
   }
 })
 
@@ -52,14 +55,14 @@ goals.delete('/:id', async (c) => {
   try {
     const success = await deleteGoal(c.env.DB, currentUser.id, goalId)
     if (!success) {
-      return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Goal not found'), 404)
+      return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Không tìm thấy mục tiêu'), 404)
     }
 
     return c.json(successResponse({ success: true }))
   } catch (e) {
     console.error('Delete failed', e)
 
-    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Delete failed'), 500)
+    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Xoá thất bại'), 500)
   }
 })
 

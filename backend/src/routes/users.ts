@@ -23,7 +23,7 @@ users.patch('/me', async (c) => {
   const currentUser = c.get('user')
   const body = await c.req.json<UpdateUserRequest>()
   if (!body) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Body request không hợp lệ'), 400)
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
   }
 
   const user = await updateUser(c.env.DB, currentUser.id, body)

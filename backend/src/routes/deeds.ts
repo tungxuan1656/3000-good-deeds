@@ -56,7 +56,7 @@ deeds.delete('/:id', async (c) => {
 
     return c.json(successResponse(true))
   } catch (_e) {
-    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Xoá thất bại'), 400)
+    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Không tìm thấy việc thiện để xoá'), 400)
   }
 })
 

@@ -9,7 +9,7 @@ const auth = new Hono<{ Bindings: Env }>()
 auth.post('/google', async (c) => {
   const body = await c.req.json<GoogleAuthRequest>()
   if (!body.code) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Code is required'), 400)
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Mã xác thực là bắt buộc'), 400)
   }
 
   try {
@@ -19,14 +19,14 @@ auth.post('/google', async (c) => {
   } catch (e: any) {
     console.error('Login error', e)
 
-    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, e.message || 'Login failed'), 500)
+    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, e.message || 'Đăng nhập thất bại'), 500)
   }
 })
 
 auth.post('/refresh', async (c) => {
   const body = await c.req.json<RefreshTokenRequest>()
   if (!body.refreshToken) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Refresh token required'), 400)
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Refresh token là bắt buộc'), 400)
   }
 
   try {
@@ -34,7 +34,10 @@ auth.post('/refresh', async (c) => {
 
     return c.json(successResponse(result))
   } catch (e: any) {
-    return c.json(errorResponse(ErrorCodes.UNAUTHORIZED, e.message || 'Invalid refresh token'), 401)
+    return c.json(
+      errorResponse(ErrorCodes.UNAUTHORIZED, e.message || 'Refresh token không hợp lệ'),
+      401,
+    )
   }
 })
 

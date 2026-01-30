@@ -10,7 +10,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
   const authHeader = c.req.header('Authorization')
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return c.json(errorResponse('UNAUTHORIZED', 'No token provided'), 401)
+    return c.json(errorResponse('UNAUTHORIZED', 'Chưa cung cấp token'), 401)
   }
 
   const token = authHeader.split(' ')[1]
@@ -21,7 +21,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
     const userId = payload.sub as string // We put userId in 'sub'
 
     if (!userId) {
-      return c.json(errorResponse('UNAUTHORIZED', 'Invalid token claims'), 401)
+      return c.json(errorResponse('UNAUTHORIZED', 'Token không hợp lệ'), 401)
     }
 
     // Verify user exists
@@ -31,13 +31,13 @@ export const authMiddleware = async (c: Context, next: Next) => {
     } catch (e) {
       console.error('User not found', e)
 
-      return c.json(errorResponse('UNAUTHORIZED', 'User not found'), 401)
+      return c.json(errorResponse('UNAUTHORIZED', 'Không tìm thấy người dùng'), 401)
     }
 
     await next()
   } catch (e) {
     console.error('Invalid or expired token', e)
 
-    return c.json(errorResponse('UNAUTHORIZED', 'Invalid or expired token'), 401)
+    return c.json(errorResponse('UNAUTHORIZED', 'Token không hợp lệ hoặc đã hết hạn'), 401)
   }
 }

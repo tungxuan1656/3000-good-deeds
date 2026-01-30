@@ -48,7 +48,7 @@ export async function loginWithGoogle(
   const tokenData: GoogleTokenResponse = await tokenResponse.json()
 
   if (!tokenResponse.ok) {
-    throw new Error('Failed to exchange Google code: ' + JSON.stringify(tokenData))
+    throw new Error('Thất bại khi trao đổi mã Google: ' + JSON.stringify(tokenData))
   }
 
   // 2. Get User Info
@@ -59,7 +59,7 @@ export async function loginWithGoogle(
   const googleUser: GoogleUserInfo = await userResponse.json()
 
   if (!userResponse.ok) {
-    throw new Error('Failed to get Google user info')
+    throw new Error('Không thể lấy thông tin người dùng từ Google')
   }
 
   // 3. Find or Create User
@@ -152,11 +152,11 @@ export async function refreshAccessToken(
     .first<any>()
 
   if (!storedToken) {
-    throw new Error('Invalid refresh token')
+    throw new Error('Refresh token không hợp lệ')
   }
 
   if (storedToken.expires_at < getCurrentTimestamp()) {
-    throw new Error('Refresh token expired')
+    throw new Error('Refresh token đã hết hạn')
   }
 
   // 2. Issue new Access Token

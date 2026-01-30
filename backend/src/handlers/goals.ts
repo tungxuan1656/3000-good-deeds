@@ -30,7 +30,7 @@ export async function createGoal(
 
   const goal = await db.prepare(`SELECT * FROM goals WHERE id = ?`).bind(newId).first<Goal>()
 
-  if (!goal) throw new Error('Create goal failed')
+  if (!goal) throw new Error('Tạo mục tiêu thất bại')
 
   return goal
 }
@@ -60,7 +60,7 @@ export async function updateGoal(
   }
 
   if (setClauses.length === 0) {
-    throw new Error('No updates provided')
+    throw new Error('Không có thông tin cập nhật')
   }
 
   setClauses.push('updated_at = ?')
@@ -75,11 +75,11 @@ export async function updateGoal(
     .run()
 
   if (res.meta.changes === 0) {
-    throw new Error('Goal not found or unauthorized')
+    throw new Error('Không tìm thấy mục tiêu hoặc không có quyền truy cập')
   }
 
   const goal = await db.prepare('SELECT * FROM goals WHERE id = ?').bind(goalId).first<Goal>()
-  if (!goal) throw new Error('Goal not found')
+  if (!goal) throw new Error('Không tìm thấy mục tiêu')
 
   return goal
 }

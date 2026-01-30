@@ -85,7 +85,7 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
     .first<any>()
 
   if (!row) {
-    throw new Error('Deed not found')
+    throw new Error('Không tìm thấy việc thiện')
   }
 
   return {
@@ -125,7 +125,7 @@ export async function updateDeed(
     .first()
 
   if (!existing) {
-    throw new Error('Deed not found or unauthorized')
+    throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
   }
 
   if (body.categoryId !== undefined) {
@@ -165,7 +165,7 @@ export async function deleteDeed(db: D1Database, userId: string, deedId: string)
     .first()
 
   if (!existing) {
-    throw new Error('Deed not found or unauthorized')
+    throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
   }
 
   await db.prepare('DELETE FROM good_deeds WHERE id = ?').bind(deedId).run()
