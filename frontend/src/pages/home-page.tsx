@@ -8,15 +8,15 @@ const HomePage = () => {
     <div className='bg-background min-h-screen pb-24'>
       <div className='pointer-events-none absolute inset-0 overflow-hidden'>
         <div className='bg-primary/10 absolute -top-20 right-0 h-72 w-72 rounded-full blur-3xl' />
-        <div className='bg-secondary/40 absolute top-40 left-6 h-48 w-48 rounded-full blur-3xl' />
+        <div className='bg-secondary/30 absolute top-40 left-6 h-48 w-48 rounded-full blur-3xl' />
       </div>
 
-      <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6 sm:px-6 lg:px-8'>
+      <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 pt-6 sm:gap-7 sm:px-6 lg:gap-8 lg:px-8'>
         {/* Top bar */}
         <div className='flex items-center justify-between'>
           <MenuDropdown />
           <div className='flex items-center gap-2 text-right'>
-            <div className='text-muted-foreground hidden text-xs font-medium sm:block'>
+            <div className='text-muted-foreground/80 hidden text-xs font-medium sm:block'>
               Chủ nhật, 15/10
             </div>
             <Button
@@ -29,24 +29,24 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className='grid gap-6 lg:grid-cols-[1fr_320px]'>
+        <div className='grid gap-8 lg:grid-cols-[1fr_320px]'>
           {/* Main column */}
-          <div className='flex flex-col gap-6'>
+          <div className='flex flex-col gap-4'>
             {/* Header */}
-            <header className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <header className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
               <p className='text-muted-foreground/70 text-xs font-semibold tracking-wider uppercase'>
                 Chủ nhật, 15/10
               </p>
-              <h1 className='text-foreground mt-2 text-3xl font-semibold tracking-tight'>
+              <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight sm:text-3xl'>
                 Hôm nay của bạn
               </h1>
-              <p className='text-muted-foreground mt-3 max-w-xl text-base leading-relaxed'>
+              <p className='text-muted-foreground/90 mt-3 max-w-xl text-base leading-relaxed'>
                 Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?
               </p>
             </header>
 
             {/* Quote Section */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
               <img
                 alt=''
                 aria-hidden='true'
@@ -56,14 +56,14 @@ const HomePage = () => {
               <div className='relative z-10 flex items-start gap-4'>
                 <div className='bg-primary/60 mt-1 h-12 w-1 rounded-full' />
                 <div>
-                  <div className='text-muted-foreground mb-3 flex items-center gap-2 text-xs font-semibold'>
+                  <div className='text-muted-foreground/80 mb-3 flex items-center gap-2 text-xs font-semibold'>
                     <SparklesIcon className='text-accent h-4 w-4' />
                     Pháp ngữ mỗi ngày
                   </div>
-                  <p className='text-foreground/80 text-lg leading-relaxed italic'>
+                  <p className='text-foreground/85 text-lg leading-relaxed font-medium italic'>
                     “Mỗi việc thiện nhỏ đều gieo một hạt giống.”
                   </p>
-                  <div className='text-muted-foreground/60 mt-4 flex items-center gap-2 text-[10px] font-semibold tracking-[0.3em] uppercase'>
+                  <div className='text-muted-foreground/60 mt-3 flex items-center gap-2 text-[10px] font-semibold tracking-[0.18em] uppercase'>
                     Lời nhắc từ thiện tâm
                   </div>
                 </div>
@@ -71,7 +71,7 @@ const HomePage = () => {
             </section>
 
             {/* Quick check-in */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
               <img
                 alt=''
                 aria-hidden='true'
@@ -81,25 +81,25 @@ const HomePage = () => {
               <div className='relative z-10 flex flex-col gap-4'>
                 <div>
                   <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
-                  <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
+                  <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
                     Bạn đã thực hành điều gì hôm nay?
                   </p>
                 </div>
                 <div className='relative grid gap-3 sm:grid-cols-3'>
                   <button
-                    className='group bg-body/30 text-foreground hover:bg-body/40 flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
+                    className='group bg-body/25 text-foreground hover:bg-body/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
                     type='button'>
                     <img alt='Thân' className='h-10 w-10' src='/icons/icon_than.png' />
                     Thân
                   </button>
                   <button
-                    className='group bg-speech/30 text-foreground hover:bg-speech/40 flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
+                    className='group bg-speech/25 text-foreground hover:bg-speech/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
                     type='button'>
                     <img alt='Khẩu' className='h-10 w-10' src='/icons/icon_khau.png' />
                     Khẩu
                   </button>
                   <button
-                    className='group bg-mind/30 text-foreground hover:bg-mind/40 flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
+                    className='group bg-mind/25 text-foreground hover:bg-mind/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
                     type='button'>
                     <img alt='Ý' className='h-10 w-10' src='/icons/icon_y.png' />Ý
                   </button>
@@ -119,7 +119,7 @@ const HomePage = () => {
             </section>
 
             {/* Progress */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
               <img
                 alt=''
                 aria-hidden='true'
@@ -133,16 +133,16 @@ const HomePage = () => {
                 </div>
                 <span className='text-muted-foreground text-xs'>Mục tiêu tuần</span>
               </div>
-              <div className='bg-muted relative z-10 h-2 w-full rounded-full'>
-                <div className='bg-primary/70 h-2 w-[70%] rounded-full' />
+              <div className='bg-muted relative z-10 h-2.5 w-full rounded-full'>
+                <div className='bg-primary/70 h-2.5 w-[70%] rounded-full' />
               </div>
-              <div className='text-muted-foreground relative z-10 mt-3 text-xs'>
+              <div className='text-muted-foreground/90 relative z-10 mt-3 text-xs'>
                 Còn 2 ngày nữa để hoàn tất mục tiêu tuần này.
               </div>
             </section>
 
             {/* Today Section */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
               <img
                 alt=''
                 aria-hidden='true'
@@ -172,7 +172,7 @@ const HomePage = () => {
           </div>
 
           {/* Side column */}
-          <aside className='flex flex-col gap-6'>
+          <aside className='flex flex-col gap-4'>
             <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
               <h3 className='text-foreground text-base font-semibold'>Nhịp điệu trong tuần</h3>
               <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
