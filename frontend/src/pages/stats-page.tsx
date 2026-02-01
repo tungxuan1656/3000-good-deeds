@@ -80,6 +80,7 @@ const StatsPage = () => {
           <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
             {summaryCards.map((card) => {
               const Icon = card.icon
+
               return (
                 <CardSection key={card.title} className='gap-3'>
                   <div className='flex items-center justify-between'>
@@ -105,6 +106,9 @@ const StatsPage = () => {
               </div>
               <span className='text-muted-foreground text-xs'>Tuần này</span>
             </div>
+            <p className='text-muted-foreground text-xs'>
+              Tuần này bạn gieo nhiều thiện qua hành động và lời nói.
+            </p>
             <div className='flex flex-col gap-3'>
               {categoryStats.map((item) => (
                 <div key={item.label} className='flex items-center gap-3'>

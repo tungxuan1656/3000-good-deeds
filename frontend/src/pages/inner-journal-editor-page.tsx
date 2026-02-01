@@ -22,7 +22,7 @@ const InnerJournalEditorPage = () => {
         </p>
       </CardSection>
 
-      <CardSection className='gap-4'>
+      <CardSection className={`gap-4 ${mode === 'repent' ? 'bg-muted/60' : ''}`}>
         <div className='flex flex-wrap gap-2'>
           <button
             className={`rounded-full border px-4 py-2 text-sm font-medium ${
@@ -53,6 +53,7 @@ const InnerJournalEditorPage = () => {
           className='min-h-44 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
           placeholder='Hôm nay mình...'
         />
+        <p className='text-muted-foreground text-xs'>Chỉ mình bạn thấy nội dung này.</p>
         <Button className='h-11 w-full rounded-full'>Lưu nhật ký</Button>
       </CardSection>
     </div>

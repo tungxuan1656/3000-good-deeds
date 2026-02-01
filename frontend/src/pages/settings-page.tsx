@@ -79,6 +79,9 @@ const SettingsPage = () => {
             <p className='text-muted-foreground text-xs'>
               Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
             </p>
+            <p className='text-muted-foreground text-xs'>
+              Thông báo mẫu: “Đến giờ gieo hạt an lành 🌱”.
+            </p>
           </div>
         )}
       </CardSection>
@@ -150,6 +153,9 @@ const SettingsPage = () => {
             <p className='text-foreground text-base font-semibold'>Xoá tài khoản</p>
             <p className='text-muted-foreground mt-1 text-xs leading-relaxed'>
               Toàn bộ dữ liệu sẽ bị xoá vĩnh viễn. Hãy cân nhắc kỹ.
+            </p>
+            <p className='text-muted-foreground mt-2 text-xs'>
+              Bạn có muốn lưu lại nhật ký trước khi rời đi không?
             </p>
           </div>
           <div className='flex h-9 w-9 items-center justify-center rounded-full bg-red-100'>

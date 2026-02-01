@@ -1,9 +1,12 @@
-import { RefreshCwIcon, ThumbsUpIcon } from 'lucide-react'
+import { HelpCircleIcon, RefreshCwIcon, ThumbsUpIcon } from 'lucide-react'
+import { useState } from 'react'
 
 import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
 
 const InnerRandomActsPage = () => {
+  const [saved, setSaved] = useState(false)
+
   return (
     <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
@@ -25,16 +28,23 @@ const InnerRandomActsPage = () => {
             Hãy cảm ơn một người đã giúp bạn hôm nay, dù chỉ là điều nhỏ.
           </p>
           <div className='text-muted-foreground mt-3 text-xs'>Gợi ý thuộc Khẩu thiện</div>
+          <div className='text-muted-foreground mt-2 flex items-center gap-2 text-xs'>
+            <HelpCircleIcon className='h-3.5 w-3.5' />
+            Vì sao gợi ý này? Dựa trên nhịp tuần của bạn.
+          </div>
         </div>
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-          <Button className='h-11 w-full rounded-full sm:w-auto'>
+          <Button
+            className='h-11 w-full rounded-full sm:w-auto'
+            disabled={saved}
+            onClick={() => setSaved(true)}>
             <ThumbsUpIcon className='h-4 w-4' />
-            Lưu lại
+            {saved ? 'Đã gieo' : 'Lưu lại'}
           </Button>
           <Button
-            className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
+            className='text-foreground group h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
             variant='secondary'>
-            <RefreshCwIcon className='h-4 w-4' />
+            <RefreshCwIcon className='h-4 w-4 transition-transform duration-300 group-hover:rotate-180' />
             Gợi ý khác
           </Button>
         </div>

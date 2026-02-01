@@ -22,6 +22,8 @@ const journalEntries = [
 ]
 
 const InnerJournalPage = () => {
+  const hasEntries = journalEntries.length > 0
+
   return (
     <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
@@ -41,7 +43,7 @@ const InnerJournalPage = () => {
           <p className='text-foreground text-base font-semibold'>Bài viết gần đây</p>
           <p className='text-muted-foreground mt-1 text-xs'>Chọn một bài để xem lại.</p>
         </div>
-        <Button asChild className='h-10 rounded-full px-4 text-sm'>
+        <Button asChild className='h-11 rounded-full px-5 text-sm shadow-sm'>
           <Link to='/inner/journal/new'>
             <PlusIcon className='h-4 w-4' />
             Viết mới
@@ -49,21 +51,27 @@ const InnerJournalPage = () => {
         </Button>
       </div>
 
-      <div className='flex flex-col gap-3'>
-        {journalEntries.map((entry) => (
-          <Link
-            key={entry.id}
-            className='flex flex-col gap-2 rounded-2xl border border-black/5 bg-white/80 p-4 transition-colors hover:bg-white'
-            to={`/inner/journal/${entry.id}`}>
-            <div className='flex items-center justify-between'>
-              <p className='text-foreground text-sm font-semibold'>{entry.title}</p>
-              <span className='text-muted-foreground text-xs'>{entry.date}</span>
-            </div>
-            <p className='text-muted-foreground text-xs'>{entry.snippet}</p>
-            <span className='text-muted-foreground text-[11px]'>Loại: {entry.type}</span>
-          </Link>
-        ))}
-      </div>
+      {hasEntries ? (
+        <div className='flex flex-col gap-3'>
+          {journalEntries.map((entry) => (
+            <Link
+              key={entry.id}
+              className='flex flex-col gap-2 rounded-2xl border border-black/5 bg-white/80 p-4 transition-colors hover:bg-white'
+              to={`/inner/journal/${entry.id}`}>
+              <div className='flex items-center justify-between'>
+                <p className='text-foreground text-sm font-semibold'>{entry.title}</p>
+                <span className='text-muted-foreground text-xs'>{entry.date}</span>
+              </div>
+              <p className='text-muted-foreground text-xs'>{entry.snippet}</p>
+              <span className='text-muted-foreground text-[11px]'>Loại: {entry.type}</span>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <CardSection className='text-muted-foreground text-center text-sm'>
+          Một dòng viết nhỏ cũng đủ để lòng nhẹ hơn.
+        </CardSection>
+      )}
     </div>
   )
 }

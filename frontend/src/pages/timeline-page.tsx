@@ -1,4 +1,5 @@
-import { ClockIcon, LockIcon } from 'lucide-react'
+import { ChevronRightIcon, ClockIcon, LockIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { CardSection } from '@/components/shared/card-section'
 
@@ -119,7 +120,7 @@ const TimelinePage = () => {
                   return (
                     <div
                       key={item.id}
-                      className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4'>
+                      className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4 transition-shadow hover:shadow-sm'>
                       <div className='flex items-start justify-between gap-3'>
                         <div className='flex items-center gap-3'>
                           <div
@@ -140,6 +141,12 @@ const TimelinePage = () => {
                             </div>
                           </div>
                         </div>
+                        <Link
+                          className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs'
+                          to={`/deeds/${item.id}`}>
+                          Xem
+                          <ChevronRightIcon className='h-3.5 w-3.5' />
+                        </Link>
                       </div>
 
                       <p className='text-foreground text-sm leading-relaxed'>{item.note}</p>

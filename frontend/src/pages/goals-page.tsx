@@ -65,7 +65,7 @@ const GoalsPage = () => {
                 Mục tiêu đang chạy
               </p>
               <h2 className='text-foreground mt-2 text-lg font-semibold'>7 việc thiện / tuần</h2>
-              <p className='text-muted-foreground mt-2 text-sm'>Còn 2 ngày để hoàn thành.</p>
+              <p className='text-muted-foreground mt-2 text-sm'>Chỉ còn 2 ngày nữa thôi 🌿</p>
             </div>
             <div className='bg-secondary/40 flex h-10 w-10 items-center justify-center rounded-full'>
               <FlagIcon className='text-primary h-5 w-5' />

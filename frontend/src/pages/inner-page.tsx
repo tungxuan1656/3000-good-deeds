@@ -19,6 +19,26 @@ const InnerPage = () => {
       </CardSection>
 
       <CardSection className='gap-4'>
+        <div>
+          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+            Gợi ý cho hôm nay
+          </p>
+          <p className='text-foreground mt-2 text-base font-semibold'>Pháp ngữ hôm nay</p>
+        </div>
+        <Link
+          className='border-primary/40 bg-primary/5 hover:bg-primary/10 flex items-center gap-4 rounded-2xl border px-4 py-4 shadow-sm transition-colors'
+          to='/inner/quote'>
+          <div className='flex h-12 w-12 animate-pulse items-center justify-center rounded-2xl bg-amber-100'>
+            <SparklesIcon className='h-5 w-5 text-amber-600' />
+          </div>
+          <div className='flex-1'>
+            <p className='text-foreground text-base font-semibold'>Pháp ngữ hôm nay</p>
+            <p className='text-muted-foreground mt-1 text-sm'>Một câu nhắc để dịu lại.</p>
+          </div>
+        </Link>
+      </CardSection>
+
+      <CardSection className='gap-4'>
         <p className='text-foreground text-base font-semibold'>Chọn một không gian</p>
         <div className='flex flex-col gap-3'>
           <Link

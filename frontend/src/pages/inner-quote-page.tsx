@@ -1,9 +1,12 @@
-import { Share2Icon, SparklesIcon } from 'lucide-react'
+import { CheckIcon, Share2Icon, SparklesIcon } from 'lucide-react'
+import { useState } from 'react'
 
 import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
 
 const InnerQuotePage = () => {
+  const [saved, setSaved] = useState(false)
+
   return (
     <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
@@ -23,12 +26,21 @@ const InnerQuotePage = () => {
           <SparklesIcon className='text-primary h-4 w-4' />
           Thứ ba, 15/10/2026
         </div>
-        <p className='text-foreground text-xl leading-relaxed font-medium italic'>
+        <p className='text-foreground text-2xl leading-relaxed font-medium italic'>
           “Mỗi việc thiện nhỏ đều gieo một hạt giống an lành trong tâm.”
         </p>
         <p className='text-muted-foreground text-sm'>— Thiện tâm</p>
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-          <Button className='h-11 w-full rounded-full sm:w-auto'>Lưu vào nhật ký</Button>
+          <Button className='h-11 w-full rounded-full sm:w-auto' onClick={() => setSaved(true)}>
+            {saved ? (
+              <>
+                <CheckIcon className='h-4 w-4' />
+                Đã lưu
+              </>
+            ) : (
+              'Lưu vào nhật ký'
+            )}
+          </Button>
           <Button
             className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
             variant='secondary'>
@@ -36,6 +48,11 @@ const InnerQuotePage = () => {
             Chia sẻ
           </Button>
         </div>
+        {saved && (
+          <div className='text-muted-foreground rounded-2xl border border-black/5 bg-white/80 px-4 py-3 text-xs'>
+            Đã gieo thêm một hạt an lành 🌱
+          </div>
+        )}
       </CardSection>
     </div>
   )
