@@ -17,7 +17,7 @@ Bạn là trợ lý lập trình chuyên về TypeScript, React 19 (Vite), Tailw
 
 - React 19 + Vite (TypeScript).
 - Styling: Tailwind CSS 4 (ưu tiên utility classes, hạn chế inline style).
-- UI: shadcn-ui. Ưu tiên tái dùng component trong src/components/ui nếu đã có. sử dụng `pnpm dlx shadcn@latest add` để thêm component cần thi
+- UI: shadcn-ui. Ưu tiên tái dùng component trong src/components/ui nếu đã có. sử dụng `pnpm dlx shadcn@latest add` để thêm component cần thiết. Phân tích và tìm kiếm component shadcn-ui cần có để xây dựng UI, sau đó tự động install component
 - Icons: lucide-react (import trực tiếp, không dùng as alias cho icon, các icon component sẽ phải có định dạng là {Name}Icon, ví dụ như là EyeIcon, PlusIcon, các component này có sẵn trong lucide-react).
 - State: zustand cho client state.
 - Form & validation: react-hook-form + zod.
