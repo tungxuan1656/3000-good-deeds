@@ -1,5 +1,7 @@
 import { PlusIcon, SparklesIcon, UserRoundIcon } from 'lucide-react'
 
+import { CardSection } from '@/components/shared/card-section'
+import Leaf from '@/components/shared/leaf'
 import MenuDropdown from '@/components/shared/menu-dropdown'
 import { Button } from '@/components/ui/button'
 
@@ -33,7 +35,8 @@ const HomePage = () => {
           {/* Main column */}
           <div className='flex flex-col gap-4'>
             {/* Header */}
-            <header className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
+            <CardSection as='header'>
+              <Leaf position='top-left' variant={1} />
               <p className='text-muted-foreground/70 text-xs font-semibold tracking-wider uppercase'>
                 Chủ nhật, 15/10
               </p>
@@ -43,17 +46,12 @@ const HomePage = () => {
               <p className='text-muted-foreground/90 mt-3 max-w-xl text-base leading-relaxed'>
                 Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?
               </p>
-            </header>
+            </CardSection>
 
             {/* Quote Section */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
-              <img
-                alt=''
-                aria-hidden='true'
-                className='pointer-events-none absolute -top-4 -right-6 h-28 w-28 opacity-30 mix-blend-multiply blur-[1px]'
-                src='/icons/icon_leaf_2.png'
-              />
-              <div className='relative z-10 flex items-start gap-4'>
+            <CardSection>
+              <Leaf className='opacity-30' position='top-right' variant={2} />
+              <div className='flex items-start gap-4'>
                 <div className='bg-primary/60 mt-1 h-12 w-1 rounded-full' />
                 <div>
                   <div className='text-muted-foreground/80 mb-3 flex items-center gap-2 text-xs font-semibold'>
@@ -68,17 +66,12 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
-            </section>
+            </CardSection>
 
             {/* Quick check-in */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
-              <img
-                alt=''
-                aria-hidden='true'
-                className='pointer-events-none absolute -bottom-6 -left-8 h-32 w-32 opacity-25 mix-blend-multiply blur-[1px]'
-                src='/icons/icon_leaf_3.png'
-              />
-              <div className='relative z-10 flex flex-col gap-4'>
+            <CardSection>
+              <Leaf className='h-32 w-32' position='bottom-left' variant={3} />
+              <div className='flex flex-col gap-4'>
                 <div>
                   <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
                   <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
@@ -116,40 +109,30 @@ const HomePage = () => {
                   </Button>
                 </div>
               </div>
-            </section>
+            </CardSection>
 
             {/* Progress */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
-              <img
-                alt=''
-                aria-hidden='true'
-                className='pointer-events-none absolute -right-8 -bottom-6 h-32 w-32 opacity-25 mix-blend-multiply blur-[1px]'
-                src='/icons/icon_leaf_1.png'
-              />
-              <div className='relative z-10 mb-4 flex items-center justify-between'>
+            <CardSection>
+              <Leaf className='h-32 w-32' position='bottom-right' variant={1} />
+              <div className='mb-4 flex items-center justify-between'>
                 <div>
                   <h2 className='text-foreground text-lg font-semibold'>Chuỗi thiện lành</h2>
                   <p className='text-muted-foreground mt-1 text-sm'>5 ngày liên tiếp</p>
                 </div>
                 <span className='text-muted-foreground text-xs'>Mục tiêu tuần</span>
               </div>
-              <div className='bg-muted relative z-10 h-2.5 w-full rounded-full'>
+              <div className='bg-muted h-2.5 w-full rounded-full'>
                 <div className='bg-primary/70 h-2.5 w-[70%] rounded-full' />
               </div>
-              <div className='text-muted-foreground/90 relative z-10 mt-3 text-xs'>
+              <div className='text-muted-foreground/90 mt-3 text-xs'>
                 Còn 2 ngày nữa để hoàn tất mục tiêu tuần này.
               </div>
-            </section>
+            </CardSection>
 
             {/* Today Section */}
-            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm sm:p-7'>
-              <img
-                alt=''
-                aria-hidden='true'
-                className='pointer-events-none absolute -top-8 -left-8 h-28 w-28 opacity-25 mix-blend-multiply blur-[1px]'
-                src='/icons/icon_leaf_4.png'
-              />
-              <div className='relative z-10 mb-4 flex items-end justify-between'>
+            <CardSection>
+              <Leaf position='top-left' variant={4} />
+              <div className='mb-4 flex items-end justify-between'>
                 <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
                 <Button
                   className='text-muted-foreground hover:text-primary h-auto p-0 text-xs font-medium hover:bg-transparent'
@@ -158,7 +141,7 @@ const HomePage = () => {
                 </Button>
               </div>
 
-              <div className='relative z-10 flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/60 px-4 py-10 text-center'>
+              <div className='flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/60 px-4 py-10 text-center'>
                 <p className='text-muted-foreground text-sm leading-relaxed'>
                   Chưa có việc thiện nào hôm nay.
                   <br />
@@ -168,12 +151,12 @@ const HomePage = () => {
                   Gợi ý điều nhỏ để bắt đầu
                 </Button>
               </div>
-            </section>
+            </CardSection>
           </div>
 
           {/* Side column */}
           <aside className='flex flex-col gap-4'>
-            <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <CardSection padding='md'>
               <h3 className='text-foreground text-base font-semibold'>Nhịp điệu trong tuần</h3>
               <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
                 4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.
@@ -189,9 +172,9 @@ const HomePage = () => {
                   </div>
                 ))}
               </div>
-            </section>
+            </CardSection>
 
-            <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+            <CardSection padding='md'>
               <h3 className='text-foreground text-base font-semibold'>Nhắc nhở dịu nhẹ</h3>
               <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
                 “Một điều tử tế mỗi ngày, tâm an yên hơn mỗi tối.”
@@ -199,7 +182,7 @@ const HomePage = () => {
               <Button className='text-foreground mt-4 h-11 w-full rounded-full border border-black/5 bg-white text-sm font-medium hover:bg-white/80'>
                 Thiết lập nhắc nhở
               </Button>
-            </section>
+            </CardSection>
           </aside>
         </div>
       </div>
