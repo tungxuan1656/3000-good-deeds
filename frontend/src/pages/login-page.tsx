@@ -1,66 +1,93 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRightIcon } from 'lucide-react'
 
-import { MobileContainer } from '@/components/layout/mobile-container'
+import { CardSection } from '@/components/shared/card-section'
+import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
 
 const LoginPage = () => {
   return (
-    <MobileContainer className='justify-center bg-transparent px-8 pb-20'>
-      <div className='flex flex-col items-center space-y-10 text-center'>
-        {/* Brand Section */}
-        <div className='relative flex flex-col items-center gap-6'>
-          <div className='flex h-28 w-28 rotate-3 items-center justify-center rounded-4xl bg-linear-to-br from-white to-white/50 shadow-sm ring-1 ring-black/5 backdrop-blur-md'>
-            <span className='text-6xl drop-shadow-sm filter'>🌱</span>
-          </div>
+    <div className='bg-background min-h-screen px-4 py-8 sm:px-6 lg:px-8'>
+      <div className='pointer-events-none absolute inset-0 overflow-hidden'>
+        <div className='bg-primary/10 absolute -top-24 right-0 h-72 w-72 rounded-full blur-3xl' />
+        <div className='bg-secondary/30 absolute top-32 left-6 h-52 w-52 rounded-full blur-3xl' />
+      </div>
 
-          <div className='space-y-3'>
-            <h1 className='text-foreground font-sans text-3xl font-bold tracking-tight sm:text-4xl'>
-              3000 Good Deeds
-            </h1>
-            <p className='text-muted-foreground/80 mx-auto max-w-65 text-lg leading-relaxed font-medium'>
-              Gieo hạt giống lành
-              <br />
-              Gặt khu vườn hạnh phúc
+      <div className='relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-4xl items-center'>
+        <div className='grid w-full gap-8 lg:grid-cols-[1.1fr_0.9fr]'>
+          <div className='flex flex-col justify-center gap-6'>
+            <CardSection className='flex flex-col gap-6'>
+              <Leaf className='opacity-30' position='top-right' variant={2} />
+              <div className='flex items-center gap-4'>
+                <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white/80 shadow-sm'>
+                  <img alt='Mầm thiện lành' className='h-10 w-10' src='/icons/icon_sprout.png' />
+                </div>
+                <div>
+                  <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
+                    3000 Good Deeds
+                  </p>
+                  <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
+                    Gieo hạt giống lành
+                  </h1>
+                </div>
+              </div>
+              <p className='text-muted-foreground/90 text-base leading-relaxed'>
+                Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.
+              </p>
+            </CardSection>
+
+            <CardSection className='flex flex-col gap-4'>
+              <Button className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full text-base font-medium text-white'>
+                Tiếp tục với Google
+              </Button>
+
+              <div className='relative py-2'>
+                <div className='absolute inset-0 flex items-center'>
+                  <span className='w-full border-t border-black/5' />
+                </div>
+                <div className='relative flex justify-center uppercase'>
+                  <span className='text-muted-foreground/60 bg-background px-3 text-[10px] font-bold tracking-widest'>
+                    HOẶC
+                  </span>
+                </div>
+              </div>
+
+              <Button
+                className='border-primary/20 text-primary hover:border-primary/50 h-12 w-full rounded-full border-2 bg-white/80 text-base font-medium hover:bg-white'
+                variant='outline'>
+                Dùng thử ngay <ArrowRightIcon className='ml-2 h-5 w-5' />
+              </Button>
+            </CardSection>
+
+            <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
+              Bằng cách tiếp tục, bạn đồng ý với{' '}
+              <span className='underline decoration-dashed underline-offset-2'>
+                Điều khoản sử dụng
+              </span>{' '}
+              và{' '}
+              <span className='underline decoration-dashed underline-offset-2'>
+                Chính sách riêng tư
+              </span>
+              .
             </p>
           </div>
-        </div>
 
-        {/* Action Section */}
-        <div className='w-full max-w-xs space-y-5 pt-4'>
-          <Button className='bg-primary shadow-primary/20 hover:bg-primary/90 h-14 w-full rounded-full text-lg font-semibold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.98]'>
-            Tiếp tục với Google
-          </Button>
-
-          <div className='relative py-2'>
-            <div className='absolute inset-0 flex items-center'>
-              <span className='w-full border-t border-black/5' />
-            </div>
-            <div className='relative flex justify-center uppercase'>
-              <span className='text-muted-foreground/50 bg-transparent px-3 text-[10px] font-bold tracking-widest'>
-                HOẶC
-              </span>
-            </div>
+          <div className='hidden items-center justify-center lg:flex'>
+            <CardSection className='flex w-full max-w-sm flex-col gap-4'>
+              <Leaf className='opacity-25' position='bottom-left' variant={3} />
+              <div className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
+                Hành trình nhẹ nhàng
+              </div>
+              <p className='text-foreground text-lg leading-relaxed font-semibold'>
+                “Mỗi việc thiện nhỏ đều gieo một hạt giống.”
+              </p>
+              <div className='text-muted-foreground/80 text-sm leading-relaxed'>
+                Giữ lại những điều tốt đẹp, để bạn thấy sự thay đổi của mình mỗi ngày.
+              </div>
+            </CardSection>
           </div>
-
-          <Button
-            className='border-primary/20 text-primary hover:border-primary/50 h-14 w-full rounded-full border-2 bg-white/50 text-lg font-medium hover:bg-white'
-            variant='outline'>
-            Dùng thử ngay <ArrowRight className='ml-2 h-5 w-5' />
-          </Button>
         </div>
-
-        {/* Footer / Terms */}
-        <p className='text-muted-foreground/50 px-8 text-xs leading-5'>
-          Bằng cách tiếp tục, bạn đồng ý với{' '}
-          <span className='underline decoration-dashed underline-offset-2'>Điều khoản sử dụng</span>{' '}
-          và{' '}
-          <span className='underline decoration-dashed underline-offset-2'>
-            Chính sách riêng tư
-          </span>
-          .
-        </p>
       </div>
-    </MobileContainer>
+    </div>
   )
 }
 
