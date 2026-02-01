@@ -11,12 +11,14 @@ const DeedDetailPage = () => {
   const [note, setNote] = useState('Nhường đường cho người lớn tuổi ở ngã tư buổi sáng.')
 
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Chi tiết việc thiện
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Một khoảnh khắc dịu dàng</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Một khoảnh khắc dịu dàng
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Xem lại, chỉnh sửa hoặc lưu lại cảm xúc của bạn.
         </p>

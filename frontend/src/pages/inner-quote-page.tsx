@@ -5,18 +5,20 @@ import { Button } from '@/components/ui/button'
 
 const InnerQuotePage = () => {
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Pháp ngữ
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Pháp ngữ hôm nay</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Pháp ngữ hôm nay
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Một câu nhắc để bạn trở về với sự dịu dàng.
         </p>
       </CardSection>
 
-      <CardSection className='gap-5'>
+      <CardSection className='gap-4'>
         <div className='text-muted-foreground flex items-center gap-3 text-xs'>
           <SparklesIcon className='text-primary h-4 w-4' />
           Thứ ba, 15/10/2026

@@ -23,12 +23,14 @@ const journalEntries = [
 
 const InnerJournalPage = () => {
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Sổ tay
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Sổ tay tâm hồn</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Sổ tay tâm hồn
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Ghi lại suy nghĩ để tâm mình nhẹ hơn.
         </p>

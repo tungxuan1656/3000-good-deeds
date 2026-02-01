@@ -36,12 +36,14 @@ const total = categoryStats.reduce((sum, item) => sum + item.value, 0)
 
 const StatsPage = () => {
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Thống kê
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Nhìn lại hành trình</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Nhìn lại hành trình
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Một góc nhỏ để thấy rõ nhịp điệu thiện lành của bạn.
         </p>
@@ -74,7 +76,7 @@ const StatsPage = () => {
       )}
 
       {!isEmpty && !isLoading && (
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-4'>
           <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
             {summaryCards.map((card) => {
               const Icon = card.icon

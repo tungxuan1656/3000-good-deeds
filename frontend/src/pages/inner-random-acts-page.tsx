@@ -5,12 +5,14 @@ import { Button } from '@/components/ui/button'
 
 const InnerRandomActsPage = () => {
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Gieo duyên
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Một gợi ý nhỏ</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Một gợi ý nhỏ
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Chọn một việc thiện nhẹ nhàng để bắt đầu hôm nay.
         </p>

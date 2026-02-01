@@ -63,12 +63,14 @@ const TimelinePage = () => {
   const isEmpty = !isLoading && timelineGroups.length === 0
 
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Hành trình
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Nhật ký việc thiện</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Nhật ký việc thiện
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Nơi lưu giữ những điều tốt đẹp theo dòng thời gian.
         </p>
@@ -99,7 +101,7 @@ const TimelinePage = () => {
       )}
 
       {!isLoading && !isEmpty && (
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-4'>
           {timelineGroups.map((group) => (
             <CardSection key={group.date} className='gap-4'>
               <div className='flex items-center justify-between'>

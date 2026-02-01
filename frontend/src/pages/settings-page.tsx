@@ -14,12 +14,14 @@ const SettingsPage = () => {
   const [deleteText, setDeleteText] = useState('')
 
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
+    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <CardSection as='header'>
         <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
           Cài đặt
         </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold'>Tuỳ chỉnh trải nghiệm</h1>
+        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          Tuỳ chỉnh trải nghiệm
+        </h1>
         <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
           Bạn có thể thay đổi nhắc nhở, ngôn ngữ và tài khoản tại đây.
         </p>
