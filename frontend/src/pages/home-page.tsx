@@ -1,12 +1,25 @@
 import { PlusIcon, SparklesIcon } from 'lucide-react'
+import { useRef } from 'react'
 
 import { CardSection } from '@/components/shared/card-section'
+import CheckInDrawer, {
+  type CheckInCategory,
+  type CheckInDrawerHandle,
+} from '@/components/shared/check-in-drawer'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
 
 const HomePage = () => {
+  const checkInRef = useRef<CheckInDrawerHandle>(null)
+
+  const openCheckIn = (nextCategory?: CheckInCategory) => {
+    checkInRef.current?.open(nextCategory)
+  }
+
   return (
     <div className='grid gap-8 lg:grid-cols-[1fr_320px]'>
+      <CheckInDrawer ref={checkInRef} />
+
       {/* Main column */}
       <div className='flex flex-col gap-4'>
         {/* Header */}
@@ -56,24 +69,27 @@ const HomePage = () => {
             <div className='relative grid gap-3 sm:grid-cols-3'>
               <button
                 className='group bg-body/25 text-foreground hover:bg-body/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
-                type='button'>
+                type='button'
+                onClick={() => openCheckIn('body')}>
                 <img alt='Thân' className='h-10 w-10' src='/icons/icon_than.png' />
                 Thân
               </button>
               <button
                 className='group bg-speech/25 text-foreground hover:bg-speech/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
-                type='button'>
+                type='button'
+                onClick={() => openCheckIn('speech')}>
                 <img alt='Khẩu' className='h-10 w-10' src='/icons/icon_khau.png' />
                 Khẩu
               </button>
               <button
                 className='group bg-mind/25 text-foreground hover:bg-mind/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
-                type='button'>
+                type='button'
+                onClick={() => openCheckIn('mind')}>
                 <img alt='Ý' className='h-10 w-10' src='/icons/icon_y.png' />Ý
               </button>
             </div>
             <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-              <Button>
+              <Button onClick={() => openCheckIn()}>
                 <PlusIcon className='size-5' />
                 Ghi nhận việc thiện
               </Button>
@@ -109,7 +125,7 @@ const HomePage = () => {
           <Leaf position='top-left' variant={4} />
           <div className='mb-4 flex items-end justify-between'>
             <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
-            <Button size={'sm'} variant='ghost'>
+            <Button size='sm' variant='ghost'>
               Xem tất cả
             </Button>
           </div>
@@ -120,7 +136,7 @@ const HomePage = () => {
               <br />
               Hãy gieo một hạt giống lành!
             </p>
-            <Button size={'sm'} variant={'secondary'}>
+            <Button size='sm' variant='secondary'>
               Gợi ý điều nhỏ để bắt đầu
             </Button>
           </div>
@@ -163,7 +179,8 @@ const HomePage = () => {
         <Button
           aria-label='Ghi nhận việc thiện'
           className='bg-primary hover:bg-primary/90 pointer-events-auto h-14 w-14 rounded-full text-white shadow-xl'
-          size='icon'>
+          size='icon'
+          onClick={() => openCheckIn()}>
           <PlusIcon className='h-6 w-6' />
         </Button>
       </div>
