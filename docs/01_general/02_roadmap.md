@@ -7,6 +7,10 @@ Tài liệu này phác thảo lộ trình xây dựng phiên bản MVP (Minimum 
 
 *   [x] **Hạ tầng:** Setup Monorepo, Database (D1), Backend (Worker), Frontend (React).
 *   [x] **Authentication:** Đăng nhập bằng Google.
+*   [ ] **Hồ sơ & Cài đặt:**
+    *   Xem thông tin (Avatar/Tên từ Google).
+    *   Cài đặt nhắc nhở.
+    *   Đăng xuất & Xoá tài khoản.
 *   [ ] **Nhật ký việc thiện:**
     *   Thêm mới việc thiện (Thân/Khẩu/Ý).
     *   Xem lịch sử theo dòng thời gian.

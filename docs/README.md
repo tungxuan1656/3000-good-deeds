@@ -14,6 +14,7 @@ Dành cho tất cả mọi người để hiểu về hồn cốt dự án.
 Dành cho Product Owner, Designer & Developer để hiểu chi tiết chức năng.
 *   [00_auth.md](./02_specs/features/00_auth.md): Đăng nhập & Bảo mật.
 *   [01_deeds.md](./02_specs/features/01_deeds.md): Ghi nhận việc thiện & Phân loại.
+*   [02_profile.md](./02_specs/features/02_profile.md): Hồ sơ & Cài đặt tài khoản.
 *   [03_stats.md](./02_specs/features/03_stats.md): Thống kê.
 *   [04_goals.md](./02_specs/features/04_goals.md): Mục tiêu.
 *   [05_achievements.md](./02_specs/features/05_achievements.md): Thành tựu & Huy hiệu.
