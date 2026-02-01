@@ -1,14 +1,7 @@
-import { MenuIcon, PlusIcon, SparklesIcon, UserRoundIcon } from 'lucide-react'
+import { PlusIcon, SparklesIcon, UserRoundIcon } from 'lucide-react'
 
+import MenuDropdown from '@/components/shared/menu-dropdown'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
 const HomePage = () => {
   return (
@@ -21,36 +14,7 @@ const HomePage = () => {
       <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6 sm:px-6 lg:px-8'>
         {/* Top bar */}
         <div className='flex items-center justify-between'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                aria-label='Mở menu'
-                className='text-foreground h-11 w-11 rounded-full bg-white/80 shadow-sm hover:bg-white'
-                size='icon'
-                variant='ghost'>
-                <MenuIcon className='h-5 w-5' />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='start' className='w-56 rounded-2xl bg-white p-2 shadow-xl'>
-              <DropdownMenuLabel className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                Menu
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {['Trang chủ', 'Hành trình', 'Thống kê', 'Mục tiêu', 'Nội tâm', 'Cài đặt'].map(
-                (item) => (
-                  <DropdownMenuItem
-                    key={item}
-                    className='text-foreground cursor-pointer rounded-xl px-3 py-2 text-sm font-medium'>
-                    {item}
-                  </DropdownMenuItem>
-                ),
-              )}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className='text-muted-foreground cursor-pointer rounded-xl px-3 py-2 text-sm'>
-                Đăng xuất
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <MenuDropdown />
           <div className='flex items-center gap-2 text-right'>
             <div className='text-muted-foreground hidden text-xs font-medium sm:block'>
               Chủ nhật, 15/10
