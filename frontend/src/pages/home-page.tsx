@@ -1,6 +1,7 @@
 import { PlusIcon, SparklesIcon } from 'lucide-react'
 import { useRef } from 'react'
 
+import { ButtonGoodDeedCategory } from '@/components/shared/button-good-deed-category'
 import { CardSection } from '@/components/shared/card-section'
 import CheckInDrawer, {
   type CheckInCategory,
@@ -66,27 +67,10 @@ const HomePage = () => {
                 Bạn đã thực hành điều gì hôm nay?
               </p>
             </div>
-            <div className='relative grid gap-3 sm:grid-cols-3'>
-              <button
-                className='group bg-body/25 text-foreground hover:bg-body/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
-                type='button'
-                onClick={() => openCheckIn('body')}>
-                <img alt='Thân' className='h-10 w-10' src='/icons/icon_than.png' />
-                Thân
-              </button>
-              <button
-                className='group bg-speech/25 text-foreground hover:bg-speech/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
-                type='button'
-                onClick={() => openCheckIn('speech')}>
-                <img alt='Khẩu' className='h-10 w-10' src='/icons/icon_khau.png' />
-                Khẩu
-              </button>
-              <button
-                className='group bg-mind/25 text-foreground hover:bg-mind/35 flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
-                type='button'
-                onClick={() => openCheckIn('mind')}>
-                <img alt='Ý' className='h-10 w-10' src='/icons/icon_y.png' />Ý
-              </button>
+            <div className='relative flex flex-col gap-3'>
+              <ButtonGoodDeedCategory variant='body' onClick={() => openCheckIn('body')} />
+              <ButtonGoodDeedCategory variant='speech' onClick={() => openCheckIn('speech')} />
+              <ButtonGoodDeedCategory variant='mind' onClick={() => openCheckIn('mind')} />
             </div>
             <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
               <Button onClick={() => openCheckIn()}>

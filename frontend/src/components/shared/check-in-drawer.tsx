@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/drawer'
 
 import { Textarea } from '../ui/textarea'
+import { ButtonGoodDeedCategory } from './button-good-deed-category'
 
 export type CheckInCategory = 'body' | 'speech' | 'mind'
 
@@ -55,7 +56,7 @@ const categoryOptions: Array<{
 const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const [step, setStep] = React.useState(1)
-  const [category, setCategory] = React.useState<CheckInCategory | null>(null)
+  const [_category, setCategory] = React.useState<CheckInCategory | null>(null)
   const [note, setNote] = React.useState('')
   const [moodTags, setMoodTags] = React.useState<string[]>([])
 
@@ -114,29 +115,14 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
             {step === 1 && (
               <div className='flex flex-col gap-3'>
                 {categoryOptions.map((item) => (
-                  <button
+                  <ButtonGoodDeedCategory
                     key={item.key}
-                    aria-pressed={category === item.key}
-                    className={`flex w-full items-center gap-4 rounded-2xl border px-4 py-4 text-left transition-colors ${item.bg} ${
-                      category === item.key
-                        ? 'border-primary/40 ring-primary/30 ring-2'
-                        : 'border-black/5 bg-white/80'
-                    }`}
-                    type='button'
+                    variant={item.key}
                     onClick={() => {
                       setCategory(item.key)
                       setStep(2)
-                    }}>
-                    <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 shadow-sm'>
-                      <img alt={item.label} className='h-8 w-8' src={item.icon} />
-                    </div>
-                    <div className='flex-1'>
-                      <p className='text-foreground text-base font-semibold'>{item.label}</p>
-                      <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
-                        {item.description}
-                      </p>
-                    </div>
-                  </button>
+                    }}
+                  />
                 ))}
               </div>
             )}
