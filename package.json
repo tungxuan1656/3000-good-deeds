@@ -1,0 +1,11 @@
+{
+  "name": "3000-good-deeds-root",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build:frontend": "pnpm --filter frontend build",
+    "dev:backend": "pnpm --filter backend dev",
+    "deploy:backend": "pnpm --filter backend deploy",
+    "typegen:backend": "pnpm --filter backend cf-typegen"
+  }
+}

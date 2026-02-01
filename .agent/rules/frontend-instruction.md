@@ -18,7 +18,7 @@ Bạn là trợ lý lập trình chuyên về TypeScript, React 19 (Vite), Tailw
 
 - React 19 + Vite (TypeScript).
 - Styling: Tailwind CSS 4 (ưu tiên utility classes, hạn chế inline style).
-- UI: shadcn-ui (Radix UI). Ưu tiên tái dùng component trong src/components/ui nếu đã có.
+- UI: shadcn-ui. Ưu tiên tái dùng component trong src/components/ui nếu đã có. sử dụng `pnpm dlx shadcn@latest add` để thêm component cần thi
 - Icons: lucide-react (import trực tiếp, không dùng as alias cho icon).
 - State: zustand cho client state.
 - Form & validation: react-hook-form + zod.
@@ -46,25 +46,11 @@ Tuân theo định hướng trong [docs/frontend/design/04_frontend_architecture
 - Mỗi component tập trung một trách nhiệm, gọn (~120 dòng khi có thể).
 - Tránh hardcode UI copy; khi thêm text phải theo tone-of-voice dự án.
 
-## UX Writing & Tone (bắt buộc)
+## UI-UX & Design Principles
 
-Theo [docs/project/vision/03_tone_of_voice.md](docs/project/vision/03_tone_of_voice.md):
-
-- Ngôn ngữ nhẹ nhàng, gợi nhắc, không phán xét, không áp lực.
-- Tránh câu mệnh lệnh “phải/cần”; ưu tiên “bạn có thể…”.
-- Không dùng ngôn ngữ so sánh hay tạo cảm giác tội lỗi.
-
-## UI & Design Principles
-
-Theo [docs/frontend/design/01_design_principles.md](docs/frontend/design/01_design_principles.md):
-
-- Đơn giản, ít màu, ít chữ, không gây kích thích mạnh.
-- Không leaderboard/xếp hạng, không cơ chế cạnh tranh.
-- Gamification nhẹ nhàng (nếu có), không tạo áp lực streak.
+Theo [docs/04_design/03_design_guide):
 
 ## State management
-
-Theo [docs/frontend/design/05_state_management.md](docs/frontend/design/05_state_management.md):
 
 - Server state: React Query (cache, invalidate, mutation).
 - Client state: Zustand cho auth, UI state.
@@ -75,6 +61,7 @@ Theo [docs/frontend/design/05_state_management.md](docs/frontend/design/05_state
 - Axios instance đặt trong src/lib/api.ts (nếu chưa có, tạo và dùng thống nhất).
 - Dùng helper cn/twMerge khi ghép class Tailwind.
 - Form: kết nối react-hook-form + zod resolver, hiển thị lỗi rõ ràng.
+- UI: sử dụng shadcn-ui, sử dụng lệnh `pnpm dlx shadcn@latest add` để cài thêm component
 
 ## Công cụ & lệnh hữu ích
 

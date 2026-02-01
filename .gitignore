@@ -1,2 +1,17 @@
 .github/skills
 .agent/skills
+
+# Dependencies
+node_modules
+
+# Build
+dist
+build
+
+# Misc
+.DS_Store
+.env
+.wrangler
+.vscode
+.idea
+*.log

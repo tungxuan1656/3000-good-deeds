@@ -131,6 +131,8 @@ export default defineConfig([
         { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
         { blankLine: 'always', prev: '*', next: 'return' },
       ],
+
+      'react-refresh/only-export-components': 'off'
     },
   },
   {

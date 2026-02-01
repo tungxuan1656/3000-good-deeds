@@ -1,35 +1,27 @@
-import './app.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 
-import appLogo from '/favicon.svg'
-
-import reactLogo from './assets/react.svg'
-import PWABadge from './pwa-badge'
+function Dashboard() {
+  return (
+    <div className='flex min-h-screen flex-col items-center justify-center gap-4'>
+      <h1 className='text-4xl font-bold'>3000 Good Deeds</h1>
+      <p className='text-muted-foreground'>Frontend Setup Complete</p>
+      <div className='flex gap-2'>
+        <Button>Get Started</Button>
+        <Button variant='outline'>Learn More</Button>
+      </div>
+    </div>
+  )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href='https://vite.dev' target='_blank'>
-          <img alt='3000-good-deeds logo' className='logo' src={appLogo} />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img alt='React logo' className='logo react' src={reactLogo} />
-        </a>
-      </div>
-      <h1>3000-good-deeds</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-      <PWABadge />
-    </>
+    <Router>
+      <Routes>
+        <Route element={<Dashboard />} path='/' />
+      </Routes>
+    </Router>
   )
 }
 
