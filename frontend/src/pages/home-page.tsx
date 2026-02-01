@@ -1,11 +1,16 @@
-import { MenuIcon, PlusIcon, SparklesIcon, UserRoundIcon, XIcon } from 'lucide-react'
-import { useState } from 'react'
+import { MenuIcon, PlusIcon, SparklesIcon, UserRoundIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const HomePage = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   return (
     <div className='bg-background min-h-screen pb-24'>
       <div className='pointer-events-none absolute inset-0 overflow-hidden'>
@@ -14,74 +19,38 @@ const HomePage = () => {
       </div>
 
       <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6 sm:px-6 lg:px-8'>
-        {/* Menu drawer */}
-        <div
-          aria-modal='true'
-          className={`fixed inset-0 z-40 transition-opacity duration-200 motion-reduce:transition-none ${
-            isMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
-          }`}
-          role='dialog'>
-          <button
-            aria-label='Đóng menu'
-            className='absolute inset-0 bg-black/20 backdrop-blur-sm'
-            type='button'
-            onClick={() => setIsMenuOpen(false)}
-          />
-          <nav
-            className={`absolute top-4 left-4 h-[calc(100%-2rem)] w-[min(320px,85vw)] rounded-3xl border border-black/5 bg-white/95 p-6 shadow-xl transition-transform duration-200 motion-reduce:transition-none ${
-              isMenuOpen ? 'translate-x-0' : '-translate-x-6'
-            }`}>
-            <div className='mb-6 flex items-center justify-between'>
-              <div>
-                <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                  Menu
-                </p>
-                <h2 className='text-foreground text-lg font-semibold'>Hành trình của bạn</h2>
-              </div>
-              <Button
-                aria-label='Đóng menu'
-                className='bg-muted/60 text-foreground hover:bg-muted h-10 w-10 rounded-full'
-                size='icon'
-                variant='ghost'
-                onClick={() => setIsMenuOpen(false)}>
-                <XIcon className='h-4 w-4' />
-              </Button>
-            </div>
-
-            <div className='text-foreground flex flex-col gap-2 text-sm font-medium'>
-              {['Trang chủ', 'Hành trình', 'Thống kê', 'Mục tiêu', 'Nội tâm', 'Cài đặt'].map(
-                (item) => (
-                  <button
-                    key={item}
-                    className='hover:bg-secondary/30 flex items-center justify-between rounded-2xl border border-black/5 bg-white px-4 py-3 text-left transition-colors'
-                    type='button'>
-                    <span>{item}</span>
-                    <span className='text-muted-foreground'>›</span>
-                  </button>
-                ),
-              )}
-            </div>
-
-            <div className='bg-secondary/30 text-muted-foreground mt-6 rounded-2xl border border-black/5 p-4 text-sm'>
-              “Mỗi ngày một hạt giống lành.”
-            </div>
-
-            <Button className='text-muted-foreground mt-6 h-11 w-full rounded-full bg-white text-sm font-medium hover:bg-white/80'>
-              Đăng xuất
-            </Button>
-          </nav>
-        </div>
-
         {/* Top bar */}
         <div className='flex items-center justify-between'>
-          <Button
-            aria-label='Mở menu'
-            className='text-foreground h-11 w-11 rounded-full bg-white/80 shadow-sm hover:bg-white'
-            size='icon'
-            variant='ghost'
-            onClick={() => setIsMenuOpen(true)}>
-            <MenuIcon className='h-5 w-5' />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                aria-label='Mở menu'
+                className='text-foreground h-11 w-11 rounded-full bg-white/80 shadow-sm hover:bg-white'
+                size='icon'
+                variant='ghost'>
+                <MenuIcon className='h-5 w-5' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='start' className='w-56 rounded-2xl bg-white p-2 shadow-xl'>
+              <DropdownMenuLabel className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+                Menu
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {['Trang chủ', 'Hành trình', 'Thống kê', 'Mục tiêu', 'Nội tâm', 'Cài đặt'].map(
+                (item) => (
+                  <DropdownMenuItem
+                    key={item}
+                    className='text-foreground cursor-pointer rounded-xl px-3 py-2 text-sm font-medium'>
+                    {item}
+                  </DropdownMenuItem>
+                ),
+              )}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className='text-muted-foreground cursor-pointer rounded-xl px-3 py-2 text-sm'>
+                Đăng xuất
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div className='flex items-center gap-2 text-right'>
             <div className='text-muted-foreground hidden text-xs font-medium sm:block'>
               Chủ nhật, 15/10
