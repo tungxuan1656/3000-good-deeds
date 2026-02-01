@@ -5,40 +5,60 @@ import { Button } from '@/components/ui/button'
 
 const LoginPage = () => {
   return (
-    <MobileContainer className='bg-background justify-center px-8 pb-20'>
-      <div className='flex flex-col items-center space-y-8 text-center'>
-        {/* Logo / Brand */}
-        <div className='bg-primary/10 mb-4 flex h-24 w-24 rotate-3 items-center justify-center rounded-3xl'>
-          <span className='text-4xl'>🌱</span>
+    <MobileContainer className='justify-center bg-transparent px-8 pb-20'>
+      <div className='flex flex-col items-center space-y-10 text-center'>
+        {/* Brand Section */}
+        <div className='relative flex flex-col items-center gap-6'>
+          <div className='flex h-28 w-28 rotate-3 items-center justify-center rounded-[2rem] bg-gradient-to-br from-white to-white/50 shadow-sm ring-1 ring-black/5 backdrop-blur-md'>
+            <span className='text-6xl drop-shadow-sm filter'>🌱</span>
+          </div>
+
+          <div className='space-y-3'>
+            <h1 className='text-foreground font-sans text-3xl font-bold tracking-tight sm:text-4xl'>
+              3000 Good Deeds
+            </h1>
+            <p className='text-muted-foreground/80 mx-auto max-w-[260px] text-lg leading-relaxed font-medium'>
+              Gieo hạt giống lành
+              <br />
+              Gặt khu vườn hạnh phúc
+            </p>
+          </div>
         </div>
 
-        <div className='space-y-4'>
-          <h1 className='text-foreground text-3xl font-bold tracking-tight'>3000 Good Deeds</h1>
-          <p className='text-muted-foreground mx-auto max-w-70 text-lg leading-relaxed'>
-            Mỗi việc thiện nhỏ là một hạt giống cho khu vườn hạnh phúc.
-          </p>
-        </div>
-
-        <div className='w-full max-w-xs space-y-4 pt-8'>
-          <Button className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full text-base font-medium text-white transition-all hover:scale-[1.02] active:scale-[0.98]'>
-            Đăng nhập với Google
+        {/* Action Section */}
+        <div className='w-full max-w-xs space-y-5 pt-4'>
+          <Button className='bg-primary shadow-primary/20 hover:bg-primary/90 h-14 w-full rounded-full text-lg font-semibold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.98]'>
+            Tiếp tục với Google
           </Button>
 
-          <div className='relative'>
+          <div className='relative py-2'>
             <div className='absolute inset-0 flex items-center'>
-              <span className='border-muted-foreground/20 w-full border-t' />
+              <span className='w-full border-t border-black/5' />
             </div>
-            <div className='relative flex justify-center text-xs uppercase'>
-              <span className='bg-background text-muted-foreground px-2'>hoặc</span>
+            <div className='relative flex justify-center uppercase'>
+              <span className='text-muted-foreground/50 bg-transparent px-3 text-[10px] font-bold tracking-widest'>
+                HOẶC
+              </span>
             </div>
           </div>
 
           <Button
-            className='border-border/50 bg-surface/50 text-foreground hover:bg-surface h-12 w-full text-base font-medium'
+            className='border-primary/20 text-primary hover:border-primary/50 h-14 w-full rounded-full border-2 bg-white/50 text-lg font-medium hover:bg-white'
             variant='outline'>
-            Dùng thử ngay <ArrowRight className='ml-2 h-4 w-4' />
+            Dùng thử ngay <ArrowRight className='ml-2 h-5 w-5' />
           </Button>
         </div>
+
+        {/* Footer / Terms */}
+        <p className='text-muted-foreground/50 px-8 text-xs leading-5'>
+          Bằng cách tiếp tục, bạn đồng ý với{' '}
+          <span className='underline decoration-dashed underline-offset-2'>Điều khoản sử dụng</span>{' '}
+          và{' '}
+          <span className='underline decoration-dashed underline-offset-2'>
+            Chính sách riêng tư
+          </span>
+          .
+        </p>
       </div>
     </MobileContainer>
   )
