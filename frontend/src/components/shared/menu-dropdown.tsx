@@ -20,6 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import useAuthStore from '@/stores/auth-store'
 
 const menuItems = [
   { label: 'Trang chủ', path: '/', icon: HomeIcon },
@@ -31,6 +32,10 @@ const menuItems = [
 ]
 
 const MenuDropdown = () => {
+  const user = useAuthStore((state) => state.user)
+  const displayName = user?.name ?? 'Bạn'
+  const displayEmail = user?.email ?? 'Chưa có email'
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -48,8 +53,8 @@ const MenuDropdown = () => {
             <UserRoundIcon className='h-5 w-5' />
           </div>
           <div className='min-w-0'>
-            <p className='text-foreground truncate text-sm font-semibold'>Tùng</p>
-            <p className='text-muted-foreground truncate text-xs'>tung@example.com</p>
+            <p className='text-foreground truncate text-sm font-semibold'>{displayName}</p>
+            <p className='text-muted-foreground truncate text-xs'>{displayEmail}</p>
           </div>
         </div>
         <DropdownMenuSeparator />
