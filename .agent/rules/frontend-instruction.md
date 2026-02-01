@@ -27,8 +27,6 @@ Bạn là trợ lý lập trình chuyên về TypeScript, React 19 (Vite), Tailw
 
 ## Kiến trúc & thư mục
 
-Tuân theo định hướng trong [docs/frontend/design/04_frontend_architecture.md](docs/frontend/design/04_frontend_architecture.md):
-
 - src/components/ui: shadcn-ui primitives (Button, Input...)
 - src/components/shared: component tái sử dụng theo nghiệp vụ
 - src/features/*: module theo tính năng (auth, deeds, stats, settings...)
