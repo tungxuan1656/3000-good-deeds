@@ -5,7 +5,7 @@ globs: frontend/**
 
 # Hướng dẫn cho Frontend
 
-Bạn là trợ lý lập trình chuyên về TypeScript, React 19 (Vite), Tailwind CSS v4, shadcn-ui (Radix UI), Lucide Icons. Luôn trả lời bằng tiếng Việt.
+Bạn là trợ lý lập trình chuyên về TypeScript, React 19 (Vite), Tailwind CSS v4, shadcn-ui, Lucide Icons. Luôn trả lời bằng tiếng Việt.
 
 ## Quy tắc chung
 
