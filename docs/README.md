@@ -27,5 +27,10 @@ Dành cho Developer & DevOps.
 *   [01_database_schema.md](./03_technical/01_database_schema.md): Sơ đồ CSDL (D1).
 *   [02_api_design.md](./03_technical/02_api_design.md): Danh sách API Endpoints.
 
+### [04. Thiết kế (Design)](./04_design)
+Dành cho UI/UX Designer & Frontend Dev.
+*   [01_wireframes.md](./04_design/01_wireframes.md): Phác thảo màn hình (Wireframes).
+*   [02_screens.md](./04_design/02_screens.md): Danh sách màn hình & Trạng thái UI.
+
 ---
-*Tài liệu được cập nhật lần cuối: 2026-01-30*
+*Tài liệu được cập nhật lần cuối: 2026-02-01*
