@@ -36,7 +36,7 @@ const LoginPage = () => {
             </CardSection>
 
             <CardSection className='flex flex-col gap-4'>
-              <Button className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full text-base font-medium text-white'>
+              <Button className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full'>
                 Tiếp tục với Google
               </Button>
 

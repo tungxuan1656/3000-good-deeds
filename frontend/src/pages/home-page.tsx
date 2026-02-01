@@ -73,8 +73,8 @@ const HomePage = () => {
               </button>
             </div>
             <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-              <Button className='bg-primary hover:bg-primary/90 hidden h-12 w-full rounded-full text-base font-medium text-white sm:inline-flex sm:w-auto'>
-                <PlusIcon className='mr-2 h-5 w-5' />
+              <Button>
+                <PlusIcon className='size-5' />
                 Ghi nhận việc thiện
               </Button>
               <Button
@@ -109,9 +109,7 @@ const HomePage = () => {
           <Leaf position='top-left' variant={4} />
           <div className='mb-4 flex items-end justify-between'>
             <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
-            <Button
-              className='text-muted-foreground hover:text-primary h-auto p-0 text-xs font-medium hover:bg-transparent'
-              variant='ghost'>
+            <Button size={'sm'} variant='ghost'>
               Xem tất cả
             </Button>
           </div>
@@ -122,7 +120,7 @@ const HomePage = () => {
               <br />
               Hãy gieo một hạt giống lành!
             </p>
-            <Button className='bg-secondary text-foreground hover:bg-secondary/80 h-10 rounded-full text-sm font-medium'>
+            <Button size={'sm'} variant={'secondary'}>
               Gợi ý điều nhỏ để bắt đầu
             </Button>
           </div>
