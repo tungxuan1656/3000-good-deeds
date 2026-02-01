@@ -31,6 +31,7 @@ Dành cho Developer & DevOps.
 Dành cho UI/UX Designer & Frontend Dev.
 *   [01_wireframes.md](./04_design/01_wireframes.md): Phác thảo màn hình (Wireframes).
 *   [02_screens.md](./04_design/02_screens.md): Danh sách màn hình & Trạng thái UI.
+*   [03_design_guide.md](./04_design/03_design_guide.md): Hướng dẫn thiết kế & UI Style.
 
 ---
 *Tài liệu được cập nhật lần cuối: 2026-02-01*
