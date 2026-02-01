@@ -9,7 +9,7 @@ const LoginPage = () => {
       <div className='flex flex-col items-center space-y-10 text-center'>
         {/* Brand Section */}
         <div className='relative flex flex-col items-center gap-6'>
-          <div className='flex h-28 w-28 rotate-3 items-center justify-center rounded-[2rem] bg-gradient-to-br from-white to-white/50 shadow-sm ring-1 ring-black/5 backdrop-blur-md'>
+          <div className='flex h-28 w-28 rotate-3 items-center justify-center rounded-4xl bg-linear-to-br from-white to-white/50 shadow-sm ring-1 ring-black/5 backdrop-blur-md'>
             <span className='text-6xl drop-shadow-sm filter'>🌱</span>
           </div>
 
@@ -17,7 +17,7 @@ const LoginPage = () => {
             <h1 className='text-foreground font-sans text-3xl font-bold tracking-tight sm:text-4xl'>
               3000 Good Deeds
             </h1>
-            <p className='text-muted-foreground/80 mx-auto max-w-[260px] text-lg leading-relaxed font-medium'>
+            <p className='text-muted-foreground/80 mx-auto max-w-65 text-lg leading-relaxed font-medium'>
               Gieo hạt giống lành
               <br />
               Gặt khu vườn hạnh phúc
