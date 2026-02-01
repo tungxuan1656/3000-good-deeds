@@ -1,13 +1,4 @@
-import {
-  BrainIcon,
-  HandHeartIcon,
-  MenuIcon,
-  MessageCircleIcon,
-  PlusIcon,
-  SparklesIcon,
-  UserRoundIcon,
-  XIcon,
-} from 'lucide-react'
+import { MenuIcon, PlusIcon, SparklesIcon, UserRoundIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -122,8 +113,14 @@ const HomePage = () => {
             </header>
 
             {/* Quote Section */}
-            <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
-              <div className='flex items-start gap-4'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+              <img
+                alt=''
+                aria-hidden='true'
+                className='pointer-events-none absolute -top-4 -right-6 h-28 w-28 opacity-30 mix-blend-multiply blur-[1px]'
+                src='/icons/icon_leaf_2.png'
+              />
+              <div className='relative z-10 flex items-start gap-4'>
                 <div className='bg-primary/60 mt-1 h-12 w-1 rounded-full' />
                 <div>
                   <div className='text-muted-foreground mb-3 flex items-center gap-2 text-xs font-semibold'>
@@ -141,31 +138,37 @@ const HomePage = () => {
             </section>
 
             {/* Quick check-in */}
-            <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
-              <div className='flex flex-col gap-4'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+              <img
+                alt=''
+                aria-hidden='true'
+                className='pointer-events-none absolute -bottom-6 -left-8 h-32 w-32 opacity-25 mix-blend-multiply blur-[1px]'
+                src='/icons/icon_leaf_3.png'
+              />
+              <div className='relative z-10 flex flex-col gap-4'>
                 <div>
                   <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
                   <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
                     Bạn đã thực hành điều gì hôm nay?
                   </p>
                 </div>
-                <div className='grid gap-3 sm:grid-cols-3'>
+                <div className='relative grid gap-3 sm:grid-cols-3'>
                   <button
                     className='group bg-body/30 text-foreground hover:bg-body/40 flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
                     type='button'>
-                    <HandHeartIcon className='text-body h-6 w-6' />
+                    <img alt='Thân' className='h-10 w-10' src='/icons/icon_than.png' />
                     Thân
                   </button>
                   <button
                     className='group bg-speech/30 text-foreground hover:bg-speech/40 flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
                     type='button'>
-                    <MessageCircleIcon className='text-speech h-6 w-6' />
+                    <img alt='Khẩu' className='h-10 w-10' src='/icons/icon_khau.png' />
                     Khẩu
                   </button>
                   <button
                     className='group bg-mind/30 text-foreground hover:bg-mind/40 flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-black/5 px-3 py-4 text-sm font-medium transition-colors'
                     type='button'>
-                    <BrainIcon className='text-mind h-6 w-6' />Ý
+                    <img alt='Ý' className='h-10 w-10' src='/icons/icon_y.png' />Ý
                   </button>
                 </div>
                 <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
@@ -183,25 +186,37 @@ const HomePage = () => {
             </section>
 
             {/* Progress */}
-            <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
-              <div className='mb-4 flex items-center justify-between'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+              <img
+                alt=''
+                aria-hidden='true'
+                className='pointer-events-none absolute -right-8 -bottom-6 h-32 w-32 opacity-25 mix-blend-multiply blur-[1px]'
+                src='/icons/icon_leaf_1.png'
+              />
+              <div className='relative z-10 mb-4 flex items-center justify-between'>
                 <div>
                   <h2 className='text-foreground text-lg font-semibold'>Chuỗi thiện lành</h2>
                   <p className='text-muted-foreground mt-1 text-sm'>5 ngày liên tiếp</p>
                 </div>
                 <span className='text-muted-foreground text-xs'>Mục tiêu tuần</span>
               </div>
-              <div className='bg-muted h-2 w-full rounded-full'>
+              <div className='bg-muted relative z-10 h-2 w-full rounded-full'>
                 <div className='bg-primary/70 h-2 w-[70%] rounded-full' />
               </div>
-              <div className='text-muted-foreground mt-3 text-xs'>
+              <div className='text-muted-foreground relative z-10 mt-3 text-xs'>
                 Còn 2 ngày nữa để hoàn tất mục tiêu tuần này.
               </div>
             </section>
 
             {/* Today Section */}
-            <section className='rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
-              <div className='mb-4 flex items-end justify-between'>
+            <section className='relative overflow-hidden rounded-3xl border border-black/5 bg-white/90 p-6 shadow-sm'>
+              <img
+                alt=''
+                aria-hidden='true'
+                className='pointer-events-none absolute -top-8 -left-8 h-28 w-28 opacity-25 mix-blend-multiply blur-[1px]'
+                src='/icons/icon_leaf_4.png'
+              />
+              <div className='relative z-10 mb-4 flex items-end justify-between'>
                 <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
                 <Button
                   className='text-muted-foreground hover:text-primary h-auto p-0 text-xs font-medium hover:bg-transparent'
@@ -210,7 +225,7 @@ const HomePage = () => {
                 </Button>
               </div>
 
-              <div className='flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/60 px-4 py-10 text-center'>
+              <div className='relative z-10 flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/60 px-4 py-10 text-center'>
                 <p className='text-muted-foreground text-sm leading-relaxed'>
                   Chưa có việc thiện nào hôm nay.
                   <br />
