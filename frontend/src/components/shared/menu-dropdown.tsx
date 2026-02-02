@@ -1,14 +1,4 @@
-import {
-  HomeIcon,
-  LeafIcon,
-  LineChartIcon,
-  LogOutIcon,
-  MenuIcon,
-  SettingsIcon,
-  TargetIcon,
-  TimerIcon,
-  UserRoundIcon,
-} from 'lucide-react'
+import { LogOutIcon, MenuIcon, UserRoundIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
@@ -20,16 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { APP_MENU_ITEMS } from '@/lib/constants'
 import useAuthStore from '@/stores/auth-store'
-
-const menuItems = [
-  { label: 'Trang chủ', path: '/', icon: HomeIcon },
-  { label: 'Hành trình', path: '/timeline', icon: TimerIcon },
-  { label: 'Thống kê', path: '/stats', icon: LineChartIcon },
-  { label: 'Mục tiêu', path: '/goals', icon: TargetIcon },
-  { label: 'Nội tâm', path: '/inner', icon: LeafIcon },
-  { label: 'Cài đặt', path: '/settings', icon: SettingsIcon },
-]
 
 const MenuDropdown = () => {
   const user = useAuthStore((state) => state.user)
@@ -62,7 +44,7 @@ const MenuDropdown = () => {
           Menu
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {menuItems.map(({ label, path, icon: Icon }) => (
+        {APP_MENU_ITEMS.map(({ label, path, icon: Icon }) => (
           <DropdownMenuItem key={label} asChild>
             <Link
               className='text-foreground flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium'
