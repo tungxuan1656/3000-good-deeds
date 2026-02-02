@@ -4,7 +4,6 @@ import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -153,10 +152,6 @@ const GoalsPage = () => {
       <SideColumn>
         <MiniCheckInCard />
         <DailyQuoteCard quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”' />
-        <WeeklyRhythmCard
-          activeCount={4}
-          description='4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.'
-        />
       </SideColumn>
     </MainContainer>
   )

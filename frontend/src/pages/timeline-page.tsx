@@ -71,13 +71,13 @@ const TimelinePage = () => {
     <MainContainer>
       <MainColumn>
         <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+          <p className='text-muted-foreground text-[11px] font-semibold tracking-[0.25em] uppercase sm:text-xs'>
             Hành trình
           </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight sm:text-[28px]'>
             Nhật ký việc thiện
           </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
+          <p className='text-muted-foreground/90 mt-3 max-w-2xl text-sm leading-relaxed sm:text-base'>
             Nơi lưu giữ những điều tốt đẹp theo dòng thời gian.
           </p>
         </CardSection>
@@ -112,11 +112,11 @@ const TimelinePage = () => {
           <div className='flex flex-col gap-4'>
             {timelineGroups.map((group) => (
               <CardSection key={group.date} className='gap-4'>
-                <div className='flex items-center justify-between'>
-                  <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+                <div className='mb-2 flex flex-wrap items-center justify-between gap-2'>
+                  <p className='text-muted-foreground text-[11px] font-semibold tracking-[0.22em] uppercase sm:text-xs'>
                     {group.date}
                   </p>
-                  <span className='text-muted-foreground text-xs'>
+                  <span className='text-muted-foreground text-[11px] sm:text-xs'>
                     {group.items.length} việc thiện
                   </span>
                 </div>
@@ -127,20 +127,22 @@ const TimelinePage = () => {
                     return (
                       <div
                         key={item.id}
-                        className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4 transition-shadow hover:shadow-sm'>
-                        <div className='flex items-start justify-between gap-3'>
-                          <div className='flex items-center gap-3'>
+                        className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/85 p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5'>
+                        <div className='flex items-start justify-between gap-4'>
+                          <div className='flex items-center gap-3 sm:gap-4'>
                             <div
                               className={`flex h-10 w-10 items-center justify-center rounded-2xl ${meta.bg}`}>
                               <img alt={meta.label} className='h-6 w-6' src={meta.icon} />
                             </div>
                             <div>
                               <p className='text-foreground text-sm font-semibold'>{meta.label}</p>
-                              <div className='text-muted-foreground mt-1 flex items-center gap-2 text-xs'>
-                                <ClockIcon className='h-3.5 w-3.5' />
-                                {item.time}
+                              <div className='text-muted-foreground mt-1 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs'>
+                                <span className='bg-muted/60 flex items-center gap-1 rounded-full px-2.5 py-1'>
+                                  <ClockIcon className='h-3.5 w-3.5' />
+                                  {item.time}
+                                </span>
                                 {item.isPrivate && (
-                                  <span className='flex items-center gap-1'>
+                                  <span className='bg-muted/60 flex items-center gap-1 rounded-full px-2.5 py-1'>
                                     <LockIcon className='h-3.5 w-3.5' />
                                     Riêng tư
                                   </span>
@@ -149,21 +151,23 @@ const TimelinePage = () => {
                             </div>
                           </div>
                           <Link
-                            className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs'
+                            className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-[11px] sm:text-xs'
                             to={`/deeds/${item.id}`}>
                             Xem
                             <ChevronRightIcon className='h-3.5 w-3.5' />
                           </Link>
                         </div>
 
-                        <p className='text-foreground text-sm leading-relaxed'>{item.note}</p>
+                        <p className='text-foreground text-sm leading-relaxed sm:text-[15px]'>
+                          {item.note}
+                        </p>
 
                         {item.moods.length > 0 && (
                           <div className='flex flex-wrap gap-2'>
                             {item.moods.map((mood) => (
                               <span
                                 key={mood}
-                                className='text-muted-foreground rounded-full border border-black/5 bg-white px-3 py-1 text-xs'>
+                                className='text-muted-foreground rounded-full border border-black/5 bg-white/70 px-3 py-1 text-[11px] sm:text-xs'>
                                 {mood}
                               </span>
                             ))}
@@ -179,7 +183,7 @@ const TimelinePage = () => {
         )}
       </MainColumn>
 
-      <SideColumn>
+      <SideColumn hideInMobile>
         <MiniCheckInCard />
         <DailyQuoteCard quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”' />
         <WeeklyRhythmCard
