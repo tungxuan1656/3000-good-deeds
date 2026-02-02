@@ -33,7 +33,7 @@ const CardSection = ({
   return (
     <Component
       className={cn(
-        'relative overflow-hidden rounded-3xl border border-black/5 shadow-sm',
+        'relative flex flex-col overflow-hidden rounded-3xl border border-black/5 shadow-sm',
         variantClasses[variant],
         paddingClasses[padding],
         className,
