@@ -10,6 +10,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 import { Textarea } from '../ui/textarea'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
@@ -54,6 +55,7 @@ const categoryOptions: Array<{
 ]
 
 const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
+  const isMobile = useIsMobile()
   const [isOpen, setIsOpen] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const [_category, setCategory] = React.useState<CheckInCategory | null>(null)
@@ -82,7 +84,7 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   }
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer direction={isMobile ? 'bottom' : 'right'} open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
         <div className='mx-auto flex w-full max-w-md flex-col'>
           <DrawerHeader className='items-start gap-2'>
