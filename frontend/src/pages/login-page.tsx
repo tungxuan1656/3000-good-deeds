@@ -1,5 +1,3 @@
-import { ArrowRightIcon } from 'lucide-react'
-
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
@@ -23,7 +21,7 @@ const LoginPage = () => {
                 </div>
                 <div>
                   <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
-                    3000 Good Deeds
+                    3000 Việc Thiện
                   </p>
                   <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
                     Gieo hạt giống lành
@@ -33,28 +31,8 @@ const LoginPage = () => {
               <p className='text-muted-foreground/90 text-base leading-relaxed'>
                 Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.
               </p>
-            </CardSection>
-
-            <CardSection className='flex flex-col gap-4'>
               <Button className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full'>
                 Tiếp tục với Google
-              </Button>
-
-              <div className='relative py-2'>
-                <div className='absolute inset-0 flex items-center'>
-                  <span className='w-full border-t border-black/5' />
-                </div>
-                <div className='relative flex justify-center uppercase'>
-                  <span className='text-muted-foreground/60 bg-background px-3 text-[10px] font-bold tracking-widest'>
-                    HOẶC
-                  </span>
-                </div>
-              </div>
-
-              <Button
-                className='border-primary/20 text-primary hover:border-primary/50 h-12 w-full rounded-full border-2 bg-white/80 text-base font-medium hover:bg-white'
-                variant='outline'>
-                Dùng thử ngay <ArrowRightIcon className='ml-2 h-5 w-5' />
               </Button>
             </CardSection>
 
