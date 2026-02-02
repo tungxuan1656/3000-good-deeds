@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/drawer'
 
 import { Textarea } from '../ui/textarea'
-import { ButtonGoodDeedCategory } from './button-good-deed-category'
+import { GoodDeedCategoryButton } from './good-deed-category-button'
 
 export type CheckInCategory = 'body' | 'speech' | 'mind'
 
@@ -115,7 +115,7 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
             {step === 1 && (
               <div className='flex flex-col gap-3'>
                 {categoryOptions.map((item) => (
-                  <ButtonGoodDeedCategory
+                  <GoodDeedCategoryButton
                     key={item.key}
                     variant={item.key}
                     onClick={() => {

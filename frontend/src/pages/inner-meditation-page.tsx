@@ -71,8 +71,8 @@ const InnerMeditationPage = () => {
             </Button>
             <Button
               className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
-              variant='secondary'
               disabled={!isRunning}
+              variant='secondary'
               onClick={() => {
                 setIsRunning(false)
                 setPhase('Giữ')

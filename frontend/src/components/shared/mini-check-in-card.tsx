@@ -1,12 +1,12 @@
 import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
-import { MiniButtonGoodDeedCategory } from '@/components/shared/button-good-deed-category'
 import { CardSection } from '@/components/shared/card-section'
 import CheckInDrawer, {
   type CheckInCategory,
   type CheckInDrawerHandle,
 } from '@/components/shared/check-in-drawer'
+import { GoodDeedCategoryMiniButton } from '@/components/shared/good-deed-category-button'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -38,9 +38,9 @@ export const MiniCheckInCard = ({
         <p className='text-muted-foreground/90 mt-2 text-xs leading-relaxed'>{description}</p>
       </div>
       <div className='flex gap-2'>
-        <MiniButtonGoodDeedCategory variant='body' onClick={() => openCheckIn('body')} />
-        <MiniButtonGoodDeedCategory variant='speech' onClick={() => openCheckIn('speech')} />
-        <MiniButtonGoodDeedCategory variant='mind' onClick={() => openCheckIn('mind')} />
+        <GoodDeedCategoryMiniButton variant='body' onClick={() => openCheckIn('body')} />
+        <GoodDeedCategoryMiniButton variant='speech' onClick={() => openCheckIn('speech')} />
+        <GoodDeedCategoryMiniButton variant='mind' onClick={() => openCheckIn('mind')} />
       </div>
       <Button className='h-10 w-full rounded-full text-sm' onClick={() => openCheckIn()}>
         <PlusIcon className='size-4' />

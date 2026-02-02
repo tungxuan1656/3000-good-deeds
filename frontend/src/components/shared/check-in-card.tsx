@@ -2,9 +2,9 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { Button } from '../ui/button'
-import { ButtonGoodDeedCategory } from './button-good-deed-category'
 import { CardSection } from './card-section'
 import CheckInDrawer, { type CheckInCategory, type CheckInDrawerHandle } from './check-in-drawer'
+import { GoodDeedCategoryButton } from './good-deed-category-button'
 import Leaf from './leaf'
 
 export function CheckInCard() {
@@ -26,9 +26,9 @@ export function CheckInCard() {
           </p>
         </div>
         <div className='relative flex flex-col gap-3'>
-          <ButtonGoodDeedCategory variant='body' onClick={() => openCheckIn('body')} />
-          <ButtonGoodDeedCategory variant='speech' onClick={() => openCheckIn('speech')} />
-          <ButtonGoodDeedCategory variant='mind' onClick={() => openCheckIn('mind')} />
+          <GoodDeedCategoryButton variant='body' onClick={() => openCheckIn('body')} />
+          <GoodDeedCategoryButton variant='speech' onClick={() => openCheckIn('speech')} />
+          <GoodDeedCategoryButton variant='mind' onClick={() => openCheckIn('mind')} />
         </div>
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
           <Button onClick={() => openCheckIn()}>

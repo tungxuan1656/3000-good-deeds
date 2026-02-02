@@ -21,7 +21,7 @@ const categories = {
   },
 }
 
-export const ButtonGoodDeedCategory = ({
+export const GoodDeedCategoryButton = ({
   variant,
   ...props
 }: {
@@ -48,7 +48,7 @@ export const ButtonGoodDeedCategory = ({
   )
 }
 
-export const MiniButtonGoodDeedCategory = ({
+export const GoodDeedCategoryMiniButton = ({
   variant,
   ...props
 }: {

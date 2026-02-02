@@ -29,9 +29,7 @@ export const DailyQuoteCard = ({
             <SparklesIcon className='text-accent h-4 w-4' />
             {label}
           </div>
-          <p className='text-foreground/85 text-lg font-medium italic leading-relaxed'>
-            {quote}
-          </p>
+          <p className='text-foreground/85 text-lg leading-relaxed font-medium italic'>{quote}</p>
           {source && (
             <div className='text-muted-foreground/60 mt-3 flex items-center gap-2 text-[10px] font-semibold tracking-[0.18em] uppercase'>
               {source}
