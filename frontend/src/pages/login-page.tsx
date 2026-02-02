@@ -6,11 +6,10 @@ import { loginGoogle } from '@/api/auth'
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
-import useAuthStore from '@/stores/auth-store'
+import { authActions } from '@/stores/auth-store'
 
 const LoginPage = () => {
   const navigate = useNavigate()
-  const { login } = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -28,7 +27,7 @@ const LoginPage = () => {
 
         if (response.success && response.data) {
           // Save auth data to store
-          login(response.data)
+          authActions.login(response.data)
 
           // Redirect to home
           navigate('/', { replace: true })

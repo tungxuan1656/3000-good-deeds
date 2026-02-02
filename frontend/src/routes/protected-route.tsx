@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import useAuthStore from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth-store'
 
 const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuthStore()
+  const isAuthenticated = useAuthStore.use.isAuthenticated()
 
   if (!isAuthenticated) {
     // Redirect to login if not authenticated

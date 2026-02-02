@@ -11,11 +11,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { APP_MENU_ITEMS } from '@/lib/constants'
-import useAuthStore from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth-store'
 
 const MenuDropdown = () => {
-  const user = useAuthStore((state) => state.user)
-  const displayName = user?.name ?? 'Bạn'
+  const user = useAuthStore.use.user()
+  const displayName = user?.displayName ?? 'Bạn'
   const displayEmail = user?.email ?? 'Chưa có email'
 
   return (

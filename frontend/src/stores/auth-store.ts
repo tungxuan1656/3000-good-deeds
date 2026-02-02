@@ -1,74 +1,71 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 import type { AuthResponse, UserDTO } from '@/types/api'
+
+import { createSelectors } from './types'
 
 interface AuthState {
   isAuthenticated: boolean
   user: UserDTO | null
   accessToken: string | null
   refreshToken: string | null
-
-  // Actions
-  login: (authResponse: AuthResponse) => void
-  logout: () => void
-  setUser: (user: UserDTO) => void
-  updateAccessToken: (token: string) => void
 }
 
-const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
+const _useAuthStore = create<AuthState>()(
+  devtools(
+    persist(
+      (_) => ({
+        isAuthenticated: false,
+        user: null,
+        accessToken: null,
+        refreshToken: null,
+      }),
+      {
+        name: 'auth-storage',
+        partialize: (state) => ({
+          isAuthenticated: state.isAuthenticated,
+          user: state.user,
+          accessToken: state.accessToken,
+          refreshToken: state.refreshToken,
+        }),
+      },
+    ),
+  ),
+)
+
+export const authActions = {
+  login: (authResponse: AuthResponse) => {
+    const { accessToken, refreshToken, user } = authResponse
+
+    // Save tokens to localStorage for API client
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+
+    _useAuthStore.setState({
+      isAuthenticated: true,
+      user,
+      accessToken,
+      refreshToken,
+    })
+  },
+  logout: () => {
+    // Clear localStorage
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+
+    _useAuthStore.setState({
       isAuthenticated: false,
       user: null,
       accessToken: null,
       refreshToken: null,
+    })
+  },
+  setUser: (user: UserDTO) => _useAuthStore.setState({ user }),
+  updateAccessToken: (token: string) => {
+    localStorage.setItem('accessToken', token)
+    _useAuthStore.setState({ accessToken: token })
+  },
+}
 
-      login: (authResponse: AuthResponse) => {
-        const { accessToken, refreshToken, user } = authResponse
-
-        // Save tokens to localStorage for API client
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
-
-        set({
-          isAuthenticated: true,
-          user,
-          accessToken,
-          refreshToken,
-        })
-      },
-
-      logout: () => {
-        // Clear localStorage
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-
-        set({
-          isAuthenticated: false,
-          user: null,
-          accessToken: null,
-          refreshToken: null,
-        })
-      },
-
-      setUser: (user: UserDTO) => set({ user }),
-
-      updateAccessToken: (token: string) => {
-        localStorage.setItem('accessToken', token)
-        set({ accessToken: token })
-      },
-    }),
-    {
-      name: 'auth-storage',
-      partialize: (state) => ({
-        isAuthenticated: state.isAuthenticated,
-        user: state.user,
-        accessToken: state.accessToken,
-        refreshToken: state.refreshToken,
-      }),
-    },
-  ),
-)
-
-export default useAuthStore
+export const useAuthStore = createSelectors(_useAuthStore)
