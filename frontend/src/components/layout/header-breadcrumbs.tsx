@@ -11,9 +11,15 @@ import {
 
 const breadcrumbLabels: Record<string, string> = {
   timeline: 'Hành trình',
+  deeds: 'Việc thiện',
+  achievements: 'Thành tựu',
   stats: 'Thống kê',
   goals: 'Mục tiêu',
   inner: 'Nội tâm',
+  quote: 'Trích dẫn',
+  'random-acts': 'Gợi ý',
+  journal: 'Nhật ký',
+  meditation: 'Thiền',
   settings: 'Cài đặt',
 }
 
@@ -35,7 +41,7 @@ export const HeaderBreadcrumbs = () => {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className='text-base'>
+      <BreadcrumbList className='text-sm md:text-base'>
         {breadcrumbs.map((crumb, index) => {
           const isLast = index === breadcrumbs.length - 1
 
