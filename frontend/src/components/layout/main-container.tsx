@@ -1,5 +1,5 @@
 export function MainContainer(props: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className='grid gap-8 lg:grid-cols-[1fr_320px]' {...props} />
+  return <div className='grid gap-6 lg:grid-cols-[1fr_320px]' {...props} />
 }
 
 export function MainColumn(props: React.HTMLAttributes<HTMLDivElement>) {

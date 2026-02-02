@@ -10,6 +10,8 @@ import CheckInDrawer, {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
+import Leaf from './leaf'
+
 type MiniCheckInCardProps = {
   title?: string
   description?: string
@@ -30,6 +32,7 @@ export const MiniCheckInCard = ({
 
   return (
     <CardSection className={cn('flex flex-col gap-4', className)} padding='md'>
+      <Leaf variant={5} />
       <div>
         <h3 className='text-foreground text-sm font-semibold'>{title}</h3>
         <p className='text-muted-foreground/90 mt-2 text-xs leading-relaxed'>{description}</p>
