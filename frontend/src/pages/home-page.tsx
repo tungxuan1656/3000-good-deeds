@@ -1,28 +1,15 @@
-import { PlusIcon, SparklesIcon } from 'lucide-react'
-import { useRef } from 'react'
-
-import { ButtonGoodDeedCategory } from '@/components/shared/button-good-deed-category'
+import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
+import { CheckInCard } from '@/components/shared'
 import { CardSection } from '@/components/shared/card-section'
-import CheckInDrawer, {
-  type CheckInCategory,
-  type CheckInDrawerHandle,
-} from '@/components/shared/check-in-drawer'
+import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import Leaf from '@/components/shared/leaf'
+import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { Button } from '@/components/ui/button'
 
 const HomePage = () => {
-  const checkInRef = useRef<CheckInDrawerHandle>(null)
-
-  const openCheckIn = (nextCategory?: CheckInCategory) => {
-    checkInRef.current?.open(nextCategory)
-  }
-
   return (
-    <div className='grid gap-8 lg:grid-cols-[1fr_320px]'>
-      <CheckInDrawer ref={checkInRef} />
-
-      {/* Main column */}
-      <div className='flex flex-col gap-4'>
+    <MainContainer>
+      <MainColumn>
         {/* Header */}
         <CardSection as='header'>
           <Leaf position='top-left' variant={1} />
@@ -38,53 +25,11 @@ const HomePage = () => {
         </CardSection>
 
         {/* Quote Section */}
-        <CardSection>
-          <Leaf className='opacity-30' position='top-right' variant={2} />
-          <div className='flex items-start gap-4'>
-            <div className='bg-primary/60 mt-1 h-12 w-1 rounded-full' />
-            <div>
-              <div className='text-muted-foreground/80 mb-3 flex items-center gap-2 text-xs font-semibold'>
-                <SparklesIcon className='text-accent h-4 w-4' />
-                Pháp ngữ mỗi ngày
-              </div>
-              <p className='text-foreground/85 text-lg leading-relaxed font-medium italic'>
-                “Mỗi việc thiện nhỏ đều gieo một hạt giống.”
-              </p>
-              <div className='text-muted-foreground/60 mt-3 flex items-center gap-2 text-[10px] font-semibold tracking-[0.18em] uppercase'>
-                Lời nhắc từ thiện tâm
-              </div>
-            </div>
-          </div>
-        </CardSection>
-
-        {/* Quick check-in */}
-        <CardSection>
-          <Leaf className='h-32 w-32' position='bottom-left' variant={3} />
-          <div className='flex flex-col gap-4'>
-            <div>
-              <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
-              <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
-                Bạn đã thực hành điều gì hôm nay?
-              </p>
-            </div>
-            <div className='relative flex flex-col gap-3'>
-              <ButtonGoodDeedCategory variant='body' onClick={() => openCheckIn('body')} />
-              <ButtonGoodDeedCategory variant='speech' onClick={() => openCheckIn('speech')} />
-              <ButtonGoodDeedCategory variant='mind' onClick={() => openCheckIn('mind')} />
-            </div>
-            <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-              <Button onClick={() => openCheckIn()}>
-                <PlusIcon className='size-5' />
-                Ghi nhận việc thiện
-              </Button>
-              <Button
-                className='text-muted-foreground hover:text-foreground h-11 w-full justify-center rounded-full text-sm sm:w-auto'
-                variant='ghost'>
-                Để sau
-              </Button>
-            </div>
-          </div>
-        </CardSection>
+        <DailyQuoteCard
+          decoration={<Leaf className='opacity-30' position='top-right' variant={2} />}
+          quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”'
+        />
+        <CheckInCard />
 
         {/* Progress */}
         <CardSection>
@@ -125,27 +70,14 @@ const HomePage = () => {
             </Button>
           </div>
         </CardSection>
-      </div>
+      </MainColumn>
 
       {/* Side column */}
-      <aside className='flex flex-col gap-4'>
-        <CardSection padding='md'>
-          <h3 className='text-foreground text-base font-semibold'>Nhịp điệu trong tuần</h3>
-          <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
-            4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.
-          </p>
-          <div className='mt-4 flex gap-2'>
-            {['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].map((day, index) => (
-              <div
-                key={day}
-                className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold ${
-                  index < 4 ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'
-                }`}>
-                {day}
-              </div>
-            ))}
-          </div>
-        </CardSection>
+      <SideColumn>
+        <WeeklyRhythmCard
+          activeCount={4}
+          description='4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.'
+        />
 
         <CardSection padding='md'>
           <h3 className='text-foreground text-base font-semibold'>Nhắc nhở dịu nhẹ</h3>
@@ -156,19 +88,8 @@ const HomePage = () => {
             Thiết lập nhắc nhở
           </Button>
         </CardSection>
-      </aside>
-
-      {/* Floating Action Button (Mobile Only) */}
-      <div className='pointer-events-none fixed right-5 bottom-5 z-50 md:hidden'>
-        <Button
-          aria-label='Ghi nhận việc thiện'
-          className='bg-primary hover:bg-primary/90 pointer-events-auto h-14 w-14 rounded-full text-white shadow-xl'
-          size='icon'
-          onClick={() => openCheckIn()}>
-          <PlusIcon className='h-6 w-6' />
-        </Button>
-      </div>
-    </div>
+      </SideColumn>
+    </MainContainer>
   )
 }
 

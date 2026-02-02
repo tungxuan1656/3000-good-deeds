@@ -1,59 +1,72 @@
+import { cn } from '@/lib/utils'
+
+const categories = {
+  body: {
+    classname: 'bg-body/20 hover:bg-body/25',
+    icon: '/icons/icon_than.png',
+    label: 'Thân',
+    description: 'Hỗ trợ, giúp đỡ, hành động thiện lành',
+  },
+  speech: {
+    classname: 'bg-speech/20 hover:bg-speech/25',
+    icon: '/icons/icon_khau.png',
+    label: 'Khẩu',
+    description: 'Lời nói hiền lành & nâng đỡ người khác',
+  },
+  mind: {
+    classname: 'bg-mind/20 hover:bg-mind/25',
+    icon: '/icons/icon_y.png',
+    label: 'Ý',
+    description: 'Suy nghĩ tốt đẹp & thiện lành',
+  },
+}
+
 export const ButtonGoodDeedCategory = ({
   variant,
   ...props
 }: {
   variant: 'body' | 'speech' | 'mind'
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  if (variant === 'speech') {
-    return (
-      <button
-        className='bg-speech/20 hover:bg-speech/25 flex w-full items-center gap-4 rounded-2xl border border-black/5 px-4 py-4 text-left transition-colors'
-        type='button'
-        {...props}>
-        <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 shadow-sm'>
-          <img alt='Khẩu' className='h-8 w-8' src='/icons/icon_khau.png' />
-        </div>
-        <div className='flex-1'>
-          <p className='text-foreground text-base font-semibold'>Khẩu</p>
-          <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
-            Lời nói hiền lành & nâng đỡ người khác
-          </p>
-        </div>
-      </button>
-    )
-  }
-  if (variant === 'mind') {
-    return (
-      <button
-        className='bg-mind/20 hover:bg-mind/25 flex w-full items-center gap-4 rounded-2xl border border-black/5 px-4 py-4 text-left transition-colors'
-        type='button'
-        {...props}>
-        <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 shadow-sm'>
-          <img alt='Ý' className='h-8 w-8' src='/icons/icon_y.png' />
-        </div>
-        <div className='flex-1'>
-          <p className='text-foreground text-base font-semibold'>Ý</p>
-          <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
-            Suy nghĩ tốt đẹp & thiện lành
-          </p>
-        </div>
-      </button>
-    )
-  }
-
   return (
     <button
-      className='bg-body/20 hover:bg-body/25 flex w-full items-center gap-4 rounded-2xl border border-black/5 px-4 py-4 text-left transition-colors'
+      className={cn(
+        'flex w-full items-center gap-3 rounded-2xl border border-black/5 p-3 text-left transition-colors',
+        categories[variant].classname,
+      )}
       type='button'
       {...props}>
-      <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 shadow-sm'>
-        <img alt='Thân' className='h-8 w-8' src='/icons/icon_than.png' />
+      <div className='flex h-12 w-12 items-center justify-center rounded-2xl'>
+        <img alt={categories[variant].label} className='size-10' src={categories[variant].icon} />
       </div>
       <div className='flex-1'>
-        <p className='text-foreground text-base font-semibold'>Thân</p>
-        <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
-          Hỗ trợ, giúp đỡ, hành động thiện lành
+        <p className='text-foreground text-base font-semibold'>{categories[variant].label}</p>
+        <p className='text-muted-foreground text-sm leading-relaxed'>
+          {categories[variant].description}
         </p>
+      </div>
+    </button>
+  )
+}
+
+export const MiniButtonGoodDeedCategory = ({
+  variant,
+  ...props
+}: {
+  variant: 'body' | 'speech' | 'mind'
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+  return (
+    <button
+      className={cn(
+        'flex w-full flex-col items-center justify-center gap-3 rounded-2xl border border-black/5 p-3 text-left transition-colors',
+        categories[variant].classname,
+      )}
+      type='button'
+      {...props}>
+      <div className='flex size-10 items-center justify-center rounded-2xl'>
+        <img alt={categories[variant].label} className='size-8' src={categories[variant].icon} />
+      </div>
+      <div className=''>
+        <p className='text-foreground text-base font-semibold'>{categories[variant].label}</p>
       </div>
     </button>
   )

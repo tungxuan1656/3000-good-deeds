@@ -1,7 +1,11 @@
 import { ChevronRightIcon, ClockIcon, LockIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
+import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection } from '@/components/shared/card-section'
+import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
+import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 
 const categoryMeta = {
   body: {
@@ -64,113 +68,126 @@ const TimelinePage = () => {
   const isEmpty = !isLoading && timelineGroups.length === 0
 
   return (
-    <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
-      <CardSection as='header'>
-        <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-          Hành trình
-        </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-          Nhật ký việc thiện
-        </h1>
-        <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-          Nơi lưu giữ những điều tốt đẹp theo dòng thời gian.
-        </p>
-      </CardSection>
-
-      {isLoading && (
-        <div className='flex flex-col gap-4'>
-          {[1, 2, 3].map((item) => (
-            <div key={item} className='rounded-2xl border border-black/5 bg-white/80 p-4 shadow-sm'>
-              <div className='bg-muted mb-3 h-4 w-32 animate-pulse rounded-full' />
-              <div className='flex flex-col gap-3'>
-                <div className='bg-muted h-16 w-full animate-pulse rounded-2xl' />
-                <div className='bg-muted h-16 w-full animate-pulse rounded-2xl' />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {isEmpty && (
-        <CardSection className='flex flex-col items-center justify-center gap-3 text-center'>
-          <p className='text-muted-foreground text-sm leading-relaxed'>
-            Chưa có việc thiện nào.
-            <br />
-            Hãy bắt đầu từ một việc nhỏ.
+    <MainContainer>
+      <MainColumn>
+        <CardSection as='header'>
+          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+            Hành trình
+          </p>
+          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
+            Nhật ký việc thiện
+          </h1>
+          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
+            Nơi lưu giữ những điều tốt đẹp theo dòng thời gian.
           </p>
         </CardSection>
-      )}
 
-      {!isLoading && !isEmpty && (
-        <div className='flex flex-col gap-4'>
-          {timelineGroups.map((group) => (
-            <CardSection key={group.date} className='gap-4'>
-              <div className='flex items-center justify-between'>
-                <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                  {group.date}
-                </p>
-                <span className='text-muted-foreground text-xs'>
-                  {group.items.length} việc thiện
-                </span>
+        {isLoading && (
+          <div className='flex flex-col gap-4'>
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className='rounded-2xl border border-black/5 bg-white/80 p-4 shadow-sm'>
+                <div className='bg-muted mb-3 h-4 w-32 animate-pulse rounded-full' />
+                <div className='flex flex-col gap-3'>
+                  <div className='bg-muted h-16 w-full animate-pulse rounded-2xl' />
+                  <div className='bg-muted h-16 w-full animate-pulse rounded-2xl' />
+                </div>
               </div>
-              <div className='flex flex-col gap-3'>
-                {group.items.map((item) => {
-                  const meta = categoryMeta[item.category]
+            ))}
+          </div>
+        )}
 
-                  return (
-                    <div
-                      key={item.id}
-                      className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4 transition-shadow hover:shadow-sm'>
-                      <div className='flex items-start justify-between gap-3'>
-                        <div className='flex items-center gap-3'>
-                          <div
-                            className={`flex h-10 w-10 items-center justify-center rounded-2xl ${meta.bg}`}>
-                            <img alt={meta.label} className='h-6 w-6' src={meta.icon} />
-                          </div>
-                          <div>
-                            <p className='text-foreground text-sm font-semibold'>{meta.label}</p>
-                            <div className='text-muted-foreground mt-1 flex items-center gap-2 text-xs'>
-                              <ClockIcon className='h-3.5 w-3.5' />
-                              {item.time}
-                              {item.isPrivate && (
-                                <span className='flex items-center gap-1'>
-                                  <LockIcon className='h-3.5 w-3.5' />
-                                  Riêng tư
-                                </span>
-                              )}
+        {isEmpty && (
+          <CardSection className='flex flex-col items-center justify-center gap-3 text-center'>
+            <p className='text-muted-foreground text-sm leading-relaxed'>
+              Chưa có việc thiện nào.
+              <br />
+              Hãy bắt đầu từ một việc nhỏ.
+            </p>
+          </CardSection>
+        )}
+
+        {!isLoading && !isEmpty && (
+          <div className='flex flex-col gap-4'>
+            {timelineGroups.map((group) => (
+              <CardSection key={group.date} className='gap-4'>
+                <div className='flex items-center justify-between'>
+                  <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+                    {group.date}
+                  </p>
+                  <span className='text-muted-foreground text-xs'>
+                    {group.items.length} việc thiện
+                  </span>
+                </div>
+                <div className='flex flex-col gap-3'>
+                  {group.items.map((item) => {
+                    const meta = categoryMeta[item.category]
+
+                    return (
+                      <div
+                        key={item.id}
+                        className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4 transition-shadow hover:shadow-sm'>
+                        <div className='flex items-start justify-between gap-3'>
+                          <div className='flex items-center gap-3'>
+                            <div
+                              className={`flex h-10 w-10 items-center justify-center rounded-2xl ${meta.bg}`}>
+                              <img alt={meta.label} className='h-6 w-6' src={meta.icon} />
+                            </div>
+                            <div>
+                              <p className='text-foreground text-sm font-semibold'>{meta.label}</p>
+                              <div className='text-muted-foreground mt-1 flex items-center gap-2 text-xs'>
+                                <ClockIcon className='h-3.5 w-3.5' />
+                                {item.time}
+                                {item.isPrivate && (
+                                  <span className='flex items-center gap-1'>
+                                    <LockIcon className='h-3.5 w-3.5' />
+                                    Riêng tư
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
+                          <Link
+                            className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs'
+                            to={`/deeds/${item.id}`}>
+                            Xem
+                            <ChevronRightIcon className='h-3.5 w-3.5' />
+                          </Link>
                         </div>
-                        <Link
-                          className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs'
-                          to={`/deeds/${item.id}`}>
-                          Xem
-                          <ChevronRightIcon className='h-3.5 w-3.5' />
-                        </Link>
+
+                        <p className='text-foreground text-sm leading-relaxed'>{item.note}</p>
+
+                        {item.moods.length > 0 && (
+                          <div className='flex flex-wrap gap-2'>
+                            {item.moods.map((mood) => (
+                              <span
+                                key={mood}
+                                className='text-muted-foreground rounded-full border border-black/5 bg-white px-3 py-1 text-xs'>
+                                {mood}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
+                    )
+                  })}
+                </div>
+              </CardSection>
+            ))}
+          </div>
+        )}
+      </MainColumn>
 
-                      <p className='text-foreground text-sm leading-relaxed'>{item.note}</p>
-
-                      {item.moods.length > 0 && (
-                        <div className='flex flex-wrap gap-2'>
-                          {item.moods.map((mood) => (
-                            <span
-                              key={mood}
-                              className='text-muted-foreground rounded-full border border-black/5 bg-white px-3 py-1 text-xs'>
-                              {mood}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            </CardSection>
-          ))}
-        </div>
-      )}
-    </div>
+      <SideColumn>
+        <MiniCheckInCard />
+        <DailyQuoteCard quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”' />
+        <WeeklyRhythmCard
+          activeCount={4}
+          description='4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.'
+        />
+      </SideColumn>
+    </MainContainer>
   )
 }
 
