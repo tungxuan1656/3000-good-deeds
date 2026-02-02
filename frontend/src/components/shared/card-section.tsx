@@ -19,8 +19,8 @@ const variantClasses: Record<CardSectionVariant, string> = {
 }
 
 const paddingClasses: Record<CardSectionPadding, string> = {
-  md: 'p-6',
-  lg: 'p-6 sm:p-7',
+  md: 'p-4',
+  lg: 'p-5',
 }
 
 const CardSection = ({

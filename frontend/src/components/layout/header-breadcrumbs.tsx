@@ -35,7 +35,7 @@ export const HeaderBreadcrumbs = () => {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className='text-sm font-semibold'>
+      <BreadcrumbList className='text-base'>
         {breadcrumbs.map((crumb, index) => {
           const isLast = index === breadcrumbs.length - 1
 
@@ -43,9 +43,9 @@ export const HeaderBreadcrumbs = () => {
             <BreadcrumbItem key={crumb.path}>
               {index > 0 && <BreadcrumbSeparator className='text-muted-foreground/50' />}
               {isLast ? (
-                <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                <BreadcrumbPage className='font-medium'>{crumb.label}</BreadcrumbPage>
               ) : (
-                <BreadcrumbLink asChild>
+                <BreadcrumbLink asChild className='font-medium'>
                   <Link to={crumb.path}>{crumb.label}</Link>
                 </BreadcrumbLink>
               )}

@@ -12,7 +12,7 @@ const AppLayout = () => {
       <AppSidebar />
       <SidebarInset>
         <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6 sm:gap-7 sm:px-6 lg:gap-8 lg:px-8'>
-          <header className='flex items-center justify-between'>
+          <header className='flex items-center gap-4'>
             <div className='md:hidden'>
               <MenuDropdown />
             </div>
