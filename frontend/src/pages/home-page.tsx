@@ -13,13 +13,13 @@ const HomePage = () => {
         {/* Header */}
         <CardSection as='header'>
           <Leaf position='top-left' variant={1} />
-          <p className='text-muted-foreground/70 text-xs font-semibold tracking-wider uppercase'>
+          <p className='text-muted-foreground/70 text-[11px] font-semibold tracking-wider uppercase sm:text-xs'>
             Chủ nhật, 15/10
           </p>
           <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight sm:text-3xl'>
             Hôm nay của bạn
           </h1>
-          <p className='text-muted-foreground/90 mt-3 max-w-xl text-base leading-relaxed'>
+          <p className='text-muted-foreground/90 mt-3 max-w-xl text-sm leading-relaxed sm:text-base'>
             Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?
           </p>
         </CardSection>
@@ -34,17 +34,17 @@ const HomePage = () => {
         {/* Progress */}
         <CardSection>
           <Leaf className='h-32 w-32' position='bottom-right' variant={1} />
-          <div className='mb-4 flex items-center justify-between'>
+          <div className='mb-4 flex items-center justify-between gap-3'>
             <div>
               <h2 className='text-foreground text-lg font-semibold'>Chuỗi thiện lành</h2>
-              <p className='text-muted-foreground mt-1 text-sm'>5 ngày liên tiếp</p>
+              <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>5 ngày liên tiếp</p>
             </div>
             <span className='text-muted-foreground text-xs'>Mục tiêu tuần</span>
           </div>
           <div className='bg-muted h-2.5 w-full rounded-full'>
             <div className='bg-primary/70 h-2.5 w-[70%] rounded-full' />
           </div>
-          <div className='text-muted-foreground/90 mt-3 text-xs'>
+          <div className='text-muted-foreground/90 mt-3 text-xs sm:text-sm'>
             Còn 2 ngày nữa để hoàn tất mục tiêu tuần này.
           </div>
         </CardSection>
@@ -52,20 +52,20 @@ const HomePage = () => {
         {/* Today Section */}
         <CardSection>
           <Leaf position='top-left' variant={4} />
-          <div className='mb-4 flex items-end justify-between'>
+          <div className='mb-4 flex items-end justify-between gap-3'>
             <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
-            <Button size='sm' variant='ghost'>
+            <Button className='text-foreground/80 hover:text-foreground' size='sm' variant='ghost'>
               Xem tất cả
             </Button>
           </div>
 
-          <div className='flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/60 px-4 py-10 text-center'>
-            <p className='text-muted-foreground text-sm leading-relaxed'>
+          <div className='flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/70 px-4 py-8 text-center sm:py-10'>
+            <p className='text-muted-foreground text-sm leading-relaxed sm:text-base'>
               Chưa có việc thiện nào hôm nay.
               <br />
               Hãy gieo một hạt giống lành!
             </p>
-            <Button size='sm' variant='secondary'>
+            <Button className='rounded-full px-5' size='sm'>
               Gợi ý điều nhỏ để bắt đầu
             </Button>
           </div>
