@@ -118,12 +118,12 @@ Huy hiệu người dùng đã đạt.
 
 ### `dharma_quotes`
 Pháp ngữ mỗi ngày.
-| Column        | Type      | Description       |
-| :------------ | :-------- | :---------------- |
-| **id**        | TEXT (PK) | UUID              |
-| **content**   | TEXT      | Nội dung câu nói  |
-| **author**    | TEXT      | Tác giả / Nguồn   |
-| **tags_json** | TEXT      | Tags (JSON Array) |
+| Column      | Type      | Description      |
+| :---------- | :-------- | :--------------- |
+| **id**      | TEXT (PK) | UUID             |
+| **content** | TEXT      | Nội dung câu nói |
+| **author**  | TEXT      | Tác giả          |
+| **source**  | TEXT      | Nguồn gốc        |
 
 ### `journal_entries`
 Nhật ký tu tập.

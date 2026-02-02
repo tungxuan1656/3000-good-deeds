@@ -1,8 +1,9 @@
 import { Hono } from 'hono'
 
+import { createJournalEntry, getJournalEntries } from '../handlers/journal'
 import { authMiddleware } from '../middlewares/auth'
-import type { CreateJournalRequest, JournalEntry, User } from '../types'
-import { ErrorCodes, errorResponse, generateId } from '../utils'
+import type { CreateJournalRequest, User } from '../types'
+import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const app = new Hono<{ Bindings: Env; Variables: { user: User } }>()
 
@@ -14,25 +15,9 @@ app.get('/', async (c) => {
   const user = c.get('user')
   const type = c.req.query('type') // 'repentance' | 'gratitude' | undefined
 
-  let query = 'SELECT * FROM journal_entries WHERE user_id = ?'
-  const params: string[] = [user.id]
+  const entries = await getJournalEntries(c.env.DB, user.id, type)
 
-  if (type) {
-    query += ' AND type = ?'
-    params.push(type)
-  }
-
-  query += ' ORDER BY created_at DESC LIMIT 50'
-
-  const { results } = await c.env.DB.prepare(query)
-    .bind(...params)
-    .all<JournalEntry>()
-
-  return c.json({
-    success: true,
-    data: results,
-    error: null,
-  })
+  return c.json(successResponse(entries))
 })
 
 // POST /api/v1/journal
@@ -54,45 +39,19 @@ app.post('/', async (c) => {
     return c.json(errorResponse(ErrorCodes.VALIDATION_ERROR, 'Invalid journal type'), 400)
   }
 
-  const newEntry: JournalEntry = {
-    id: generateId('journal_'),
-    userId: user.id,
-    type: body.type,
-    content: body.content,
-    emotion: body.emotion || null,
-    isPrivate: true,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  }
+  try {
+    const newEntry = await createJournalEntry(c.env.DB, user.id, body)
 
-  const { success } = await c.env.DB.prepare(
-    `INSERT INTO journal_entries (id, user_id, type, content, emotion, is_private, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-  )
-    .bind(
-      newEntry.id,
-      newEntry.userId,
-      newEntry.type,
-      newEntry.content,
-      newEntry.emotion,
-      newEntry.isPrivate ? 1 : 0,
-      newEntry.createdAt,
-      newEntry.updatedAt,
+    return c.json(successResponse(newEntry), 201)
+  } catch (e) {
+    return c.json(
+      errorResponse(
+        ErrorCodes.INTERNAL_ERROR,
+        e instanceof Error ? e.message : 'Failed to create journal entry',
+      ),
+      500,
     )
-    .run()
-
-  if (!success) {
-    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Failed to create journal entry'), 500)
   }
-
-  return c.json(
-    {
-      success: true,
-      data: newEntry,
-      error: null,
-    },
-    201,
-  )
 })
 
 export default app

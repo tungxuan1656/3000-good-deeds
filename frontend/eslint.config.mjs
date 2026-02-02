@@ -132,7 +132,7 @@ export default defineConfig([
         { blankLine: 'always', prev: '*', next: 'return' },
       ],
 
-      'react-refresh/only-export-components': 'off'
+      'react-refresh/only-export-components': 'off',
     },
   },
   {
@@ -144,6 +144,7 @@ export default defineConfig([
       parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig.app.json',
+        tsconfigRootDir: __dirname,
         sourceType: 'module',
       },
     },

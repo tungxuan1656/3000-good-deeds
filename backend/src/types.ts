@@ -182,7 +182,6 @@ export interface DharmaQuote {
   content: string
   author: string | null
   source: string | null
-  tagsJson: string | null
   createdAt: number
   updatedAt: number
 }
@@ -203,4 +202,11 @@ export interface CreateJournalRequest {
   type: 'repentance' | 'gratitude'
   content: string
   emotion?: string
+}
+
+export interface RandomAct {
+  id: string
+  content: string
+  createdAt: number
+  updatedAt: number
 }

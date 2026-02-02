@@ -142,6 +142,7 @@ export default defineConfig([
       parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
         sourceType: 'module',
       },
     },
