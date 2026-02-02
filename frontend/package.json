@@ -11,7 +11,7 @@
     "lint:fix": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
-    "type-check": "tsc --noEmit --project tsconfig.json",
+    "type-check": "tsc --noEmit --project tsconfig.app.json",
     "check": "pnpm lint:fix && pnpm type-check",
     "deploy": "pnpm build && firebase deploy"
   },
