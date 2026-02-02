@@ -1,6 +1,7 @@
 export * from './card-section'
 export * from './check-in-card'
 export * from './check-in-drawer'
+export * from './confirm-dialog'
 export * from './daily-quote-card'
 export * from './good-deed-category-button'
 export * from './leaf'
