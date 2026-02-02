@@ -1,40 +1,74 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
-interface UserProfile {
-  id?: string
-  name?: string
-  email?: string
-  avatarUrl?: string
-}
-
-interface UserPreferences {
-  language: 'vi' | 'en'
-  remindersEnabled: boolean
-  reminderTime?: string
-}
+import type { AuthResponse, UserDTO } from '@/types/api'
 
 interface AuthState {
   isAuthenticated: boolean
-  user: UserProfile | null
-  preferences: UserPreferences
-  setAuthenticated: (value: boolean) => void
-  setUser: (user: UserProfile | null) => void
-  updatePreferences: (updates: Partial<UserPreferences>) => void
-  signOut: () => void
+  user: UserDTO | null
+  accessToken: string | null
+  refreshToken: string | null
+
+  // Actions
+  login: (authResponse: AuthResponse) => void
+  logout: () => void
+  setUser: (user: UserDTO) => void
+  updateAccessToken: (token: string) => void
 }
 
-const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: false,
-  user: null,
-  preferences: {
-    language: 'vi',
-    remindersEnabled: true,
-  },
-  setAuthenticated: (value) => set({ isAuthenticated: value }),
-  setUser: (user) => set({ user }),
-  updatePreferences: (updates) =>
-    set((state) => ({ preferences: { ...state.preferences, ...updates } })),
-  signOut: () => set({ isAuthenticated: false, user: null }),
-}))
+const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      isAuthenticated: false,
+      user: null,
+      accessToken: null,
+      refreshToken: null,
+
+      login: (authResponse: AuthResponse) => {
+        const { accessToken, refreshToken, user } = authResponse
+
+        // Save tokens to localStorage for API client
+        localStorage.setItem('accessToken', accessToken)
+        localStorage.setItem('refreshToken', refreshToken)
+
+        set({
+          isAuthenticated: true,
+          user,
+          accessToken,
+          refreshToken,
+        })
+      },
+
+      logout: () => {
+        // Clear localStorage
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+
+        set({
+          isAuthenticated: false,
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+        })
+      },
+
+      setUser: (user: UserDTO) => set({ user }),
+
+      updateAccessToken: (token: string) => {
+        localStorage.setItem('accessToken', token)
+        set({ accessToken: token })
+      },
+    }),
+    {
+      name: 'auth-storage',
+      partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+      }),
+    },
+  ),
+)
 
 export default useAuthStore

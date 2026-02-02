@@ -10,6 +10,25 @@ export const client = axios.create({
   },
 })
 
+// Track if we're currently refreshing to avoid multiple refresh requests
+let isRefreshing = false
+let failedQueue: Array<{
+  resolve: (value?: unknown) => void
+  reject: (reason?: unknown) => void
+}> = []
+
+const processQueue = (error: Error | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve()
+    }
+  })
+
+  failedQueue = []
+}
+
 // Request interceptor: Attach token
 client.interceptors.request.use(
   (config) => {
@@ -25,21 +44,68 @@ client.interceptors.request.use(
   },
 )
 
-// Response interceptor: Handle errors
+// Response interceptor: Handle errors and token refresh
 client.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config
+
     if (error.response) {
-      // Handle 401 Unauthorized
-      if (error.response.status === 401) {
-        // Clear token and redirect to login
-        // Important: Use window.location to ensure full reload and state reset
-        // Prevent infinite loop if already on login page
-        if (!window.location.pathname.includes('/login')) {
-          localStorage.removeItem('accessToken')
-          localStorage.removeItem('refreshToken')
-          localStorage.removeItem('user')
-          // window.location.href = '/login'; // Uncomment when login route exists
+      // Handle 401 Unauthorized - Try to refresh token
+      if (error.response.status === 401 && !originalRequest._retry) {
+        if (isRefreshing) {
+          // If already refreshing, queue this request
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject })
+          })
+            .then(() => {
+              return client(originalRequest)
+            })
+            .catch((err) => {
+              return Promise.reject(err)
+            })
+        }
+
+        originalRequest._retry = true
+        isRefreshing = true
+
+        const refreshToken = localStorage.getItem('refreshToken')
+
+        if (!refreshToken) {
+          // No refresh token, redirect to login
+          isRefreshing = false
+          redirectToLogin()
+
+          return Promise.reject(error)
+        }
+
+        try {
+          // Try to refresh the token
+          const response = await axios.post(`${API_URL}/auth/refresh`, {
+            refreshToken,
+          })
+
+          const { accessToken } = response.data.data
+
+          // Update stored token
+          localStorage.setItem('accessToken', accessToken)
+
+          // Update the original request with new token
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`
+
+          // Process queued requests
+          processQueue(null)
+          isRefreshing = false
+
+          // Retry the original request
+          return client(originalRequest)
+        } catch (refreshError) {
+          // Refresh failed, clear auth and redirect to login
+          processQueue(new Error('Token refresh failed'))
+          isRefreshing = false
+          redirectToLogin()
+
+          return Promise.reject(refreshError)
         }
       }
     }
@@ -47,3 +113,16 @@ client.interceptors.response.use(
     return Promise.reject(error)
   },
 )
+
+function redirectToLogin() {
+  // Clear all auth data
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('user')
+  localStorage.removeItem('auth-storage')
+
+  // Redirect to login page if not already there
+  if (!window.location.pathname.includes('/login')) {
+    window.location.href = '/login'
+  }
+}

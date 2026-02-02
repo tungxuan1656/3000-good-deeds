@@ -1,8 +1,56 @@
+import { useGoogleLogin } from '@react-oauth/google'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { loginGoogle } from '@/api/auth'
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
+import useAuthStore from '@/stores/auth-store'
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const { login } = useAuthStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      setIsLoading(true)
+      setError(null)
+
+      try {
+        // Send authorization code to backend
+        const response = await loginGoogle({
+          code: codeResponse.code,
+          redirectUri: window.location.origin,
+        })
+
+        if (response.success && response.data) {
+          // Save auth data to store
+          login(response.data)
+
+          // Redirect to home
+          navigate('/', { replace: true })
+        } else {
+          setError(response.error || 'Đăng nhập thất bại')
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Login error:', err)
+        setError('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại.')
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    onError: (error) => {
+      // eslint-disable-next-line no-console
+      console.error('Google OAuth error:', error)
+      setError('Không thể kết nối với Google. Vui lòng thử lại.')
+    },
+    flow: 'auth-code',
+  })
+
   return (
     <div className='bg-background min-h-screen px-4 py-8 sm:px-6 lg:px-8'>
       <div className='pointer-events-none absolute inset-0 overflow-hidden'>
@@ -31,8 +79,18 @@ const LoginPage = () => {
               <p className='text-muted-foreground/90 text-base leading-relaxed'>
                 Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.
               </p>
-              <Button className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full'>
-                Tiếp tục với Google
+
+              {error && (
+                <div className='rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>
+                  {error}
+                </div>
+              )}
+
+              <Button
+                className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full'
+                disabled={isLoading}
+                onClick={() => handleGoogleLogin()}>
+                {isLoading ? 'Đang đăng nhập...' : 'Tiếp tục với Google'}
               </Button>
             </CardSection>
 
