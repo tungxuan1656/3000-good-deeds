@@ -1,6 +1,6 @@
 const initialCategories = [
   {
-    id: 'cat_body',
+    id: '01KGH777ED9508C2E99ZA5N809',
     key: 'body',
     name: 'Thân thiện',
     description: 'Hành động cụ thể bằng thân',
@@ -8,7 +8,7 @@ const initialCategories = [
     order_index: 1,
   },
   {
-    id: 'cat_speech',
+    id: '01KGH777EH3JS6ZGC28ZB9MPYF',
     key: 'speech',
     name: 'Khẩu thiện',
     description: 'Lời nói ái ngữ, chân thật',
@@ -16,7 +16,7 @@ const initialCategories = [
     order_index: 2,
   },
   {
-    id: 'cat_mind',
+    id: '01KGH777EH1K3H22612D5S36H8',
     key: 'mind',
     name: 'Ý thiện',
     description: 'Suy nghĩ lành, buông xả',
@@ -24,7 +24,7 @@ const initialCategories = [
     order_index: 3,
   },
   {
-    id: 'cat_patience',
+    id: '01KGH777EHAJDZY1PPDMSWDZPT',
     key: 'patience',
     name: 'Nhẫn nhục',
     description: 'Chấp nhận nghịch cảnh',
@@ -32,7 +32,7 @@ const initialCategories = [
     order_index: 4,
   },
   {
-    id: 'cat_gratitude',
+    id: '01KGH777EH77FMYE827V9VY65K',
     key: 'gratitude',
     name: 'Biết ơn',
     description: 'Tri ân người và vật',
@@ -43,7 +43,7 @@ const initialCategories = [
 
 const initialAchievements = [
   {
-    id: 'ach_first_seed',
+    id: '01KGH777EHT5J81GAABTPMHPFR',
     code: 'FIRST_DEED',
     title: 'Hạt giống đầu tiên',
     description: 'Thực hiện việc thiện đầu tiên của bạn',
@@ -52,7 +52,7 @@ const initialAchievements = [
     order_index: 1,
   },
   {
-    id: 'ach_streak_3',
+    id: '01KGH777EHVXYAM7Z5BTX2M51F',
     code: 'STREAK_3',
     title: 'Khởi động đà thiện',
     description: 'Duy trì chuỗi việc thiện trong 3 ngày liên tiếp',
@@ -61,7 +61,7 @@ const initialAchievements = [
     order_index: 2,
   },
   {
-    id: 'ach_count_10',
+    id: '01KGH777EH93MXVHZP19H9F6RV',
     code: 'COUNT_10',
     title: 'Người gieo hạt chăm chỉ',
     description: 'Đạt mốc 10 việc thiện',
@@ -73,32 +73,32 @@ const initialAchievements = [
 
 const initialQuotes = [
   {
-    id: 'q1',
+    id: '01KGH777EHEHHDHSY3CPTJ5XQE',
     content:
       'Hận thù diệt hận thù, đời này không thể có. Từ bi diệt hận thù, là định luật ngàn thu.',
     author: 'Kinh Pháp Cú',
     source: 'Phẩm Song Yếu',
   },
   {
-    id: 'q2',
+    id: '01KGH777EHNDKKDP0Y56NYEC4S',
     content: 'Hãy tự mình thắp đuốc lên mà đi.',
     author: 'Đức Phật Thích Ca',
     source: 'Kinh Đại Bát Niết Bàn',
   },
   {
-    id: 'q3',
+    id: '01KGH777EJYSGTVG4604G1JN81',
     content: 'Mỉm cười, thở vào. Mỉm cười, thở ra.',
     author: 'Thiền sư Thích Nhất Hạnh',
     source: null,
   },
   {
-    id: 'q4',
+    id: '01KGH777EJHJDWMP5TJM6EZBQZ',
     content: 'Vạn pháp duy tâm tạo.',
     author: 'Kinh Hoa Nghiêm',
     source: null,
   },
   {
-    id: 'q5',
+    id: '01KGH777EJ545TPW71AZEA3FEK',
     content: 'Phước đức tại mẫu, nhưng cũng do mình tạo.',
     author: 'Dân gian',
     source: null,
@@ -106,16 +106,19 @@ const initialQuotes = [
 ]
 
 const initialRandomActs = [
-  { id: 'act_1', content: 'Nhắn tin hỏi thăm một người bạn cũ.' },
-  { id: 'act_2', content: 'Cười với một người lạ.' },
-  { id: 'act_3', content: 'Nhặt rác nơi công cộng.' },
-  { id: 'act_4', content: 'Thầm chúc bình an cho người đang đi trước mặt bạn.' },
-  { id: 'act_5', content: 'Uống một ly nước thật chậm và biết ơn.' },
-  { id: 'act_6', content: 'Tha thứ cho lỗi lầm nhỏ của ai đó hôm nay.' },
-  { id: 'act_7', content: 'Khen ngợi chân thành một đồng nghiệp.' },
-  { id: 'act_8', content: 'Dành 5 phút ngồi yên không làm gì cả.' },
-  { id: 'act_9', content: 'Gọi điện về cho bố mẹ.' },
-  { id: 'act_10', content: 'Lắng nghe ai đó trọn vẹn mà không ngắt lời.' },
+  { id: '01KGH777EJ18EXJ5WFEBGA04DW', content: 'Nhắn tin hỏi thăm một người bạn cũ.' },
+  { id: '01KGH777EJ6JJ5A5CMJXTBF4C6', content: 'Cười với một người lạ.' },
+  { id: '01KGH777EJEMRJKC9NK3G2BZ0S', content: 'Nhặt rác nơi công cộng.' },
+  {
+    id: '01KGH777EJ2ZM81EWDE6BRG8AX',
+    content: 'Thầm chúc bình an cho người đang đi trước mặt bạn.',
+  },
+  { id: '01KGH777EJCKJQ9N6SS2B6B1TZ', content: 'Uống một ly nước thật chậm và biết ơn.' },
+  { id: '01KGH777EJY6WW625X2KG8HRT1', content: 'Tha thứ cho lỗi lầm nhỏ của ai đó hôm nay.' },
+  { id: '01KGH777EJQ77NPZ0GK2WXC0AG', content: 'Khen ngợi chân thành một đồng nghiệp.' },
+  { id: '01KGH777EJCT5N69ZCPAJJNPHP', content: 'Dành 5 phút ngồi yên không làm gì cả.' },
+  { id: '01KGH777EJ2NNM2Y0ZPGEG30MD', content: 'Gọi điện về cho bố mẹ.' },
+  { id: '01KGH777EJRAZ4EK22FX4D9VRC', content: 'Lắng nghe ai đó trọn vẹn mà không ngắt lời.' },
 ]
 
 export async function seed(db: any) {

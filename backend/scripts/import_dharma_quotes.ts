@@ -3,8 +3,8 @@ import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { randomUUID } from 'node:crypto'
 import { parse } from 'csv-parse/sync'
+import { ulid } from 'ulid'
 
 type Target = 'local' | 'remote' | 'preview'
 
@@ -143,7 +143,7 @@ async function main() {
 
   const statements = records.map((quote) => {
     const createdAt = Date.now()
-    const id = randomUUID()
+    const id = ulid()
     return `INSERT OR REPLACE INTO dharma_quotes (id, content, author, source, created_at, updated_at)\nVALUES (${sqlString(
       id,
     )}, ${sqlString(quote.content)}, ${sqlString(quote.author || null)}, ${sqlString(quote.source || null)}, ${createdAt}, ${createdAt});`

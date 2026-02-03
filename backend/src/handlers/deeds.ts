@@ -1,5 +1,5 @@
 import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest } from '../types'
-import { getCurrentTimestamp } from '../utils'
+import { generateId, getCurrentTimestamp } from '../utils'
 import { checkAndUnlockAchievements } from './achievements'
 
 // Get deeds list (with filters)
@@ -53,7 +53,7 @@ export async function createDeed(
 ): Promise<GoodDeed> {
   const now = getCurrentTimestamp()
   const performedAt = body.performedAt || now
-  const newId = crypto.randomUUID()
+  const newId = generateId()
 
   await db
     .prepare(

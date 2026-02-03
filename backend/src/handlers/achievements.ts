@@ -1,5 +1,5 @@
 import type { AchievementDefinition, UserAchievement } from '../types'
-import { getCurrentTimestamp } from '../utils'
+import { generateId, getCurrentTimestamp } from '../utils'
 
 export async function getAchievementDefinitions(db: D1Database): Promise<AchievementDefinition[]> {
   const results = await db
@@ -97,6 +97,6 @@ async function unlockAchievement(db: D1Database, userId: string, achievementId: 
     .prepare(
       'INSERT INTO user_achievements (id, user_id, achievement_id, unlocked_at) VALUES (?, ?, ?, ?)',
     )
-    .bind(crypto.randomUUID(), userId, achievementId, now)
+    .bind(generateId(), userId, achievementId, now)
     .run()
 }

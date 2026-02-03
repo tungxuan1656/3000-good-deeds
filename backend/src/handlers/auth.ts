@@ -1,7 +1,7 @@
 import { SignJWT } from 'jose'
 
 import type { AuthResponse, GoogleAuthRequest, GoogleTokenResponse, GoogleUserInfo } from '../types'
-import { getCurrentTimestamp } from '../utils'
+import { generateId, getCurrentTimestamp } from '../utils'
 import { getUser } from './users'
 
 const JWT_SECRET = 'your-secret-key-change-me' // TODO: Move to Env
@@ -88,7 +88,7 @@ export async function loginWithGoogle(
       userId = existingUser.id
     } else {
       // Create new user
-      userId = crypto.randomUUID()
+      userId = generateId()
 
       await db
         .prepare(
@@ -109,7 +109,7 @@ export async function loginWithGoogle(
         VALUES (?, ?, ?, ?, ?, ?)
     `,
       )
-      .bind(crypto.randomUUID(), userId, 'google', googleUser.id, googleUser.email, now)
+      .bind(generateId(), userId, 'google', googleUser.id, googleUser.email, now)
       .run()
   }
 
@@ -127,7 +127,7 @@ export async function loginWithGoogle(
     VALUES (?, ?, ?, ?, ?)
   `,
     )
-    .bind(crypto.randomUUID(), userId, refreshToken, refreshTokenExpiry, now)
+    .bind(generateId(), userId, refreshToken, refreshTokenExpiry, now)
     .run()
 
   const user = await getUser(db, userId!)

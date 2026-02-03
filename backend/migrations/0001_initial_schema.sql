@@ -1,6 +1,9 @@
+-- Migration number: 0001 2026-02-03T00:00:00.000Z
+-- Baseline schema (ULID-based identifiers stored as TEXT)
+
 -- 1. USERS
 CREATE TABLE IF NOT EXISTS users (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   email TEXT UNIQUE NOT NULL,
   display_name TEXT NOT NULL,
   avatar_url TEXT,
@@ -28,7 +31,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- 2. AUTH TOKENS
 CREATE TABLE IF NOT EXISTS refresh_tokens (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
   token_hash TEXT NOT NULL,
   expires_at INTEGER NOT NULL,
@@ -40,7 +43,7 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 
 -- 3. OAUTH ACCOUNTS
 CREATE TABLE IF NOT EXISTS oauth_accounts (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
   provider TEXT NOT NULL,            -- 'google'
   provider_user_id TEXT NOT NULL,    -- Google sub
@@ -55,7 +58,7 @@ ON oauth_accounts(provider, provider_user_id);
 
 -- 4. CATEGORIES (System-managed in MVP)
 CREATE TABLE IF NOT EXISTS categories (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- stable ID
   key TEXT UNIQUE NOT NULL,          -- stable identifier (e.g., 'body')
   name TEXT NOT NULL,
   description TEXT,
@@ -70,7 +73,7 @@ CREATE TABLE IF NOT EXISTS categories (
 
 -- 5. GOOD DEEDS (Core)
 CREATE TABLE IF NOT EXISTS good_deeds (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
   category_id TEXT NOT NULL,
 
@@ -95,7 +98,7 @@ ON good_deeds(user_id, category_id);
 
 -- 6. GOALS
 CREATE TABLE IF NOT EXISTS goals (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
 
   title TEXT,
@@ -116,7 +119,7 @@ ON goals(user_id, type, is_active);
 
 -- 7. ACHIEVEMENTS (Definitions)
 CREATE TABLE IF NOT EXISTS achievement_definitions (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- stable ID
   code TEXT UNIQUE NOT NULL,         -- 'STREAK_3', 'FIRST_DEED'
   title TEXT NOT NULL,
   description TEXT NOT NULL,
@@ -131,7 +134,7 @@ CREATE TABLE IF NOT EXISTS achievement_definitions (
 
 -- 8. USER ACHIEVEMENTS
 CREATE TABLE IF NOT EXISTS user_achievements (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
   achievement_id TEXT NOT NULL,
   unlocked_at INTEGER NOT NULL,
@@ -142,8 +145,46 @@ CREATE TABLE IF NOT EXISTS user_achievements (
 
 -- 9. SYSTEM SETTINGS (Feature flags, content configs)
 CREATE TABLE IF NOT EXISTS system_settings (
-  id TEXT PRIMARY KEY,
+  id TEXT PRIMARY KEY,               -- ULID
   key TEXT UNIQUE NOT NULL,
   value_json TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+-- 10. DHARMA QUOTES (Cultivation)
+CREATE TABLE IF NOT EXISTS dharma_quotes (
+  id TEXT PRIMARY KEY,               -- ULID
+  content TEXT NOT NULL,
+  author TEXT,
+  source TEXT,
+
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+-- 11. JOURNAL ENTRIES (Cultivation)
+CREATE TABLE IF NOT EXISTS journal_entries (
+  id TEXT PRIMARY KEY,               -- ULID
+  user_id TEXT NOT NULL,
+  type TEXT NOT NULL,                -- 'repentance' | 'gratitude'
+  content TEXT NOT NULL,
+  emotion TEXT,
+  is_private BOOLEAN DEFAULT 1,
+
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_journal_user_type
+ON journal_entries(user_id, type);
+
+-- 12. RANDOM ACTS (Cultivation)
+CREATE TABLE IF NOT EXISTS random_acts (
+  id TEXT PRIMARY KEY,               -- ULID
+  content TEXT NOT NULL,
+
+  created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL
 );

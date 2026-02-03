@@ -1,5 +1,5 @@
 import type { Goal } from '../types'
-import { getCurrentTimestamp } from '../utils'
+import { generateId, getCurrentTimestamp } from '../utils'
 
 export async function getGoals(db: D1Database, userId: string): Promise<Goal[]> {
   const results = await db
@@ -18,7 +18,7 @@ export async function createGoal(
 ): Promise<Goal> {
   const now = getCurrentTimestamp()
   const startDate = now // Simple start date = created_at
-  const newId = crypto.randomUUID()
+  const newId = generateId()
 
   await db
     .prepare(

@@ -1,3 +1,5 @@
+import { ulid } from 'ulid'
+
 import type { ApiResponse } from './types'
 
 // Tạo response thành công
@@ -39,7 +41,7 @@ export const ErrorCodes = {
 
 // Generate unique ID
 export function generateId(prefix: string = ''): string {
-  return prefix + crypto.randomUUID()
+  return prefix + ulid()
 }
 
 // Tạo JSON response với status code

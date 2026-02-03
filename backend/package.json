@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "hono": "^4.0.0",
-    "jose": "^5.2.0"
+    "jose": "^5.2.0",
+    "ulid": "^3.0.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",
@@ -59,10 +60,7 @@
     "migrate:local": "wrangler d1 migrations apply DB --local",
     "migrate:remote": "wrangler d1 migrations apply DB --remote",
     "predeploy": "npm run migrate:remote",
-    "seed:test": "bash scripts/seed-test-data.sh",
-    "import:dharma-quotes": "tsx scripts/import-dharma-quotes.ts",
-    "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx",
-    "lint:fix": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix",
+    "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "type-check": "tsc --noEmit --project tsconfig.json"
