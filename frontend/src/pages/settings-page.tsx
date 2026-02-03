@@ -22,6 +22,7 @@ import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Spinner } from '@/components/ui/spinner'
 import { useUpdateUser, useUser } from '@/hooks/api/use-user'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
@@ -31,7 +32,6 @@ const SettingsPage = () => {
   const refreshToken = useAuthStore.use.refreshToken()
   const { data: userResponse } = useUser()
   const updateUser = useUpdateUser()
-  const [reminderEnabled, setReminderEnabled] = useState(false)
   const [reminderTime, setReminderTime] = useState('20:30')
   const [deleteText, setDeleteText] = useState('')
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
@@ -52,7 +52,6 @@ const SettingsPage = () => {
   useEffect(() => {
     if (user) {
       authActions.setUser(user)
-      setReminderEnabled(Boolean(user.reminderEnabled))
       setReminderTime(user.reminderTime ?? '20:30')
     }
   }, [user])
@@ -71,8 +70,6 @@ const SettingsPage = () => {
   }
 
   const handleReminderToggle = async (nextValue: boolean) => {
-    setReminderEnabled(nextValue)
-
     try {
       const response = await updateUser.mutateAsync({
         reminderEnabled: nextValue,
@@ -80,9 +77,7 @@ const SettingsPage = () => {
       if (response?.data) {
         authActions.setUser(response.data)
       }
-    } catch {
-      setReminderEnabled((prev) => !prev)
-    }
+    } catch {}
   }
 
   const handleReminderTimeBlur = async () => {
@@ -161,7 +156,7 @@ const SettingsPage = () => {
           <div className='flex items-center justify-between'>
             <div>
               <div className='flex items-center gap-2 text-xs font-semibold tracking-widest uppercase'>
-                {reminderEnabled ? (
+                {user?.reminderEnabled ? (
                   <span className='flex items-center text-emerald-600'>
                     <CheckCircle2Icon className='inline h-4 w-4' />
                     <span className='ml-1'>Đang bật</span>
@@ -177,12 +172,13 @@ const SettingsPage = () => {
               <p className='text-muted-foreground mt-1 text-xs'>Chỉ một lần mỗi ngày.</p>
             </div>
             <Button
-              variant={reminderEnabled ? 'outline' : 'default'}
-              onClick={() => handleReminderToggle(!reminderEnabled)}>
-              {reminderEnabled ? 'Tắt thông báo' : 'Bật thông báo'}
+              variant={user?.reminderEnabled ? 'outline' : 'default'}
+              onClick={() => handleReminderToggle(!user?.reminderEnabled)}>
+              {updateUser.isPending ? <Spinner /> : null}
+              {user?.reminderEnabled ? 'Tắt thông báo' : 'Bật thông báo'}
             </Button>
           </div>
-          {reminderEnabled && (
+          {user?.reminderEnabled && (
             <div className='flex flex-col gap-2'>
               <div className='flex items-center justify-between gap-4'>
                 <Label className='text-foreground text-xs font-semibold tracking-widest uppercase'>
