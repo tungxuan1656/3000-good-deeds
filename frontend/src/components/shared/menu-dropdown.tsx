@@ -1,7 +1,9 @@
 import { LogOutIcon, MenuIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
+import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -11,12 +13,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ConfirmDialog } from '@/components/shared'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const MenuDropdown = () => {
   const navigate = useNavigate()
   const refreshToken = useAuthStore.use.refreshToken()
+  const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
 
   const handleLogout = async () => {
     try {
@@ -75,11 +79,22 @@ const MenuDropdown = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className='text-destructive focus:text-destructive cursor-pointer rounded-xl px-3 py-2 text-sm font-medium'
-          onClick={handleLogout}>
+          onClick={() => logoutDialogRef.current?.open()}>
           <LogOutIcon className='h-4 w-4' />
           Đăng xuất
         </DropdownMenuItem>
       </DropdownMenuContent>
+      <ConfirmDialog
+        ref={logoutDialogRef}
+        cancelLabel='Để sau'
+        confirmLabel='Đăng xuất'
+        description='Bạn có thể đăng nhập lại bất cứ lúc nào.'
+        title='Đăng xuất khỏi tài khoản?'
+        onConfirm={() => {
+          logoutDialogRef.current?.close()
+          handleLogout()
+        }}
+      />
     </DropdownMenu>
   )
 }

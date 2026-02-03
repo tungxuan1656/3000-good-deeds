@@ -1,7 +1,9 @@
 import { LogOutIcon, UserRoundIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
+import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +17,7 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar'
+import { ConfirmDialog } from '@/components/shared'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
@@ -23,6 +26,7 @@ export const AppSidebar = () => {
   const navigate = useNavigate()
   const user = useAuthStore.use.user()
   const refreshToken = useAuthStore.use.refreshToken()
+  const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const displayName = user?.displayName ?? 'Bạn'
   const displayEmail = user?.email ?? 'Chưa có email'
 
@@ -85,13 +89,26 @@ export const AppSidebar = () => {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className='text-destructive' onClick={handleLogout}>
+            <SidebarMenuButton
+              className='text-destructive'
+              onClick={() => logoutDialogRef.current?.open()}>
               <LogOutIcon />
               <span>Đăng xuất</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+      <ConfirmDialog
+        ref={logoutDialogRef}
+        cancelLabel='Để sau'
+        confirmLabel='Đăng xuất'
+        description='Bạn có thể đăng nhập lại bất cứ lúc nào.'
+        title='Đăng xuất khỏi tài khoản?'
+        onConfirm={() => {
+          logoutDialogRef.current?.close()
+          handleLogout()
+        }}
+      />
     </Sidebar>
   )
 }
