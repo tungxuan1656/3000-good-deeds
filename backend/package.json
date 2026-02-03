@@ -45,6 +45,7 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
+    "csv-parse": "^6.0.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.45.0",
     "wrangler": "4.51.0"
@@ -59,6 +60,7 @@
     "migrate:remote": "wrangler d1 migrations apply DB --remote",
     "predeploy": "npm run migrate:remote",
     "seed:test": "bash scripts/seed-test-data.sh",
+    "import:dharma-quotes": "tsx scripts/import-dharma-quotes.ts",
     "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx",
     "lint:fix": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
