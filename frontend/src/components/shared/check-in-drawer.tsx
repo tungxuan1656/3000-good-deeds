@@ -11,6 +11,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { CATEGORIES } from '@/lib/constants'
 
 import { Textarea } from '../ui/textarea'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
@@ -23,36 +24,6 @@ export interface CheckInDrawerHandle {
 }
 
 const moodOptions = ['An vui', 'Biết ơn', 'Nhẹ lòng', 'Ấm áp', 'Bình an', 'Hy vọng']
-
-const categoryOptions: Array<{
-  key: CheckInCategory
-  label: string
-  description: string
-  icon: string
-  bg: string
-}> = [
-  {
-    key: 'body',
-    label: 'Thân',
-    description: 'Hỗ trợ, giúp đỡ, hành động thiện lành',
-    icon: '/icons/icon_than.png',
-    bg: 'bg-body/20',
-  },
-  {
-    key: 'speech',
-    label: 'Khẩu',
-    description: 'Lời nói hiền lành & nâng đỡ người khác',
-    icon: '/icons/icon_khau.png',
-    bg: 'bg-speech/20',
-  },
-  {
-    key: 'mind',
-    label: 'Ý',
-    description: 'Suy nghĩ tốt đẹp & thiện lành',
-    icon: '/icons/icon_y.png',
-    bg: 'bg-mind/20',
-  },
-]
 
 const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   const isMobile = useIsMobile()
@@ -116,12 +87,12 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
           <div className='px-4 pb-4'>
             {step === 1 && (
               <div className='flex flex-col gap-3'>
-                {categoryOptions.map((item) => (
+                {Object.entries(CATEGORIES).map(([key]) => (
                   <GoodDeedCategoryButton
-                    key={item.key}
-                    variant={item.key}
+                    key={key}
+                    variant={key as CheckInCategory}
                     onClick={() => {
-                      setCategory(item.key)
+                      setCategory(key as CheckInCategory)
                       setStep(2)
                     }}
                   />
