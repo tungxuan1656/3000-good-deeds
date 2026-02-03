@@ -15,15 +15,6 @@ export interface UserDTO {
   timezone?: string
   themePreference?: 'light' | 'dark' | 'system'
   privacyMode?: 'private' | 'limited'
-  settings?: UserSettingsDTO
-}
-
-export interface UserSettingsDTO {
-  reminderTime?: string
-  reminderEnabled?: boolean
-  timezone?: string
-  themePreference?: 'light' | 'dark' | 'system'
-  privacyMode?: 'private' | 'limited'
 }
 
 export interface AuthResponse {

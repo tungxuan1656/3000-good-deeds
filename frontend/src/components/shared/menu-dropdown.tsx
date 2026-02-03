@@ -49,7 +49,7 @@ const MenuDropdown = () => {
         <Link to={'/settings'}>
           <div className='flex items-center gap-3 rounded-2xl border border-black/5 bg-white px-1 py-2'>
             <div className='bg-secondary/40 text-foreground flex h-10 min-h-10 w-10 min-w-10 items-center justify-center rounded-full'>
-              <img src={user?.avatarUrl ?? ''} alt={displayName} />
+              <img alt={displayName} src={user?.avatarUrl ?? ''} />
             </div>
             <div className='min-w-0'>
               <p className='text-foreground truncate text-sm font-semibold'>{displayName}</p>

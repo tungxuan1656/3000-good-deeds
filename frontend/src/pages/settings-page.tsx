@@ -1,4 +1,11 @@
-import { BellIcon, LogOutIcon, Trash2Icon, UserIcon } from 'lucide-react'
+import {
+  BellIcon,
+  CheckCircle2Icon,
+  LogOutIcon,
+  Trash2Icon,
+  UserIcon,
+  XCircleIcon,
+} from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,7 +22,6 @@ import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Toggle } from '@/components/ui/toggle'
 import { useUpdateUser, useUser } from '@/hooks/api/use-user'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
@@ -39,14 +45,15 @@ const SettingsPage = () => {
     const nameSource = displayName || displayEmail
     const parts = nameSource.trim().split(' ').filter(Boolean)
     const letters = parts.slice(0, 2).map((part) => part[0]?.toUpperCase())
+
     return letters.join('') || 'U'
   }, [displayEmail, displayName])
 
   useEffect(() => {
     if (user) {
       authActions.setUser(user)
-      setReminderEnabled(Boolean(user.reminderEnabled ?? user.settings?.reminderEnabled))
-      setReminderTime(user.reminderTime ?? user.settings?.reminderTime ?? '20:30')
+      setReminderEnabled(Boolean(user.reminderEnabled))
+      setReminderTime(user.reminderTime ?? '20:30')
     }
   }, [user])
 
@@ -80,6 +87,13 @@ const SettingsPage = () => {
 
   const handleReminderTimeBlur = async () => {
     try {
+      if (!reminderTime.match(/^\d{2}:\d{2}$/)) {
+        setReminderTime(user?.reminderTime ?? '20:30')
+
+        return
+      }
+      if (reminderTime === user?.reminderTime) return
+
       const response = await updateUser.mutateAsync({
         reminderTime,
       })
@@ -146,25 +160,42 @@ const SettingsPage = () => {
         <CardSection className='gap-4'>
           <div className='flex items-center justify-between'>
             <div>
-              <p className='text-foreground text-base font-semibold'>Nhắc nhở dịu nhẹ</p>
+              <div className='flex items-center gap-2 text-xs font-semibold tracking-widest uppercase'>
+                {reminderEnabled ? (
+                  <span className='flex items-center text-emerald-600'>
+                    <CheckCircle2Icon className='inline h-4 w-4' />
+                    <span className='ml-1'>Đang bật</span>
+                  </span>
+                ) : (
+                  <span className='text-muted-foreground flex items-center'>
+                    <XCircleIcon className='inline h-4 w-4' />
+                    <span className='ml-1'>Đang tắt</span>
+                  </span>
+                )}
+              </div>
+              <p className='text-foreground mt-2 text-base font-semibold'>Thông báo nhắc nhở</p>
               <p className='text-muted-foreground mt-1 text-xs'>Chỉ một lần mỗi ngày.</p>
             </div>
-            <Toggle pressed={reminderEnabled} onPressedChange={handleReminderToggle}>
-              {reminderEnabled ? 'Bật' : 'Tắt'}
-            </Toggle>
+            <Button
+              variant={reminderEnabled ? 'outline' : 'default'}
+              onClick={() => handleReminderToggle(!reminderEnabled)}>
+              {reminderEnabled ? 'Tắt thông báo' : 'Bật thông báo'}
+            </Button>
           </div>
           {reminderEnabled && (
             <div className='flex flex-col gap-2'>
-              <Label className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                Chọn giờ nhắc
-              </Label>
-              <Input
-                className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
-                value={reminderTime}
-                type='time'
-                onBlur={handleReminderTimeBlur}
-                onChange={(event) => setReminderTime(event.target.value)}
-              />
+              <div className='flex items-center justify-between gap-4'>
+                <Label className='text-foreground text-xs font-semibold tracking-widest uppercase'>
+                  Chọn giờ nhắc
+                </Label>
+                <Input
+                  className='w-36 rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
+                  type='time'
+                  value={reminderTime}
+                  onBlur={handleReminderTimeBlur}
+                  onChange={(event) => setReminderTime(event.target.value)}
+                />
+              </div>
               <p className='text-muted-foreground text-xs'>
                 Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
               </p>

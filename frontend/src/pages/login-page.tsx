@@ -6,8 +6,8 @@ import { loginGoogle } from '@/api/auth'
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
-import { authActions } from '@/stores/auth-store'
 import { Spinner } from '@/components/ui/spinner'
+import { authActions } from '@/stores/auth-store'
 
 const LoginPage = () => {
   const navigate = useNavigate()
