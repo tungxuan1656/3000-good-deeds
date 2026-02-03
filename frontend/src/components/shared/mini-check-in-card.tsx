@@ -2,12 +2,10 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { CardSection } from '@/components/shared/card-section'
-import CheckInDrawer, {
-  type CheckInCategory,
-  type CheckInDrawerHandle,
-} from '@/components/shared/check-in-drawer'
+import { CheckInDrawer, type CheckInDrawerHandle } from '@/components/shared/check-in-drawer'
 import { GoodDeedCategoryMiniButton } from '@/components/shared/good-deed-category-button'
 import { Button } from '@/components/ui/button'
+import { useCategories } from '@/hooks/api/use-categories'
 import { cn } from '@/lib/utils'
 
 import Leaf from './leaf'
@@ -15,7 +13,7 @@ import Leaf from './leaf'
 type MiniCheckInCardProps = {
   title?: string
   description?: string
-  onOpenCheckIn?: (nextCategory?: CheckInCategory) => void
+  onOpenCheckIn?: (nextCategory?: string) => void
   className?: string
 }
 
@@ -25,8 +23,9 @@ export const MiniCheckInCard = ({
   className,
 }: MiniCheckInCardProps) => {
   const checkInRef = useRef<CheckInDrawerHandle>(null)
+  const { data: categories } = useCategories()
 
-  const openCheckIn = (nextCategory?: CheckInCategory) => {
+  const openCheckIn = (nextCategory?: string) => {
     checkInRef.current?.open(nextCategory)
   }
 
@@ -38,9 +37,15 @@ export const MiniCheckInCard = ({
         <p className='text-muted-foreground/90 mt-2 text-xs leading-relaxed'>{description}</p>
       </div>
       <div className='flex gap-2'>
-        <GoodDeedCategoryMiniButton variant='body' onClick={() => openCheckIn('body')} />
-        <GoodDeedCategoryMiniButton variant='speech' onClick={() => openCheckIn('speech')} />
-        <GoodDeedCategoryMiniButton variant='mind' onClick={() => openCheckIn('mind')} />
+        {categories.map((category) => {
+          return (
+            <GoodDeedCategoryMiniButton
+              key={category.code}
+              category={category}
+              onClick={() => openCheckIn(category.code)}
+            />
+          )
+        })}
       </div>
       <Button className='h-10 w-full rounded-full text-sm' onClick={() => openCheckIn()}>
         <PlusIcon className='size-4' />

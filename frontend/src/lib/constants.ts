@@ -34,27 +34,3 @@ export const APP_MENU_ITEMS = [
   { label: 'Nội tâm', path: PATHS.INNER, icon: LeafIcon },
   { label: 'Cài đặt', path: PATHS.SETTINGS, icon: SettingsIcon },
 ]
-
-export const CATEGORIES = {
-  body: {
-    id: '01KGH777ED9508C2E99ZA5N809',
-    classname: 'bg-body/20 hover:bg-body/40',
-    icon: '/icons/icon_than.png',
-    label: 'Thân',
-    description: 'Hỗ trợ, giúp đỡ, hành động thiện lành',
-  },
-  speech: {
-    id: '01KGH777EH3JS6ZGC28ZB9MPYF',
-    classname: 'bg-speech/20 hover:bg-speech/40',
-    icon: '/icons/icon_khau.png',
-    label: 'Khẩu',
-    description: 'Lời nói hiền lành & nâng đỡ người khác',
-  },
-  mind: {
-    id: '01KGH777EH1K3H22612D5S36H8',
-    classname: 'bg-mind/20 hover:bg-mind/40',
-    icon: '/icons/icon_y.png',
-    label: 'Ý',
-    description: 'Suy nghĩ tốt đẹp & thiện lành',
-  },
-}

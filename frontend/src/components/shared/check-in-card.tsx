@@ -1,16 +1,19 @@
 import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
+import { useCategories } from '@/hooks/api/use-categories'
+
 import { Button } from '../ui/button'
 import { CardSection } from './card-section'
-import CheckInDrawer, { type CheckInCategory, type CheckInDrawerHandle } from './check-in-drawer'
+import { CheckInDrawer, type CheckInDrawerHandle } from './check-in-drawer'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 import Leaf from './leaf'
 
 export function CheckInCard() {
   const checkInRef = useRef<CheckInDrawerHandle>(null)
+  const { data: categories } = useCategories()
 
-  const openCheckIn = (nextCategory?: CheckInCategory) => {
+  const openCheckIn = (nextCategory?: string) => {
     checkInRef.current?.open(nextCategory)
   }
 
@@ -26,9 +29,15 @@ export function CheckInCard() {
           </p>
         </div>
         <div className='relative flex flex-col gap-3'>
-          <GoodDeedCategoryButton variant='body' onClick={() => openCheckIn('body')} />
-          <GoodDeedCategoryButton variant='speech' onClick={() => openCheckIn('speech')} />
-          <GoodDeedCategoryButton variant='mind' onClick={() => openCheckIn('mind')} />
+          {categories.map((category) => {
+            return (
+              <GoodDeedCategoryButton
+                key={category.code}
+                category={category}
+                onClick={() => openCheckIn(category.code)}
+              />
+            )
+          })}
         </div>
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
           <Button onClick={() => openCheckIn()}>

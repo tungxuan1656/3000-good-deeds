@@ -24,28 +24,27 @@ import {
 } from '@/components/ui/drawer'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Spinner } from '@/components/ui/spinner'
+import { useCategories } from '@/hooks/api/use-categories'
 import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { CATEGORIES } from '@/lib/constants'
 
 import { Textarea } from '../ui/textarea'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 
-export type CheckInCategory = 'body' | 'speech' | 'mind'
-
 export interface CheckInDrawerHandle {
-  open: (category?: CheckInCategory) => void
+  open: (categoryCode?: string) => void
   close: () => void
 }
 
 const moodOptions = ['An vui', 'Biết ơn', 'Nhẹ lòng', 'Ấm áp', 'Bình an', 'Hy vọng']
 
-const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
+export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   const isMobile = useIsMobile()
+  const { data: categories } = useCategories()
   const createDeed = useCreateDeed()
   const [isOpen, setIsOpen] = React.useState(false)
   const [step, setStep] = React.useState(1)
-  const [_category, setCategory] = React.useState<CheckInCategory | null>(null)
+  const [category, setCategory] = React.useState<string | null>(null)
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date())
   const [note, setNote] = React.useState('')
   const [moodTags, setMoodTags] = React.useState<string[]>([])
@@ -55,7 +54,7 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null)
 
   const open = React.useCallback(
-    (nextCategory?: CheckInCategory) => {
+    (nextCategory?: string) => {
       setCategory(nextCategory ?? null)
       if (nextCategory) setStep(2)
       else setStep(1)
@@ -147,21 +146,21 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   )
 
   const handleSubmit = React.useCallback(async () => {
-    if (!_category) return
+    if (!category) return
 
-    const categoryId = CATEGORIES[_category].id
+    const categoryCode = category
     const now = new Date()
     const performedAt = new Date(selectedDate)
     performedAt.setHours(now.getHours(), now.getMinutes(), 0, 0)
 
     await createDeed.mutateAsync({
-      categoryId,
+      categoryCode,
       description: note.trim() || undefined,
       performedAt: performedAt.getTime(),
     })
 
     setIsOpen(false)
-  }, [_category, createDeed, note, selectedDate])
+  }, [category, createDeed, note, selectedDate])
 
   const toggleMoodTag = (tag: string) => {
     setMoodTags((prev) =>
@@ -208,12 +207,12 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
           <div className='px-4 pb-4'>
             {step === 1 && (
               <div className='flex flex-col gap-3'>
-                {Object.entries(CATEGORIES).map(([key]) => (
+                {categories.map((category) => (
                   <GoodDeedCategoryButton
-                    key={key}
-                    variant={key as CheckInCategory}
+                    key={category.code}
+                    category={category}
                     onClick={() => {
-                      setCategory(key as CheckInCategory)
+                      setCategory(category.code)
                       setStep(2)
                     }}
                   />
@@ -359,7 +358,3 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
     </Drawer>
   )
 })
-
-CheckInDrawer.displayName = 'CheckInDrawer'
-
-export default CheckInDrawer

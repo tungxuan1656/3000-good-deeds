@@ -31,18 +31,18 @@ export interface LoginRequest {
 
 export interface DeedDTO {
   id: string
-  categoryId: string
+  categoryCode: string
   description?: string
   performedAt: number
   createdAt: number
-  category?: DeedCategoryDTO
 }
 
 export interface DeedCategoryDTO {
-  id: string
+  code: string
   name: string
-  icon: string
-  color: string
+  description?: string | null
+  icon?: string | null
+  style?: string | null
 }
 
 export interface GetDeedsRequest {
@@ -52,7 +52,7 @@ export interface GetDeedsRequest {
 }
 
 export interface CreateDeedRequest {
-  categoryId: string
+  categoryCode: string
   description?: string
   performedAt?: number
 }
