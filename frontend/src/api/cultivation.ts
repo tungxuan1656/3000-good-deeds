@@ -7,15 +7,18 @@ import type {
   RandomActDTO,
 } from '../types/api'
 import { client } from './client'
+import { API_ENDPOINTS } from './endpoints'
 
 export const getDailyQuote = async (): Promise<ApiResponse<DailyQuoteDTO>> => {
-  const response = await client.get<ApiResponse<DailyQuoteDTO>>('/cultivation/quotes/daily')
+  const response = await client.get<ApiResponse<DailyQuoteDTO>>(
+    API_ENDPOINTS.cultivation.dailyQuote,
+  )
 
   return response.data
 }
 
 export const getRandomAct = async (): Promise<ApiResponse<RandomActDTO>> => {
-  const response = await client.get<ApiResponse<RandomActDTO>>('/cultivation/acts/random')
+  const response = await client.get<ApiResponse<RandomActDTO>>(API_ENDPOINTS.cultivation.randomAct)
 
   return response.data
 }
@@ -23,13 +26,15 @@ export const getRandomAct = async (): Promise<ApiResponse<RandomActDTO>> => {
 export const getJournal = async (
   params: GetJournalRequest,
 ): Promise<ApiResponse<JournalEntryDTO[]>> => {
-  const response = await client.get<ApiResponse<JournalEntryDTO[]>>('/journal', { params })
+  const response = await client.get<ApiResponse<JournalEntryDTO[]>>(API_ENDPOINTS.journal.list, {
+    params,
+  })
 
   return response.data
 }
 
 export const createJournal = async (data: CreateJournalRequest): Promise<ApiResponse<void>> => {
-  const response = await client.post<ApiResponse<void>>('/journal', data)
+  const response = await client.post<ApiResponse<void>>(API_ENDPOINTS.journal.create, data)
 
   return response.data
 }

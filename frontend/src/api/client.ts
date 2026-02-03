@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { API_ENDPOINTS } from './endpoints'
+
 // Get API URL from env or default
 const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
 
@@ -81,7 +83,7 @@ client.interceptors.response.use(
 
         try {
           // Try to refresh the token
-          const response = await axios.post(`${API_URL}/auth/refresh`, {
+          const response = await axios.post(`${API_URL}${API_ENDPOINTS.auth.refresh}`, {
             refreshToken,
           })
 

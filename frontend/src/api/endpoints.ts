@@ -1,0 +1,49 @@
+export const API_ENDPOINTS = {
+  auth: {
+    google: '/auth/google',
+    logout: '/auth/logout',
+    refresh: '/auth/refresh',
+  },
+  users: {
+    me: '/users/me',
+  },
+  deeds: {
+    list: '/deeds',
+    create: '/deeds',
+    update: (id: string) => `/deeds/${id}`,
+    delete: (id: string) => `/deeds/${id}`,
+    detail: (id: string) => `/deeds/${id}`,
+  },
+  categories: {
+    list: '/categories',
+  },
+  goals: {
+    list: '/goals',
+    create: '/goals',
+    update: (id: string) => `/goals/${id}`,
+    delete: (id: string) => `/goals/${id}`,
+  },
+  stats: {
+    summary: '/stats/summary',
+  },
+  activities: {
+    calendar: '/activities/calendar',
+    streak: '/activities/streak',
+  },
+  achievements: {
+    definitions: '/achievements/definitions',
+    mine: '/achievements',
+  },
+  reminders: {
+    settings: '/reminders/settings',
+  },
+  cultivation: {
+    dailyQuote: '/cultivation/quotes/daily',
+    randomAct: '/cultivation/acts/random',
+  },
+  journal: {
+    list: '/journal',
+    create: '/journal',
+  },
+  seed: '/seed',
+} as const
