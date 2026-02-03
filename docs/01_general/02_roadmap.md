@@ -27,7 +27,7 @@ Tài liệu này phác thảo lộ trình xây dựng phiên bản MVP (Minimum 
 ## Giai đoạn 2.5: Tu Tâp Nội Tâm (Inner Cultivation)
 **Mục tiêu:** Cung cấp công cụ hỗ trợ "quay vào bên trong" (Đã hoàn thiện Backend).
 
-*   [x] **Pháp ngữ mỗi ngày (Daily Quotes):** Hiển thị lời dạy hiền triết ngẫu nhiên.
+*   [x] **Pháp ngữ (Random Quotes):** Hiển thị lời dạy hiền triết ngẫu nhiên (cache theo phiên).
 *   [x] **Gieo duyên lành (Random Acts):** Gợi ý việc thiện ngẫu nhiên.
 *   [ ] **Sổ tay tâm hồn (Soul Journal):** Viết nhật ký Sám hối & Biết ơn (Riêng tư).
 *   [ ] **Hỗ trợ thiền & thở:** Timer đơn giản & Hướng dẫn thở 4-7-8.

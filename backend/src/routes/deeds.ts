@@ -24,7 +24,7 @@ deeds.post('/', async (c) => {
   const currentUser = c.get('user')
   const body = await c.req.json<CreateDeedRequest>()
 
-  if (!body || !body.categoryId) {
+  if (!body || !body.categoryCode) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
   }
 

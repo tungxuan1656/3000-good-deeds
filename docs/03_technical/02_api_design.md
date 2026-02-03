@@ -30,7 +30,10 @@
 
 ### Users
 *   `GET /users/me` - Lấy profile & settings.
-*   `PUT /users/me` - Cập nhật profile.
+*   `PATCH /users/me` - Cập nhật profile.
+
+### Categories
+*   `GET /categories` - Lấy danh mục việc thiện (system default).
 
 ### Deeds (Cốt lõi)
 *   `GET /deeds` - Lấy danh sách (hỗ trợ filter date).
@@ -38,7 +41,7 @@
 *   `DELETE /deeds/:id` - Xóa.
 
 ### Cultivation (Tu tập)
-*   `GET /cultivation/quotes/daily` - Lấy pháp ngữ hôm nay.
+*   `GET /cultivation/quotes/random` - Lấy pháp ngữ ngẫu nhiên.
 *   `GET /cultivation/acts/random` - Gợi ý việc thiện.
 *   `GET /journal` - Lấy danh sách nhật ký.
 *   `POST /journal` - Viết nhật ký.

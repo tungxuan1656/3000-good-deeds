@@ -58,11 +58,11 @@ ON oauth_accounts(provider, provider_user_id);
 
 -- 4. CATEGORIES (System-managed in MVP)
 CREATE TABLE IF NOT EXISTS categories (
-  id TEXT PRIMARY KEY,               -- stable ID
-  key TEXT UNIQUE NOT NULL,          -- stable identifier (e.g., 'body')
+  code TEXT PRIMARY KEY,            -- stable identifier (e.g., 'body')
   name TEXT NOT NULL,
   description TEXT,
-  icon_key TEXT NOT NULL,
+  icon TEXT NOT NULL,                -- icon URL
+  style TEXT,                        -- className string
   order_index INTEGER DEFAULT 0,
   is_active BOOLEAN DEFAULT 1,
   is_system_default BOOLEAN DEFAULT 1,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS good_deeds (
   id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
-  category_id TEXT NOT NULL,
+  category_code TEXT NOT NULL,
 
   description TEXT,                  -- short note
   emotion_after TEXT,                -- optional (future)
@@ -87,14 +87,14 @@ CREATE TABLE IF NOT EXISTS good_deeds (
   updated_at INTEGER NOT NULL,
 
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (category_id) REFERENCES categories(id)
+  FOREIGN KEY (category_code) REFERENCES categories(code)
 );
 
 CREATE INDEX IF NOT EXISTS idx_deeds_user_date
 ON good_deeds(user_id, performed_at);
 
 CREATE INDEX IF NOT EXISTS idx_deeds_user_category
-ON good_deeds(user_id, category_id);
+ON good_deeds(user_id, category_code);
 
 -- 6. GOALS
 CREATE TABLE IF NOT EXISTS goals (

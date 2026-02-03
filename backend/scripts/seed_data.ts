@@ -1,10 +1,15 @@
+/// <reference types="node" />
+
 import { spawn } from 'node:child_process'
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+
 import { parse } from 'csv-parse/sync'
 import { ulid } from 'ulid'
+
+import { seedAchievements, seedCategories, seedRandomActs } from '../src/seed'
 
 type Target = 'local' | 'remote' | 'preview'
 
@@ -15,16 +20,16 @@ interface CliOptions {
 }
 
 const README = `Usage:
-  pnpm --filter backend run import:dharma-quotes [--local|--remote|--preview] [--db <binding>] [--env <environment>]
+  pnpm --filter backend run seed:data [--local|--remote|--preview] [--db <binding>] [--env <environment>]
 
 Options:
-  --local           Execute against the local D1 instance used by wrangler dev (default)
-  --remote          Run the SQL against the remote D1 database defined in wrangler.toml
-  --preview         Target the D1 preview database
+  --local            Execute against the local D1 instance used by wrangler dev (default)
+  --remote           Run the SQL against the remote D1 database defined in wrangler.toml
+  --preview          Target the D1 preview database
   --db <binding>     Database binding name (default: DB)
-  --env <env>       Wrangler environment to load before executing
-  --help, -h        Show this help
-` // ascii only
+  --env <env>        Wrangler environment to load before executing
+  --help, -h         Show this help
+`
 
 function printHelp() {
   console.log(README)
@@ -102,22 +107,18 @@ async function runCommand(args: string[], cwd: string) {
   const control = spawn('npx', args, { cwd, stdio: 'inherit' })
 
   await new Promise<void>((resolve, reject) => {
-    control.on('close', (code) => {
+    control.on('close', (code: number | null) => {
       if (code === 0) {
         resolve()
       } else {
         reject(new Error(`Command exited with code ${code}`))
       }
     })
-    control.on('error', (err) => reject(err))
+    control.on('error', (err: unknown) => reject(err))
   })
 }
 
-async function main() {
-  const options = parseArgs()
-  const scriptDir = path.dirname(fileURLToPath(import.meta.url))
-  const csvPath = path.join(scriptDir, '..', 'resources', 'dharma_quotes', 'kinhphapcu-all.csv')
-
+async function loadQuotes(csvPath: string) {
   const rawCsv = await fs.readFile(csvPath, 'utf-8')
   const parsed = parse(rawCsv, {
     columns: true,
@@ -129,34 +130,74 @@ async function main() {
     throw new Error('No dharma quotes were found in the CSV file')
   }
 
-  const records = parsed
+  return parsed
     .map((row) => ({
       content: String((row as Record<string, string>).content ?? '').trim(),
       author: String((row as Record<string, string>).author ?? '').trim(),
       source: String((row as Record<string, string>).source ?? '').trim(),
     }))
     .filter((quote) => quote.content.length > 0)
+}
 
-  if (records.length === 0) {
-    throw new Error('Trimmed dharma quotes are empty after filtering')
+async function main() {
+  const options = parseArgs()
+  const scriptDir = path.dirname(fileURLToPath(import.meta.url))
+  const csvPath = path.join(scriptDir, '..', 'resources', 'dharma_quotes', 'kinhphapcu-all.csv')
+
+  const quotes = await loadQuotes(csvPath)
+
+  const statements: string[] = ['BEGIN TRANSACTION;']
+
+  for (const category of seedCategories) {
+    const now = Date.now()
+    statements.push(
+      `INSERT OR REPLACE INTO categories (code, name, description, icon, style, order_index, is_active, is_system_default, created_at, updated_at)
+       VALUES (${sqlString(category.code)}, ${sqlString(category.name)}, ${sqlString(
+         category.description,
+       )}, ${sqlString(category.icon)}, ${sqlString(category.style)}, ${category.order_index}, 1, 1, ${now}, ${now});`,
+    )
   }
 
-  const statements = records.map((quote) => {
-    const createdAt = Date.now()
-    const id = ulid()
-    return `INSERT OR REPLACE INTO dharma_quotes (id, content, author, source, created_at, updated_at)\nVALUES (${sqlString(
-      id,
-    )}, ${sqlString(quote.content)}, ${sqlString(quote.author || null)}, ${sqlString(quote.source || null)}, ${createdAt}, ${createdAt});`
-  })
+  for (const achievement of seedAchievements) {
+    const now = Date.now()
+    statements.push(
+      `INSERT OR REPLACE INTO achievement_definitions (id, code, title, description, icon_key, condition_json, order_index, is_active, created_at, updated_at)
+       VALUES (${sqlString(achievement.id)}, ${sqlString(achievement.code)}, ${sqlString(
+         achievement.title,
+       )}, ${sqlString(achievement.description)}, ${sqlString(
+         achievement.icon_key,
+       )}, ${sqlString(achievement.condition_json)}, ${achievement.order_index}, 1, ${now}, ${now});`,
+    )
+  }
 
-  const sql = ['BEGIN TRANSACTION;', ...statements, 'COMMIT;'].join('\n')
+  for (const quote of quotes) {
+    const now = Date.now()
+    statements.push(
+      `INSERT OR REPLACE INTO dharma_quotes (id, content, author, source, created_at, updated_at)
+       VALUES (${sqlString(ulid())}, ${sqlString(quote.content)}, ${sqlString(
+         quote.author || null,
+       )}, ${sqlString(quote.source || null)}, ${now}, ${now});`,
+    )
+  }
 
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'import-dharma-'))
-  const sqlFilePath = path.join(tempDir, 'dharma-quotes.sql')
+  for (const act of seedRandomActs) {
+    const now = Date.now()
+    statements.push(
+      `INSERT OR REPLACE INTO random_acts (id, content, created_at, updated_at)
+       VALUES (${sqlString(act.id)}, ${sqlString(act.content)}, ${now}, ${now});`,
+    )
+  }
+
+  statements.push('COMMIT;')
+
+  const sql = statements.join('\n')
+
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'seed-data-'))
+  const sqlFilePath = path.join(tempDir, 'seed-data.sql')
   await fs.writeFile(sqlFilePath, sql)
 
   try {
-    console.log(`Generated SQL script with ${statements.length} statements at ${sqlFilePath}`)
+    console.log(`Generated SQL script with ${statements.length - 2} statements at ${sqlFilePath}`)
 
     const commandArgs = ['wrangler', 'd1', 'execute', options.dbBinding, '--file', sqlFilePath]
     if (options.target === 'local') {
@@ -175,13 +216,13 @@ async function main() {
     console.log(`Running: npx ${commandArgs.join(' ')}`)
     await runCommand(commandArgs, path.join(scriptDir, '..'))
 
-    console.log('Import completed successfully.')
+    console.log('Seed data completed successfully.')
   } finally {
     await fs.rm(tempDir, { recursive: true, force: true })
   }
 }
 
 main().catch((error) => {
-  console.error('Failed to import dharma quotes:', error)
+  console.error('Failed to seed data:', error)
   process.exit(1)
 })

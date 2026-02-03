@@ -24,7 +24,7 @@ Hệ thống sử dụng 3 nhóm cốt lõi (Mặc định):
 2.  **Khẩu thiện (Speech):** Lời nói (ái ngữ, chân thật, hòa giải).
 3.  **Ý thiện (Mind):** Tâm ý (bao dung, buông xả, hoan hỷ).
 
-*Lưu ý: Trong MVP, danh mục là cố định, user không tạo thêm.*
+*Lưu ý: Trong MVP, danh mục là cố định, user không tạo thêm. Frontend lấy danh mục từ API `GET /categories`.*
 
 ---
 

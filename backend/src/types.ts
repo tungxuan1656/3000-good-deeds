@@ -29,12 +29,12 @@ export interface User {
 
 // Category Entity
 export interface Category {
-  id: string
+  code: string
   name: string
   description: string | null
   icon: string | null
-  color: string | null
   isActive: boolean
+  style: string | null
   createdAt: number
 }
 
@@ -42,7 +42,7 @@ export interface Category {
 export interface GoodDeed {
   id: string
   userId: string
-  categoryId: string
+  categoryCode: string
   description: string | null
   performedAt: number
   createdAt: number
@@ -92,13 +92,13 @@ export interface UserStats {
 
 // Request Types
 export interface CreateDeedRequest {
-  categoryId: string
+  categoryCode: string
   description?: string
   performedAt?: number // defaults to now
 }
 
 export interface UpdateDeedRequest {
-  categoryId?: string
+  categoryCode?: string
   description?: string
   performedAt?: number
 }

@@ -72,7 +72,7 @@ Lấy thông tin người dùng hiện tại và cài đặt.
 }
 ```
 
-### `PUT /users/me`
+### `PATCH /users/me`
 Cập nhật thông tin profile hoặc settings.
 
 **Request Body (Partial Update):**
@@ -105,16 +105,10 @@ Lấy danh sách việc thiện đã làm.
   "data": [
     {
       "id": "d_1",
-      "categoryId": "cat_body",
+      "categoryCode": "body",
       "description": "Giúp bà cụ qua đường",
       "performedAt": 1706500000000,
       "createdAt": 1706500100000,
-      "category": {
-        "id": "cat_body",
-        "name": "Thân thiện",
-        "icon": "hand-heart",
-        "color": "blue"
-      }
     }
   ],
   "error": null
@@ -127,7 +121,7 @@ Ghi nhận việc thiện mới.
 **Request Body:**
 ```json
 {
-  "categoryId": "cat_body", // (Required)
+  "categoryCode": "body", // (Required)
   "description": "Ghi chú...", // (Optional)
   "performedAt": 1706500000000 // (Optional, Default: now)
 }
@@ -143,10 +137,34 @@ Xóa việc thiện.
 
 ---
 
+## 3. Categories (Danh mục)
+
+### `GET /categories`
+Lấy danh mục việc thiện (system default).
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "code": "body",
+      "name": "Thân thiện",
+      "description": "Hành động cụ thể bằng thân",
+      "icon": "/icons/icon_than.png",
+      "style": "bg-body/20 hover:bg-body/40"
+    }
+  ],
+  "error": null
+}
+```
+
+---
+
 ## 4. Cultivation (Tu tập)
 
-### `GET /cultivation/quotes/daily`
-Lấy pháp ngữ (quote) của ngày hôm nay.
+### `GET /cultivation/quotes/random`
+Lấy pháp ngữ (quote) ngẫu nhiên.
 
 **Response (200 OK):**
 ```json

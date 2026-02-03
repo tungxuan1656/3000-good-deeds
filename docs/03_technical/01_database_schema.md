@@ -57,26 +57,26 @@ Quản lý phiên đăng nhập dài hạn.
 
 ### `categories`
 Danh mục việc thiện (System managed).
-| Column          | Type          | Description                             |
-| :-------------- | :------------ | :-------------------------------------- |
-| **id**          | TEXT (PK)     | ULID                                    |
-| **key**         | TEXT (Unique) | Mã định danh ('body', 'speech', 'mind') |
-| **name**        | TEXT          | Tên hiển thị (Tiếng Việt)               |
-| **description** | TEXT          | Mô tả ngắn                              |
-| **icon_key**    | TEXT          | Tên icon (Lucide)                       |
-| **order_index** | INTEGER       | Thứ tự sắp xếp                          |
-| **is_active**   | BOOLEAN       | 1 = Hiển thị                            |
+| Column          | Type      | Description                             |
+| :-------------- | :-------- | :-------------------------------------- |
+| **code**        | TEXT (PK) | Mã định danh ('body', 'speech', 'mind') |
+| **name**        | TEXT      | Tên hiển thị (Tiếng Việt)               |
+| **description** | TEXT      | Mô tả ngắn                              |
+| **icon**        | TEXT      | URL icon                                |
+| **style**       | TEXT      | className string                        |
+| **order_index** | INTEGER   | Thứ tự sắp xếp                          |
+| **is_active**   | BOOLEAN   | 1 = Hiển thị                            |
 
 ### `good_deeds`
 Bảng lưu trữ việc thiện.
-| Column           | Type      | Description                   |
-| :--------------- | :-------- | :---------------------------- |
-| **id**           | TEXT (PK) | ULID                          |
-| **user_id**      | TEXT (FK) | Reference `users.id`          |
-| **category_id**  | TEXT (FK) | Reference `categories.id`     |
-| **description**  | TEXT      | Ghi chú người dùng            |
-| **performed_at** | INTEGER   | Thời điểm thực hiện hành động |
-| **is_private**   | BOOLEAN   | Luôn là 1 (Private) trong MVP |
+| Column            | Type      | Description                   |
+| :---------------- | :-------- | :---------------------------- |
+| **id**            | TEXT (PK) | ULID                          |
+| **user_id**       | TEXT (FK) | Reference `users.id`          |
+| **category_code** | TEXT (FK) | Reference `categories.code`   |
+| **description**   | TEXT      | Ghi chú người dùng            |
+| **performed_at**  | INTEGER   | Thời điểm thực hiện hành động |
+| **is_private**    | BOOLEAN   | Luôn là 1 (Private) trong MVP |
 
 ---
 

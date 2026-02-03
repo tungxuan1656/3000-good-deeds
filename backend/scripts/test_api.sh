@@ -75,7 +75,7 @@ fi
 echo "4. Creating Deed..."
 DEED_RES=$(curl -s -X POST "$API_URL/deeds" \
   -H "$AUTH_HEADER" -H "$CONTENT_TYPE" \
-  -d '{"categoryId": "cat_body", "description": "Helping test"}')
+    -d '{"categoryCode": "body", "description": "Helping test"}')
 DEED_ID=$(echo $DEED_RES | python3 -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
 
 if [ -n "$DEED_ID" ] && [ "$DEED_ID" != "null" ]; then

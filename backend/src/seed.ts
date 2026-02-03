@@ -1,47 +1,31 @@
-const initialCategories = [
+export const seedCategories = [
   {
-    id: '01KGH777ED9508C2E99ZA5N809',
-    key: 'body',
+    code: 'body',
     name: 'Thân thiện',
     description: 'Hành động cụ thể bằng thân',
-    icon_key: 'hand-heart',
+    icon: '/icons/icon_than.png',
+    style: 'bg-body/20 hover:bg-body/40',
     order_index: 1,
   },
   {
-    id: '01KGH777EH3JS6ZGC28ZB9MPYF',
-    key: 'speech',
+    code: 'speech',
     name: 'Khẩu thiện',
     description: 'Lời nói ái ngữ, chân thật',
-    icon_key: 'message-circle-heart',
+    icon: '/icons/icon_khau.png',
+    style: 'bg-speech/20 hover:bg-speech/40',
     order_index: 2,
   },
   {
-    id: '01KGH777EH1K3H22612D5S36H8',
-    key: 'mind',
+    code: 'mind',
     name: 'Ý thiện',
     description: 'Suy nghĩ lành, buông xả',
-    icon_key: 'brain-circuit',
+    icon: '/icons/icon_y.png',
+    style: 'bg-mind/20 hover:bg-mind/40',
     order_index: 3,
-  },
-  {
-    id: '01KGH777EHAJDZY1PPDMSWDZPT',
-    key: 'patience',
-    name: 'Nhẫn nhục',
-    description: 'Chấp nhận nghịch cảnh',
-    icon_key: 'shield',
-    order_index: 4,
-  },
-  {
-    id: '01KGH777EH77FMYE827V9VY65K',
-    key: 'gratitude',
-    name: 'Biết ơn',
-    description: 'Tri ân người và vật',
-    icon_key: 'flower',
-    order_index: 5,
   },
 ]
 
-const initialAchievements = [
+export const seedAchievements = [
   {
     id: '01KGH777EHT5J81GAABTPMHPFR',
     code: 'FIRST_DEED',
@@ -71,7 +55,7 @@ const initialAchievements = [
   },
 ]
 
-const initialQuotes = [
+export const seedQuotes = [
   {
     id: '01KGH777EHEHHDHSY3CPTJ5XQE',
     content:
@@ -105,7 +89,7 @@ const initialQuotes = [
   },
 ]
 
-const initialRandomActs = [
+export const seedRandomActs = [
   { id: '01KGH777EJ18EXJ5WFEBGA04DW', content: 'Nhắn tin hỏi thăm một người bạn cũ.' },
   { id: '01KGH777EJ6JJ5A5CMJXTBF4C6', content: 'Cười với một người lạ.' },
   { id: '01KGH777EJEMRJKC9NK3G2BZ0S', content: 'Nhặt rác nơi công cộng.' },
@@ -123,20 +107,20 @@ const initialRandomActs = [
 
 export async function seed(db: any) {
   console.log('🌱 Seeding Categories...')
-  for (const cat of initialCategories) {
+  for (const cat of seedCategories) {
     await db
       .prepare(
         `
-            INSERT OR REPLACE INTO categories (id, key, name, description, icon_key, order_index, is_active, created_at, updated_at)
+            INSERT OR REPLACE INTO categories (code, name, description, icon, style, order_index, is_active, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)
         `,
       )
       .bind(
-        cat.id,
-        cat.key,
+        cat.code,
         cat.name,
         cat.description,
-        cat.icon_key,
+        cat.icon,
+        cat.style,
         cat.order_index,
         Date.now(),
         Date.now(),
@@ -145,7 +129,7 @@ export async function seed(db: any) {
   }
 
   console.log('🏆 Seeding Achievements...')
-  for (const ach of initialAchievements) {
+  for (const ach of seedAchievements) {
     await db
       .prepare(
         `
@@ -168,7 +152,7 @@ export async function seed(db: any) {
   }
 
   console.log('📖 Seeding Dharma Quotes...')
-  for (const quote of initialQuotes) {
+  for (const quote of seedQuotes) {
     await db
       .prepare(
         `
@@ -181,7 +165,7 @@ export async function seed(db: any) {
   }
 
   console.log('✨ Seeding Random Acts...')
-  for (const act of initialRandomActs) {
+  for (const act of seedRandomActs) {
     await db
       .prepare(
         `

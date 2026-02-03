@@ -12,12 +12,12 @@ export async function getDeeds(
   const { results } = await db
     .prepare(
       `SELECT 
-        d.id, d.user_id as userId, d.category_id as categoryId, d.description,
+        d.id, d.user_id as userId, d.category_code as categoryCode, d.description,
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
-        c.id as c_id, c.name as c_name, c.icon_key as c_icon, c.description as c_desc,
+        c.code as c_code, c.name as c_name, c.icon as c_icon, c.description as c_desc, c.style as c_style,
         c.is_active as c_active, c.created_at as c_created
        FROM good_deeds d
-       JOIN categories c ON d.category_id = c.id
+       JOIN categories c ON d.category_code = c.code
        WHERE d.user_id = ?
        ORDER BY d.performed_at DESC, d.created_at DESC
        LIMIT ? OFFSET ?`,
@@ -26,24 +26,17 @@ export async function getDeeds(
     .all()
 
   // Map result to GoodDeed structure
-  return results.map((row: any) => ({
-    id: row.id,
-    userId: row.userId,
-    categoryId: row.categoryId,
-    description: row.description,
-    performedAt: row.performedAt,
-    createdAt: row.createdAt,
-    updatedAt: row.updatedAt,
-    category: {
-      id: row.c_id,
-      name: row.c_name,
-      icon: row.c_icon,
-      color: null, // Removed color from schema?
-      description: row.c_desc,
-      isActive: Boolean(row.c_active),
-      createdAt: row.c_created,
-    },
-  }))
+  return results.map((row: any) => {
+    return {
+      id: row.id,
+      userId: row.userId,
+      categoryCode: row.categoryCode,
+      description: row.description,
+      performedAt: row.performedAt,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
+    }
+  })
 }
 
 export async function createDeed(
@@ -57,10 +50,10 @@ export async function createDeed(
 
   await db
     .prepare(
-      `INSERT INTO good_deeds (id, user_id, category_id, description, is_private, performed_at, created_at, updated_at)
+      `INSERT INTO good_deeds (id, user_id, category_code, description, is_private, performed_at, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     )
-    .bind(newId, userId, body.categoryId, body.description || null, 1, performedAt, now, now)
+    .bind(newId, userId, body.categoryCode, body.description || null, 1, performedAt, now, now)
     .run()
 
   // Check achievements
@@ -73,12 +66,12 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
   const row = await db
     .prepare(
       `SELECT 
-        d.id, d.user_id as userId, d.category_id as categoryId, d.description,
+        d.id, d.user_id as userId, d.category_code as categoryCode, d.description,
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
-        c.id as c_id, c.name as c_name, c.icon_key as c_icon, c.description as c_desc,
+        c.code as c_code, c.name as c_name, c.icon as c_icon, c.description as c_desc, c.style as c_style,
         c.is_active as c_active, c.created_at as c_created
        FROM good_deeds d
-       JOIN categories c ON d.category_id = c.id
+       JOIN categories c ON d.category_code = c.code
        WHERE d.id = ?`,
     )
     .bind(deedId)
@@ -91,20 +84,11 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
   return {
     id: row.id,
     userId: row.userId,
-    categoryId: row.categoryId,
+    categoryCode: row.categoryCode,
     description: row.description,
     performedAt: row.performedAt,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
-    category: {
-      id: row.c_id,
-      name: row.c_name,
-      icon: row.c_icon,
-      color: null,
-      description: row.c_desc,
-      isActive: Boolean(row.c_active),
-      createdAt: row.c_created,
-    },
   }
 }
 
@@ -128,9 +112,9 @@ export async function updateDeed(
     throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
   }
 
-  if (body.categoryId !== undefined) {
-    updates.push('category_id = ?')
-    values.push(body.categoryId)
+  if (body.categoryCode !== undefined) {
+    updates.push('category_code = ?')
+    values.push(body.categoryCode)
   }
 
   if (body.description !== undefined) {
