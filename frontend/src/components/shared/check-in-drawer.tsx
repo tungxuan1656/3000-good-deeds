@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
+import { vi } from 'date-fns/locale'
 import {
+  CalendarIcon,
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -8,6 +10,7 @@ import {
   XIcon,
 } from 'lucide-react'
 import * as React from 'react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -74,6 +77,15 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   }, [])
 
   React.useImperativeHandle(ref, () => ({ open, close }), [open, close])
+
+  const handleContinue = React.useCallback(() => {
+    if (step === 2 && note.length < 5) {
+      toast.error('Vui lòng nhập ghi chú với tối thiểu 5 ký tự.')
+
+      return
+    }
+    setStep((prev) => Math.min(4, prev + 1))
+  }, [step, note])
 
   const compressImage = React.useCallback(async (file: File) => {
     const imageUrl = URL.createObjectURL(file)
@@ -157,6 +169,12 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
     )
   }
 
+  const formattedDate = React.useMemo(() => {
+    const value = format(selectedDate, "EEEE, 'ngày' dd 'tháng' MM 'năm' yyyy", { locale: vi })
+
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }, [selectedDate])
+
   return (
     <Drawer direction={isMobile ? 'bottom' : 'right'} open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
@@ -203,28 +221,19 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
               </div>
             )}
 
-            {step === 3 && (
+            {step === 2 && (
               <div className='flex flex-col gap-4'>
-                <Textarea
-                  className='min-h-28 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
-                  placeholder='Ví dụ: Nhường đường cho người lớn tuổi...'
-                  value={note}
-                  onChange={(event) => setNote(event.target.value)}
-                />
-                <div className='flex flex-col gap-2'>
-                  <span className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                    Chọn ngày
-                  </span>
+                <div>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
-                        className='justify-between rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
+                        className='border-input justify-between rounded-2xl border bg-white px-4 py-2 text-sm'
                         variant='secondary'>
-                        {format(selectedDate, 'dd/MM/yyyy')}
-                        <ChevronRightIcon className='h-4 w-4' />
+                        <CalendarIcon className='h-4 w-4' />
+                        {formattedDate}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent align='start'>
+                    <PopoverContent align='start' className='bg-white'>
                       <Calendar
                         mode='single'
                         selected={selectedDate}
@@ -235,10 +244,16 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
                     </PopoverContent>
                   </Popover>
                 </div>
+                <Textarea
+                  className='min-h-28 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
+                  placeholder='Ví dụ: Nhường đường cho người lớn tuổi...'
+                  value={note}
+                  onChange={(event) => setNote(event.target.value)}
+                />
               </div>
             )}
 
-            {step === 2 && (
+            {step === 4 && (
               <div className='flex flex-col gap-4'>
                 <div className='text-muted-foreground flex min-h-36 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-black/10 bg-white/80 text-center text-sm'>
                   {imagePreview ? (
@@ -269,7 +284,7 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
               </div>
             )}
 
-            {step === 4 && (
+            {step === 3 && (
               <div className='flex flex-col gap-4'>
                 <div className='flex flex-wrap gap-2'>
                   {moodOptions.map((tag) => (
@@ -309,9 +324,7 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
                   Quay lại
                 </Button>
                 {step < 4 ? (
-                  <Button
-                    className='h-11 rounded-full px-6'
-                    onClick={() => setStep((prev) => Math.min(4, prev + 1))}>
+                  <Button className='h-11 rounded-full px-6' onClick={handleContinue}>
                     Tiếp tục
                     <ChevronRightIcon className='h-4 w-4' />
                   </Button>

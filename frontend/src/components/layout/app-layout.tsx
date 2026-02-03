@@ -4,6 +4,7 @@ import { AppSidebar } from '@/components/layout'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 import MenuDropdown from '../shared/menu-dropdown'
+import { Toaster } from '../ui/sonner'
 import { HeaderBreadcrumbs } from './header-breadcrumbs'
 
 const AppLayout = () => {
@@ -21,6 +22,7 @@ const AppLayout = () => {
           <main className='flex flex-col gap-6'>
             <Outlet />
           </main>
+          <Toaster position='top-center' />
         </div>
       </SidebarInset>
     </SidebarProvider>
