@@ -7,6 +7,7 @@ import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
 import { authActions } from '@/stores/auth-store'
+import { Spinner } from '@/components/ui/spinner'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -89,6 +90,7 @@ const LoginPage = () => {
                 className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full'
                 disabled={isLoading}
                 onClick={() => handleGoogleLogin()}>
+                {isLoading ? <Spinner /> : null}
                 {isLoading ? 'Đang đăng nhập...' : 'Tiếp tục với Google'}
               </Button>
             </CardSection>
