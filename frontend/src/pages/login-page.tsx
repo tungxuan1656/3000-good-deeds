@@ -7,6 +7,7 @@ import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
+import { PATHS } from '@/lib/constants'
 import { authActions } from '@/stores/auth-store'
 
 const LoginPage = () => {
@@ -31,7 +32,7 @@ const LoginPage = () => {
           authActions.login(response.data)
 
           // Redirect to home
-          navigate('/', { replace: true })
+          navigate(PATHS.HOME, { replace: true })
         } else {
           setError(response.error || 'Đăng nhập thất bại')
         }

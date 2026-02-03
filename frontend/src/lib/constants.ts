@@ -7,11 +7,30 @@ import {
   TimerIcon,
 } from 'lucide-react'
 
+export const PATHS = {
+  LOGIN: '/login',
+  HOME: '/',
+  TIMELINE: '/timeline',
+  STATS: '/stats',
+  GOALS: '/goals',
+  ACHIEVEMENTS: '/achievements',
+  DEEDS: '/deeds',
+  DEED_DETAIL: (id: string) => `/deeds/${id}`,
+  INNER: '/inner',
+  INNER_QUOTE: '/inner/quote',
+  INNER_RANDOM_ACTS: '/inner/random-acts',
+  INNER_JOURNAL: '/inner/journal',
+  INNER_JOURNAL_NEW: '/inner/journal/new',
+  INNER_JOURNAL_DETAIL: (id: string) => `/inner/journal/${id}`,
+  INNER_MEDITATION: '/inner/meditation',
+  SETTINGS: '/settings',
+}
+
 export const APP_MENU_ITEMS = [
-  { label: 'Trang chủ', path: '/', icon: HomeIcon },
-  { label: 'Hành trình', path: '/timeline', icon: TimerIcon },
-  { label: 'Thống kê', path: '/stats', icon: LineChartIcon },
-  { label: 'Mục tiêu', path: '/goals', icon: TargetIcon },
-  { label: 'Nội tâm', path: '/inner', icon: LeafIcon },
-  { label: 'Cài đặt', path: '/settings', icon: SettingsIcon },
+  { label: 'Trang chủ', path: PATHS.HOME, icon: HomeIcon },
+  { label: 'Hành trình', path: PATHS.TIMELINE, icon: TimerIcon },
+  { label: 'Thống kê', path: PATHS.STATS, icon: LineChartIcon },
+  { label: 'Mục tiêu', path: PATHS.GOALS, icon: TargetIcon },
+  { label: 'Nội tâm', path: PATHS.INNER, icon: LeafIcon },
+  { label: 'Cài đặt', path: PATHS.SETTINGS, icon: SettingsIcon },
 ]

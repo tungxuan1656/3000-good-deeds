@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
 import { useUpdateUser, useUser } from '@/hooks/api/use-user'
+import { PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
@@ -65,7 +66,7 @@ const SettingsPage = () => {
       // Ignore logout errors and still clear local state
     } finally {
       authActions.logout()
-      navigate('/login', { replace: true })
+      navigate(PATHS.LOGIN, { replace: true })
     }
   }
 

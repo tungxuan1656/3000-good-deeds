@@ -3,6 +3,7 @@ import { CheckInCard } from '@/components/shared'
 import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import Leaf from '@/components/shared/leaf'
+import { ReminderSuggestCard } from '@/components/shared/reminder-suggest-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { Button } from '@/components/ui/button'
 
@@ -79,15 +80,7 @@ const HomePage = () => {
           description='4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.'
         />
 
-        <CardSection padding='md'>
-          <h3 className='text-foreground text-base font-semibold'>Nhắc nhở dịu nhẹ</h3>
-          <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
-            “Một điều tử tế mỗi ngày, tâm an yên hơn mỗi tối.”
-          </p>
-          <Button className='text-foreground mt-4 h-11 w-full rounded-full border border-black/5 bg-white text-sm font-medium hover:bg-white/80'>
-            Thiết lập nhắc nhở
-          </Button>
-        </CardSection>
+        <ReminderSuggestCard />
       </SideColumn>
     </MainContainer>
   )

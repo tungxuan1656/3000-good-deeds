@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar'
-import { APP_MENU_ITEMS } from '@/lib/constants'
+import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 export const AppSidebar = () => {
@@ -35,7 +35,7 @@ export const AppSidebar = () => {
       // Ignore logout errors and still clear local state
     } finally {
       authActions.logout()
-      navigate('/login', { replace: true })
+      navigate(PATHS.LOGIN, { replace: true })
     }
   }
 

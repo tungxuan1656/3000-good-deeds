@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { PATHS } from '@/lib/constants'
+
 import { API_ENDPOINTS } from './endpoints'
 
 // Get API URL from env or default
@@ -124,7 +126,7 @@ function redirectToLogin() {
   localStorage.removeItem('auth-storage')
 
   // Redirect to login page if not already there
-  if (!window.location.pathname.includes('/login')) {
-    window.location.href = '/login'
+  if (!window.location.pathname.includes(PATHS.LOGIN)) {
+    window.location.href = PATHS.LOGIN
   }
 }

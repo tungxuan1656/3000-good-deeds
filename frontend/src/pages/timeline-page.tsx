@@ -6,6 +6,7 @@ import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import { PATHS } from '@/lib/constants'
 
 const categoryMeta = {
   body: {
@@ -152,7 +153,7 @@ const TimelinePage = () => {
                           </div>
                           <Link
                             className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-[11px] sm:text-xs'
-                            to={`/deeds/${item.id}`}>
+                            to={PATHS.DEED_DETAIL(item.id)}>
                             Xem
                             <ChevronRightIcon className='h-3.5 w-3.5' />
                           </Link>

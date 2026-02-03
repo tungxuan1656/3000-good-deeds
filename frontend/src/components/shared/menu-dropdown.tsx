@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { APP_MENU_ITEMS } from '@/lib/constants'
+import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const MenuDropdown = () => {
@@ -27,7 +27,7 @@ const MenuDropdown = () => {
       // Ignore logout errors and still clear local state
     } finally {
       authActions.logout()
-      navigate('/login', { replace: true })
+      navigate(PATHS.LOGIN, { replace: true })
     }
   }
   const user = useAuthStore.use.user()
@@ -46,7 +46,7 @@ const MenuDropdown = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='start' className='w-64 rounded-2xl bg-white p-2 shadow-xl'>
-        <Link to={'/settings'}>
+        <Link to={PATHS.SETTINGS}>
           <div className='flex items-center gap-3 rounded-2xl border border-black/5 bg-white px-1 py-2'>
             <div className='bg-secondary/40 text-foreground flex h-10 min-h-10 w-10 min-w-10 items-center justify-center rounded-full'>
               <img alt={displayName} src={user?.avatarUrl ?? ''} />

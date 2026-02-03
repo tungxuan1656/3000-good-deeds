@@ -6,6 +6,7 @@ import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import { PATHS } from '@/lib/constants'
 
 const InnerPage = () => {
   return (
@@ -32,7 +33,7 @@ const InnerPage = () => {
           </div>
           <Link
             className='border-primary/40 bg-primary/5 hover:bg-primary/10 flex items-center gap-4 rounded-2xl border px-4 py-4 shadow-sm transition-colors'
-            to='/inner/quote'>
+            to={PATHS.INNER_QUOTE}>
             <div className='flex h-12 w-12 animate-pulse items-center justify-center rounded-2xl bg-amber-100'>
               <SparklesIcon className='h-5 w-5 text-amber-600' />
             </div>
@@ -48,7 +49,7 @@ const InnerPage = () => {
           <div className='flex flex-col gap-3'>
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to='/inner/quote'>
+              to={PATHS.INNER_QUOTE}>
               <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100'>
                 <SparklesIcon className='h-5 w-5 text-amber-600' />
               </div>
@@ -60,7 +61,7 @@ const InnerPage = () => {
 
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to='/inner/random-acts'>
+              to={PATHS.INNER_RANDOM_ACTS}>
               <div className='bg-secondary/40 flex h-12 w-12 items-center justify-center rounded-2xl'>
                 <HeartHandshakeIcon className='text-primary h-5 w-5' />
               </div>
@@ -72,7 +73,7 @@ const InnerPage = () => {
 
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to='/inner/journal'>
+              to={PATHS.INNER_JOURNAL}>
               <div className='bg-mind/20 flex h-12 w-12 items-center justify-center rounded-2xl'>
                 <BookOpenIcon className='text-primary h-5 w-5' />
               </div>
@@ -84,7 +85,7 @@ const InnerPage = () => {
 
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to='/inner/meditation'>
+              to={PATHS.INNER_MEDITATION}>
               <div className='bg-body/20 flex h-12 w-12 items-center justify-center rounded-2xl'>
                 <LeafIcon className='text-primary h-5 w-5' />
               </div>
