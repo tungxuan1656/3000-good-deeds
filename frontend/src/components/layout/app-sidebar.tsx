@@ -1,6 +1,7 @@
 import { LogOutIcon, UserRoundIcon } from 'lucide-react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
+import { logout } from '@/api/auth'
 import {
   Sidebar,
   SidebarContent,
@@ -21,12 +22,21 @@ export const AppSidebar = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const user = useAuthStore.use.user()
+  const refreshToken = useAuthStore.use.refreshToken()
   const displayName = user?.displayName ?? 'Bạn'
   const displayEmail = user?.email ?? 'Chưa có email'
 
-  const handleLogout = () => {
-    authActions.logout()
-    navigate('/login', { replace: true })
+  const handleLogout = async () => {
+    try {
+      if (refreshToken) {
+        await logout(refreshToken)
+      }
+    } catch {
+      // Ignore logout errors and still clear local state
+    } finally {
+      authActions.logout()
+      navigate('/login', { replace: true })
+    }
   }
 
   return (

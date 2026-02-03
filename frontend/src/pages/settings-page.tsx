@@ -1,6 +1,8 @@
 import { BellIcon, LogOutIcon, Trash2Icon, UserIcon } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { logout } from '@/api/auth'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
   CardSection,
@@ -14,12 +16,80 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Toggle } from '@/components/ui/toggle'
+import { useUpdateUser, useUser } from '@/hooks/api/use-user'
+import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
+  const navigate = useNavigate()
+  const userFromStore = useAuthStore.use.user()
+  const refreshToken = useAuthStore.use.refreshToken()
+  const { data: userResponse } = useUser()
+  const updateUser = useUpdateUser()
   const [reminderEnabled, setReminderEnabled] = useState(false)
+  const [reminderTime, setReminderTime] = useState('20:30')
   const [deleteText, setDeleteText] = useState('')
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const deleteDialogRef = useRef<ConfirmDialogHandle>(null)
+
+  const user = userResponse?.data ?? userFromStore
+  const displayName = user?.displayName ?? 'Bạn'
+  const displayEmail = user?.email ?? 'Chưa có email'
+  const avatarUrl = user?.avatarUrl
+  const initials = useMemo(() => {
+    const nameSource = displayName || displayEmail
+    const parts = nameSource.trim().split(' ').filter(Boolean)
+    const letters = parts.slice(0, 2).map((part) => part[0]?.toUpperCase())
+    return letters.join('') || 'U'
+  }, [displayEmail, displayName])
+
+  useEffect(() => {
+    if (user) {
+      authActions.setUser(user)
+      setReminderEnabled(Boolean(user.reminderEnabled ?? user.settings?.reminderEnabled))
+      setReminderTime(user.reminderTime ?? user.settings?.reminderTime ?? '20:30')
+    }
+  }, [user])
+
+  const handleLogout = async () => {
+    try {
+      if (refreshToken) {
+        await logout(refreshToken)
+      }
+    } catch {
+      // Ignore logout errors and still clear local state
+    } finally {
+      authActions.logout()
+      navigate('/login', { replace: true })
+    }
+  }
+
+  const handleReminderToggle = async (nextValue: boolean) => {
+    setReminderEnabled(nextValue)
+
+    try {
+      const response = await updateUser.mutateAsync({
+        reminderEnabled: nextValue,
+      })
+      if (response?.data) {
+        authActions.setUser(response.data)
+      }
+    } catch {
+      setReminderEnabled((prev) => !prev)
+    }
+  }
+
+  const handleReminderTimeBlur = async () => {
+    try {
+      const response = await updateUser.mutateAsync({
+        reminderTime,
+      })
+      if (response?.data) {
+        authActions.setUser(response.data)
+      }
+    } catch {
+      // Keep local value; backend validation will show on next successful fetch
+    }
+  }
 
   const handleDeleteOpenChange = (open: boolean) => {
     if (!open) setDeleteText('')
@@ -56,11 +126,15 @@ const SettingsPage = () => {
           <div className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4'>
             <div className='flex items-center gap-4'>
               <div className='bg-muted text-muted-foreground flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold'>
-                TD
+                {avatarUrl ? (
+                  <img alt={displayName} className='h-full w-full rounded-full' src={avatarUrl} />
+                ) : (
+                  initials
+                )}
               </div>
               <div>
-                <p className='text-foreground text-sm font-semibold'>Tung Doan</p>
-                <p className='text-muted-foreground text-xs'>tungdoan@email.com</p>
+                <p className='text-foreground text-sm font-semibold'>{displayName}</p>
+                <p className='text-muted-foreground text-xs'>{displayEmail}</p>
               </div>
             </div>
             <div className='text-muted-foreground text-xs'>
@@ -75,7 +149,7 @@ const SettingsPage = () => {
               <p className='text-foreground text-base font-semibold'>Nhắc nhở dịu nhẹ</p>
               <p className='text-muted-foreground mt-1 text-xs'>Chỉ một lần mỗi ngày.</p>
             </div>
-            <Toggle pressed={reminderEnabled} onPressedChange={setReminderEnabled}>
+            <Toggle pressed={reminderEnabled} onPressedChange={handleReminderToggle}>
               {reminderEnabled ? 'Bật' : 'Tắt'}
             </Toggle>
           </div>
@@ -86,8 +160,10 @@ const SettingsPage = () => {
               </Label>
               <Input
                 className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
-                defaultValue='20:30'
+                value={reminderTime}
                 type='time'
+                onBlur={handleReminderTimeBlur}
+                onChange={(event) => setReminderTime(event.target.value)}
               />
               <p className='text-muted-foreground text-xs'>
                 Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
@@ -156,7 +232,10 @@ const SettingsPage = () => {
         confirmLabel='Đăng xuất'
         description='Bạn có thể đăng nhập lại bất cứ lúc nào.'
         title='Đăng xuất khỏi tài khoản?'
-        onConfirm={() => logoutDialogRef.current?.close()}
+        onConfirm={() => {
+          logoutDialogRef.current?.close()
+          handleLogout()
+        }}
       />
 
       <ConfirmDialog

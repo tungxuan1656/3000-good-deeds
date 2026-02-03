@@ -10,6 +10,11 @@ export interface UserDTO {
   displayName: string
   avatarUrl?: string
   bio?: string
+  reminderTime?: string | null
+  reminderEnabled?: boolean
+  timezone?: string
+  themePreference?: 'light' | 'dark' | 'system'
+  privacyMode?: 'private' | 'limited'
   settings?: UserSettingsDTO
 }
 

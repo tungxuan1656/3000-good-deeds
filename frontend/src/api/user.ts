@@ -8,7 +8,7 @@ export const getMe = async (): Promise<ApiResponse<UserDTO>> => {
 }
 
 export const updateMe = async (data: Partial<UserDTO>): Promise<ApiResponse<UserDTO>> => {
-  const response = await client.put<ApiResponse<UserDTO>>('/users/me', data)
+  const response = await client.patch<ApiResponse<UserDTO>>('/users/me', data)
 
   return response.data
 }

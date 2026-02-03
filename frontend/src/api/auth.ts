@@ -6,3 +6,11 @@ export const loginGoogle = async (data: LoginRequest): Promise<ApiResponse<AuthR
 
   return response.data
 }
+
+export const logout = async (refreshToken?: string): Promise<ApiResponse<boolean>> => {
+  const response = await client.post<ApiResponse<boolean>>('/auth/logout', {
+    refreshToken,
+  })
+
+  return response.data
+}
