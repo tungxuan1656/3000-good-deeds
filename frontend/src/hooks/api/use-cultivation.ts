@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { createJournal, getDailyQuote, getJournal, getRandomAct } from '../../api/cultivation'
+import { createJournal, getJournal, getRandomAct, getRandomQuote } from '../../api/cultivation'
 import type { GetJournalRequest } from '../../types/api'
 
 export const CULTIVATION_KEYS = {
@@ -9,11 +9,14 @@ export const CULTIVATION_KEYS = {
   journal: (params: GetJournalRequest) => ['cultivation', 'journal', params] as const,
 }
 
-export const useDailyQuote = () => {
+const SIX_HOURS = 1000 * 60 * 60 * 6
+
+export const useRandomQuote = () => {
   return useQuery({
     queryKey: CULTIVATION_KEYS.quote,
-    queryFn: getDailyQuote,
-    staleTime: 1000 * 60 * 60, // 1 hour
+    queryFn: getRandomQuote,
+    staleTime: SIX_HOURS,
+    gcTime: SIX_HOURS,
   })
 }
 
@@ -21,7 +24,8 @@ export const useRandomAct = () => {
   return useQuery({
     queryKey: CULTIVATION_KEYS.act,
     queryFn: getRandomAct,
-    staleTime: 1000 * 60 * 60, // 1 hour
+    staleTime: SIX_HOURS,
+    gcTime: SIX_HOURS,
     enabled: false,
   })
 }

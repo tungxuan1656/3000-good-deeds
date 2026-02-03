@@ -38,7 +38,7 @@ export const API_ENDPOINTS = {
     settings: '/reminders/settings',
   },
   cultivation: {
-    dailyQuote: '/cultivation/quotes/daily',
+    randomQuote: '/cultivation/quotes/random',
     randomAct: '/cultivation/acts/random',
   },
   journal: {

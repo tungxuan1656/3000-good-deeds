@@ -65,7 +65,7 @@ const InnerJournalEditorPage = () => {
 
       <SideColumn>
         <MiniCheckInCard />
-        <DailyQuoteCard quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”' />
+        <DailyQuoteCard />
         <WeeklyRhythmCard
           activeCount={4}
           description='4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.'

@@ -1,13 +1,13 @@
 import { Hono } from 'hono'
 
-import { getDailyQuote, getRandomAct } from '../handlers/cultivation'
+import { getRandomAct, getRandomQuote } from '../handlers/cultivation'
 import { ErrorCodes, successResponse } from '../utils'
 
 const app = new Hono<{ Bindings: Env }>()
 
-// GET /api/v1/cultivation/quotes/daily
-app.get('/quotes/daily', async (c) => {
-  const quote = await getDailyQuote(c.env.DB)
+// GET /api/v1/cultivation/quotes/random
+app.get('/quotes/random', async (c) => {
+  const quote = await getRandomQuote(c.env.DB)
 
   // Fallback if no quotes exist yet (though seed should provide them)
   if (!quote) {

@@ -151,7 +151,7 @@ const GoalsPage = () => {
 
       <SideColumn>
         <MiniCheckInCard />
-        <DailyQuoteCard quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”' />
+        <DailyQuoteCard />
       </SideColumn>
     </MainContainer>
   )

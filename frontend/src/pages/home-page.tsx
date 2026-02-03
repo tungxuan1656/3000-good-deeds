@@ -26,10 +26,7 @@ const HomePage = () => {
         </CardSection>
 
         {/* Quote Section */}
-        <DailyQuoteCard
-          decoration={<Leaf className='opacity-30' position='top-right' variant={2} />}
-          quote='“Mỗi việc thiện nhỏ đều gieo một hạt giống.”'
-        />
+        <DailyQuoteCard />
         <CheckInCard />
 
         {/* Progress */}

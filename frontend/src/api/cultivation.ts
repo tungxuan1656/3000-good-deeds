@@ -9,9 +9,9 @@ import type {
 import { client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
-export const getDailyQuote = async (): Promise<ApiResponse<DailyQuoteDTO>> => {
+export const getRandomQuote = async (): Promise<ApiResponse<DailyQuoteDTO>> => {
   const response = await client.get<ApiResponse<DailyQuoteDTO>>(
-    API_ENDPOINTS.cultivation.dailyQuote,
+    API_ENDPOINTS.cultivation.randomQuote,
   )
 
   return response.data
