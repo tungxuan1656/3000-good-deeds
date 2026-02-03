@@ -1,7 +1,16 @@
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, XIcon } from 'lucide-react'
+import { format } from 'date-fns'
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ImagePlusIcon,
+  SparklesIcon,
+  XIcon,
+} from 'lucide-react'
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import {
   Drawer,
   DrawerClose,
@@ -10,6 +19,9 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Spinner } from '@/components/ui/spinner'
+import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { CATEGORIES } from '@/lib/constants'
 
@@ -27,26 +39,117 @@ const moodOptions = ['An vui', 'Biết ơn', 'Nhẹ lòng', 'Ấm áp', 'Bình a
 
 const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   const isMobile = useIsMobile()
+  const createDeed = useCreateDeed()
   const [isOpen, setIsOpen] = React.useState(false)
   const [step, setStep] = React.useState(1)
   const [_category, setCategory] = React.useState<CheckInCategory | null>(null)
+  const [selectedDate, setSelectedDate] = React.useState<Date>(new Date())
   const [note, setNote] = React.useState('')
   const [moodTags, setMoodTags] = React.useState<string[]>([])
+  const [_imageFile, setImageFile] = React.useState<File | null>(null)
+  const [imagePreview, setImagePreview] = React.useState<string | null>(null)
+  const [isCompressing, setIsCompressing] = React.useState(false)
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null)
 
-  const open = React.useCallback((nextCategory?: CheckInCategory) => {
-    setCategory(nextCategory ?? null)
-    if (nextCategory) setStep(2)
-    else setStep(1)
-    setNote('')
-    setMoodTags([])
-    setIsOpen(true)
-  }, [])
+  const open = React.useCallback(
+    (nextCategory?: CheckInCategory) => {
+      setCategory(nextCategory ?? null)
+      if (nextCategory) setStep(2)
+      else setStep(1)
+      setSelectedDate(new Date())
+      setNote('')
+      setMoodTags([])
+      setImageFile(null)
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview)
+        setImagePreview(null)
+      }
+      setIsOpen(true)
+    },
+    [imagePreview],
+  )
 
   const close = React.useCallback(() => {
     setIsOpen(false)
   }, [])
 
   React.useImperativeHandle(ref, () => ({ open, close }), [open, close])
+
+  const compressImage = React.useCallback(async (file: File) => {
+    const imageUrl = URL.createObjectURL(file)
+    try {
+      const image = new Image()
+      const imageLoaded = new Promise<HTMLImageElement>((resolve, reject) => {
+        image.onload = () => resolve(image)
+        image.onerror = (event) => reject(event)
+      })
+      image.src = imageUrl
+
+      const img = await imageLoaded
+      const maxSize = 1280
+      const ratio = Math.min(1, maxSize / Math.max(img.width, img.height))
+      const width = Math.round(img.width * ratio)
+      const height = Math.round(img.height * ratio)
+
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return file
+
+      ctx.drawImage(img, 0, 0, width, height)
+
+      const blob = await new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, 'image/jpeg', 0.8)
+      })
+
+      if (!blob) return file
+
+      return new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), {
+        type: 'image/jpeg',
+        lastModified: Date.now(),
+      })
+    } finally {
+      URL.revokeObjectURL(imageUrl)
+    }
+  }, [])
+
+  const handleImageSelect = React.useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]
+      if (!file) return
+      setIsCompressing(true)
+      try {
+        const compressed = await compressImage(file)
+        setImageFile(compressed)
+        if (imagePreview) {
+          URL.revokeObjectURL(imagePreview)
+        }
+        setImagePreview(URL.createObjectURL(compressed))
+      } finally {
+        setIsCompressing(false)
+      }
+    },
+    [compressImage, imagePreview],
+  )
+
+  const handleSubmit = React.useCallback(async () => {
+    if (!_category) return
+
+    const categoryId = CATEGORIES[_category].id
+    const now = new Date()
+    const performedAt = new Date(selectedDate)
+    performedAt.setHours(now.getHours(), now.getMinutes(), 0, 0)
+
+    await createDeed.mutateAsync({
+      categoryId,
+      description: note.trim() || undefined,
+      performedAt: performedAt.getTime(),
+    })
+
+    setIsOpen(false)
+  }, [_category, createDeed, note, selectedDate])
 
   const toggleMoodTag = (tag: string) => {
     setMoodTags((prev) =>
@@ -66,8 +169,8 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
                 </DrawerTitle>
                 <p className='text-muted-foreground mt-1 text-sm'>
                   {step === 1 && 'Bạn muốn ghi nhận việc thiện nào?'}
-                  {step === 2 && 'Một dòng nhỏ để lưu lại khoảnh khắc này.'}
-                  {step === 3 && 'Thêm một hình ảnh nếu bạn muốn.'}
+                  {step === 2 && 'Thêm một hình ảnh nếu bạn muốn.'}
+                  {step === 3 && 'Một dòng nhỏ để lưu lại khoảnh khắc này.'}
                   {step === 4 && 'Chọn cảm xúc đang có hôm nay.'}
                 </p>
               </div>
@@ -100,7 +203,7 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
               </div>
             )}
 
-            {step === 2 && (
+            {step === 3 && (
               <div className='flex flex-col gap-4'>
                 <Textarea
                   className='min-h-28 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
@@ -108,15 +211,59 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                 />
+                <div className='flex flex-col gap-2'>
+                  <span className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+                    Chọn ngày
+                  </span>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        className='justify-between rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
+                        variant='secondary'>
+                        {format(selectedDate, 'dd/MM/yyyy')}
+                        <ChevronRightIcon className='h-4 w-4' />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align='start'>
+                      <Calendar
+                        mode='single'
+                        selected={selectedDate}
+                        onSelect={(date: Date | undefined) => {
+                          if (date) setSelectedDate(date)
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             )}
 
-            {step === 3 && (
+            {step === 2 && (
               <div className='flex flex-col gap-4'>
                 <div className='text-muted-foreground flex min-h-36 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-black/10 bg-white/80 text-center text-sm'>
-                  <span>Chưa có hình ảnh</span>
-                  <Button className='h-9 rounded-full px-4 text-sm' variant='secondary'>
-                    Tải ảnh lên
+                  {imagePreview ? (
+                    <img
+                      alt='Ảnh đã chọn'
+                      className='h-36 w-full rounded-2xl object-cover'
+                      src={imagePreview}
+                    />
+                  ) : (
+                    <span>Chưa có hình ảnh</span>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    accept='image/*'
+                    className='hidden'
+                    type='file'
+                    onChange={handleImageSelect}
+                  />
+                  <Button
+                    className='h-9 rounded-full px-4 text-sm'
+                    disabled={isCompressing}
+                    variant='secondary'
+                    onClick={() => fileInputRef.current?.click()}>
+                    {isCompressing ? <Spinner /> : <ImagePlusIcon className='h-4 w-4' />}
+                    {imagePreview ? 'Đổi ảnh' : 'Tải ảnh lên'}
                   </Button>
                 </div>
               </div>
@@ -169,9 +316,12 @@ const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
                     <ChevronRightIcon className='h-4 w-4' />
                   </Button>
                 ) : (
-                  <Button className='h-11 rounded-full px-6'>
-                    <CheckIcon className='h-4 w-4' />
-                    Lưu lại
+                  <Button
+                    className='h-11 rounded-full px-6'
+                    disabled={createDeed.isPending}
+                    onClick={handleSubmit}>
+                    {createDeed.isPending ? <Spinner /> : <CheckIcon className='h-4 w-4' />}
+                    {createDeed.isPending ? 'Đang lưu...' : 'Lưu lại'}
                   </Button>
                 )}
               </div>

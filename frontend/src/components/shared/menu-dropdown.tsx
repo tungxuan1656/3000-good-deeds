@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
+import { ConfirmDialog } from '@/components/shared'
 import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ConfirmDialog } from '@/components/shared'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 

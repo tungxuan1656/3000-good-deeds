@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
+import { ConfirmDialog } from '@/components/shared'
 import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import {
   Sidebar,
@@ -17,7 +18,6 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar'
-import { ConfirmDialog } from '@/components/shared'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 

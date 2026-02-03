@@ -22,7 +22,7 @@ Bạn là trợ lý lập trình chuyên về TypeScript, React 19 (Vite), Tailw
 - State: zustand cho client state.
 - Form & validation: react-hook-form + zod.
 - Data fetching: axios. Server-state nên dùng React Query (TanStack) khi cần caching/mutation.
-- Date/time: dayjs.
+- Date/time: date-fns.
 
 ## Kiến trúc & thư mục
 
