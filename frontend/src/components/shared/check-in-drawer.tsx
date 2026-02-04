@@ -160,6 +160,7 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
                     </PopoverTrigger>
                     <PopoverContent align='start' className='bg-white'>
                       <Calendar
+                        disabled={(date) => date > new Date()}
                         mode='single'
                         selected={selectedDate}
                         onSelect={(date: Date | undefined) => {
