@@ -1,7 +1,15 @@
 import type { UserStats } from '../types'
+import { getLocalDateStringByTimeZone } from '../utils/datetime'
 import { getStreak } from './activities'
 
 export async function getStatsSummary(db: D1Database, userId: string): Promise<UserStats> {
+  // Get user's timezone
+  const userRow = await db
+    .prepare('SELECT timezone FROM users WHERE id = ?')
+    .bind(userId)
+    .first<{ timezone?: string }>()
+  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
+
   // 1. Total Deeds
   const totalResult = await db
     .prepare('SELECT COUNT(*) as count FROM good_deeds WHERE user_id = ?')
@@ -13,15 +21,16 @@ export async function getStatsSummary(db: D1Database, userId: string): Promise<U
   const streak = await getStreak(db, userId)
 
   // 3. Today Count
-  const now = new Date()
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
-  const todayEnd = todayStart + 86400000
+  const today = getLocalDateStringByTimeZone(timeZone)
 
   const todayResult = await db
     .prepare(
-      'SELECT COUNT(*) as count FROM good_deeds WHERE user_id = ? AND performed_at >= ? AND performed_at < ?',
+      `SELECT COUNT(*) as count
+       FROM good_deeds
+       WHERE user_id = ?
+       AND COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) = ?`,
     )
-    .bind(userId, todayStart, todayEnd)
+    .bind(userId, today)
     .first<{ count: number }>()
   const todayCount = todayResult?.count || 0
 

@@ -47,11 +47,12 @@ export async function getCalendar(
   const { results } = await db
     .prepare(
       `SELECT 
-        strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch')) as date,
+        COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) as date,
         COUNT(id) as count
        FROM good_deeds
        WHERE user_id = ?
-       AND performed_at >= ? AND performed_at <= ?
+       AND COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) >= ?
+       AND COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) <= ?
        GROUP BY date`,
     )
     // Note: sqlite unixepoch expects seconds, our ts is ms.
@@ -69,7 +70,7 @@ export async function getCalendar(
     // But `from` param in routes/activities.ts defaults to '2025-01' (YYYY-MM).
     // So distinct comparison might be needed. Use LIKE? or range of timestamps?
     // Let's stick to simple string comparison on the date column derived.
-    .bind(userId, new Date(from).getTime(), new Date(to).getTime())
+    .bind(userId, from, to)
     // Wait, the original code bound `from` and `to` (strings) directly to `date` comparison?
     // "WHERE date >= ? AND date <= ?"
     // This requires `date` to be the projected YYYY-MM-DD string.
@@ -85,10 +86,17 @@ export async function getStreak(
   db: D1Database,
   userId: string,
 ): Promise<{ currentStreak: number }> {
+  // Get user's timezone
+  const userRow = await db
+    .prepare('SELECT timezone FROM users WHERE id = ?')
+    .bind(userId)
+    .first<{ timezone?: string }>()
+  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
+
   // Get unique dates of activity in descending order
   const { results } = await db
     .prepare(
-      `SELECT DISTINCT strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch')) as date
+      `SELECT DISTINCT COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) as date
        FROM good_deeds
        WHERE user_id = ?
        ORDER BY date DESC
@@ -103,12 +111,12 @@ export async function getStreak(
 
   const uniqueDates = results.map((r) => r.date)
   // Use current date as reference (UTC)
-  const now = new Date()
-  const today = now.toISOString().split('T')[0]
+  const now = Date.now()
+  const today = formatDateParts(getDatePartsInTimeZone(now, timeZone))
   const yesterdayDate = new Date(now)
-  yesterdayDate.setDate(now.getDate() - 1)
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1)
 
-  const yesterday = yesterdayDate.toISOString().split('T')[0]
+  const yesterday = formatDateParts(getDatePartsInTimeZone(yesterdayDate.getTime(), timeZone))
 
   // Check if the most recent activity was today or yesterday
   const lastActivityDate = uniqueDates[0]
@@ -151,20 +159,21 @@ export async function getWeeklyRhythm(
   const { results } = await db
     .prepare(
       `SELECT 
-        performed_at as performedAt
+        COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) as date,
+        COUNT(id) as count
       FROM good_deeds
       WHERE user_id = ?
-      AND performed_at >= ? AND performed_at <= ?
-      `,
+      AND performed_at >= ?
+      AND performed_at <= ?
+      GROUP BY date`,
     )
     .bind(userId, from, to)
-    .all<{ performedAt: number }>()
+    .all<WeeklyRhythmDay>()
 
   const counts = new Map<string, number>()
 
   results.forEach((row) => {
-    const key = formatDateParts(getDatePartsInTimeZone(row.performedAt, timeZone))
-    counts.set(key, (counts.get(key) ?? 0) + 1)
+    counts.set(row.date, row.count)
   })
 
   const startParts = getDatePartsInTimeZone(from, timeZone)
