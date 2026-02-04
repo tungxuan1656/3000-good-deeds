@@ -42,7 +42,7 @@ export interface DeedCategoryDTO {
   code: string
   name: string
   description?: string | null
-  icon?: string | null
+  icon?: string
   style?: string | null
 }
 

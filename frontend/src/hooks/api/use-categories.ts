@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
 
 import { getCategories } from '../../api/categories'
 import type { DeedCategoryDTO } from '../../types/api'
@@ -42,8 +43,16 @@ export const useCategories = () => {
     select: (response) => response.data,
   })
 
-  return {
-    ...query,
-    data: query.data ?? FALLBACK_CATEGORIES,
-  }
+  const output = useMemo(() => {
+    const data = query.data ?? FALLBACK_CATEGORIES
+    const codeToCategoryMap: Record<string, DeedCategoryDTO> = {}
+
+    data.forEach((category) => {
+      codeToCategoryMap[category.code] = category
+    })
+
+    return { ...query, data, codeToCategoryMap }
+  }, [query.data])
+
+  return output
 }

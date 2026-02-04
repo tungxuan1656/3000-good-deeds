@@ -1,72 +1,64 @@
-import { ChevronRightIcon, ClockIcon, LockIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { format, isToday, isYesterday } from 'date-fns'
+import { vi } from 'date-fns/locale'
+import * as React from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
-import { PATHS } from '@/lib/constants'
-
-const categoryMeta = {
-  body: {
-    label: 'Thân',
-    icon: '/icons/icon_than.png',
-    bg: 'bg-body/20',
-  },
-  speech: {
-    label: 'Khẩu',
-    icon: '/icons/icon_khau.png',
-    bg: 'bg-speech/20',
-  },
-  mind: {
-    label: 'Ý',
-    icon: '/icons/icon_y.png',
-    bg: 'bg-mind/20',
-  },
-}
-
-const timelineGroups = [
-  {
-    date: 'Hôm nay · 15/10',
-    items: [
-      {
-        id: '1',
-        category: 'body' as const,
-        time: '08:45',
-        note: 'Nhường đường cho người lớn tuổi ở ngã tư.',
-        isPrivate: true,
-        moods: ['Biết ơn', 'Nhẹ lòng'],
-      },
-      {
-        id: '2',
-        category: 'speech' as const,
-        time: '12:10',
-        note: 'Nói lời cảm ơn với người giao hàng.',
-        isPrivate: false,
-        moods: ['Ấm áp'],
-      },
-    ],
-  },
-  {
-    date: 'Hôm qua · 14/10',
-    items: [
-      {
-        id: '3',
-        category: 'mind' as const,
-        time: '21:05',
-        note: 'Nhìn lại ngày với lòng biết ơn và tha thứ.',
-        isPrivate: true,
-        moods: ['Bình an'],
-      },
-    ],
-  },
-]
-
-const isLoading = false
+import { useCategories } from '@/hooks/api/use-categories'
+import { useDeeds } from '@/hooks/api/use-deeds'
+import type { DeedDTO } from '@/types/api'
 
 const TimelinePage = () => {
-  const isEmpty = !isLoading && timelineGroups.length === 0
+  const { codeToCategoryMap } = useCategories()
+  const { data: deedsResponse, isLoading, isFetching } = useDeeds({ limit: 50 })
+  const deeds = deedsResponse?.data ?? []
+
+  const timelineGroups = React.useMemo(() => {
+    const groups: Array<{
+      dateKey: string
+      dateLabel: string
+      items: DeedDTO[]
+    }> = []
+
+    deeds.forEach((item) => {
+      const performedAt = item.performedAt || item.createdAt
+      const date = new Date(performedAt)
+      const dateKey = format(date, 'dd/MM/yyyy')
+
+      let dateLabel = format(date, 'dd/MM', { locale: vi })
+      if (isToday(date)) {
+        dateLabel = `Hôm nay · ${dateLabel}`
+      } else if (isYesterday(date)) {
+        dateLabel = `Hôm qua · ${dateLabel}`
+      } else {
+        dateLabel = `Ngày ${dateLabel}`
+      }
+
+      const existingGroup = groups.find((group) => group.dateKey === dateKey)
+      const targetGroup = existingGroup
+        ? existingGroup
+        : (() => {
+            const nextGroup = {
+              dateKey,
+              dateLabel,
+              items: [],
+            }
+            groups.push(nextGroup)
+
+            return nextGroup
+          })()
+
+      targetGroup.items.push(item)
+    })
+
+    return groups
+  }, [deeds])
+
+  const showLoading = (isLoading || isFetching) && deeds.length === 0
+  const isEmpty = !showLoading && timelineGroups.length === 0
 
   return (
     <MainContainer>
@@ -83,7 +75,7 @@ const TimelinePage = () => {
           </p>
         </CardSection>
 
-        {isLoading && (
+        {showLoading && (
           <div className='flex flex-col gap-4'>
             {[1, 2, 3].map((item) => (
               <div
@@ -109,71 +101,40 @@ const TimelinePage = () => {
           </CardSection>
         )}
 
-        {!isLoading && !isEmpty && (
+        {!showLoading && !isEmpty && (
           <div className='flex flex-col gap-4'>
             {timelineGroups.map((group) => (
-              <CardSection key={group.date} className='gap-4'>
+              <CardSection key={group.dateKey} className='gap-2'>
                 <div className='mb-2 flex flex-wrap items-center justify-between gap-2'>
-                  <p className='text-muted-foreground text-[11px] font-semibold tracking-[0.22em] uppercase sm:text-xs'>
-                    {group.date}
+                  <p className='text-foreground text-sm font-semibold tracking-widest uppercase'>
+                    {group.dateLabel}
                   </p>
-                  <span className='text-muted-foreground text-[11px] sm:text-xs'>
+                  <span className='text-muted-foreground text-sm sm:text-xs'>
                     {group.items.length} việc thiện
                   </span>
                 </div>
                 <div className='flex flex-col gap-3'>
                   {group.items.map((item) => {
-                    const meta = categoryMeta[item.category]
+                    const meta = codeToCategoryMap[item.categoryCode]
 
                     return (
                       <div
                         key={item.id}
-                        className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/85 p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5'>
-                        <div className='flex items-start justify-between gap-4'>
-                          <div className='flex items-center gap-3 sm:gap-4'>
-                            <div
-                              className={`flex h-10 w-10 items-center justify-center rounded-2xl ${meta.bg}`}>
-                              <img alt={meta.label} className='h-6 w-6' src={meta.icon} />
-                            </div>
-                            <div>
-                              <p className='text-foreground text-sm font-semibold'>{meta.label}</p>
-                              <div className='text-muted-foreground mt-1 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs'>
-                                <span className='bg-muted/60 flex items-center gap-1 rounded-full px-2.5 py-1'>
-                                  <ClockIcon className='h-3.5 w-3.5' />
-                                  {item.time}
-                                </span>
-                                {item.isPrivate && (
-                                  <span className='bg-muted/60 flex items-center gap-1 rounded-full px-2.5 py-1'>
-                                    <LockIcon className='h-3.5 w-3.5' />
-                                    Riêng tư
-                                  </span>
-                                )}
-                              </div>
-                            </div>
+                        className='border-primary/30 flex flex-col gap-3 rounded-2xl border-2 bg-white/85 px-3 py-2 transition-shadow hover:shadow-md'>
+                        <div className='flex items-center gap-3 sm:gap-4'>
+                          <div
+                            className={`flex h-10 w-10 items-center justify-center rounded-2xl ${meta.style}`}>
+                            <img alt={meta.name} className='h-6 w-6' src={meta.icon} />
                           </div>
-                          <Link
-                            className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-[11px] sm:text-xs'
-                            to={PATHS.DEED_DETAIL(item.id)}>
-                            Xem
-                            <ChevronRightIcon className='h-3.5 w-3.5' />
-                          </Link>
+                          <div className='flex-1'>
+                            <p className='text-foreground text-base font-semibold'>{meta.name}</p>
+                            <p className='text-muted-foreground text-sm'>{item.labels}</p>
+                          </div>
                         </div>
 
-                        <p className='text-foreground text-sm leading-relaxed sm:text-[15px]'>
-                          {item.note}
+                        <p className='text-foreground text-sm leading-relaxed'>
+                          {item.description}
                         </p>
-
-                        {item.moods.length > 0 && (
-                          <div className='flex flex-wrap gap-2'>
-                            {item.moods.map((mood) => (
-                              <span
-                                key={mood}
-                                className='text-muted-foreground rounded-full border border-black/5 bg-white/70 px-3 py-1 text-[11px] sm:text-xs'>
-                                {mood}
-                              </span>
-                            ))}
-                          </div>
-                        )}
                       </div>
                     )
                   })}
