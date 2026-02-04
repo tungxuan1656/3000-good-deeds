@@ -1,5 +1,6 @@
 import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
+import { getLocalDateStringByTimeZone } from '../utils'
 import { checkAndUnlockAchievements } from './achievements'
 
 // Get deeds list (with filters)
@@ -60,14 +61,21 @@ export async function createDeed(
   userId: string,
   body: CreateDeedRequest,
 ): Promise<GoodDeed> {
+  const userRow = await db
+    .prepare('SELECT timezone FROM users WHERE id = ?')
+    .bind(userId)
+    .first<{ timezone?: string }>()
+  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
+
   const now = getCurrentTimestamp()
   const performedAt = body.performedAt || now
   const newId = generateId()
+  const localDate = getLocalDateStringByTimeZone(timeZone, performedAt)
 
   await db
     .prepare(
-      `INSERT INTO good_deeds (id, user_id, category_code, description, labels, is_private, performed_at, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO good_deeds (id, user_id, category_code, description, labels, local_date, is_private, performed_at, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       newId,
@@ -75,6 +83,7 @@ export async function createDeed(
       body.categoryCode,
       body.description || null,
       body.labels || null,
+      localDate,
       1,
       performedAt,
       now,
@@ -125,6 +134,12 @@ export async function updateDeed(
   deedId: string,
   body: UpdateDeedRequest,
 ): Promise<GoodDeed> {
+  const userRow = await db
+    .prepare('SELECT timezone FROM users WHERE id = ?')
+    .bind(userId)
+    .first<{ timezone?: string }>()
+  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
+
   const now = getCurrentTimestamp()
   const updates: string[] = []
   const values: any[] = []
@@ -157,6 +172,9 @@ export async function updateDeed(
   if (body.performedAt !== undefined) {
     updates.push('performed_at = ?')
     values.push(body.performedAt)
+
+    updates.push('local_date = ?')
+    values.push(getLocalDateStringByTimeZone(timeZone, body.performedAt))
   }
 
   if (updates.length > 0) {

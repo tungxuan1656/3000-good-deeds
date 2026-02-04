@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS good_deeds (
 
   description TEXT,                  -- short note
   labels TEXT,                       -- comma-separated tags
+  local_date TEXT,                   -- YYYY-MM-DD in user's timezone
   is_private BOOLEAN DEFAULT 1,
 
   performed_at INTEGER NOT NULL,
