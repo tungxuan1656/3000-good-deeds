@@ -5,7 +5,6 @@ import {
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ImagePlusIcon,
   SparklesIcon,
   XIcon,
 } from 'lucide-react'
@@ -27,7 +26,6 @@ import { Spinner } from '@/components/ui/spinner'
 import { useCategories } from '@/hooks/api/use-categories'
 import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { compressImage } from '@/lib/image'
 
 import { Textarea } from '../ui/textarea'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
@@ -49,28 +47,16 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date())
   const [note, setNote] = React.useState('')
   const [moodTags, setMoodTags] = React.useState<string[]>([])
-  const [_imageFile, setImageFile] = React.useState<File | null>(null)
-  const [imagePreview, setImagePreview] = React.useState<string | null>(null)
-  const [isCompressing, setIsCompressing] = React.useState(false)
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null)
 
-  const open = React.useCallback(
-    (nextCategory?: string) => {
-      setCategory(nextCategory ?? null)
-      if (nextCategory) setStep(2)
-      else setStep(1)
-      setSelectedDate(new Date())
-      setNote('')
-      setMoodTags([])
-      setImageFile(null)
-      if (imagePreview) {
-        URL.revokeObjectURL(imagePreview)
-        setImagePreview(null)
-      }
-      setIsOpen(true)
-    },
-    [imagePreview],
-  )
+  const open = React.useCallback((nextCategory?: string) => {
+    setCategory(nextCategory ?? null)
+    if (nextCategory) setStep(2)
+    else setStep(1)
+    setSelectedDate(new Date())
+    setNote('')
+    setMoodTags([])
+    setIsOpen(true)
+  }, [])
 
   const close = React.useCallback(() => {
     setIsOpen(false)
@@ -86,25 +72,6 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
     }
     setStep((prev) => Math.min(4, prev + 1))
   }, [step, note])
-
-  const handleImageSelect = React.useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]
-      if (!file) return
-      setIsCompressing(true)
-      try {
-        const compressed = await compressImage(file)
-        setImageFile(compressed)
-        if (imagePreview) {
-          URL.revokeObjectURL(imagePreview)
-        }
-        setImagePreview(URL.createObjectURL(compressed))
-      } finally {
-        setIsCompressing(false)
-      }
-    },
-    [imagePreview],
-  )
 
   const handleSubmit = React.useCallback(async () => {
     if (!category) return
@@ -147,9 +114,8 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
                 </DrawerTitle>
                 <p className='text-muted-foreground mt-1 text-sm'>
                   {step === 1 && 'Bạn muốn ghi nhận việc thiện nào?'}
-                  {step === 2 && 'Thêm một hình ảnh nếu bạn muốn.'}
-                  {step === 3 && 'Một dòng nhỏ để lưu lại khoảnh khắc này.'}
-                  {step === 4 && 'Chọn cảm xúc đang có hôm nay.'}
+                  {step === 2 && 'Một dòng nhỏ để lưu lại khoảnh khắc này.'}
+                  {step === 3 && 'Chuyển hóa cảm xúc của tâm của bạn.'}
                 </p>
               </div>
               <DrawerClose asChild>
@@ -162,7 +128,6 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
                 </Button>
               </DrawerClose>
             </div>
-            {/* <p className='text-muted-foreground text-xs'>Bước {step} / 4</p> */}
           </DrawerHeader>
 
           <div className='px-4 pb-4'>
@@ -213,37 +178,6 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
               </div>
             )}
 
-            {step === 4 && (
-              <div className='flex flex-col gap-4'>
-                <div className='text-muted-foreground flex min-h-36 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-black/10 bg-white/80 text-center text-sm'>
-                  {imagePreview ? (
-                    <img
-                      alt='Ảnh đã chọn'
-                      className='h-36 w-full rounded-2xl object-cover'
-                      src={imagePreview}
-                    />
-                  ) : (
-                    <span>Chưa có hình ảnh</span>
-                  )}
-                  <input
-                    ref={fileInputRef}
-                    accept='image/*'
-                    className='hidden'
-                    type='file'
-                    onChange={handleImageSelect}
-                  />
-                  <Button
-                    className='h-9 rounded-full px-4 text-sm'
-                    disabled={isCompressing}
-                    variant='secondary'
-                    onClick={() => fileInputRef.current?.click()}>
-                    {isCompressing ? <Spinner /> : <ImagePlusIcon className='h-4 w-4' />}
-                    {imagePreview ? 'Đổi ảnh' : 'Tải ảnh lên'}
-                  </Button>
-                </div>
-              </div>
-            )}
-
             {step === 3 && (
               <div className='flex flex-col gap-4'>
                 <div className='flex flex-wrap gap-2'>
@@ -267,7 +201,7 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
 
           <DrawerFooter className='gap-3'>
             <div className='flex items-center justify-center gap-2'>
-              {[1, 2, 3, 4].map((item) => (
+              {[1, 2, 3].map((item) => (
                 <span
                   key={item}
                   className={`h-2 w-2 rounded-full ${item === step ? 'bg-primary' : 'bg-black/10'}`}
@@ -283,7 +217,7 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
                   <ChevronLeftIcon className='h-4 w-4' />
                   Quay lại
                 </Button>
-                {step < 4 ? (
+                {step < 3 ? (
                   <Button className='h-11 rounded-full px-6' onClick={handleContinue}>
                     Tiếp tục
                     <ChevronRightIcon className='h-4 w-4' />
