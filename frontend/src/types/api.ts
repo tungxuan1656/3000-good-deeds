@@ -33,6 +33,7 @@ export interface DeedDTO {
   id: string
   categoryCode: string
   description?: string
+  labels?: string
   performedAt: number
   createdAt: number
 }
@@ -54,6 +55,7 @@ export interface GetDeedsRequest {
 export interface CreateDeedRequest {
   categoryCode: string
   description?: string
+  labels?: string
   performedAt?: number
 }
 

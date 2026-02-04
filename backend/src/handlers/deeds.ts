@@ -12,7 +12,7 @@ export async function getDeeds(
   const { results } = await db
     .prepare(
       `SELECT 
-        d.id, d.user_id as userId, d.category_code as categoryCode, d.description,
+        d.id, d.user_id as userId, d.category_code as categoryCode, d.description, d.labels,
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
         c.code as c_code, c.name as c_name, c.icon as c_icon, c.description as c_desc, c.style as c_style,
         c.is_active as c_active, c.created_at as c_created
@@ -32,6 +32,7 @@ export async function getDeeds(
       userId: row.userId,
       categoryCode: row.categoryCode,
       description: row.description,
+      labels: row.labels,
       performedAt: row.performedAt,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
@@ -50,10 +51,20 @@ export async function createDeed(
 
   await db
     .prepare(
-      `INSERT INTO good_deeds (id, user_id, category_code, description, is_private, performed_at, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO good_deeds (id, user_id, category_code, description, labels, is_private, performed_at, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
-    .bind(newId, userId, body.categoryCode, body.description || null, 1, performedAt, now, now)
+    .bind(
+      newId,
+      userId,
+      body.categoryCode,
+      body.description || null,
+      body.labels || null,
+      1,
+      performedAt,
+      now,
+      now,
+    )
     .run()
 
   // Check achievements
@@ -66,7 +77,7 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
   const row = await db
     .prepare(
       `SELECT 
-        d.id, d.user_id as userId, d.category_code as categoryCode, d.description,
+        d.id, d.user_id as userId, d.category_code as categoryCode, d.description, d.labels,
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
         c.code as c_code, c.name as c_name, c.icon as c_icon, c.description as c_desc, c.style as c_style,
         c.is_active as c_active, c.created_at as c_created
@@ -86,6 +97,7 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
     userId: row.userId,
     categoryCode: row.categoryCode,
     description: row.description,
+    labels: row.labels,
     performedAt: row.performedAt,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
@@ -120,6 +132,11 @@ export async function updateDeed(
   if (body.description !== undefined) {
     updates.push('description = ?')
     values.push(body.description)
+  }
+
+  if (body.labels !== undefined) {
+    updates.push('labels = ?')
+    values.push(body.labels)
   }
 
   if (body.performedAt !== undefined) {

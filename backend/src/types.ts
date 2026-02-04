@@ -44,6 +44,7 @@ export interface GoodDeed {
   userId: string
   categoryCode: string
   description: string | null
+  labels?: string | null
   performedAt: number
   createdAt: number
   updatedAt: number
@@ -94,12 +95,14 @@ export interface UserStats {
 export interface CreateDeedRequest {
   categoryCode: string
   description?: string
+  labels?: string
   performedAt?: number // defaults to now
 }
 
 export interface UpdateDeedRequest {
   categoryCode?: string
   description?: string
+  labels?: string
   performedAt?: number
 }
 

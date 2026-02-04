@@ -110,18 +110,18 @@ export const CheckInDrawer = React.forwardRef<CheckInDrawerHandle>((_props, ref)
     if (!category) return
 
     const categoryCode = category
-    const now = new Date()
     const performedAt = new Date(selectedDate)
-    performedAt.setHours(now.getHours(), now.getMinutes(), 0, 0)
+    performedAt.setHours(0, 0, 0, 0)
 
     await createDeed.mutateAsync({
       categoryCode,
       description: note.trim() || undefined,
+      labels: moodTags.length ? moodTags.join(', ') : undefined,
       performedAt: performedAt.getTime(),
     })
 
     setIsOpen(false)
-  }, [category, createDeed, note, selectedDate])
+  }, [category, createDeed, moodTags, note, selectedDate])
 
   const toggleMoodTag = (tag: string) => {
     setMoodTags((prev) =>

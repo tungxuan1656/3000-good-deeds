@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS good_deeds (
   category_code TEXT NOT NULL,
 
   description TEXT,                  -- short note
-  emotion_after TEXT,                -- optional (future)
+  labels TEXT,                       -- comma-separated tags
   is_private BOOLEAN DEFAULT 1,
 
   performed_at INTEGER NOT NULL,
