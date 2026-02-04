@@ -11,7 +11,6 @@ export const PATHS = {
   LOGIN: '/login',
   HOME: '/',
   TIMELINE: '/timeline',
-  CALENDAR: '/calendar',
   STATS: '/stats',
   GOALS: '/goals',
   ACHIEVEMENTS: '/achievements',
