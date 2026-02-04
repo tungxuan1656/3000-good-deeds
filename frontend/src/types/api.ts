@@ -92,7 +92,6 @@ export interface CreateJournalRequest {
 export interface StatsSummaryDTO {
   totalDeeds: number
   streakDays: number
-  todayCount: number
 }
 
 export interface CalendarDayDTO {

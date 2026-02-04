@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { PATHS } from '@/lib/constants'
@@ -22,26 +21,6 @@ const InnerPage = () => {
           <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
             Pháp ngữ, sổ tay, thiền thở — tất cả ở một nơi yên tĩnh.
           </p>
-        </CardSection>
-
-        <CardSection className='gap-4'>
-          <div>
-            <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-              Gợi ý cho hôm nay
-            </p>
-            <p className='text-foreground mt-2 text-base font-semibold'>Pháp ngữ hôm nay</p>
-          </div>
-          <Link
-            className='border-primary/40 bg-primary/5 hover:bg-primary/10 flex items-center gap-4 rounded-2xl border px-4 py-4 shadow-sm transition-colors'
-            to={PATHS.INNER_QUOTE}>
-            <div className='flex h-12 w-12 animate-pulse items-center justify-center rounded-2xl bg-amber-100'>
-              <SparklesIcon className='h-5 w-5 text-amber-600' />
-            </div>
-            <div className='flex-1'>
-              <p className='text-foreground text-base font-semibold'>Pháp ngữ hôm nay</p>
-              <p className='text-muted-foreground mt-1 text-sm'>Một câu nhắc để dịu lại.</p>
-            </div>
-          </Link>
         </CardSection>
 
         <CardSection className='gap-4'>
@@ -100,7 +79,6 @@ const InnerPage = () => {
 
       <SideColumn>
         <MiniCheckInCard />
-        <DailyQuoteCard />
         <WeeklyRhythmCard />
       </SideColumn>
     </MainContainer>

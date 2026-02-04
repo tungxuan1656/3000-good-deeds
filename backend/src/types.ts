@@ -88,7 +88,6 @@ export interface UserAchievement {
 export interface UserStats {
   totalDeeds: number
   streakDays: number
-  todayCount: number
 }
 
 // Request Types

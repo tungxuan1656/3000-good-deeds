@@ -1,8 +1,12 @@
+import { format } from 'date-fns'
+import { vi } from 'date-fns/locale'
+
 import { TodaySection } from '@/components/home/today-section'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CheckInCard } from '@/components/shared'
 import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { HeaderSection } from '@/components/shared/header-section'
 import Leaf from '@/components/shared/leaf'
 import { ReminderSuggestCard } from '@/components/shared/reminder-suggest-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
@@ -11,19 +15,11 @@ const HomePage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        {/* Header */}
-        <CardSection as='header'>
-          <Leaf position='top-left' variant={1} />
-          <p className='text-muted-foreground/70 text-[11px] font-semibold tracking-wider uppercase sm:text-xs'>
-            Chủ nhật, 15/10
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight sm:text-3xl'>
-            Hôm nay của bạn
-          </h1>
-          <p className='text-muted-foreground/90 mt-3 max-w-xl text-sm leading-relaxed sm:text-base'>
-            Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?'
+          subtitle={format(new Date(), "EEEE', ngày' dd'/'MM", { locale: vi })}
+          title='Hôm nay của bạn'
+        />
 
         {/* Quote Section */}
         <DailyQuoteCard />

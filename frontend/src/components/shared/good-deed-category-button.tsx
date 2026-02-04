@@ -52,7 +52,7 @@ export const GoodDeedCategoryMiniButton = ({
         <img alt={category.name} className='size-8' src={icon} />
       </div>
       <div className=''>
-        <p className='text-foreground text-base font-semibold'>{category.name}</p>
+        <p className='text-foreground text-center text-sm font-semibold'>{category.name}</p>
       </div>
     </button>
   )
