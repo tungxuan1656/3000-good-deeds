@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AppLayout from '@/components/layout/app-layout'
 import { PATHS } from '@/lib/constants'
 import AchievementsPage from '@/pages/achievements-page'
+import CalendarPage from '@/pages/calendar-page'
 import DeedDetailPage from '@/pages/deed-detail-page'
 import GoalsPage from '@/pages/goals-page'
 import HomePage from '@/pages/home-page'
@@ -32,6 +33,7 @@ function App() {
             <Route element={<AppLayout />}>
               <Route element={<HomePage />} path={PATHS.HOME} />
               <Route element={<TimelinePage />} path={PATHS.TIMELINE} />
+              <Route element={<CalendarPage />} path={PATHS.CALENDAR} />
               <Route element={<DeedDetailPage />} path={PATHS.DEED_DETAIL(':id')} />
               <Route element={<AchievementsPage />} path={PATHS.ACHIEVEMENTS} />
               <Route element={<StatsPage />} path={PATHS.STATS} />

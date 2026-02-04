@@ -53,7 +53,7 @@ export const WeeklyRhythmCard = () => {
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
-          onClick={() => navigate(PATHS.TIMELINE)}>
+          onClick={() => navigate(PATHS.CALENDAR)}>
           Xem tất cả
         </Button>
       </div>
