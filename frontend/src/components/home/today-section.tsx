@@ -45,7 +45,7 @@ export const TodaySection = () => {
   return (
     <CardSection>
       <Leaf position='top-left' variant={4} />
-      <div className='mb-4 flex items-end justify-between gap-3'>
+      <div className='mb-4 flex items-start justify-between gap-3'>
         <div>
           <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
           <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
@@ -53,7 +53,7 @@ export const TodaySection = () => {
           </p>
         </div>
         <Button
-          className='text-foreground/80 hover:text-foreground'
+          className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
           onClick={() => navigate(PATHS.TIMELINE)}>
