@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-import { getRandomAct, getRandomQuote } from '../handlers/cultivation'
+import { getRandomAct, getRandomActs, getRandomQuote } from '../handlers/cultivation'
 import { ErrorCodes, successResponse } from '../utils'
 
 const app = new Hono<{ Bindings: Env }>()
@@ -44,6 +44,32 @@ app.get('/acts/random', async (c) => {
     successResponse({
       content: act.content,
     }),
+  )
+})
+
+// GET /api/v1/cultivation/acts/random-list
+app.get('/acts/random-list', async (c) => {
+  const limitParam = c.req.query('limit')
+  const limit = limitParam ? Math.max(1, Math.min(50, parseInt(limitParam))) : 10
+  const acts = await getRandomActs(c.env.DB, limit)
+
+  if (!acts.length) {
+    return c.json(
+      {
+        success: true,
+        data: null,
+        error: { code: ErrorCodes.NOT_FOUND, message: 'No random acts available' },
+      },
+      404,
+    )
+  }
+
+  return c.json(
+    successResponse(
+      acts.map((act) => ({
+        content: act.content,
+      })),
+    ),
   )
 })
 

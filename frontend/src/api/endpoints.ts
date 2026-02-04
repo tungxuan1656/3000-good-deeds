@@ -40,6 +40,7 @@ export const API_ENDPOINTS = {
   cultivation: {
     randomQuote: '/cultivation/quotes/random',
     randomAct: '/cultivation/acts/random',
+    randomActsList: '/cultivation/acts/random-list',
   },
   journal: {
     list: '/journal',

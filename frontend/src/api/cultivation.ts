@@ -23,6 +23,17 @@ export const getRandomAct = async (): Promise<ApiResponse<RandomActDTO>> => {
   return response.data
 }
 
+export const getRandomActs = async (limit = 10): Promise<ApiResponse<RandomActDTO[]>> => {
+  const response = await client.get<ApiResponse<RandomActDTO[]>>(
+    API_ENDPOINTS.cultivation.randomActsList,
+    {
+      params: { limit },
+    },
+  )
+
+  return response.data
+}
+
 export const getJournal = async (
   params: GetJournalRequest,
 ): Promise<ApiResponse<JournalEntryDTO[]>> => {

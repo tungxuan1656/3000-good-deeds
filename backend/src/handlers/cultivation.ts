@@ -31,3 +31,20 @@ export async function getRandomAct(db: D1Database): Promise<RandomAct | null> {
 
   return act
 }
+
+// Lấy danh sách hành động thiện ngẫu nhiên
+export async function getRandomActs(db: D1Database, limit = 10): Promise<RandomAct[]> {
+  const { results } = await db
+    .prepare(
+      `SELECT 
+        id, content, 
+        created_at as createdAt, updated_at as updatedAt 
+      FROM random_acts 
+      ORDER BY RANDOM() 
+      LIMIT ?`,
+    )
+    .bind(limit)
+    .all<RandomAct>()
+
+  return results
+}

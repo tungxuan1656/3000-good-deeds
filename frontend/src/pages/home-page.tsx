@@ -1,3 +1,4 @@
+import { TodaySection } from '@/components/home/today-section'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CheckInCard } from '@/components/shared'
 import { CardSection } from '@/components/shared/card-section'
@@ -5,7 +6,6 @@ import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
 import Leaf from '@/components/shared/leaf'
 import { ReminderSuggestCard } from '@/components/shared/reminder-suggest-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
-import { Button } from '@/components/ui/button'
 
 const HomePage = () => {
   return (
@@ -47,27 +47,7 @@ const HomePage = () => {
           </div>
         </CardSection>
 
-        {/* Today Section */}
-        <CardSection>
-          <Leaf position='top-left' variant={4} />
-          <div className='mb-4 flex items-end justify-between gap-3'>
-            <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
-            <Button className='text-foreground/80 hover:text-foreground' size='sm' variant='ghost'>
-              Xem tất cả
-            </Button>
-          </div>
-
-          <div className='flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/70 px-4 py-8 text-center sm:py-10'>
-            <p className='text-muted-foreground text-sm leading-relaxed sm:text-base'>
-              Chưa có việc thiện nào hôm nay.
-              <br />
-              Hãy gieo một hạt giống lành!
-            </p>
-            <Button className='rounded-full px-5' size='sm'>
-              Gợi ý điều nhỏ để bắt đầu
-            </Button>
-          </div>
-        </CardSection>
+        <TodaySection />
       </MainColumn>
 
       {/* Side column */}

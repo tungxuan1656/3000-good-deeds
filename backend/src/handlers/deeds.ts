@@ -8,7 +8,22 @@ export async function getDeeds(
   userId: string,
   limit = 20,
   offset = 0,
+  from?: number,
+  to?: number,
 ): Promise<GoodDeed[]> {
+  const whereClauses: string[] = ['d.user_id = ?']
+  const bindings: Array<string | number> = [userId]
+
+  if (from !== undefined) {
+    whereClauses.push('d.performed_at >= ?')
+    bindings.push(from)
+  }
+
+  if (to !== undefined) {
+    whereClauses.push('d.performed_at <= ?')
+    bindings.push(to)
+  }
+
   const { results } = await db
     .prepare(
       `SELECT 
@@ -18,11 +33,11 @@ export async function getDeeds(
         c.is_active as c_active, c.created_at as c_created
        FROM good_deeds d
        JOIN categories c ON d.category_code = c.code
-       WHERE d.user_id = ?
+       WHERE ${whereClauses.join(' AND ')}
        ORDER BY d.performed_at DESC, d.created_at DESC
        LIMIT ? OFFSET ?`,
     )
-    .bind(userId, limit, offset)
+    .bind(...bindings, limit, offset)
     .all()
 
   // Map result to GoodDeed structure
