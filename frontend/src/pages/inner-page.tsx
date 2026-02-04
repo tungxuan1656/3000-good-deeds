@@ -2,26 +2,18 @@ import { BookOpenIcon, HeartHandshakeIcon, LeafIcon, SparklesIcon } from 'lucide
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import { CardSection, HeaderSection, MiniCheckInCard, WeeklyRhythmCard } from '@/components/shared'
 import { PATHS } from '@/lib/constants'
 
 const InnerPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Nội tâm
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Kho tàng an yên
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Pháp ngữ, sổ tay, thiền thở — tất cả ở một nơi yên tĩnh.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Pháp ngữ, sổ tay, thiền thở — những bước nhỏ nuôi dưỡng tâm từ bi và chánh niệm.'
+          subtitle='Nội tâm'
+          title='Không gian tu tập'
+        />
 
         <CardSection className='gap-4'>
           <p className='text-foreground text-base font-semibold'>Chọn một không gian</p>
@@ -45,8 +37,8 @@ const InnerPage = () => {
                 <HeartHandshakeIcon className='text-primary h-5 w-5' />
               </div>
               <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Gieo duyên</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Một việc thiện nhỏ để bắt đầu.</p>
+                <p className='text-foreground text-base font-semibold'>Gợi ý việc thiện</p>
+                <p className='text-muted-foreground mt-1 text-sm'>Khởi tâm từ bi trong đời sống.</p>
               </div>
             </Link>
 

@@ -2,10 +2,13 @@ import { CheckIcon, RefreshCwIcon, Share2Icon, SparklesIcon } from 'lucide-react
 import { useState } from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import {
+  CardSection,
+  DailyQuoteCard,
+  HeaderSection,
+  MiniCheckInCard,
+  WeeklyRhythmCard,
+} from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { useRandomQuote } from '@/hooks/api/use-cultivation'
 
@@ -19,17 +22,11 @@ const InnerQuotePage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Pháp ngữ
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Pháp ngữ hôm nay
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Một câu nhắc để bạn trở về với sự dịu dàng.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Một lời nhắc để trở về với chánh niệm và tâm.'
+          subtitle='Pháp ngữ'
+          title='Pháp ngữ hôm nay'
+        />
 
         <CardSection className='gap-4'>
           <div className='flex items-start justify-between gap-4'>
@@ -69,7 +66,7 @@ const InnerQuotePage = () => {
           </div>
           {saved && (
             <div className='text-muted-foreground rounded-2xl border border-black/5 bg-white/80 px-4 py-3 text-xs'>
-              Đã gieo thêm một hạt an lành 🌱
+              Đã ghi lại một điều để nuôi dưỡng tâm 🌱
             </div>
           )}
         </CardSection>

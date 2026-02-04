@@ -15,6 +15,7 @@ import {
   CardSection,
   ConfirmDialog,
   DailyQuoteCard,
+  HeaderSection,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
@@ -108,17 +109,11 @@ const SettingsPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Cài đặt
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Tuỳ chỉnh trải nghiệm
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Bạn có thể thay đổi nhắc nhở, ngôn ngữ và tài khoản tại đây.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Điều chỉnh nhắc nhở và tài khoản để giữ nếp sống chánh niệm.'
+          subtitle='Cài đặt'
+          title='Tuỳ chỉnh trải nghiệm'
+        />
 
         <CardSection className='gap-4'>
           <div className='flex items-center justify-between'>
@@ -197,7 +192,7 @@ const SettingsPage = () => {
                 Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
               </p>
               <p className='text-muted-foreground text-xs'>
-                Thông báo mẫu: “Đến giờ gieo hạt an lành 🌱”.
+                Thông báo mẫu: “Đến giờ ghi nhận việc thiện 🌱”.
               </p>
             </div>
           )}

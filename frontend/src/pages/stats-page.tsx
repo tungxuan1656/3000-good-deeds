@@ -1,9 +1,7 @@
 import { CalendarIcon, TrendingUpIcon } from 'lucide-react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
+import { CardSection, DailyQuoteCard, HeaderSection, MiniCheckInCard } from '@/components/shared'
 import { useStatsSummary } from '@/hooks/api/use-stats'
 
 const StatsPage = () => {
@@ -27,17 +25,11 @@ const StatsPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header' className='gap-3'>
-          <p className='text-muted-foreground text-[11px] font-semibold tracking-[0.24em] uppercase sm:text-xs'>
-            Thống kê
-          </p>
-          <h1 className='text-foreground text-[26px] font-semibold tracking-tight sm:text-[30px]'>
-            Nhìn lại hành trình
-          </h1>
-          <p className='text-muted-foreground/90 max-w-2xl text-sm leading-relaxed sm:text-base'>
-            Một góc nhỏ để thấy rõ nhịp điệu thiện lành của bạn.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Quán chiếu để nuôi dưỡng tâm từ bi, hỷ xả và chánh niệm.'
+          subtitle='Thống kê'
+          title='Nhìn lại hành trình'
+        />
 
         {isLoading && (
           <div className='flex flex-col gap-4'>

@@ -2,10 +2,13 @@ import { HelpCircleIcon, RefreshCwIcon, ThumbsUpIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import {
+  CardSection,
+  DailyQuoteCard,
+  HeaderSection,
+  MiniCheckInCard,
+  WeeklyRhythmCard,
+} from '@/components/shared'
 import { Button } from '@/components/ui/button'
 
 const InnerRandomActsPage = () => {
@@ -14,17 +17,11 @@ const InnerRandomActsPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Gieo duyên
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Một gợi ý nhỏ
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Chọn một việc thiện nhẹ nhàng để bắt đầu hôm nay.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Chọn một việc thiện phù hợp để nuôi dưỡng tâm từ, bi, hỷ, xả trong ngày.'
+          subtitle='Gợi ý việc thiện'
+          title='Một gợi ý trong ngày'
+        />
 
         <CardSection className='gap-4'>
           <div className='rounded-2xl border border-black/5 bg-white/80 p-5'>
@@ -44,7 +41,7 @@ const InnerRandomActsPage = () => {
               disabled={saved}
               onClick={() => setSaved(true)}>
               <ThumbsUpIcon className='h-4 w-4' />
-              {saved ? 'Đã gieo' : 'Lưu lại'}
+              {saved ? 'Đã thực hiện' : 'Lưu lại'}
             </Button>
             <Button
               className='text-foreground group h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'

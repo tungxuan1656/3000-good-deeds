@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { HeaderSection } from '@/components/shared/header-section'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { Button } from '@/components/ui/button'
@@ -61,35 +62,33 @@ const CalendarPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-[11px] font-semibold tracking-[0.25em] uppercase sm:text-xs'>
-            Lịch hoạt động
-          </p>
-          <div className='mt-2 flex flex-wrap items-center justify-between gap-3'>
-            <h1 className='text-foreground text-2xl font-semibold tracking-tight'>
-              {format(currentMonth, 'MMMM/yyyy', { locale: vi }).toUpperCase()}
-            </h1>
-            <div className='flex items-center gap-2'>
-              <Button
-                className='h-9 w-9 rounded-full'
-                size='icon'
-                variant='outline'
-                onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}>
-                <ChevronLeftIcon className='h-4 w-4' />
-              </Button>
-              <Button
-                className='h-9 w-9 rounded-full'
-                size='icon'
-                variant='outline'
-                onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}>
-                <ChevronRightIcon className='h-4 w-4' />
-              </Button>
-            </div>
+        <HeaderSection
+          description='Theo dõi ngày có việc thiện để nuôi dưỡng tâm và thực hành các Pháp.'
+          subtitle='Lịch'
+          title='Lịch việc thiện'
+        />
+
+        <div className='mx-2 mt-4 flex flex-wrap items-center justify-between gap-3'>
+          <h2 className='text-foreground text-xl font-semibold'>
+            {format(currentMonth, 'MMMM/yyyy', { locale: vi }).toUpperCase()}
+          </h2>
+          <div className='flex items-center gap-2'>
+            <Button
+              className='h-9 w-9 rounded-full'
+              size='icon'
+              variant='outline'
+              onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}>
+              <ChevronLeftIcon className='h-4 w-4' />
+            </Button>
+            <Button
+              className='h-9 w-9 rounded-full'
+              size='icon'
+              variant='outline'
+              onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}>
+              <ChevronRightIcon className='h-4 w-4' />
+            </Button>
           </div>
-          <p className='text-muted-foreground/90 mt-3 max-w-2xl text-sm leading-relaxed sm:text-base'>
-            Theo dõi nhịp gieo hạt mỗi ngày.
-          </p>
-        </CardSection>
+        </div>
 
         <CardSection>
           <div className='mb-5 flex items-center justify-between gap-2'>

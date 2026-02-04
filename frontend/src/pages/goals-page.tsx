@@ -1,9 +1,7 @@
 import { CheckCircle2Icon, FlagIcon, PlusIcon } from 'lucide-react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
+import { CardSection, DailyQuoteCard, HeaderSection, MiniCheckInCard } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -31,17 +29,11 @@ const GoalsPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Mục tiêu
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Giữ nhịp đều đặn
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Cài đặt mục tiêu vừa đủ để nuôi dưỡng thói quen tốt.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Đặt mục tiêu vừa sức để nuôi dưỡng thói quen thiện.'
+          subtitle='Mục tiêu'
+          title='Giữ nhịp đều đặn'
+        />
 
         {isLoading && (
           <div className='flex flex-col gap-4'>

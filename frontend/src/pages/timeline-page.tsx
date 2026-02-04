@@ -3,11 +3,14 @@ import { vi } from 'date-fns/locale'
 import * as React from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { GoodDeedCard } from '@/components/shared'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import {
+  CardSection,
+  DailyQuoteCard,
+  GoodDeedCard,
+  HeaderSection,
+  MiniCheckInCard,
+  WeeklyRhythmCard,
+} from '@/components/shared'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import type { DeedDTO } from '@/types/api'
 
@@ -62,17 +65,11 @@ const TimelinePage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-[11px] font-semibold tracking-[0.25em] uppercase sm:text-xs'>
-            Hành trình
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight sm:text-[28px]'>
-            Nhật ký việc thiện
-          </h1>
-          <p className='text-muted-foreground/90 mt-3 max-w-2xl text-sm leading-relaxed sm:text-base'>
-            Nơi lưu giữ những điều tốt đẹp theo dòng thời gian.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Ghi lại việc thiện để nuôi dưỡng tâm từ bi và chánh niệm.'
+          subtitle='Hành trình'
+          title='Nhật ký việc thiện'
+        />
 
         {showLoading && (
           <div className='flex flex-col gap-4'>

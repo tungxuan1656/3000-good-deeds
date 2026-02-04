@@ -1,7 +1,7 @@
 import { CheckIcon, ClockIcon, Edit3Icon, ImageIcon, LockIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 
-import { CardSection } from '@/components/shared/card-section'
+import { CardSection, HeaderSection } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 
@@ -12,17 +12,11 @@ const DeedDetailPage = () => {
 
   return (
     <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
-      <CardSection as='header'>
-        <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-          Chi tiết việc thiện
-        </p>
-        <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-          Một khoảnh khắc dịu dàng
-        </h1>
-        <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-          Xem lại, chỉnh sửa hoặc lưu lại cảm xúc của bạn.
-        </p>
-      </CardSection>
+      <HeaderSection
+        description='Xem lại, chỉnh sửa hoặc ghi nhận cảm xúc trong việc thiện này.'
+        subtitle='Chi tiết'
+        title='Chi tiết việc thiện'
+      />
 
       <CardSection className='gap-4'>
         <div className='flex flex-wrap items-center gap-3'>

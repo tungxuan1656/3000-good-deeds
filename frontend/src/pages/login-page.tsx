@@ -66,14 +66,14 @@ const LoginPage = () => {
               <Leaf className='opacity-30' position='top-right' variant={2} />
               <div className='flex items-center gap-4'>
                 <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white/80 shadow-sm'>
-                  <img alt='Mầm thiện lành' className='h-10 w-10' src='/icons/icon_sprout.png' />
+                  <img alt='Mầm từ bi' className='h-10 w-10' src='/icons/icon_sprout.png' />
                 </div>
                 <div>
                   <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
                     3000 Việc Thiện
                   </p>
                   <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
-                    Gieo hạt giống lành
+                    Nuôi dưỡng tâm từ bi
                   </h1>
                 </div>
               </div>
@@ -116,7 +116,7 @@ const LoginPage = () => {
                 Hành trình nhẹ nhàng
               </div>
               <p className='text-foreground text-lg leading-relaxed font-semibold'>
-                “Mỗi việc thiện nhỏ đều gieo một hạt giống.”
+                “Mỗi việc thiện nhỏ đều nuôi dưỡng tâm.”
               </p>
               <div className='text-muted-foreground/80 text-sm leading-relaxed'>
                 Giữ lại những điều tốt đẹp, để bạn thấy sự thay đổi của mình mỗi ngày.

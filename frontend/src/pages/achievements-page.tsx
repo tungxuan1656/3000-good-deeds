@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection } from '@/components/shared/card-section'
 import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { HeaderSection } from '@/components/shared/header-section'
 import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
 import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { Button } from '@/components/ui/button'
@@ -11,14 +12,14 @@ import { Button } from '@/components/ui/button'
 const achievements = [
   {
     id: 'a1',
-    title: 'Hạt giống đầu tiên',
+    title: 'Bước đầu tiên',
     description: 'Ghi nhận việc thiện đầu tiên',
     date: '10/10/2026',
     isUnlocked: true,
   },
   {
     id: 'a2',
-    title: '7 ngày dịu dàng',
+    title: '7 ngày liên tục',
     description: 'Duy trì 7 ngày liên tiếp',
     date: '15/10/2026',
     isUnlocked: true,
@@ -59,17 +60,11 @@ const AchievementsPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Thành tựu
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Những dấu mốc dịu dàng
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Mỗi huy hiệu là một bước nhỏ bạn đã đi qua.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Mỗi huy hiệu là một dấu mốc nuôi dưỡng tâm.'
+          subtitle='Dấu mốc'
+          title='Những dấu mốc tu tập'
+        />
 
         {showNewUnlock && (
           <CardSection className='border border-amber-200/60 bg-amber-50/70'>

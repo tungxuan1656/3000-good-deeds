@@ -2,10 +2,13 @@ import { PauseIcon, PlayIcon, TimerIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import {
+  CardSection,
+  DailyQuoteCard,
+  HeaderSection,
+  MiniCheckInCard,
+  WeeklyRhythmCard,
+} from '@/components/shared'
 import { Button } from '@/components/ui/button'
 
 const InnerMeditationPage = () => {
@@ -16,17 +19,11 @@ const InnerMeditationPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Thiền & thở
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Trở về với hơi thở
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Một vòng thở chậm để bạn dịu lại.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Thở chậm để trở về chánh niệm và an trú nơi tâm.'
+          subtitle='Thiền & thở'
+          title='Trở về với hơi thở'
+        />
 
         <CardSection className='gap-4'>
           <div className='flex flex-col items-center gap-4'>

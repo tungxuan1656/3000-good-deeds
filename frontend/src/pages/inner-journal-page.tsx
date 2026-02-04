@@ -2,10 +2,13 @@ import { PlusIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection } from '@/components/shared/card-section'
-import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
-import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
-import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
+import {
+  CardSection,
+  DailyQuoteCard,
+  HeaderSection,
+  MiniCheckInCard,
+  WeeklyRhythmCard,
+} from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { PATHS } from '@/lib/constants'
 
@@ -32,17 +35,11 @@ const InnerJournalPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <CardSection as='header'>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Sổ tay
-          </p>
-          <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight'>
-            Sổ tay tâm hồn
-          </h1>
-          <p className='text-muted-foreground mt-3 text-sm leading-relaxed'>
-            Ghi lại suy nghĩ để tâm mình nhẹ hơn.
-          </p>
-        </CardSection>
+        <HeaderSection
+          description='Ghi lại quán chiếu để nuôi dưỡng tâm.'
+          subtitle='Sổ tay'
+          title='Sổ tay tâm hồn'
+        />
 
         <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
           <div>
