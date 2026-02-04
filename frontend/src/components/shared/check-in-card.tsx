@@ -20,7 +20,7 @@ export function CheckInCard() {
   return (
     <CardSection>
       <CheckInDrawer ref={checkInRef} />
-      <Leaf className='h-32 w-32' position='bottom-left' variant={3} />
+      <Leaf className='h-32 w-32 rotate-180' position='top-right' variant={4} />
       <div className='flex flex-col gap-4'>
         <div>
           <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
@@ -43,11 +43,6 @@ export function CheckInCard() {
           <Button onClick={() => openCheckIn()}>
             <PlusIcon className='size-5' />
             Ghi nhận việc thiện
-          </Button>
-          <Button
-            className='text-muted-foreground hover:text-foreground h-11 w-full justify-center rounded-full text-sm sm:w-auto'
-            variant='ghost'>
-            Để sau
           </Button>
         </div>
       </div>
