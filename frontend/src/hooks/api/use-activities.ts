@@ -6,7 +6,7 @@ export const ACTIVITIES_KEYS = {
   calendar: (from?: string, to?: string) => ['activities', 'calendar', from, to] as const,
 }
 
-const ONE_HOUR = 1000
+const ONE_HOUR = 1000 * 60 * 60
 
 export const useCalendar = (from?: string, to?: string) => {
   return useQuery({
