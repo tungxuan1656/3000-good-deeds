@@ -3,11 +3,6 @@ interface CalendarDay {
   count: number
 }
 
-interface WeeklyRhythmDay {
-  date: string
-  count: number
-}
-
 type DateParts = {
   year: number
   month: number
@@ -146,55 +141,4 @@ export async function getStreak(
   }
 
   return { currentStreak: streak }
-}
-
-// Get weekly rhythm (7 days)
-export async function getWeeklyRhythm(
-  db: D1Database,
-  userId: string,
-  from: number,
-  to: number,
-  timeZone: string,
-): Promise<WeeklyRhythmDay[]> {
-  const { results } = await db
-    .prepare(
-      `SELECT 
-        COALESCE(local_date, strftime('%Y-%m-%d', datetime(performed_at/1000, 'unixepoch'))) as date,
-        COUNT(id) as count
-      FROM good_deeds
-      WHERE user_id = ?
-      AND performed_at >= ?
-      AND performed_at <= ?
-      GROUP BY date`,
-    )
-    .bind(userId, from, to)
-    .all<WeeklyRhythmDay>()
-
-  const counts = new Map<string, number>()
-
-  results.forEach((row) => {
-    counts.set(row.date, row.count)
-  })
-
-  const startParts = getDatePartsInTimeZone(from, timeZone)
-  const baseDate = new Date(Date.UTC(startParts.year, startParts.month - 1, startParts.day))
-  const days: WeeklyRhythmDay[] = []
-
-  for (let i = 0; i < 7; i += 1) {
-    const date = new Date(baseDate)
-    date.setUTCDate(baseDate.getUTCDate() + i)
-
-    const key = formatDateParts({
-      year: date.getUTCFullYear(),
-      month: date.getUTCMonth() + 1,
-      day: date.getUTCDate(),
-    })
-
-    days.push({
-      date: key,
-      count: counts.get(key) ?? 0,
-    })
-  }
-
-  return days
 }

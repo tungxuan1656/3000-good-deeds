@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getWeeklyRhythm } from '../../api/activities'
+import { getCalendar } from '../../api/activities'
 
 export const ACTIVITIES_KEYS = {
-  weeklyRhythm: (from?: number, to?: number) => ['activities', 'weekly-rhythm', from, to] as const,
+  calendar: (from?: string, to?: string) => ['activities', 'calendar', from, to] as const,
 }
 
 const ONE_HOUR = 1000
 
-export const useWeeklyRhythm = (from?: number, to?: number) => {
+export const useCalendar = (from?: string, to?: string) => {
   return useQuery({
-    queryKey: ACTIVITIES_KEYS.weeklyRhythm(from, to),
-    queryFn: () => getWeeklyRhythm(from, to),
+    queryKey: ACTIVITIES_KEYS.calendar(from, to),
+    queryFn: () => getCalendar(from, to),
     staleTime: ONE_HOUR,
     gcTime: ONE_HOUR,
   })

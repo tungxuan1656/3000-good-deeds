@@ -95,7 +95,7 @@ export interface StatsSummaryDTO {
   todayCount: number
 }
 
-export interface WeeklyRhythmDayDTO {
+export interface CalendarDayDTO {
   date: string
   count: number
 }

@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-import { getCalendar, getStreak, getWeeklyRhythm } from '../handlers/activities'
+import { getCalendar, getStreak } from '../handlers/activities'
 import { authMiddleware } from '../middlewares/auth'
 import { successResponse } from '../utils'
 
@@ -22,22 +22,6 @@ activities.get('/streak', async (c) => {
   const streak = await getStreak(c.env.DB, currentUser.id)
 
   return c.json(successResponse(streak))
-})
-
-activities.get('/weekly-rhythm', async (c) => {
-  const currentUser = c.get('user')
-  const userRow = await c.env.DB.prepare('SELECT timezone FROM users WHERE id = ?')
-    .bind(currentUser.id)
-    .first<{ timezone?: string }>()
-  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
-  const fromParam = c.req.query('from')
-  const toParam = c.req.query('to')
-  const now = Date.now()
-  const from = fromParam ? parseInt(fromParam) : now - 6 * 24 * 60 * 60 * 1000
-  const to = toParam ? parseInt(toParam) : now
-  const rhythm = await getWeeklyRhythm(c.env.DB, currentUser.id, from, to, timeZone)
-
-  return c.json(successResponse(rhythm))
 })
 
 export default activities

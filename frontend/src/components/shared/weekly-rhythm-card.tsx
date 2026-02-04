@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
-import { useWeeklyRhythm } from '@/hooks/api/use-activities'
+import { useCalendar } from '@/hooks/api/use-activities'
 import { PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
@@ -18,11 +18,14 @@ export const WeeklyRhythmCard = () => {
   const from = startOfCurrentWeek.setHours(0, 0, 0, 0)
   const to = addDays(startOfCurrentWeek, 6).setHours(23, 59, 59, 999)
 
-  const { data } = useWeeklyRhythm(from, to)
-  const rhythm = data?.data ?? []
+  const { data } = useCalendar(
+    format(new Date(from), 'yyyy-MM-dd'),
+    format(new Date(to), 'yyyy-MM-dd'),
+  )
+  const calendar = data?.data ?? []
 
   const days = useMemo(() => {
-    if (rhythm.length === 7) return rhythm
+    const counts = new Map(calendar.map((item) => [item.date, item.count]))
 
     return defaultDays.map((_, index) => {
       const date = addDays(startOfCurrentWeek, index)
@@ -30,10 +33,10 @@ export const WeeklyRhythmCard = () => {
 
       return {
         date: key,
-        count: 0,
+        count: counts.get(key) ?? 0,
       }
     })
-  }, [rhythm, startOfCurrentWeek])
+  }, [calendar, startOfCurrentWeek])
 
   const activeCount = days.filter((day) => day.count > 0).length
 
