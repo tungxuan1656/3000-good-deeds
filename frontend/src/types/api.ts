@@ -95,6 +95,11 @@ export interface StatsSummaryDTO {
   todayCount: number
 }
 
+export interface WeeklyRhythmDayDTO {
+  date: string
+  count: number
+}
+
 export interface GoalDTO {
   id: string
   type: 'daily' | 'weekly' | 'monthly'

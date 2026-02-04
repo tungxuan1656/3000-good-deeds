@@ -29,6 +29,7 @@ export const API_ENDPOINTS = {
   activities: {
     calendar: '/activities/calendar',
     streak: '/activities/streak',
+    weeklyRhythm: '/activities/weekly-rhythm',
   },
   achievements: {
     definitions: '/achievements/definitions',

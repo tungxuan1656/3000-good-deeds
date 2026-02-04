@@ -136,10 +136,7 @@ const AchievementsPage = () => {
       <SideColumn>
         <MiniCheckInCard />
         <DailyQuoteCard />
-        <WeeklyRhythmCard
-          activeCount={4}
-          description='4/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.'
-        />
+        <WeeklyRhythmCard />
       </SideColumn>
     </MainContainer>
   )

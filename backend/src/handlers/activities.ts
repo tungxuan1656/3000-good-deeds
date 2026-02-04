@@ -3,6 +3,40 @@ interface CalendarDay {
   count: number
 }
 
+interface WeeklyRhythmDay {
+  date: string
+  count: number
+}
+
+type DateParts = {
+  year: number
+  month: number
+  day: number
+}
+
+const getDatePartsInTimeZone = (timestamp: number, timeZone: string): DateParts => {
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+
+  const parts = formatter.formatToParts(new Date(timestamp))
+  const year = Number(parts.find((part) => part.type === 'year')?.value)
+  const month = Number(parts.find((part) => part.type === 'month')?.value)
+  const day = Number(parts.find((part) => part.type === 'day')?.value)
+
+  return { year, month, day }
+}
+
+const formatDateParts = (parts: DateParts): string => {
+  const month = String(parts.month).padStart(2, '0')
+  const day = String(parts.day).padStart(2, '0')
+
+  return `${parts.year}-${month}-${day}`
+}
+
 // Get daily counts for calendar view
 export async function getCalendar(
   db: D1Database,
@@ -104,4 +138,54 @@ export async function getStreak(
   }
 
   return { currentStreak: streak }
+}
+
+// Get weekly rhythm (7 days)
+export async function getWeeklyRhythm(
+  db: D1Database,
+  userId: string,
+  from: number,
+  to: number,
+  timeZone: string,
+): Promise<WeeklyRhythmDay[]> {
+  const { results } = await db
+    .prepare(
+      `SELECT 
+        performed_at as performedAt
+      FROM good_deeds
+      WHERE user_id = ?
+      AND performed_at >= ? AND performed_at <= ?
+      `,
+    )
+    .bind(userId, from, to)
+    .all<{ performedAt: number }>()
+
+  const counts = new Map<string, number>()
+
+  results.forEach((row) => {
+    const key = formatDateParts(getDatePartsInTimeZone(row.performedAt, timeZone))
+    counts.set(key, (counts.get(key) ?? 0) + 1)
+  })
+
+  const startParts = getDatePartsInTimeZone(from, timeZone)
+  const baseDate = new Date(Date.UTC(startParts.year, startParts.month - 1, startParts.day))
+  const days: WeeklyRhythmDay[] = []
+
+  for (let i = 0; i < 7; i += 1) {
+    const date = new Date(baseDate)
+    date.setUTCDate(baseDate.getUTCDate() + i)
+
+    const key = formatDateParts({
+      year: date.getUTCFullYear(),
+      month: date.getUTCMonth() + 1,
+      day: date.getUTCDate(),
+    })
+
+    days.push({
+      date: key,
+      count: counts.get(key) ?? 0,
+    })
+  }
+
+  return days
 }
