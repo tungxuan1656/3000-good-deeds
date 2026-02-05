@@ -68,7 +68,8 @@ Chi tiết về business logic, decision flow, và ví dụ xem tại [04_goals.
 
 ### 2.5. `GET /goals/:id/history`
 - Lấy lịch sử theo period_time DESC
-- Pagination support
+- Cursor-based pagination (query: `limit`, `cursor`)
+- Return: `{ data, pagination: { hasMore, nextCursor, limit } }`
 
 ---
 

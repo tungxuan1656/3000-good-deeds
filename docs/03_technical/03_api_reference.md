@@ -361,7 +361,7 @@ Lấy lịch sử tiến độ theo chu kỳ của một mục tiêu.
 
 **Query Parameters:**
 - `limit` (number): Số chu kỳ tối đa (Default: 10, Max: 50)
-- `offset` (number): Bỏ qua số bản ghi đầu (Default: 0)
+- `cursor` (string): ID của bản ghi cuối cùng từ trang trước (Optional)
 
 **Response (200 OK):**
 ```json
@@ -396,9 +396,9 @@ Lấy lịch sử tiến độ theo chu kỳ của một mục tiêu.
     }
   ],
   "pagination": {
-    "total": 25,
-    "limit": 10,
-    "offset": 0
+    "hasMore": true,
+    "nextCursor": "gh_2",
+    "limit": 10
   }
 }
 ```
@@ -406,6 +406,9 @@ Lấy lịch sử tiến độ theo chu kỳ của một mục tiêu.
 **Notes:**
 - History được sắp xếp theo `period_time` DESC (mới nhất trước)
 - Milestone chỉ có 1 bản ghi history (period_time cố định)
+- Cursor-based pagination: Dùng `id` của record cuối cùng làm cursor cho trang tiếp theo
+- `hasMore = true`: Còn dữ liệu để tải thêm
+- `nextCursor`: ID để truyền vào query param `cursor` cho request tiếp theo
 
 ---
 
