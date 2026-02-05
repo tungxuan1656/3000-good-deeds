@@ -1,30 +1,159 @@
-import { CheckCircle2Icon, FlagIcon, PlusIcon } from 'lucide-react'
+import { CheckCircle2Icon, PlusIcon } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import { CardSection, DailyQuoteCard, HeaderSection, MiniCheckInCard } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Toggle } from '@/components/ui/toggle'
+import { getGoalHistory, getGoals, upsertGoal } from '@/api/goals'
+import type { GoalHistoryDTO } from '@/types/api'
 
 const GoalsPage = () => {
-  const hasActiveGoal = true
-  const isLoading = false
-  const historyGoals = [
-    {
-      id: 'g1',
-      title: 'Mục tiêu tuần',
-      description: '7 việc thiện trong 7 ngày',
-      result: 'Đã hoàn thành',
-      date: 'Tuần 1 · 10/2026',
-    },
-    {
-      id: 'g2',
-      title: 'Mục tiêu tháng',
-      description: '20 việc thiện trong tháng',
-      result: 'Hoàn thành 16/20',
-      date: '09/2026',
-    },
-  ]
+  const goalTypes = useMemo(() => ['weekly', 'monthly', 'yearly'] as const, [])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState<Record<string, boolean>>({})
+  const [goalForms, setGoalForms] = useState<
+    Record<(typeof goalTypes)[number], { targetCount: string; isEnabled: boolean }>
+  >({
+    weekly: { targetCount: '1', isEnabled: false },
+    monthly: { targetCount: '1', isEnabled: false },
+    yearly: { targetCount: '1', isEnabled: false },
+  })
+  const [historyGoals, setHistoryGoals] = useState<GoalHistoryDTO[]>([])
+
+  const goalTypeLabel = (type: (typeof goalTypes)[number]) => {
+    switch (type) {
+      case 'weekly':
+        return 'Mục tiêu tuần'
+      case 'monthly':
+        return 'Mục tiêu tháng'
+      case 'yearly':
+        return 'Mục tiêu năm'
+      default:
+        return 'Mục tiêu'
+    }
+  }
+
+  const formatPeriodLabel = (history: GoalHistoryDTO) => {
+    if (history.type === 'weekly') {
+      return `Tuần ${history.periodTime}`
+    }
+
+    return history.periodTime
+  }
+
+  const loadGoals = async () => {
+    setIsLoading(true)
+
+    try {
+      const response = await getGoals()
+      if (!response.success || !response.data) {
+        throw new Error('Không thể tải mục tiêu')
+      }
+
+      const goals = response.data
+      const forms = goalTypes.reduce(
+        (acc, type) => {
+          const goal = goals.find((item) => item.type === type)
+          acc[type] = {
+            targetCount: goal ? String(goal.targetCount) : '1',
+            isEnabled: goal?.isEnabled ?? false,
+          }
+          return acc
+        },
+        {} as Record<(typeof goalTypes)[number], { targetCount: string; isEnabled: boolean }>,
+      )
+
+      setGoalForms(forms)
+
+      if (goals.length === 0) {
+        setHistoryGoals([])
+        return
+      }
+
+      const historyResponses = await Promise.all(
+        goals.map((goal) => getGoalHistory(goal.id, { limit: 20 })),
+      )
+
+      const histories = historyResponses
+        .filter((res) => res.success && res.data)
+        .flatMap((res) => res.data?.data ?? [])
+        .sort((a, b) => b.startDate - a.startDate)
+
+      setHistoryGoals(histories)
+    } catch (error) {
+      console.error(error)
+      toast.error('Không thể tải mục tiêu')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    void loadGoals()
+  }, [])
+
+  const handleTargetChange = (type: (typeof goalTypes)[number], value: string) => {
+    setGoalForms((prev) => ({
+      ...prev,
+      [type]: { ...prev[type], targetCount: value },
+    }))
+  }
+
+  const handleToggle = async (type: (typeof goalTypes)[number], isEnabled: boolean) => {
+    const targetCount = Number(goalForms[type].targetCount)
+    if (!Number.isFinite(targetCount) || targetCount <= 0) {
+      toast.error('Số lượng mục tiêu không hợp lệ')
+      return
+    }
+
+    setIsSaving((prev) => ({ ...prev, [type]: true }))
+
+    try {
+      const response = await upsertGoal({ type, targetCount, isEnabled })
+      if (!response.success) {
+        throw new Error('Không thể cập nhật mục tiêu')
+      }
+
+      await loadGoals()
+    } catch (error) {
+      console.error(error)
+      toast.error('Không thể cập nhật mục tiêu')
+    } finally {
+      setIsSaving((prev) => ({ ...prev, [type]: false }))
+    }
+  }
+
+  const handleSave = async (type: (typeof goalTypes)[number]) => {
+    const targetCount = Number(goalForms[type].targetCount)
+    if (!Number.isFinite(targetCount) || targetCount <= 0) {
+      toast.error('Số lượng mục tiêu không hợp lệ')
+      return
+    }
+
+    setIsSaving((prev) => ({ ...prev, [type]: true }))
+
+    try {
+      const response = await upsertGoal({
+        type,
+        targetCount,
+        isEnabled: goalForms[type].isEnabled,
+      })
+      if (!response.success) {
+        throw new Error('Không thể cập nhật mục tiêu')
+      }
+
+      await loadGoals()
+    } catch (error) {
+      console.error(error)
+      toast.error('Không thể cập nhật mục tiêu')
+    } finally {
+      setIsSaving((prev) => ({ ...prev, [type]: false }))
+    }
+  }
 
   return (
     <MainContainer>
@@ -48,32 +177,9 @@ const GoalsPage = () => {
           </div>
         )}
 
-        {!isLoading && !hasActiveGoal && (
+        {!isLoading && historyGoals.length === 0 && (
           <CardSection className='flex flex-col items-center gap-3 text-center'>
-            <p className='text-muted-foreground text-sm'>Bạn chưa thiết lập mục tiêu nào.</p>
-            <Button className='h-10 rounded-full px-5 text-sm'>Tạo mục tiêu đầu tiên</Button>
-          </CardSection>
-        )}
-
-        {!isLoading && hasActiveGoal && (
-          <CardSection className='gap-4'>
-            <div className='flex items-start justify-between gap-4'>
-              <div>
-                <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                  Mục tiêu đang chạy
-                </p>
-                <h2 className='text-foreground mt-2 text-lg font-semibold'>7 việc thiện / tuần</h2>
-                <p className='text-muted-foreground mt-2 text-sm'>Chỉ còn 2 ngày nữa thôi 🌿</p>
-              </div>
-              <div className='bg-secondary/40 flex h-10 w-10 items-center justify-center rounded-full'>
-                <FlagIcon className='text-primary h-5 w-5' />
-              </div>
-            </div>
-
-            <div className='bg-muted h-2.5 w-full rounded-full'>
-              <div className='bg-primary/70 h-2.5 w-[70%] rounded-full' />
-            </div>
-            <div className='text-muted-foreground text-xs'>Đã hoàn thành 5/7 việc thiện.</div>
+            <p className='text-muted-foreground text-sm'>Bạn chưa có lịch sử mục tiêu.</p>
           </CardSection>
         )}
 
@@ -88,32 +194,56 @@ const GoalsPage = () => {
                 <PlusIcon className='text-primary h-4 w-4' />
               </div>
             </div>
-            <div className='grid gap-4 sm:grid-cols-2'>
-              <div className='flex flex-col gap-2'>
-                <Label className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                  Kiểu mục tiêu
-                </Label>
-                <div className='flex gap-2'>
-                  <button className='text-foreground rounded-full border border-black/5 bg-white px-4 py-2 text-sm font-medium'>
-                    Hằng ngày
-                  </button>
-                  <button className='text-muted-foreground rounded-full border border-black/5 bg-white/60 px-4 py-2 text-sm font-medium'>
-                    Hằng tuần
-                  </button>
+            <div className='grid gap-4'>
+              {goalTypes.map((type) => (
+                <div
+                  key={type}
+                  className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/70 p-4'>
+                  <div className='flex items-center justify-between gap-3'>
+                    <div>
+                      <p className='text-foreground text-sm font-semibold'>{goalTypeLabel(type)}</p>
+                      <p className='text-muted-foreground text-xs'>
+                        Thiết lập nhịp phù hợp với bạn.
+                      </p>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-muted-foreground text-xs'>Tắt/Bật</span>
+                      <Toggle
+                        aria-label={`Bật tắt mục tiêu ${goalTypeLabel(type)}`}
+                        className='rounded-full border border-black/5 px-3'
+                        pressed={goalForms[type].isEnabled}
+                        onPressedChange={(value) => {
+                          setGoalForms((prev) => ({
+                            ...prev,
+                            [type]: { ...prev[type], isEnabled: value },
+                          }))
+                          void handleToggle(type, value)
+                        }}>
+                        {goalForms[type].isEnabled ? 'Bật' : 'Tắt'}
+                      </Toggle>
+                    </div>
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <Label className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
+                      Số lượng việc thiện
+                    </Label>
+                    <Input
+                      className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
+                      min={1}
+                      type='number'
+                      value={goalForms[type].targetCount}
+                      onChange={(event) => handleTargetChange(type, event.target.value)}
+                    />
+                  </div>
+                  <Button
+                    className='h-10 w-full rounded-full'
+                    disabled={isSaving[type]}
+                    onClick={() => void handleSave(type)}>
+                    {isSaving[type] ? 'Đang lưu...' : 'Lưu mục tiêu'}
+                  </Button>
                 </div>
-              </div>
-              <div className='flex flex-col gap-2'>
-                <Label className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                  Số lượng việc thiện
-                </Label>
-                <Input
-                  className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
-                  defaultValue='1'
-                  type='number'
-                />
-              </div>
+              ))}
             </div>
-            <Button className='h-11 w-full rounded-full'>Lưu mục tiêu</Button>
           </CardSection>
         )}
 
@@ -126,13 +256,19 @@ const GoalsPage = () => {
                   key={goal.id}
                   className='flex flex-col gap-2 rounded-2xl border border-black/5 bg-white/80 p-4'>
                   <div className='flex items-center justify-between'>
-                    <p className='text-foreground text-sm font-semibold'>{goal.title}</p>
-                    <span className='text-muted-foreground text-xs'>{goal.date}</span>
+                    <p className='text-foreground text-sm font-semibold'>
+                      {goalTypeLabel(goal.type)}
+                    </p>
+                    <span className='text-muted-foreground text-xs'>{formatPeriodLabel(goal)}</span>
                   </div>
-                  <p className='text-muted-foreground text-xs'>{goal.description}</p>
+                  <p className='text-muted-foreground text-xs'>
+                    Mục tiêu {goal.targetCount} việc thiện
+                  </p>
                   <div className='text-muted-foreground flex items-center gap-2 text-xs'>
                     <CheckCircle2Icon className='text-primary h-3.5 w-3.5' />
-                    {goal.result}
+                    {goal.completed
+                      ? 'Đã hoàn thành'
+                      : `Hoàn thành ${goal.actualCount}/${goal.targetCount}`}
                   </div>
                 </div>
               ))}

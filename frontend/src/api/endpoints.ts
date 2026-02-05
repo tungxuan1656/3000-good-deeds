@@ -19,9 +19,8 @@ export const API_ENDPOINTS = {
   },
   goals: {
     list: '/goals',
-    create: '/goals',
-    update: (id: string) => `/goals/${id}`,
-    delete: (id: string) => `/goals/${id}`,
+    upsert: '/goals',
+    history: (id: string) => `/goals/${id}/history`,
   },
   stats: {
     summary: '/stats/summary',

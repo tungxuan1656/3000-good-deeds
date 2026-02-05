@@ -101,13 +101,45 @@ export interface CalendarDayDTO {
 
 export interface GoalDTO {
   id: string
-  type: 'daily' | 'weekly' | 'monthly'
+  type: 'weekly' | 'monthly' | 'yearly'
   targetCount: number
-  status: 'active' | 'completed' | 'failed'
-  startDate: number
+  isEnabled: boolean
+  createdAt: number
+  updatedAt: number
 }
 
-export interface CreateGoalRequest {
-  type: 'daily' | 'weekly' | 'monthly'
+export interface GoalHistoryDTO {
+  id: string
+  goalId: string
+  type: 'weekly' | 'monthly' | 'yearly'
+  periodTime: string
   targetCount: number
+  actualCount: number
+  completed: boolean
+  startDate: number
+  endDate: number | null
+  createdAt: number
+  updatedAt: number
+}
+
+export interface GoalHistoryPagination {
+  hasMore: boolean
+  nextCursor: number | null
+  limit: number
+}
+
+export interface GoalHistoryResponse {
+  data: GoalHistoryDTO[]
+  pagination: GoalHistoryPagination
+}
+
+export interface UpsertGoalRequest {
+  type: 'weekly' | 'monthly' | 'yearly'
+  targetCount?: number
+  isEnabled?: boolean
+}
+
+export interface GetGoalHistoryRequest {
+  limit?: number
+  cursor?: number
 }
