@@ -48,8 +48,6 @@ export interface GoodDeed {
   performedAt: number
   createdAt: number
   updatedAt: number
-  // Expanded
-  category?: Category
 }
 
 // Goal Entity
@@ -234,4 +232,12 @@ export type DateParts = {
   year: number
   month: number
   day: number
+}
+
+export type GoalType = Goal['type']
+
+export type DeedPeriods = {
+  localWeek: string
+  localMonth: string
+  localYear: string
 }

@@ -30,11 +30,8 @@ export async function getDeeds(
     .prepare(
       `SELECT 
         d.id, d.user_id as userId, d.category_code as categoryCode, d.description, d.labels,
-        d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
-        c.code as c_code, c.name as c_name, c.icon as c_icon, c.description as c_desc, c.style as c_style,
-        c.is_active as c_active, c.created_at as c_created
+        d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt
        FROM good_deeds d
-       JOIN categories c ON d.category_code = c.code
        WHERE ${whereClauses.join(' AND ')}
        ORDER BY d.performed_at DESC, d.created_at DESC
        LIMIT ? OFFSET ?`,
@@ -203,13 +200,28 @@ export async function updateDeed(
   }
 
   if (body.performedAt !== undefined) {
-    const newPeriods = computeLocalPeriods(user.timezone, body.performedAt)
+    const previousPeriods = {
+      localWeek: existing.local_week,
+      localMonth: existing.local_month,
+      localYear: existing.local_year,
+    }
 
-    await handleDeedChange(db, user, {
+    const newPeriods = computeLocalPeriods(user.timezone, body.performedAt)
+    const newPeriodValues = {
       localWeek: newPeriods.localWeek,
       localMonth: newPeriods.localMonth,
       localYear: newPeriods.localYear,
-    })
+    }
+
+    const isSamePeriod =
+      previousPeriods.localWeek === newPeriodValues.localWeek &&
+      previousPeriods.localMonth === newPeriodValues.localMonth &&
+      previousPeriods.localYear === newPeriodValues.localYear
+
+    if (!isSamePeriod) {
+      await handleDeedChange(db, user, previousPeriods)
+      await handleDeedChange(db, user, newPeriodValues)
+    }
   }
 
   return await getDeedById(db, deedId)

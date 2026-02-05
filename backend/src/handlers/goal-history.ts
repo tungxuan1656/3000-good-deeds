@@ -1,50 +1,7 @@
-import type { Goal, GoalHistory, User } from '../types'
+import type { DeedPeriods, Goal, GoalHistory, GoalType, User } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
-import { computeLocalPeriods, getPeriodStartEnd } from '../utils'
-
-const MILESTONE_PERIOD = 'milestone_1'
-
-type GoalType = Goal['type']
-
-type DeedPeriods = {
-  localWeek: string
-  localMonth: string
-  localYear: string
-}
-
-const getCurrentPeriod = (type: GoalType, timezone: string, timestamp?: number) => {
-  if (type === 'milestone') {
-    return MILESTONE_PERIOD
-  }
-
-  const { localWeek, localMonth, localYear } = computeLocalPeriods(timezone, timestamp)
-
-  switch (type) {
-    case 'weekly':
-      return localWeek
-    case 'monthly':
-      return localMonth
-    case 'yearly':
-      return localYear
-    default:
-      return localWeek
-  }
-}
-
-const getDeedPeriodForGoal = (type: GoalType, deedPeriods: DeedPeriods) => {
-  switch (type) {
-    case 'weekly':
-      return deedPeriods.localWeek
-    case 'monthly':
-      return deedPeriods.localMonth
-    case 'yearly':
-      return deedPeriods.localYear
-    case 'milestone':
-      return MILESTONE_PERIOD
-    default:
-      return deedPeriods.localWeek
-  }
-}
+import { getPeriodStartEnd } from '../utils'
+import { getCurrentPeriod, getDeedPeriodForGoal, MILESTONE_PERIOD } from '../utils/goals'
 
 const mapGoalHistory = (row: any): GoalHistory => {
   return {
@@ -107,12 +64,12 @@ export const ensureGoalHistoryForCurrentPeriod = async (
   db: D1Database,
   goal: Goal,
   timezone: string,
-): Promise<GoalHistory> => {
+): Promise<boolean> => {
   const periodTime = getCurrentPeriod(goal.type, timezone)
   const existing = await getGoalHistoryByPeriod(db, goal.userId, goal.type, periodTime)
 
   if (existing) {
-    return existing
+    return true
   }
 
   const now = getCurrentTimestamp()
@@ -154,12 +111,7 @@ export const ensureGoalHistoryForCurrentPeriod = async (
     )
     .run()
 
-  const created = await getGoalHistoryByPeriod(db, goal.userId, goal.type, periodTime)
-  if (!created) {
-    throw new Error('Tạo lịch sử mục tiêu thất bại')
-  }
-
-  return created
+  return true
 }
 
 export const updateGoalHistoryForPeriod = async (
@@ -304,14 +256,4 @@ export const getGoalHistoryPage = async (
       limit: pageLimit,
     },
   }
-}
-
-export const getCurrentGoalHistory = async (
-  db: D1Database,
-  goal: Goal,
-  timezone: string,
-): Promise<GoalHistory | null> => {
-  const periodTime = getCurrentPeriod(goal.type, timezone)
-
-  return getGoalHistoryByPeriod(db, goal.userId, goal.type, periodTime)
 }
