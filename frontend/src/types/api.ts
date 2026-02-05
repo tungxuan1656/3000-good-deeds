@@ -117,7 +117,7 @@ export interface GoalHistoryDTO {
   actualCount: number
   completed: boolean
   startDate: number
-  endDate: number | null
+  endDate: number
   createdAt: number
   updatedAt: number
 }
@@ -133,8 +133,10 @@ export interface GoalHistoryResponse {
   pagination: GoalHistoryPagination
 }
 
+export type GoalTypeDTO = 'weekly' | 'monthly' | 'yearly'
+
 export interface UpsertGoalRequest {
-  type: 'weekly' | 'monthly' | 'yearly'
+  type: GoalTypeDTO
   targetCount?: number
   isEnabled?: boolean
 }

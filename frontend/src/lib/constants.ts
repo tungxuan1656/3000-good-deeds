@@ -7,6 +7,8 @@ import {
   TimerIcon,
 } from 'lucide-react'
 
+import type { GoalTypeDTO } from '@/types/api'
+
 export const PATHS = {
   LOGIN: '/login',
   HOME: '/',
@@ -34,3 +36,10 @@ export const APP_MENU_ITEMS = [
   { label: 'Nội tâm', path: PATHS.INNER, icon: LeafIcon },
   { label: 'Cài đặt', path: PATHS.SETTINGS, icon: SettingsIcon },
 ]
+
+export const GOAL_TYPES = ['weekly', 'monthly', 'yearly'] as const
+export const GOAL_LABELS: Record<GoalTypeDTO, string> = {
+  weekly: 'Mục tiêu tuần',
+  monthly: 'Mục tiêu tháng',
+  yearly: 'Mục tiêu năm',
+}
