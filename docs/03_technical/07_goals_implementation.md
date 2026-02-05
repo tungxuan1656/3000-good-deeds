@@ -31,42 +31,32 @@ Chi tiết về business logic, decision flow, và ví dụ xem tại [04_goals.
 ### 1.3. `updateGoalHistory()`
 - Recount deed cho period
 - Update `actual_count`, `completed`
-- Milestone: set `end_date` khi hoàn thành
 
 ### 1.4. `getCurrentPeriod(type, timezone)`
 - Return period string hiện tại theo type
 - Weekly: `2026-W06`
 - Monthly: `2026-02`
 - Yearly: `2026`
-- Milestone: `milestone_1`
 
-### 1.5. `handleDeedChange()` - Integration Point
-- Get active goals
-- Xác định period của deed
-- So sánh với current period
-- Apply Case A/B/C logic
+### 1.5. `handleDeedCreate()` / `handleDeedDelete()` - Integration Point
+- `handleDeedCreate`: nếu deed thuộc current period và goal đang bật → tạo history nếu thiếu; sau đó recompute nếu history tồn tại
+- `handleDeedDelete`: recompute nếu history tồn tại (không quan tâm goal đang bật)
 
 ---
 
 ## 2. API Endpoints
 
 ### 2.1. `GET /goals`
-- Lấy tất cả goals + progress hiện tại
-- JOIN với goal_history (latest period)
+- Lấy tất cả goals
 
 ### 2.2. `POST /goals`
 - Validate type, target_count
 - Create/Update trong `goals` table
-- TẠO goal_history cho current period ngay lập tức
+- Enable goal → TẠO goal_history cho current period ngay lập tức
+- Disable goal → XÓA goal_history của current period
+- Update target_count → recompute current period
 
-### 2.3. `PATCH /goals/:id`
-- Update target_count hoặc is_enabled
-- Chỉ ảnh hưởng current period trở đi
-
-### 2.4. `DELETE /goals/:id`
-- Xóa goal + toàn bộ history
-
-### 2.5. `GET /goals/:id/history`
+### 2.3. `GET /goals/:id/history`
 - Lấy lịch sử theo period_time DESC
 - Cursor-based pagination (query: `limit`, `cursor`)
 - Return: `{ data, pagination: { hasMore, nextCursor, limit } }`
@@ -104,19 +94,22 @@ File: `backend/migrations/0004_add_goals_and_goal_history.sql`
 | Add deed    | Current | Yes      | UPDATE           |
 | Add deed    | Past    | No       | **KHÔNG LÀM GÌ** |
 | Add deed    | Past    | Yes      | UPDATE           |
-| Delete deed | Current | No       | CREATE + UPDATE  |
+| Delete deed | Current | No       | **KHÔNG LÀM GÌ** |
 | Delete deed | Current | Yes      | UPDATE           |
 | Delete deed | Past    | No       | **KHÔNG LÀM GÌ** |
 | Delete deed | Past    | Yes      | UPDATE           |
 
 ### 4.2. Function Responsibility
 
-| Function              | CREATE history?                 | UPDATE history?           |
-| --------------------- | ------------------------------- | ------------------------- |
-| `ensureGoalHistory()` | ✅ (chỉ current period)          | ❌                         |
-| `updateGoalHistory()` | ❌                               | ✅ (bất kỳ period nào)     |
-| `createGoal()`        | ✅ (current period ngay lập tức) | ❌                         |
-| `handleDeedChange()`  | Via `ensureGoalHistory()`       | Via `updateGoalHistory()` |
+| Function                       | CREATE history?                 | UPDATE history?           |
+| ------------------------------ | ------------------------------- | ------------------------- |
+| `ensureGoalHistory()`          | ✅ (chỉ current period)          | ❌                         |
+| `updateGoalHistory()`          | ❌                               | ✅ (bất kỳ period đã có)   |
+| `upsertGoal()` (enable)        | ✅ (current period ngay lập tức) | ❌                         |
+| `upsertGoal()` (disable)       | ❌ (xóa current period history)  | ❌                         |
+| `upsertGoal()` (target change) | ❌                               | ✅ (current period)        |
+| `handleDeedCreate()`           | Via `ensureGoalHistory()`       | Via `updateGoalHistory()` |
+| `handleDeedDelete()`           | ❌                               | Via `updateGoalHistory()` |
 
 ---
 
@@ -130,7 +123,6 @@ File: `backend/migrations/0004_add_goals_and_goal_history.sql`
 - [ ] Goal history được tạo khi enable goal
 - [ ] Thay đổi target chỉ ảnh hưởng current period
 - [ ] Disable goal ngừng tạo history mới
-- [ ] Milestone set `end_date` khi hoàn thành
 
 ### 5.2. Critical: Retroactive History Prevention
 
@@ -164,17 +156,6 @@ File: `backend/migrations/0004_add_goals_and_goal_history.sql`
 
 ---
 
-## 6. Exception: Milestone Goals
-
-Milestone goals **LUÔN đếm tất cả deed**, không phân biệt past/current.
-
-**Lý do:** Milestone đại diện tổng lifetime count, không phải periodic commitment.
-
-Logic riêng:
-- `period_time` = `milestone_1` (cố định)
-- COUNT tất cả deed của user
-- Không cần check current vs past period
-
 ---
 
 ## 7. Deployment
@@ -203,7 +184,6 @@ pnpm deploy
 - [ ] Bulk import không tạo retroactive history
 - [ ] Edit deed cũ chỉ update nếu history tồn tại
 - [ ] Test 4 test cases chính đều pass
-- [ ] Milestone goals vẫn count all deeds
 - [ ] Không có SQL query nào tạo history với `period_time < current_period`
 
 ---

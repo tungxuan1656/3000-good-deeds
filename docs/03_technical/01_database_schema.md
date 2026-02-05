@@ -91,35 +91,35 @@ Bảng lưu trữ việc thiện.
 
 ### `goals`
 Mục tiêu cá nhân hiện tại.
-| Column           | Type      | Description                                      |
-| :--------------- | :-------- | :----------------------------------------------- |
-| **id**           | TEXT (PK) | ULID                                             |
-| **user_id**      | TEXT (FK) | Reference `users.id`                             |
-| **type**         | TEXT      | 'weekly' \| 'monthly' \| 'yearly' \| 'milestone' |
-| **target_count** | INTEGER   | Số lượng việc thiện mục tiêu                     |
-| **is_enabled**   | BOOLEAN   | 1 = Đang bật, 0 = Đã tắt                         |
-| *created_at*     | INTEGER   | Unix Timestamp                                   |
-| *updated_at*     | INTEGER   | Unix Timestamp                                   |
+| Column           | Type      | Description                       |
+| :--------------- | :-------- | :-------------------------------- |
+| **id**           | TEXT (PK) | ULID                              |
+| **user_id**      | TEXT (FK) | Reference `users.id`              |
+| **type**         | TEXT      | 'weekly' \| 'monthly' \| 'yearly' |
+| **target_count** | INTEGER   | Số lượng việc thiện mục tiêu      |
+| **is_enabled**   | BOOLEAN   | 1 = Đang bật, 0 = Đã tắt          |
+| *created_at*     | INTEGER   | Unix Timestamp                    |
+| *updated_at*     | INTEGER   | Unix Timestamp                    |
 
 **Constraints:**
 - UNIQUE (`user_id`, `type`) - Mỗi loại mục tiêu chỉ có 1 active goal
 
 ### `goal_history`
 Lịch sử tiến độ theo từng chu kỳ.
-| Column           | Type      | Description                                       |
-| :--------------- | :-------- | :------------------------------------------------ |
-| **id**           | TEXT (PK) | ULID                                              |
-| **goal_id**      | TEXT (FK) | Reference `goals.id`                              |
-| **user_id**      | TEXT (FK) | Reference `users.id`                              |
-| **type**         | TEXT      | 'weekly' \| 'monthly' \| 'yearly' \| 'milestone'  |
-| **period_time**  | TEXT      | Chu kỳ ('2026-W05', '2026-02', '2026')            |
-| **target_count** | INTEGER   | Mục tiêu tại thời điểm đó                         |
-| **actual_count** | INTEGER   | Số việc thiện thực tế đạt được                    |
-| **start_date**   | INTEGER   | Timestamp bắt đầu chu kỳ                          |
-| **end_date**     | INTEGER   | Timestamp kết thúc (NULL với milestone chưa xong) |
-| **completed**    | BOOLEAN   | 1 = Đã đạt target                                 |
-| *created_at*     | INTEGER   | Unix Timestamp                                    |
-| *updated_at*     | INTEGER   | Unix Timestamp                                    |
+| Column           | Type      | Description                            |
+| :--------------- | :-------- | :------------------------------------- |
+| **id**           | TEXT (PK) | ULID                                   |
+| **goal_id**      | TEXT (FK) | Reference `goals.id`                   |
+| **user_id**      | TEXT (FK) | Reference `users.id`                   |
+| **type**         | TEXT      | 'weekly' \| 'monthly' \| 'yearly'      |
+| **period_time**  | TEXT      | Chu kỳ ('2026-W05', '2026-02', '2026') |
+| **target_count** | INTEGER   | Mục tiêu tại thời điểm đó              |
+| **actual_count** | INTEGER   | Số việc thiện thực tế đạt được         |
+| **start_date**   | INTEGER   | Timestamp bắt đầu chu kỳ               |
+| **end_date**     | INTEGER   | Timestamp kết thúc                     |
+| **completed**    | BOOLEAN   | 1 = Đã đạt target                      |
+| *created_at*     | INTEGER   | Unix Timestamp                         |
+| *updated_at*     | INTEGER   | Unix Timestamp                         |
 
 **Constraints:**
 - UNIQUE (`user_id`, `type`, `period_time`) - Một chu kỳ chỉ có 1 bản ghi

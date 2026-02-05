@@ -1,8 +1,8 @@
 import type { Goal, User } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
-import { ensureGoalHistoryForCurrentPeriod, syncCurrentGoalHistoryTarget } from './goal-history'
+import { syncCurrentGoalHistoryTarget } from './goal-history'
 
-const allowedTypes = new Set<Goal['type']>(['weekly', 'monthly', 'yearly', 'milestone'])
+const allowedTypes = new Set<Goal['type']>(['weekly', 'monthly', 'yearly'])
 
 const mapGoal = (row: any): Goal => {
   return {
@@ -22,32 +22,17 @@ export async function getGoals(db: D1Database, user: User): Promise<Array<Goal>>
     .bind(user.id)
     .all<any>()
 
-  const goals = (results.results || []).map(mapGoal)
-
-  await Promise.all(
-    goals.map(async (goal) => {
-      if (goal.isEnabled) {
-        await ensureGoalHistoryForCurrentPeriod(db, goal, user.timezone)
-      }
-    }),
-  )
-
-  return goals
+  return (results.results || []).map(mapGoal)
 }
 
 export async function upsertGoal(
   db: D1Database,
   user: User,
-  payload: { type: string; targetCount?: number; isEnabled?: boolean },
+  payload: { type: string; targetCount: number; isEnabled: boolean },
 ): Promise<Goal> {
   const { type, targetCount, isEnabled } = payload
 
-  if (
-    !allowedTypes.has(type as Goal['type']) ||
-    targetCount === undefined ||
-    isEnabled === undefined ||
-    targetCount <= 0
-  ) {
+  if (!allowedTypes.has(type as Goal['type']) || !targetCount || !isEnabled || targetCount <= 0) {
     throw new Error('Thông tin mục tiêu không hợp lệ')
   }
 
@@ -75,10 +60,7 @@ export async function upsertGoal(
       .run()
   }
 
-  const updated = await db
-    .prepare('SELECT * FROM goals WHERE id = ?')
-    .bind(existing.id)
-    .first<any>()
+  const updated = await db.prepare('SELECT * FROM goals WHERE id = ?').bind(goalId).first<any>()
   if (!updated) throw new Error('Không tìm thấy mục tiêu')
 
   const mapped = mapGoal(updated)

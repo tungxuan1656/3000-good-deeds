@@ -130,7 +130,7 @@ ON good_deeds(user_id, local_year);
 CREATE TABLE IF NOT EXISTS goals (
   id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (type IN ('weekly', 'monthly', 'yearly', 'milestone')),
+  type TEXT NOT NULL CHECK (type IN ('weekly', 'monthly', 'yearly')),
   target_count INTEGER NOT NULL CHECK (target_count > 0),
   is_enabled BOOLEAN NOT NULL DEFAULT 1,
   created_at INTEGER NOT NULL,
@@ -150,12 +150,12 @@ CREATE TABLE IF NOT EXISTS goal_history (
   id TEXT PRIMARY KEY,               -- ULID
   goal_id TEXT NOT NULL,
   user_id TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (type IN ('weekly', 'monthly', 'yearly', 'milestone')),
-  period_time TEXT NOT NULL,         -- '2026-W05' | '2026-02' | '2026' | 'milestone_1'
+  type TEXT NOT NULL CHECK (type IN ('weekly', 'monthly', 'yearly')),
+  period_time TEXT NOT NULL,         -- '2026-W05' | '2026-02' | '2026'
   target_count INTEGER NOT NULL CHECK (target_count > 0),
   actual_count INTEGER NOT NULL DEFAULT 0,
   start_date INTEGER NOT NULL,
-  end_date INTEGER,                  -- NULL for ongoing, set when completed (milestone only)
+  end_date INTEGER NOT NULL,
   completed BOOLEAN NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,

@@ -1,7 +1,7 @@
 import type { DeedPeriods, Goal, GoalHistory, GoalType, User } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
 import { getPeriodStartEnd } from '../utils'
-import { getCurrentPeriod, getDeedPeriodForGoal, MILESTONE_PERIOD } from '../utils/goals'
+import { getCurrentPeriod, getDeedPeriodForGoal } from '../utils/goals'
 
 const mapGoalHistory = (row: any): GoalHistory => {
   return {
@@ -26,15 +26,6 @@ const countDeedsForPeriod = async (
   type: GoalType,
   periodTime: string,
 ): Promise<number> => {
-  if (type === 'milestone') {
-    const result = await db
-      .prepare('SELECT COUNT(*) as count FROM good_deeds WHERE user_id = ?')
-      .bind(userId)
-      .first<{ count: number }>()
-
-    return result?.count || 0
-  }
-
   const column =
     type === 'weekly' ? 'local_week' : type === 'monthly' ? 'local_month' : 'local_year'
 
@@ -72,22 +63,26 @@ export const ensureGoalHistoryForCurrentPeriod = async (
     return true
   }
 
+  await createGoalHistoryForPeriod(db, goal, periodTime, timezone)
+
+  return true
+}
+
+export const createGoalHistoryForPeriod = async (
+  db: D1Database,
+  goal: Goal,
+  periodTime: string,
+  timezone: string,
+): Promise<void> => {
+  const existing = await getGoalHistoryByPeriod(db, goal.userId, goal.type, periodTime)
+  if (existing) {
+    return
+  }
+
   const now = getCurrentTimestamp()
   const actualCount = await countDeedsForPeriod(db, goal.userId, goal.type, periodTime)
   const completed = actualCount >= goal.targetCount
-
-  let startDate = now
-  let endDate: number | null = null
-
-  if (goal.type !== 'milestone') {
-    const period = getPeriodStartEnd(goal.type, timezone)
-    startDate = period.startDate
-    endDate = period.endDate
-  } else if (completed) {
-    endDate = now
-  }
-
-  const newId = generateId()
+  const period = getPeriodStartEnd(goal.type, timezone)
 
   await db
     .prepare(
@@ -96,57 +91,45 @@ export const ensureGoalHistoryForCurrentPeriod = async (
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
-      newId,
+      generateId(),
       goal.id,
       goal.userId,
       goal.type,
       periodTime,
       goal.targetCount,
       actualCount,
-      startDate,
-      endDate,
+      period.startDate,
+      period.endDate,
       completed ? 1 : 0,
       now,
       now,
     )
     .run()
-
-  return true
 }
 
 export const updateGoalHistoryForPeriod = async (
   db: D1Database,
-  goal: Goal,
+  userId: string,
+  type: GoalType,
   periodTime: string,
-  options?: { updateTargetCount?: boolean },
+  options?: { targetCount?: number },
 ): Promise<void> => {
-  const existing = await getGoalHistoryByPeriod(db, goal.userId, goal.type, periodTime)
+  const existing = await getGoalHistoryByPeriod(db, userId, type, periodTime)
   if (!existing) {
     return
   }
 
   const now = getCurrentTimestamp()
-  const actualCount = await countDeedsForPeriod(db, goal.userId, goal.type, periodTime)
-  const targetCount = options?.updateTargetCount ? goal.targetCount : existing.targetCount
+  const targetCount = options?.targetCount ?? existing.targetCount
+  const actualCount = await countDeedsForPeriod(db, userId, type, periodTime)
   const completed = actualCount >= targetCount
 
-  let endDate = existing.endDate
-
-  if (goal.type === 'milestone' && completed && !endDate) {
-    endDate = now
-  }
-
   const setClauses = ['actual_count = ?', 'completed = ?', 'updated_at = ?']
-  const bindings: Array<string | number | null> = [actualCount, completed ? 1 : 0, now]
+  const bindings: Array<string | number> = [actualCount, completed ? 1 : 0, now]
 
-  if (options?.updateTargetCount) {
+  if (options?.targetCount !== undefined) {
     setClauses.unshift('target_count = ?')
     bindings.unshift(targetCount)
-  }
-
-  if (goal.type === 'milestone') {
-    setClauses.push('end_date = ?')
-    bindings.push(endDate)
   }
 
   bindings.push(existing.id)
@@ -157,7 +140,29 @@ export const updateGoalHistoryForPeriod = async (
     .run()
 }
 
-export const handleDeedChange = async (
+export const deleteGoalHistoryForCurrentPeriod = async (
+  db: D1Database,
+  goal: Goal,
+  timezone: string,
+): Promise<void> => {
+  const periodTime = getCurrentPeriod(goal.type, timezone)
+
+  await db
+    .prepare('DELETE FROM goal_history WHERE user_id = ? AND type = ? AND period_time = ?')
+    .bind(goal.userId, goal.type, periodTime)
+    .run()
+}
+
+export const updateGoalHistoryIfExists = async (
+  db: D1Database,
+  userId: string,
+  type: GoalType,
+  periodTime: string,
+): Promise<void> => {
+  await updateGoalHistoryForPeriod(db, userId, type, periodTime)
+}
+
+export const handleDeedCreate = async (
   db: D1Database,
   user: User,
   deedPeriods: DeedPeriods,
@@ -167,12 +172,9 @@ export const handleDeedChange = async (
     .bind(user.id)
     .all<any>()
 
-  if (!results || results.length === 0) {
-    return
-  }
-
-  for (const row of results) {
-    const goal: Goal = {
+  const enabledByType = new Map<GoalType, Goal>()
+  for (const row of results || []) {
+    enabledByType.set(row.type as GoalType, {
       id: row.id,
       userId: row.user_id,
       type: row.type,
@@ -180,28 +182,41 @@ export const handleDeedChange = async (
       isEnabled: Boolean(row.is_enabled),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
-    }
+    })
+  }
 
-    if (goal.type === 'milestone') {
-      await ensureGoalHistoryForCurrentPeriod(db, goal, user.timezone)
-      await updateGoalHistoryForPeriod(db, goal, MILESTONE_PERIOD)
-      continue
-    }
+  const types: GoalType[] = ['weekly', 'monthly', 'yearly']
+  for (const type of types) {
+    const deedPeriod = getDeedPeriodForGoal(type, deedPeriods)
+    const currentPeriod = getCurrentPeriod(type, user.timezone)
+    const goal = enabledByType.get(type)
 
-    const deedPeriod = getDeedPeriodForGoal(goal.type, deedPeriods)
-    const currentPeriod = getCurrentPeriod(goal.type, user.timezone)
-
-    if (deedPeriod === currentPeriod) {
-      await ensureGoalHistoryForCurrentPeriod(db, goal, user.timezone)
-      await updateGoalHistoryForPeriod(db, goal, currentPeriod)
-      continue
-    }
-
-    const history = await getGoalHistoryByPeriod(db, goal.userId, goal.type, deedPeriod)
-    if (history) {
-      await updateGoalHistoryForPeriod(db, goal, deedPeriod)
+    if (goal && deedPeriod === currentPeriod) {
+      await createGoalHistoryForPeriod(db, goal, deedPeriod, user.timezone)
     }
   }
+
+  await Promise.all(
+    types.map(async (type) => {
+      const deedPeriod = getDeedPeriodForGoal(type, deedPeriods)
+      await updateGoalHistoryIfExists(db, user.id, type, deedPeriod)
+    }),
+  )
+}
+
+export const handleDeedDelete = async (
+  db: D1Database,
+  user: User,
+  deedPeriods: DeedPeriods,
+): Promise<void> => {
+  const types: GoalType[] = ['weekly', 'monthly', 'yearly']
+
+  await Promise.all(
+    types.map(async (type) => {
+      const deedPeriod = getDeedPeriodForGoal(type, deedPeriods)
+      await updateGoalHistoryIfExists(db, user.id, type, deedPeriod)
+    }),
+  )
 }
 
 export const syncCurrentGoalHistoryTarget = async (
@@ -214,8 +229,11 @@ export const syncCurrentGoalHistoryTarget = async (
   }
 
   const periodTime = getCurrentPeriod(goal.type, timezone)
-  await ensureGoalHistoryForCurrentPeriod(db, goal, timezone)
-  await updateGoalHistoryForPeriod(db, goal, periodTime, { updateTargetCount: true })
+  await createGoalHistoryForPeriod(db, goal, periodTime, timezone)
+
+  await updateGoalHistoryForPeriod(db, goal.userId, goal.type, periodTime, {
+    targetCount: goal.targetCount,
+  })
 }
 
 export const getGoalHistoryPage = async (

@@ -2,7 +2,7 @@ import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest, User } from '../ty
 import { generateId, getCurrentTimestamp } from '../utils'
 import { computeLocalPeriods } from '../utils'
 import { checkAndUnlockAchievements } from './achievements'
-import { handleDeedChange } from './goal-history'
+import { handleDeedCreate, handleDeedDelete } from './goal-history'
 
 // Get deeds list (with filters)
 export async function getDeeds(
@@ -93,7 +93,7 @@ export async function createDeed(
     )
     .run()
 
-  await handleDeedChange(db, user, { localWeek, localMonth, localYear })
+  await handleDeedCreate(db, user, { localWeek, localMonth, localYear })
 
   // Check achievements
   await checkAndUnlockAchievements(db, user.id)
@@ -219,8 +219,8 @@ export async function updateDeed(
       previousPeriods.localYear === newPeriodValues.localYear
 
     if (!isSamePeriod) {
-      await handleDeedChange(db, user, previousPeriods)
-      await handleDeedChange(db, user, newPeriodValues)
+      await handleDeedDelete(db, user, previousPeriods)
+      await handleDeedCreate(db, user, newPeriodValues)
     }
   }
 
@@ -242,7 +242,7 @@ export async function deleteDeed(db: D1Database, user: User, deedId: string): Pr
 
   await db.prepare('DELETE FROM good_deeds WHERE id = ?').bind(deedId).run()
 
-  await handleDeedChange(db, user, {
+  await handleDeedDelete(db, user, {
     localWeek: existing.local_week,
     localMonth: existing.local_month,
     localYear: existing.local_year,

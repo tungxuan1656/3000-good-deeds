@@ -1,13 +1,7 @@
 import { type DeedPeriods, type GoalType } from '../types'
 import { computeLocalPeriods } from './datetime'
 
-export const MILESTONE_PERIOD = 'milestone_1'
-
 export const getCurrentPeriod = (type: GoalType, timezone: string, timestamp?: number) => {
-  if (type === 'milestone') {
-    return MILESTONE_PERIOD
-  }
-
   const { localWeek, localMonth, localYear } = computeLocalPeriods(timezone, timestamp)
 
   switch (type) {
@@ -30,8 +24,6 @@ export const getDeedPeriodForGoal = (type: GoalType, deedPeriods: DeedPeriods) =
       return deedPeriods.localMonth
     case 'yearly':
       return deedPeriods.localYear
-    case 'milestone':
-      return MILESTONE_PERIOD
     default:
       return deedPeriods.localWeek
   }

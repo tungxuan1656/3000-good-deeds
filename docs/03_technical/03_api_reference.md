@@ -261,26 +261,8 @@ Lấy tất cả mục tiêu hiện tại của user.
       "type": "weekly",
       "targetCount": 21,
       "isEnabled": true,
-      "currentProgress": {
-        "periodTime": "2026-W05",
-        "actualCount": 15,
-        "completed": false
-      },
       "createdAt": 1706500000000,
       "updatedAt": 1706500000000
-    },
-    {
-      "id": "g_2",
-      "type": "milestone",
-      "targetCount": 3000,
-      "isEnabled": true,
-      "currentProgress": {
-        "periodTime": "milestone_1",
-        "actualCount": 150,
-        "completed": false
-      },
-      "createdAt": 1706400000000,
-      "updatedAt": 1706400000000
     }
   ]
 }
@@ -292,42 +274,17 @@ Tạo hoặc cập nhật mục tiêu.
 **Request Body:**
 ```json
 {
-  "type": "weekly", // 'weekly' | 'monthly' | 'yearly' | 'milestone'
+  "type": "weekly", // 'weekly' | 'monthly' | 'yearly'
   "targetCount": 21,
   "isEnabled": true // (Optional, default: true)
 }
 ```
 
-**Response (201 Created / 200 OK):**
-```json
-{
-  "success": true,
-  "data": {
-    "id": "g_1",
-    "type": "weekly",
-    "targetCount": 21,
-    "isEnabled": true,
-    "createdAt": 1706500000000,
-    "updatedAt": 1706500000000
-  }
-}
-```
 
-**Notes:**
-- Tạo mục tiêu mới sẽ tự động tạo bản ghi `goal_history` cho chu kỳ hiện tại
-- Nếu mục tiêu đã tồn tại (cùng user + type), sẽ update thay vì tạo mới
-
-### `PATCH /goals/:id`
-Cập nhật mục tiêu (target hoặc is_enabled).
-
-**Request Body:**
-```json
-{
-  "targetCount": 30,
-  "isEnabled": false
-}
-```
-
+  **Notes:**
+  - Tạo hoặc bật mục tiêu sẽ tự động tạo bản ghi `goal_history` cho chu kỳ hiện tại
+  - Tắt mục tiêu sẽ xóa `goal_history` của chu kỳ hiện tại
+  - Update `targetCount` chỉ ảnh hưởng chu kỳ hiện tại
 **Response (200 OK):**
 ```json
 {
@@ -405,7 +362,6 @@ Lấy lịch sử tiến độ theo chu kỳ của một mục tiêu.
 
 **Notes:**
 - History được sắp xếp theo `period_time` DESC (mới nhất trước)
-- Milestone chỉ có 1 bản ghi history (period_time cố định)
 - Cursor-based pagination: Dùng `id` của record cuối cùng làm cursor cho trang tiếp theo
 - `hasMore = true`: Còn dữ liệu để tải thêm
 - `nextCursor`: ID để truyền vào query param `cursor` cho request tiếp theo

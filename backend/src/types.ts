@@ -54,7 +54,7 @@ export interface GoodDeed {
 export interface Goal {
   id: string
   userId: string
-  type: 'weekly' | 'monthly' | 'yearly' | 'milestone'
+  type: 'weekly' | 'monthly' | 'yearly'
   targetCount: number
   isEnabled: boolean
   createdAt: number
@@ -65,7 +65,7 @@ export interface GoalHistory {
   id: string
   goalId: string
   userId: string
-  type: 'weekly' | 'monthly' | 'yearly' | 'milestone'
+  type: 'weekly' | 'monthly' | 'yearly'
   periodTime: string
   targetCount: number
   actualCount: number
