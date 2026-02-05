@@ -2,11 +2,11 @@ import { PlusIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
-import { getGoals, upsertGoal } from '@/api/goals'
+import { getGoals, upsertGoals } from '@/api/goals'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Toggle } from '@/components/ui/toggle'
+import { Switch } from '@/components/ui/switch'
+import { GOAL_LABELS } from '@/lib/constants'
 
 type GoalType = 'weekly' | 'monthly' | 'yearly'
 
@@ -18,25 +18,12 @@ type GoalFormState = {
 const GoalSettingCard = () => {
   const goalTypes = useMemo(() => ['weekly', 'monthly', 'yearly'] as const, [])
   const [isLoading, setIsLoading] = useState(true)
-  const [isSaving, setIsSaving] = useState<Record<string, boolean>>({})
+  const [isSaving, setIsSaving] = useState(false)
   const [goalForms, setGoalForms] = useState<Record<GoalType, GoalFormState>>({
     weekly: { targetCount: '1', isEnabled: false },
     monthly: { targetCount: '1', isEnabled: false },
     yearly: { targetCount: '1', isEnabled: false },
   })
-
-  const goalTypeLabel = (type: GoalType) => {
-    switch (type) {
-      case 'weekly':
-        return 'Mục tiêu tuần'
-      case 'monthly':
-        return 'Mục tiêu tháng'
-      case 'yearly':
-        return 'Mục tiêu năm'
-      default:
-        return 'Mục tiêu'
-    }
-  }
 
   const loadGoals = async () => {
     setIsLoading(true)
@@ -82,52 +69,37 @@ const GoalSettingCard = () => {
     }))
   }
 
-  const handleToggle = async (type: GoalType, isEnabled: boolean) => {
-    const targetCount = Number(goalForms[type].targetCount)
-    if (!Number.isFinite(targetCount) || targetCount <= 0) {
-      toast.error('Số lượng mục tiêu không hợp lệ')
-
-      return
-    }
-
+  const handleToggle = (type: GoalType, isEnabled: boolean) => {
     setGoalForms((prev) => ({
       ...prev,
       [type]: { ...prev[type], isEnabled },
     }))
-
-    setIsSaving((prev) => ({ ...prev, [type]: true }))
-
-    try {
-      const response = await upsertGoal({ type, targetCount, isEnabled })
-      if (!response.success) {
-        throw new Error('Không thể cập nhật mục tiêu')
-      }
-
-      await loadGoals()
-    } catch (error) {
-      console.error(error)
-      toast.error('Không thể cập nhật mục tiêu')
-    } finally {
-      setIsSaving((prev) => ({ ...prev, [type]: false }))
-    }
   }
 
-  const handleSave = async (type: GoalType) => {
-    const targetCount = Number(goalForms[type].targetCount)
-    if (!Number.isFinite(targetCount) || targetCount <= 0) {
+  const handleSave = async () => {
+    const payload = goalTypes.map((type) => {
+      const targetCount = Number(goalForms[type].targetCount)
+
+      return {
+        type,
+        targetCount,
+        isEnabled: goalForms[type].isEnabled,
+      }
+    })
+
+    const invalid = payload.some(
+      (goal) => !Number.isFinite(goal.targetCount) || goal.targetCount <= 0,
+    )
+    if (invalid) {
       toast.error('Số lượng mục tiêu không hợp lệ')
 
       return
     }
 
-    setIsSaving((prev) => ({ ...prev, [type]: true }))
+    setIsSaving(true)
 
     try {
-      const response = await upsertGoal({
-        type,
-        targetCount,
-        isEnabled: goalForms[type].isEnabled,
-      })
+      const response = await upsertGoals({ goals: payload })
       if (!response.success) {
         throw new Error('Không thể cập nhật mục tiêu')
       }
@@ -137,7 +109,7 @@ const GoalSettingCard = () => {
       console.error(error)
       toast.error('Không thể cập nhật mục tiêu')
     } finally {
-      setIsSaving((prev) => ({ ...prev, [type]: false }))
+      setIsSaving(false)
     }
   }
 
@@ -157,45 +129,33 @@ const GoalSettingCard = () => {
           <div
             key={type}
             className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/70 p-4'>
-            <div className='flex items-center justify-between gap-3'>
-              <div>
-                <p className='text-foreground text-sm font-semibold'>{goalTypeLabel(type)}</p>
-                <p className='text-muted-foreground text-xs'>Thiết lập nhịp phù hợp với bạn.</p>
-              </div>
-              <div className='flex items-center gap-2'>
-                <span className='text-muted-foreground text-xs'>Tắt/Bật</span>
-                <Toggle
-                  aria-label={`Bật tắt mục tiêu ${goalTypeLabel(type)}`}
-                  className='rounded-full border border-black/5 px-3'
-                  disabled={isLoading || isSaving[type]}
-                  pressed={goalForms[type].isEnabled}
-                  onPressedChange={(value) => void handleToggle(type, value)}>
-                  {goalForms[type].isEnabled ? 'Bật' : 'Tắt'}
-                </Toggle>
+            <div className='flex flex-wrap items-center justify-between gap-3'>
+              <p className='text-foreground text-sm font-semibold'>{GOAL_LABELS[type]}</p>
+              <div className='flex items-center gap-3'>
+                <Input
+                  className='w-24 rounded-2xl border border-black/5 bg-white px-3 py-2 text-sm'
+                  disabled={isLoading || isSaving}
+                  min={1}
+                  type='number'
+                  value={goalForms[type].targetCount}
+                  onChange={(event) => handleTargetChange(type, event.target.value)}
+                />
+                <Switch
+                  checked={goalForms[type].isEnabled}
+                  disabled={isLoading || isSaving}
+                  onCheckedChange={(value) => handleToggle(type, value)}
+                />
               </div>
             </div>
-            <div className='flex flex-col gap-2'>
-              <Label className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-                Số lượng việc thiện
-              </Label>
-              <Input
-                className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
-                disabled={isLoading || isSaving[type]}
-                min={1}
-                type='number'
-                value={goalForms[type].targetCount}
-                onChange={(event) => handleTargetChange(type, event.target.value)}
-              />
-            </div>
-            <Button
-              className='h-10 w-full rounded-full'
-              disabled={isLoading || isSaving[type]}
-              onClick={() => void handleSave(type)}>
-              {isSaving[type] ? 'Đang lưu...' : 'Lưu mục tiêu'}
-            </Button>
           </div>
         ))}
       </div>
+      <Button
+        className='h-11 w-full rounded-full'
+        disabled={isLoading || isSaving}
+        onClick={() => void handleSave()}>
+        {isSaving ? 'Đang lưu...' : 'Lưu tất cả mục tiêu'}
+      </Button>
     </div>
   )
 }
