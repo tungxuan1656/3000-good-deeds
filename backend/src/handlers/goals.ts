@@ -35,18 +35,20 @@ export async function getGoals(db: D1Database, user: User): Promise<Array<Goal>>
   return goals
 }
 
-export async function createGoal(
+export async function upsertGoal(
   db: D1Database,
   user: User,
-  type: string,
-  targetCount: number,
+  payload: { type: string; targetCount?: number; isEnabled?: boolean },
 ): Promise<Goal> {
-  if (!allowedTypes.has(type as Goal['type'])) {
-    throw new Error('Loại mục tiêu không hợp lệ')
-  }
+  const { type, targetCount, isEnabled } = payload
 
-  if (targetCount <= 0) {
-    throw new Error('Số lượng mục tiêu không hợp lệ')
+  if (
+    !allowedTypes.has(type as Goal['type']) ||
+    targetCount === undefined ||
+    isEnabled === undefined ||
+    targetCount <= 0
+  ) {
+    throw new Error('Thông tin mục tiêu không hợp lệ')
   }
 
   const now = getCurrentTimestamp()
@@ -55,98 +57,34 @@ export async function createGoal(
     .bind(user.id, type)
     .first<any>()
 
-  let goalId = existing?.id
-
-  if (existing) {
-    await db
-      .prepare(
-        `UPDATE goals SET target_count = ?, is_enabled = 1, updated_at = ?
-         WHERE id = ? AND user_id = ?`,
-      )
-      .bind(targetCount, now, existing.id, user.id)
-      .run()
-  } else {
-    goalId = generateId()
-
+  const goalId = existing?.id ?? generateId()
+  if (!existing) {
     await db
       .prepare(
         `INSERT INTO goals (id, user_id, type, target_count, is_enabled, created_at, updated_at)
-         VALUES (?, ?, ?, ?, 1, ?, ?)`,
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
       )
-      .bind(goalId, user.id, type, targetCount, now, now)
+      .bind(goalId, user.id, type, targetCount, isEnabled ? 1 : 0, now, now)
+      .run()
+  } else {
+    await db
+      .prepare(
+        `UPDATE goals SET target_count = ?, is_enabled = ?, updated_at = ? WHERE id = ? AND user_id = ?`,
+      )
+      .bind(targetCount, isEnabled ? 1 : 0, now, goalId, user.id)
       .run()
   }
 
-  const goal = await db.prepare(`SELECT * FROM goals WHERE id = ?`).bind(goalId).first<any>()
+  const updated = await db
+    .prepare('SELECT * FROM goals WHERE id = ?')
+    .bind(existing.id)
+    .first<any>()
+  if (!updated) throw new Error('Không tìm thấy mục tiêu')
 
-  if (!goal) throw new Error('Tạo mục tiêu thất bại')
-
-  const mapped = mapGoal(goal)
-
-  await syncCurrentGoalHistoryTarget(db, mapped, user.timezone)
-
-  return mapped
-}
-
-export async function updateGoal(
-  db: D1Database,
-  user: User,
-  goalId: string,
-  updates: { targetCount?: number; isEnabled?: boolean },
-): Promise<Goal> {
-  if (updates.targetCount !== undefined && updates.targetCount <= 0) {
-    throw new Error('Số lượng mục tiêu không hợp lệ')
-  }
-
-  const setClauses: string[] = []
-  const values: any[] = []
-
-  if (updates.targetCount !== undefined) {
-    setClauses.push('target_count = ?')
-    values.push(updates.targetCount)
-  }
-
-  if (updates.isEnabled !== undefined) {
-    setClauses.push('is_enabled = ?')
-    values.push(updates.isEnabled ? 1 : 0)
-  }
-
-  if (setClauses.length === 0) {
-    throw new Error('Không có thông tin cập nhật')
-  }
-
-  setClauses.push('updated_at = ?')
-  values.push(getCurrentTimestamp())
-
-  values.push(goalId)
-  values.push(user.id) // Ensure ownership
-
-  const res = await db
-    .prepare(`UPDATE goals SET ${setClauses.join(', ')} WHERE id = ? AND user_id = ?`)
-    .bind(...values)
-    .run()
-
-  if (res.meta.changes === 0) {
-    throw new Error('Không tìm thấy mục tiêu hoặc không có quyền truy cập')
-  }
-
-  const goal = await db.prepare('SELECT * FROM goals WHERE id = ?').bind(goalId).first<any>()
-  if (!goal) throw new Error('Không tìm thấy mục tiêu')
-
-  const mapped = mapGoal(goal)
-
-  if (updates.targetCount !== undefined || updates.isEnabled !== undefined) {
+  const mapped = mapGoal(updated)
+  if (mapped.isEnabled) {
     await syncCurrentGoalHistoryTarget(db, mapped, user.timezone)
   }
 
   return mapped
-}
-
-export async function deleteGoal(db: D1Database, user: User, goalId: string): Promise<boolean> {
-  const res = await db
-    .prepare('DELETE FROM goals WHERE id = ? AND user_id = ?')
-    .bind(goalId, user.id)
-    .run()
-
-  return res.meta.changes > 0
 }
