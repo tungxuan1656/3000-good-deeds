@@ -19,9 +19,9 @@ goals.get('/', async (c) => {
 
 goals.post('/', async (c) => {
   const currentUser = c.get('user')
-  const body = await c.req.json<{ type: string; targetCount?: number; isEnabled?: boolean }>()
+  const body = await c.req.json<{ type: string; targetCount: number; isEnabled: boolean }>()
 
-  if (!body.type) {
+  if (!body.type || !body.targetCount || body.isEnabled === undefined) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
   }
 
