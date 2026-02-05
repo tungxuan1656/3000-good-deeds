@@ -56,11 +56,24 @@ export interface GoodDeed {
 export interface Goal {
   id: string
   userId: string
-  type: 'daily' | 'weekly' | 'monthly'
+  type: 'weekly' | 'monthly' | 'yearly' | 'milestone'
   targetCount: number
+  isEnabled: boolean
+  createdAt: number
+  updatedAt: number
+}
+
+export interface GoalHistory {
+  id: string
+  goalId: string
+  userId: string
+  type: 'weekly' | 'monthly' | 'yearly' | 'milestone'
+  periodTime: string
+  targetCount: number
+  actualCount: number
   startDate: number
   endDate: number | null
-  status: 'active' | 'completed' | 'archived'
+  completed: boolean
   createdAt: number
   updatedAt: number
 }
@@ -156,8 +169,7 @@ export interface UpdateUserRequest {
 
 export interface UpdateGoalRequest {
   targetCount?: number
-  status?: 'active' | 'completed' | 'archived'
-  endDate?: number
+  isEnabled?: boolean
 }
 
 export interface FirebaseJwtPayload {
@@ -211,4 +223,15 @@ export interface RandomAct {
   content: string
   createdAt: number
   updatedAt: number
+}
+
+export interface CalendarDay {
+  date: string
+  count: number
+}
+
+export type DateParts = {
+  year: number
+  month: number
+  day: number
 }

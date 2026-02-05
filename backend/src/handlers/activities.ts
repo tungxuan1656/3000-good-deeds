@@ -1,41 +1,10 @@
-interface CalendarDay {
-  date: string
-  count: number
-}
-
-type DateParts = {
-  year: number
-  month: number
-  day: number
-}
-
-const getDatePartsInTimeZone = (timestamp: number, timeZone: string): DateParts => {
-  const formatter = new Intl.DateTimeFormat('en-CA', {
-    timeZone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-
-  const parts = formatter.formatToParts(new Date(timestamp))
-  const year = Number(parts.find((part) => part.type === 'year')?.value)
-  const month = Number(parts.find((part) => part.type === 'month')?.value)
-  const day = Number(parts.find((part) => part.type === 'day')?.value)
-
-  return { year, month, day }
-}
-
-const formatDateParts = (parts: DateParts): string => {
-  const month = String(parts.month).padStart(2, '0')
-  const day = String(parts.day).padStart(2, '0')
-
-  return `${parts.year}-${month}-${day}`
-}
+import { type CalendarDay, type User } from '../types'
+import { formatDateParts, getZonedDateParts } from '../utils'
 
 // Get daily counts for calendar view
 export async function getCalendar(
   db: D1Database,
-  userId: string,
+  user: User,
   from: string,
   to: string,
 ): Promise<CalendarDay[]> {
@@ -50,24 +19,14 @@ export async function getCalendar(
        AND local_date <= ?
        GROUP BY date`,
     )
-    .bind(userId, from, to)
+    .bind(user.id, from, to)
     .all<CalendarDay>()
 
   return results || []
 }
 
 // Calculate current streak
-export async function getStreak(
-  db: D1Database,
-  userId: string,
-): Promise<{ currentStreak: number }> {
-  // Get user's timezone
-  const userRow = await db
-    .prepare('SELECT timezone FROM users WHERE id = ?')
-    .bind(userId)
-    .first<{ timezone?: string }>()
-  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
-
+export async function getStreak(db: D1Database, user: User): Promise<{ currentStreak: number }> {
   // Get unique dates of activity in descending order
   const { results } = await db
     .prepare(
@@ -77,7 +36,7 @@ export async function getStreak(
        ORDER BY date DESC
        LIMIT 365`,
     )
-    .bind(userId)
+    .bind(user.id)
     .all<{ date: string }>()
 
   if (!results || results.length === 0) {
@@ -87,11 +46,11 @@ export async function getStreak(
   const uniqueDates = results.map((r) => r.date)
   // Use current date as reference (UTC)
   const now = Date.now()
-  const today = formatDateParts(getDatePartsInTimeZone(now, timeZone))
+  const today = formatDateParts(getZonedDateParts(user.timezone, now))
   const yesterdayDate = new Date(now)
   yesterdayDate.setDate(yesterdayDate.getDate() - 1)
 
-  const yesterday = formatDateParts(getDatePartsInTimeZone(yesterdayDate.getTime(), timeZone))
+  const yesterday = formatDateParts(getZonedDateParts(user.timezone, yesterdayDate.getTime()))
 
   // Check if the most recent activity was today or yesterday
   const lastActivityDate = uniqueDates[0]
