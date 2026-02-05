@@ -1,6 +1,10 @@
 import type { Goal, User } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
-import { syncCurrentGoalHistoryTarget } from './goal-history'
+import {
+  deleteGoalHistoryForCurrentPeriod,
+  ensureGoalHistoryForCurrentPeriod,
+  syncCurrentGoalHistoryTarget,
+} from './goal-history'
 
 const allowedTypes = new Set<Goal['type']>(['weekly', 'monthly', 'yearly'])
 
@@ -43,6 +47,7 @@ export async function upsertGoal(
     .first<any>()
 
   const goalId = existing?.id ?? generateId()
+
   if (!existing) {
     await db
       .prepare(
@@ -64,9 +69,44 @@ export async function upsertGoal(
   if (!updated) throw new Error('Không tìm thấy mục tiêu')
 
   const mapped = mapGoal(updated)
-  if (mapped.isEnabled) {
+
+  if (!existing) {
+    if (mapped.isEnabled) {
+      await ensureGoalHistoryForCurrentPeriod(db, mapped, user.timezone)
+    }
+
+    return mapped
+  }
+
+  const wasEnabled = Boolean(existing.is_enabled)
+
+  if (wasEnabled && !mapped.isEnabled) {
+    await deleteGoalHistoryForCurrentPeriod(db, mapped, user.timezone)
+    return mapped
+  }
+
+  if (!wasEnabled && mapped.isEnabled) {
+    await ensureGoalHistoryForCurrentPeriod(db, mapped, user.timezone)
+    return mapped
+  }
+
+  if (mapped.isEnabled && targetCount !== existing.target_count) {
     await syncCurrentGoalHistoryTarget(db, mapped, user.timezone)
   }
 
   return mapped
+}
+
+export async function upsertGoals(
+  db: D1Database,
+  user: User,
+  goals: Array<{ type: string; targetCount: number; isEnabled: boolean }>,
+): Promise<Goal[]> {
+  const results: Goal[] = []
+
+  for (const goal of goals) {
+    results.push(await upsertGoal(db, user, goal))
+  }
+
+  return results
 }

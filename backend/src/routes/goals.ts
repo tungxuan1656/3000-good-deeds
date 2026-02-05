@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 
 import { getGoalHistoryPage } from '../handlers/goal-history'
-import { getGoals, upsertGoal } from '../handlers/goals'
+import { getGoals, upsertGoal, upsertGoals } from '../handlers/goals'
 import { authMiddleware } from '../middlewares/auth'
 import type { User } from '../types'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
@@ -19,18 +19,29 @@ goals.get('/', async (c) => {
 
 goals.post('/', async (c) => {
   const currentUser = c.get('user')
-  const body = await c.req.json<{ type: string; targetCount: number; isEnabled: boolean }>()
+  const body = await c.req.json<
+    | { type: string; targetCount: number; isEnabled: boolean }
+    | { goals: Array<{ type: string; targetCount: number; isEnabled: boolean }> }
+  >()
 
-  if (!body.type || !body.targetCount || body.isEnabled === undefined) {
+  const isBatch = 'goals' in body
+
+  if (!isBatch && (!body.type || !body.targetCount || body.isEnabled === undefined)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
+  }
+
+  if (isBatch && (!body.goals || body.goals.length === 0)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
   }
 
   try {
-    const result = await upsertGoal(c.env.DB, currentUser, body)
+    const result = isBatch
+      ? await upsertGoals(c.env.DB, currentUser, body.goals)
+      : await upsertGoal(c.env.DB, currentUser, body)
 
     return c.json(successResponse(result))
   } catch (e) {
-    console.error('Create goal failed', e)
+    console.error('Upsert goal failed', e)
 
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Tạo mục tiêu thất bại'), 400)
   }

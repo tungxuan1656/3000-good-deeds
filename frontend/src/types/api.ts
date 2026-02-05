@@ -137,8 +137,12 @@ export type GoalTypeDTO = 'weekly' | 'monthly' | 'yearly'
 
 export interface UpsertGoalRequest {
   type: GoalTypeDTO
-  targetCount?: number
-  isEnabled?: boolean
+  targetCount: number
+  isEnabled: boolean
+}
+
+export interface UpsertGoalsRequest {
+  goals: UpsertGoalRequest[]
 }
 
 export interface GetGoalHistoryRequest {
