@@ -1,19 +1,20 @@
-import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest } from '../types'
+import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest, User } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
-import { getLocalDateStringByTimeZone } from '../utils'
+import { computeLocalPeriods } from '../utils'
 import { checkAndUnlockAchievements } from './achievements'
+import { handleDeedChange } from './goal-history'
 
 // Get deeds list (with filters)
 export async function getDeeds(
   db: D1Database,
-  userId: string,
+  user: User,
   limit = 20,
   offset = 0,
   from?: number,
   to?: number,
 ): Promise<GoodDeed[]> {
   const whereClauses: string[] = ['d.user_id = ?']
-  const bindings: Array<string | number> = [userId]
+  const bindings: Array<string | number> = [user.id]
 
   if (from !== undefined) {
     whereClauses.push('d.performed_at >= ?')
@@ -58,32 +59,36 @@ export async function getDeeds(
 
 export async function createDeed(
   db: D1Database,
-  userId: string,
+  user: User,
   body: CreateDeedRequest,
 ): Promise<GoodDeed> {
-  const userRow = await db
-    .prepare('SELECT timezone FROM users WHERE id = ?')
-    .bind(userId)
-    .first<{ timezone?: string }>()
-  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
-
   const now = getCurrentTimestamp()
   const performedAt = body.performedAt || now
   const newId = generateId()
-  const localDate = getLocalDateStringByTimeZone(timeZone, performedAt)
+  const { localDate, localWeek, localMonth, localYear } = computeLocalPeriods(
+    user.timezone,
+    performedAt,
+  )
 
   await db
     .prepare(
-      `INSERT INTO good_deeds (id, user_id, category_code, description, labels, local_date, is_private, performed_at, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO good_deeds (
+         id, user_id, category_code, description, labels,
+         local_date, local_week, local_month, local_year,
+         is_private, performed_at, created_at, updated_at
+       )
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       newId,
-      userId,
+      user.id,
       body.categoryCode,
       body.description || null,
       body.labels || null,
       localDate,
+      localWeek,
+      localMonth,
+      localYear,
       1,
       performedAt,
       now,
@@ -91,8 +96,10 @@ export async function createDeed(
     )
     .run()
 
+  await handleDeedChange(db, user, { localWeek, localMonth, localYear })
+
   // Check achievements
-  await checkAndUnlockAchievements(db, userId)
+  await checkAndUnlockAchievements(db, user.id)
 
   return await getDeedById(db, newId)
 }
@@ -102,11 +109,8 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
     .prepare(
       `SELECT 
         d.id, d.user_id as userId, d.category_code as categoryCode, d.description, d.labels,
-        d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt,
-        c.code as c_code, c.name as c_name, c.icon as c_icon, c.description as c_desc, c.style as c_style,
-        c.is_active as c_active, c.created_at as c_created
+        d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt
        FROM good_deeds d
-       JOIN categories c ON d.category_code = c.code
        WHERE d.id = ?`,
     )
     .bind(deedId)
@@ -130,25 +134,21 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
 
 export async function updateDeed(
   db: D1Database,
-  userId: string,
+  user: User,
   deedId: string,
   body: UpdateDeedRequest,
 ): Promise<GoodDeed> {
-  const userRow = await db
-    .prepare('SELECT timezone FROM users WHERE id = ?')
-    .bind(userId)
-    .first<{ timezone?: string }>()
-  const timeZone = userRow?.timezone || 'Asia/Ho_Chi_Minh'
-
   const now = getCurrentTimestamp()
   const updates: string[] = []
   const values: any[] = []
 
   // Security check: ensure user owns the deed
   const existing = await db
-    .prepare('SELECT id FROM good_deeds WHERE id = ? AND user_id = ?')
-    .bind(deedId, userId)
-    .first()
+    .prepare(
+      'SELECT id, local_week, local_month, local_year, performed_at FROM good_deeds WHERE id = ? AND user_id = ?',
+    )
+    .bind(deedId, user.id)
+    .first<any>()
 
   if (!existing) {
     throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
@@ -173,8 +173,22 @@ export async function updateDeed(
     updates.push('performed_at = ?')
     values.push(body.performedAt)
 
+    const { localDate, localWeek, localMonth, localYear } = computeLocalPeriods(
+      user.timezone,
+      body.performedAt,
+    )
+
     updates.push('local_date = ?')
-    values.push(getLocalDateStringByTimeZone(timeZone, body.performedAt))
+    values.push(localDate)
+
+    updates.push('local_week = ?')
+    values.push(localWeek)
+
+    updates.push('local_month = ?')
+    values.push(localMonth)
+
+    updates.push('local_year = ?')
+    values.push(localYear)
   }
 
   if (updates.length > 0) {
@@ -188,21 +202,39 @@ export async function updateDeed(
       .run()
   }
 
+  if (body.performedAt !== undefined) {
+    const newPeriods = computeLocalPeriods(user.timezone, body.performedAt)
+
+    await handleDeedChange(db, user, {
+      localWeek: newPeriods.localWeek,
+      localMonth: newPeriods.localMonth,
+      localYear: newPeriods.localYear,
+    })
+  }
+
   return await getDeedById(db, deedId)
 }
 
-export async function deleteDeed(db: D1Database, userId: string, deedId: string): Promise<boolean> {
+export async function deleteDeed(db: D1Database, user: User, deedId: string): Promise<boolean> {
   // Security check: ensure user owns the deed
   const existing = await db
-    .prepare('SELECT id FROM good_deeds WHERE id = ? AND user_id = ?')
-    .bind(deedId, userId)
-    .first()
+    .prepare(
+      'SELECT id, local_week, local_month, local_year FROM good_deeds WHERE id = ? AND user_id = ?',
+    )
+    .bind(deedId, user.id)
+    .first<any>()
 
   if (!existing) {
     throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
   }
 
   await db.prepare('DELETE FROM good_deeds WHERE id = ?').bind(deedId).run()
+
+  await handleDeedChange(db, user, {
+    localWeek: existing.local_week,
+    localMonth: existing.local_month,
+    localYear: existing.local_year,
+  })
 
   return true
 }

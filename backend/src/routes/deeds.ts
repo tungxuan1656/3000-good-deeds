@@ -2,10 +2,10 @@ import { Hono } from 'hono'
 
 import { createDeed, deleteDeed, getDeeds, updateDeed } from '../handlers/deeds'
 import { authMiddleware } from '../middlewares/auth'
-import type { CreateDeedRequest, UpdateDeedRequest } from '../types'
+import type { CreateDeedRequest, UpdateDeedRequest, User } from '../types'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
-const deeds = new Hono<{ Bindings: Env; Variables: { user: any } }>()
+const deeds = new Hono<{ Bindings: Env; Variables: { user: User } }>()
 
 deeds.use('/*', authMiddleware)
 
@@ -19,7 +19,7 @@ deeds.get('/', async (c) => {
   const from = fromParam ? parseInt(fromParam) : undefined
   const to = toParam ? parseInt(toParam) : undefined
 
-  const result = await getDeeds(c.env.DB, currentUser.id, limit, offset, from, to)
+  const result = await getDeeds(c.env.DB, currentUser, limit, offset, from, to)
 
   return c.json(successResponse(result))
 })
@@ -36,7 +36,7 @@ deeds.post('/', async (c) => {
     body.categoryCode = 'body'
   }
 
-  const result = await createDeed(c.env.DB, currentUser.id, body)
+  const result = await createDeed(c.env.DB, currentUser, body)
 
   return c.json(successResponse(result))
 })
@@ -47,7 +47,7 @@ deeds.put('/:id', async (c) => {
   const body = await c.req.json<UpdateDeedRequest>()
 
   try {
-    const result = await updateDeed(c.env.DB, currentUser.id, deedId, body)
+    const result = await updateDeed(c.env.DB, currentUser, deedId, body)
 
     return c.json(successResponse(result))
   } catch (_e) {
@@ -60,7 +60,7 @@ deeds.delete('/:id', async (c) => {
   const deedId = c.req.param('id')
 
   try {
-    await deleteDeed(c.env.DB, currentUser.id, deedId)
+    await deleteDeed(c.env.DB, currentUser, deedId)
 
     return c.json(successResponse(true))
   } catch (_e) {
