@@ -37,7 +37,6 @@ const LoginPage = () => {
           setError(response.error || 'Đăng nhập thất bại')
         }
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.error('Login error:', err)
         setError('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại.')
       } finally {
@@ -45,7 +44,6 @@ const LoginPage = () => {
       }
     },
     onError: (error) => {
-      // eslint-disable-next-line no-console
       console.error('Google OAuth error:', error)
       setError('Không thể kết nối với Google. Vui lòng thử lại.')
     },
