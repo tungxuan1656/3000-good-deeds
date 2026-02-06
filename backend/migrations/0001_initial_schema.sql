@@ -256,6 +256,9 @@ CREATE TABLE IF NOT EXISTS journal_entries (
 CREATE INDEX IF NOT EXISTS idx_journal_user_type
 ON journal_entries(user_id, type);
 
+CREATE INDEX IF NOT EXISTS idx_journal_entries_paging
+ON journal_entries (user_id, created_at DESC, id DESC);
+
 -- ============================================
 -- 13. RANDOM ACTS (Cultivation)
 -- ============================================
