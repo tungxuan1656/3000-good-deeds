@@ -1,6 +1,10 @@
+import { LeafIcon } from 'lucide-react'
+
 import { useStatsSummary } from '@/hooks/api/use-stats'
 
 import { CardSection } from '../shared'
+import { EmptyDataView } from '../shared/empty-data-view'
+import { SkeletonList } from '../shared/skeleton-list'
 
 export const StatsCard = () => {
   const { data, isLoading } = useStatsSummary()
@@ -20,21 +24,14 @@ export const StatsCard = () => {
 
   return (
     <>
-      {isLoading && (
-        <div className='flex flex-col gap-4'>
-          {[1, 2, 3].map((item) => (
-            <div key={item} className='rounded-2xl border border-black/5 bg-white/80 p-4 shadow-sm'>
-              <div className='bg-muted mb-3 h-4 w-32 animate-pulse rounded-full' />
-              <div className='bg-muted h-24 w-full animate-pulse rounded-2xl' />
-            </div>
-          ))}
-        </div>
-      )}
+      {isLoading && <SkeletonList length={2} />}
 
       {isEmpty && !isLoading && (
-        <CardSection className='text-muted-foreground text-center text-sm'>
-          Chưa có dữ liệu thống kê. Hãy ghi nhận vài việc thiện đầu tiên.
-        </CardSection>
+        <EmptyDataView
+          Icon={<LeafIcon />}
+          description='Hãy ghi nhận những việc thiện bạn đã làm nhé!'
+          title='Chưa có dữ liệu thống kê'
+        />
       )}
 
       {!isEmpty && !isLoading && (

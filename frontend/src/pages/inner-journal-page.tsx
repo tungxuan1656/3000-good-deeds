@@ -77,7 +77,7 @@ const InnerJournalPage = () => {
         )}
       </MainColumn>
 
-      <SideColumn>
+      <SideColumn hideInMobile>
         <MiniCheckInCard />
         <DailyQuoteCard />
         <WeeklyRhythmCard />

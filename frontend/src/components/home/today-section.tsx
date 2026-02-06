@@ -15,6 +15,8 @@ import { useDeeds } from '@/hooks/api/use-deeds'
 import { PATHS } from '@/lib/constants'
 
 import { GoodDeedCard } from '../shared'
+import { EmptyDataView } from '../shared/empty-data-view'
+import { SkeletonList } from '../shared/skeleton-list'
 
 export const TodaySection = () => {
   const navigate = useNavigate()
@@ -61,25 +63,12 @@ export const TodaySection = () => {
         </Button>
       </div>
 
-      {showLoading && (
-        <div className='flex flex-col gap-3'>
-          {[1, 2].map((item) => (
-            <div key={item} className='rounded-2xl border border-black/5 bg-white/80 p-4 shadow-sm'>
-              <div className='bg-muted mb-2 h-4 w-24 animate-pulse rounded-full' />
-              <div className='bg-muted h-10 w-full animate-pulse rounded-2xl' />
-            </div>
-          ))}
-        </div>
-      )}
-
+      {showLoading && <SkeletonList length={1} />}
       {isEmpty && (
-        <div className='flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-black/10 bg-white/70 px-4 py-8 text-center sm:py-10'>
-          <p className='text-muted-foreground text-sm leading-relaxed sm:text-base'>
-            Chưa có việc thiện nào hôm nay.
-            <br />
-            Hãy gieo một hạt giống lành!
-          </p>
-        </div>
+        <EmptyDataView
+          description='Hãy gieo một hạt giống lành!'
+          title='Hôm nay chưa có việc thiện nào'
+        />
       )}
 
       {!showLoading && !isEmpty && (

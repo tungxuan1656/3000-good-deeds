@@ -1,6 +1,6 @@
 import { format, isToday, isYesterday } from 'date-fns'
 import { vi } from 'date-fns/locale'
-import { Loader2 } from 'lucide-react'
+import { LeafyGreenIcon, Loader2 } from 'lucide-react'
 import * as React from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
@@ -12,6 +12,8 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { EmptyDataView } from '@/components/shared/empty-data-view'
+import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import type { DeedDTO } from '@/types/api'
@@ -78,30 +80,13 @@ const TimelinePage = () => {
           title='Nhật ký việc thiện'
         />
 
-        {showLoading && (
-          <div className='flex flex-col gap-4'>
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className='rounded-2xl border border-black/5 bg-white/80 p-4 shadow-sm'>
-                <div className='bg-muted mb-3 h-4 w-32 animate-pulse rounded-full' />
-                <div className='flex flex-col gap-3'>
-                  <div className='bg-muted h-16 w-full animate-pulse rounded-2xl' />
-                  <div className='bg-muted h-16 w-full animate-pulse rounded-2xl' />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
+        {showLoading && <SkeletonList />}
         {isEmpty && (
-          <CardSection className='flex flex-col items-center justify-center gap-3 text-center'>
-            <p className='text-muted-foreground text-sm leading-relaxed'>
-              Chưa có việc thiện nào.
-              <br />
-              Hãy bắt đầu từ một việc nhỏ.
-            </p>
-          </CardSection>
+          <EmptyDataView
+            Icon={<LeafyGreenIcon />}
+            description='Hãy bắt đầu từ một việc nhỏ.'
+            title='Bạn chưa ghi nhận việc thiện nào'
+          />
         )}
 
         {!showLoading && !isEmpty && (
