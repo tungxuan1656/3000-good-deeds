@@ -240,7 +240,7 @@ export const getGoalHistoryPage = async (
   db: D1Database,
   userId: string,
   limit: number,
-  cursor?: number,
+  cursor?: string,
   type?: GoalType,
 ) => {
   const pageLimit = Math.min(Math.max(limit, 1), 50)
@@ -253,15 +253,17 @@ export const getGoalHistoryPage = async (
   }
 
   if (cursor) {
-    conditions.push('created_at < ?')
-    bindings.push(cursor)
+    // Parse composite cursor: "startDate_id"
+    const [cursorStartDate, cursorId] = cursor.split('_')
+    conditions.push('(start_date < ? OR (start_date = ? AND id < ?))')
+    bindings.push(Number(cursorStartDate), Number(cursorStartDate), cursorId)
   }
 
   const { results } = await db
     .prepare(
       `SELECT * FROM goal_history
        WHERE ${conditions.join(' AND ')}
-       ORDER BY created_at DESC
+       ORDER BY start_date DESC, id DESC
        LIMIT ?`,
     )
     .bind(...bindings, pageLimit + 1)
@@ -269,7 +271,8 @@ export const getGoalHistoryPage = async (
 
   const sliced = results.slice(0, pageLimit)
   const hasMore = results.length > pageLimit
-  const nextCursor = hasMore ? sliced[sliced.length - 1]?.created_at : null
+  const lastItem = sliced[sliced.length - 1]
+  const nextCursor = hasMore && lastItem ? `${lastItem.start_date}_${lastItem.id}` : null
 
   return {
     data: sliced.map(mapGoalHistory),

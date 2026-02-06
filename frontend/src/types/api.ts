@@ -136,7 +136,7 @@ export interface GoalHistoryDTO {
 
 export interface GoalHistoryPagination {
   hasMore: boolean
-  nextCursor: number | null
+  nextCursor: string | null
   limit: number
 }
 
@@ -159,6 +159,6 @@ export interface UpsertGoalsRequest {
 
 export interface GetGoalHistoryRequest {
   limit?: number
-  cursor?: number
+  cursor?: string
   type?: GoalTypeDTO
 }

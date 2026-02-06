@@ -174,6 +174,12 @@ ON goal_history(user_id, type);
 CREATE INDEX IF NOT EXISTS idx_goal_history_goal_period
 ON goal_history(goal_id, period_time);
 
+CREATE INDEX IF NOT EXISTS idx_goal_history_paging
+ON goal_history(user_id, start_date DESC, id DESC);
+
+CREATE INDEX IF NOT EXISTS idx_goal_history_user_period
+ON goal_history(user_id, type, period_time);
+
 -- ============================================
 -- 8. ACHIEVEMENTS (Definitions)
 -- ============================================
