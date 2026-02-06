@@ -2,6 +2,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import AppLayout from '@/components/layout/app-layout'
+import { ScrollToTop } from '@/components/layout/scroll-to-top'
 import { PATHS } from '@/lib/constants'
 import AchievementsPage from '@/pages/achievements-page'
 import DeedDetailPage from '@/pages/deed-detail-page'
@@ -26,6 +27,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route element={<LoginPage />} path={PATHS.LOGIN} />
           <Route element={<ProtectedRoute />}>
