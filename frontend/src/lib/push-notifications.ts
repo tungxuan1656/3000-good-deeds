@@ -1,7 +1,7 @@
 import { getVapidPublicKey, subscribePush, unsubscribePush } from '@/api/reminders'
 import type { PushSubscriptionPayloadDTO } from '@/types/api'
 
-const SERVICE_WORKER_URL = '/sw.js'
+const SERVICE_WORKER_URL = import.meta.env.DEV ? '/dev-sw.js?dev-sw' : '/sw.js'
 
 const urlBase64ToUint8Array = (base64String: string) => {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -27,9 +27,17 @@ export const isPushSupported = () => {
 
 const getOrRegisterServiceWorker = async () => {
   const existing = await navigator.serviceWorker.getRegistration()
-  if (existing) return existing
+  if (existing) {
+    await navigator.serviceWorker.ready
 
-  return await navigator.serviceWorker.register(SERVICE_WORKER_URL)
+    return existing
+  }
+
+  await navigator.serviceWorker.register(SERVICE_WORKER_URL, {
+    type: import.meta.env.DEV ? 'module' : 'classic',
+  })
+
+  return await navigator.serviceWorker.ready
 }
 
 export const subscribeToPushNotifications = async (): Promise<{
