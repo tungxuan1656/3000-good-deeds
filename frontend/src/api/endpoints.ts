@@ -44,6 +44,8 @@ export const API_ENDPOINTS = {
   journal: {
     list: '/journal',
     create: '/journal',
+    entries: '/journal/entries',
+    entryDetail: (id: string) => `/journal/entries/${id}`,
   },
   seed: '/seed',
 } as const

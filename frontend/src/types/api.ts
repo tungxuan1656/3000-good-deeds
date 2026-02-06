@@ -98,6 +98,23 @@ export interface JournalEntryDTO {
   createdAt: number
 }
 
+export interface JournalPagination {
+  hasMore: boolean
+  nextCursor: string | null
+  limit: number
+}
+
+export interface GetJournalEntriesRequest {
+  limit?: number
+  cursor?: string
+  type?: 'repentance' | 'gratitude'
+}
+
+export interface JournalEntriesResponse {
+  data: JournalEntryDTO[]
+  pagination: JournalPagination
+}
+
 export interface GetJournalRequest {
   type?: 'repentance' | 'gratitude'
 }

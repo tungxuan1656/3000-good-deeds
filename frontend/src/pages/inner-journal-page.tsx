@@ -1,5 +1,8 @@
-import { PlusIcon } from 'lucide-react'
+import { Loader2Icon } from 'lucide-react'
+import * as React from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
@@ -10,27 +13,63 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
-import { PATHS } from '@/lib/constants'
+import { TagButton } from '@/components/ui/tag'
+import { Textarea } from '@/components/ui/textarea'
+import { useCreateInnerJournalEntry } from '@/hooks/api/use-inner-journal'
+import {
+  INNER_JOURNAL_IMMUTABLE_NOTE,
+  INNER_JOURNAL_TYPE_GUIDANCE,
+  INNER_JOURNAL_TYPE_LABELS,
+  type InnerJournalType,
+  PATHS,
+} from '@/lib/constants'
 
-const journalEntries = [
-  {
-    id: 'j1',
-    title: 'Biết ơn buổi sáng',
-    snippet: 'Hôm nay mình nhận ra…',
-    type: 'Biết ơn',
-    date: '15/10/2026',
-  },
-  {
-    id: 'j2',
-    title: 'Một điều muốn buông',
-    snippet: 'Mình chọn thở sâu và…',
-    type: 'Sám hối',
-    date: '12/10/2026',
-  },
-]
+const schema = z.object({
+  type: z.enum(['gratitude', 'repentance']),
+  content: z.string().trim().min(1, 'Bạn có thể viết ngắn thôi — nhưng đừng để trống.'),
+})
 
 const InnerJournalPage = () => {
-  const hasEntries = journalEntries.length > 0
+  const [type, setType] = React.useState<InnerJournalType>('gratitude')
+  const [content, setContent] = React.useState('')
+  const [errorText, setErrorText] = React.useState<string | null>(null)
+
+  const createMutation = useCreateInnerJournalEntry()
+
+  const isSaving = createMutation.isPending
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    setErrorText(null)
+
+    const parsed = schema.safeParse({ type, content })
+    if (!parsed.success) {
+      const message = parsed.error.issues[0]?.message ?? 'Nội dung chưa hợp lệ'
+      setErrorText(message)
+
+      return
+    }
+
+    try {
+      const result = await createMutation.mutateAsync({
+        type: parsed.data.type,
+        content: parsed.data.content,
+      })
+
+      if (!result.success) {
+        const message =
+          (result as any).error?.message ?? (result.error ? String(result.error) : 'Lưu thất bại')
+        toast.error(message)
+
+        return
+      }
+
+      setContent('')
+      toast.success('Đã lưu')
+    } catch (_e) {
+      toast.error('Lưu thất bại')
+    }
+  }
 
   return (
     <MainContainer>
@@ -41,40 +80,56 @@ const InnerJournalPage = () => {
           title='Sổ tay tâm hồn'
         />
 
-        <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-          <div>
-            <p className='text-foreground text-base font-semibold'>Bài viết gần đây</p>
-            <p className='text-muted-foreground mt-1 text-xs'>Chọn một bài để xem lại.</p>
-          </div>
-          <Button asChild className='h-11 rounded-full px-5 text-sm shadow-sm'>
-            <Link to={PATHS.INNER_JOURNAL_NEW}>
-              <PlusIcon className='h-4 w-4' />
-              Viết mới
-            </Link>
-          </Button>
-        </div>
+        <form onSubmit={(event) => void handleSubmit(event)}>
+          <CardSection className='gap-4'>
+            <div className='flex flex-wrap gap-2'>
+              {(Object.keys(INNER_JOURNAL_TYPE_LABELS) as InnerJournalType[]).map((key) => {
+                const isActive = key === type
 
-        {hasEntries ? (
-          <div className='flex flex-col gap-3'>
-            {journalEntries.map((entry) => (
-              <Link
-                key={entry.id}
-                className='flex flex-col gap-2 rounded-2xl border border-black/5 bg-white/80 p-4 transition-colors hover:bg-white'
-                to={PATHS.INNER_JOURNAL_DETAIL(entry.id)}>
-                <div className='flex items-center justify-between'>
-                  <p className='text-foreground text-sm font-semibold'>{entry.title}</p>
-                  <span className='text-muted-foreground text-xs'>{entry.date}</span>
-                </div>
-                <p className='text-muted-foreground text-xs'>{entry.snippet}</p>
-                <span className='text-muted-foreground text-[11px]'>Loại: {entry.type}</span>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <CardSection className='text-muted-foreground text-center text-sm'>
-            Một dòng viết nhỏ cũng đủ để lòng nhẹ hơn.
+                return (
+                  <TagButton
+                    key={key}
+                    isActive={isActive}
+                    label={INNER_JOURNAL_TYPE_LABELS[key]}
+                    onToggle={() => setType(key)}
+                  />
+                )
+              })}
+            </div>
+
+            <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
+              “{INNER_JOURNAL_TYPE_GUIDANCE[type]}”
+            </p>
+
+            <div className='flex flex-col gap-2'>
+              <Textarea
+                className='min-h-44 w-full resize-none rounded-2xl border border-black/5 bg-white px-4 py-3 text-sm leading-relaxed'
+                placeholder='Viết ngắn thôi, chỉ điều bạn thật sự nhận ra trong lòng…'
+                value={content}
+                onChange={(event) => setContent(event.target.value)}
+              />
+              <p className='text-muted-foreground text-xs leading-relaxed'>
+                {INNER_JOURNAL_IMMUTABLE_NOTE}
+              </p>
+              {errorText && <p className='text-destructive text-xs'>{errorText}</p>}
+            </div>
+
+            <Button disabled={isSaving} type='submit'>
+              {isSaving ? (
+                <>
+                  <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />
+                  Đang lưu…
+                </>
+              ) : (
+                'Lưu'
+              )}
+            </Button>
+
+            <Button asChild variant='outline'>
+              <Link to={PATHS.INNER_JOURNAL_HISTORY}>Xem lại những ngày cũ</Link>
+            </Button>
           </CardSection>
-        )}
+        </form>
       </MainColumn>
 
       <SideColumn hideInMobile>

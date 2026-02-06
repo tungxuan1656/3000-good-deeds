@@ -22,6 +22,7 @@ const breadcrumbLabels: Record<string, string> = {
   journal: 'Nhật ký',
   meditation: 'Thiền',
   settings: 'Cài đặt',
+  history: 'Lịch sử',
 }
 
 export const HeaderBreadcrumbs = () => {

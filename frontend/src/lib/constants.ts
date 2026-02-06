@@ -22,10 +22,28 @@ export const PATHS = {
   INNER_RANDOM_ACTS: '/inner/random-acts',
   INNER_JOURNAL: '/inner/journal',
   INNER_JOURNAL_NEW: '/inner/journal/new',
-  INNER_JOURNAL_DETAIL: (id: string) => `/inner/journal/${id}`,
+  INNER_JOURNAL_HISTORY: '/inner/journal/history',
   INNER_MEDITATION: '/inner/meditation',
   SETTINGS: '/settings',
 }
+
+export const INNER_JOURNAL_TYPES = ['gratitude', 'repentance'] as const
+export type InnerJournalType = (typeof INNER_JOURNAL_TYPES)[number]
+
+export const INNER_JOURNAL_TYPE_LABELS: Record<InnerJournalType, string> = {
+  gratitude: 'Biết ơn',
+  repentance: 'Sám hối',
+}
+
+export const INNER_JOURNAL_TYPE_GUIDANCE: Record<InnerJournalType, string> = {
+  repentance:
+    'Hãy chậm lại một chút, nhìn thẳng vào điều đã khiến tâm bạn bất an hôm nay, ghi lại với sự trung thực và nhẹ nhàng, không để tự trách, chỉ để thấy rõ và buông xuống.',
+  gratitude:
+    'Hãy dành một khoảnh khắc nhận ra điều tốt đẹp đã đến với mình trong ngày, dù rất nhỏ, ghi lại để nuôi dưỡng sự trân trọng và giúp tâm mình lắng dịu hơn.',
+}
+
+export const INNER_JOURNAL_IMMUTABLE_NOTE =
+  'Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung sẽ không sửa lại được, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống.'
 
 export const APP_MENU_ITEMS = [
   { label: 'Trang chủ', path: PATHS.HOME, icon: HomeIcon },

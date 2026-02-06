@@ -8,7 +8,7 @@ import AchievementsPage from '@/pages/achievements-page'
 import DeedDetailPage from '@/pages/deed-detail-page'
 import GoalsPage from '@/pages/goals-page'
 import HomePage from '@/pages/home-page'
-import InnerJournalEditorPage from '@/pages/inner-journal-editor-page'
+import InnerJournalHistoryPage from '@/pages/inner-journal-history-page'
 import InnerJournalPage from '@/pages/inner-journal-page'
 import InnerMeditationPage from '@/pages/inner-meditation-page'
 import InnerPage from '@/pages/inner-page'
@@ -40,11 +40,8 @@ function App() {
               <Route element={<InnerPage />} path={PATHS.INNER} />
               <Route element={<InnerRandomActsPage />} path={PATHS.INNER_RANDOM_ACTS} />
               <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL} />
-              <Route element={<InnerJournalEditorPage />} path={PATHS.INNER_JOURNAL_NEW} />
-              <Route
-                element={<InnerJournalEditorPage />}
-                path={PATHS.INNER_JOURNAL_DETAIL(':id')}
-              />
+              <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL_NEW} />
+              <Route element={<InnerJournalHistoryPage />} path={PATHS.INNER_JOURNAL_HISTORY} />
               <Route element={<InnerMeditationPage />} path={PATHS.INNER_MEDITATION} />
               <Route element={<SettingsPage />} path={PATHS.SETTINGS} />
             </Route>

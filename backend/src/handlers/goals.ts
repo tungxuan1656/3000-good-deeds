@@ -82,11 +82,13 @@ export async function upsertGoal(
 
   if (wasEnabled && !mapped.isEnabled) {
     await deleteGoalHistoryForCurrentPeriod(db, mapped, user.timezone)
+
     return mapped
   }
 
   if (!wasEnabled && mapped.isEnabled) {
     await ensureGoalHistoryForCurrentPeriod(db, mapped, user.timezone)
+
     return mapped
   }
 

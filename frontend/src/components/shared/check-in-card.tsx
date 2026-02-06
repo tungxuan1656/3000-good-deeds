@@ -5,7 +5,7 @@ import { useCategories } from '@/hooks/api/use-categories'
 
 import { Button } from '../ui/button'
 import { CardSection } from './card-section'
-import { CheckInSheet, type CheckInDrawerHandle } from './check-in-sheet'
+import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 import Leaf from './leaf'
 

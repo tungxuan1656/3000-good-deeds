@@ -2,7 +2,7 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { CardSection } from '@/components/shared/card-section'
-import { CheckInSheet, type CheckInDrawerHandle } from '@/components/shared/check-in-sheet'
+import { type CheckInDrawerHandle, CheckInSheet } from '@/components/shared/check-in-sheet'
 import { GoodDeedCategoryMiniButton } from '@/components/shared/good-deed-category-button'
 import { Button } from '@/components/ui/button'
 import { useCategories } from '@/hooks/api/use-categories'
