@@ -1,5 +1,5 @@
 import { PauseIcon, PlayIcon, TimerIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
@@ -12,9 +12,73 @@ import {
 import { Button } from '@/components/ui/button'
 
 const InnerMeditationPage = () => {
+  const phases = useMemo(
+    () => [
+      { label: 'Hít vào', seconds: 4 },
+      { label: 'Giữ', seconds: 4 },
+      { label: 'Thở ra', seconds: 4 },
+    ],
+    [],
+  )
+  const durations = useMemo(
+    () => [
+      { label: '3 phút', minutes: 3 },
+      { label: '5 phút', minutes: 5 },
+      { label: '10 phút', minutes: 10 },
+    ],
+    [],
+  )
+
+  const [durationMinutes, setDurationMinutes] = useState(5)
+  const [remainingSeconds, setRemainingSeconds] = useState(durationMinutes * 60)
+  const [phaseState, setPhaseState] = useState({
+    index: 0,
+    secondsLeft: phases[0].seconds,
+  })
   const [isRunning, setIsRunning] = useState(false)
-  const [phase, setPhase] = useState('Hít vào')
   const [isFinished, setIsFinished] = useState(false)
+
+  const phaseLabel = phases[phaseState.index]?.label ?? phases[0].label
+  const timeLabel = useMemo(() => {
+    const minutes = Math.floor(remainingSeconds / 60)
+    const seconds = remainingSeconds % 60
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+  }, [remainingSeconds])
+
+  useEffect(() => {
+    if (isRunning) return
+
+    setRemainingSeconds(durationMinutes * 60)
+    setPhaseState({ index: 0, secondsLeft: phases[0].seconds })
+    setIsFinished(false)
+  }, [durationMinutes, isRunning, phases])
+
+  useEffect(() => {
+    if (!isRunning) return undefined
+
+    const timer = window.setInterval(() => {
+      setRemainingSeconds((prev) => {
+        if (prev <= 1) {
+          setIsRunning(false)
+          setIsFinished(true)
+          return 0
+        }
+
+        return prev - 1
+      })
+
+      setPhaseState((prev) => {
+        if (prev.secondsLeft <= 1) {
+          const nextIndex = (prev.index + 1) % phases.length
+          return { index: nextIndex, secondsLeft: phases[nextIndex].seconds }
+        }
+
+        return { ...prev, secondsLeft: prev.secondsLeft - 1 }
+      })
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [isRunning, phases])
 
   return (
     <MainContainer>
@@ -36,21 +100,26 @@ const InnerMeditationPage = () => {
                   className={`text-sm font-semibold ${
                     isRunning ? 'text-primary' : 'text-foreground'
                   }`}>
-                  {phase}
+                  {phaseLabel}
                 </span>
               </div>
             </div>
             <p className='text-muted-foreground text-xs'>Chu kỳ 4-4-4</p>
-            <div className='text-foreground text-2xl font-semibold'>05:00</div>
+            <div className='text-foreground text-2xl font-semibold'>{timeLabel}</div>
           </div>
 
           <div className='flex flex-wrap items-center justify-center gap-2'>
-            {['3 phút', '5 phút', '10 phút'].map((item) => (
+            {durations.map((item) => (
               <button
-                key={item}
-                className='text-muted-foreground rounded-full border border-black/5 bg-white px-4 py-2 text-sm font-medium disabled:opacity-50'
-                disabled={isRunning}>
-                {item}
+                key={item.label}
+                className={`rounded-full border px-4 py-2 text-sm font-medium disabled:opacity-50 ${
+                  durationMinutes === item.minutes
+                    ? 'border-primary/40 bg-primary/15 text-primary'
+                    : 'text-muted-foreground border-black/5 bg-white'
+                }`}
+                disabled={isRunning}
+                onClick={() => setDurationMinutes(item.minutes)}>
+                {item.label}
               </button>
             ))}
           </div>
@@ -59,9 +128,12 @@ const InnerMeditationPage = () => {
             <Button
               className='h-11 w-full rounded-full sm:w-auto'
               onClick={() => {
+                if (remainingSeconds === 0) {
+                  setRemainingSeconds(durationMinutes * 60)
+                  setPhaseState({ index: 0, secondsLeft: phases[0].seconds })
+                }
                 setIsRunning(true)
                 setIsFinished(false)
-                setPhase('Hít vào')
               }}>
               <PlayIcon className='h-4 w-4' />
               Bắt đầu
@@ -72,7 +144,6 @@ const InnerMeditationPage = () => {
               variant='secondary'
               onClick={() => {
                 setIsRunning(false)
-                setPhase('Giữ')
               }}>
               <PauseIcon className='h-4 w-4' />
               Tạm dừng
@@ -82,8 +153,9 @@ const InnerMeditationPage = () => {
               variant='ghost'
               onClick={() => {
                 setIsRunning(false)
-                setIsFinished(true)
-                setPhase('Thở ra')
+                setIsFinished(false)
+                setRemainingSeconds(durationMinutes * 60)
+                setPhaseState({ index: 0, secondsLeft: phases[0].seconds })
               }}>
               <TimerIcon className='h-4 w-4' />
               Đặt lại
@@ -98,7 +170,7 @@ const InnerMeditationPage = () => {
         </CardSection>
       </MainColumn>
 
-      <SideColumn>
+      <SideColumn hideInMobile>
         <MiniCheckInCard />
         <DailyQuoteCard />
         <WeeklyRhythmCard />
