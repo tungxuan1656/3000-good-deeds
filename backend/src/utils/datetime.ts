@@ -6,6 +6,11 @@ type ZonedDateParts = {
   day: number
 }
 
+type ZonedTimeParts = {
+  hour: number
+  minute: number
+}
+
 export const getZonedDateParts = (timezone: string, timestamp: number): ZonedDateParts => {
   const formatter = new Intl.DateTimeFormat('en-CA', {
     timeZone: timezone,
@@ -20,6 +25,21 @@ export const getZonedDateParts = (timezone: string, timestamp: number): ZonedDat
   const day = Number(parts.find((p) => p.type === 'day')?.value)
 
   return { year, month, day }
+}
+
+export const getZonedTimeParts = (timezone: string, timestamp: number): ZonedTimeParts => {
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: timezone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+
+  const parts = formatter.formatToParts(new Date(timestamp))
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value)
+  const minute = Number(parts.find((p) => p.type === 'minute')?.value)
+
+  return { hour, minute }
 }
 
 const getIsoWeekInfo = (year: number, month: number, day: number) => {

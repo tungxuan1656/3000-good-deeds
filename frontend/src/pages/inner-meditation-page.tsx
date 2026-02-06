@@ -42,6 +42,7 @@ const InnerMeditationPage = () => {
   const timeLabel = useMemo(() => {
     const minutes = Math.floor(remainingSeconds / 60)
     const seconds = remainingSeconds % 60
+
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
   }, [remainingSeconds])
 
@@ -61,6 +62,7 @@ const InnerMeditationPage = () => {
         if (prev <= 1) {
           setIsRunning(false)
           setIsFinished(true)
+
           return 0
         }
 
@@ -70,6 +72,7 @@ const InnerMeditationPage = () => {
       setPhaseState((prev) => {
         if (prev.secondsLeft <= 1) {
           const nextIndex = (prev.index + 1) % phases.length
+
           return { index: nextIndex, secondsLeft: phases[nextIndex].seconds }
         }
 

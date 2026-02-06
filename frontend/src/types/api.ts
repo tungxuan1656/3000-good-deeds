@@ -169,6 +169,19 @@ export interface GoalHistoryResponse {
   pagination: GoalHistoryPagination
 }
 
+export interface PushSubscriptionKeysDTO {
+  p256dh: string
+  auth: string
+}
+
+export interface PushSubscriptionPayloadDTO {
+  endpoint: string
+  expirationTime?: number | null
+  keys: PushSubscriptionKeysDTO
+  userAgent?: string
+  platform?: string
+}
+
 export type GoalTypeDTO = 'weekly' | 'monthly' | 'yearly'
 
 export interface UpsertGoalRequest {

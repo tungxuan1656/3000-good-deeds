@@ -26,6 +26,11 @@ import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
 import { useUpdateUser, useUser } from '@/hooks/api/use-user'
 import { PATHS } from '@/lib/constants'
+import {
+  isPushSupported,
+  subscribeToPushNotifications,
+  unsubscribeFromPushNotifications,
+} from '@/lib/push-notifications'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
@@ -35,6 +40,8 @@ const SettingsPage = () => {
   const { data: userResponse } = useUser()
   const updateUser = useUpdateUser()
   const [reminderTime, setReminderTime] = useState('20:30')
+  const [pushSupported, setPushSupported] = useState(true)
+  const [pushError, setPushError] = useState<string | null>(null)
   const [deleteText, setDeleteText] = useState('')
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const deleteDialogRef = useRef<ConfirmDialogHandle>(null)
@@ -58,6 +65,10 @@ const SettingsPage = () => {
     }
   }, [user])
 
+  useEffect(() => {
+    setPushSupported(isPushSupported())
+  }, [])
+
   const handleLogout = async () => {
     try {
       if (refreshToken) {
@@ -73,13 +84,30 @@ const SettingsPage = () => {
 
   const handleReminderToggle = async (nextValue: boolean) => {
     try {
+      setPushError(null)
+
+      if (nextValue) {
+        const result = await subscribeToPushNotifications()
+        if (!result.success) {
+          setPushError(result.error ?? 'Không thể bật nhắc nhở lúc này.')
+
+          return
+        }
+      } else {
+        await unsubscribeFromPushNotifications()
+      }
+
       const response = await updateUser.mutateAsync({
         reminderEnabled: nextValue,
       })
       if (response?.data) {
         authActions.setUser(response.data)
       }
-    } catch {}
+    } catch (error) {
+      console.log(error)
+
+      setPushError('Không thể cập nhật nhắc nhở. Vui lòng thử lại sau.')
+    }
   }
 
   const handleReminderTimeBlur = async () => {
@@ -166,8 +194,15 @@ const SettingsPage = () => {
               </div>
               <p className='text-foreground mt-2 text-base font-semibold'>Thông báo nhắc nhở</p>
               <p className='text-muted-foreground mt-1 text-xs'>Chỉ một lần mỗi ngày.</p>
+              {!pushSupported && (
+                <p className='text-muted-foreground mt-1 text-xs'>
+                  Thiết bị này chưa hỗ trợ Web Push hoặc cần cài đặt PWA (iOS Safari).
+                </p>
+              )}
+              {pushError && <p className='mt-1 text-xs text-red-600'>{pushError}</p>}
             </div>
             <Button
+              disabled={!pushSupported && !user?.reminderEnabled}
               variant={user?.reminderEnabled ? 'outline' : 'default'}
               onClick={() => handleReminderToggle(!user?.reminderEnabled)}>
               {updateUser.isPending ? <Spinner /> : null}

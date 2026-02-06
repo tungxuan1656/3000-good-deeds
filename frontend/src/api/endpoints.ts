@@ -31,6 +31,8 @@ export const API_ENDPOINTS = {
   },
   reminders: {
     settings: '/reminders/settings',
+    pushKey: '/reminders/push-key',
+    subscriptions: '/reminders/subscriptions',
   },
   cultivation: {
     randomQuote: '/cultivation/quotes/random',

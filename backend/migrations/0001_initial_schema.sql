@@ -191,7 +191,35 @@ CREATE TABLE IF NOT EXISTS system_settings (
 );
 
 -- ============================================
--- 9. DHARMA QUOTES (Cultivation)
+-- 9. PUSH SUBSCRIPTIONS (Web Push)
+-- ============================================
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id TEXT PRIMARY KEY,               -- ULID
+  user_id TEXT NOT NULL,
+  endpoint TEXT NOT NULL,
+  p256dh TEXT NOT NULL,
+  auth TEXT NOT NULL,
+  expiration_time INTEGER,
+  user_agent TEXT,
+  platform TEXT,
+  is_active BOOLEAN DEFAULT 1,
+  last_used_at INTEGER,
+
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  UNIQUE (user_id, endpoint)
+);
+
+CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user_active
+ON push_subscriptions(user_id, is_active);
+
+CREATE INDEX IF NOT EXISTS idx_push_subscriptions_endpoint
+ON push_subscriptions(endpoint);
+
+-- ============================================
+-- 10. DHARMA QUOTES (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS dharma_quotes (
   id TEXT PRIMARY KEY,               -- ULID
@@ -204,7 +232,7 @@ CREATE TABLE IF NOT EXISTS dharma_quotes (
 );
 
 -- ============================================
--- 10. JOURNAL ENTRIES (Cultivation)
+-- 11. JOURNAL ENTRIES (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS journal_entries (
   id TEXT PRIMARY KEY,               -- ULID

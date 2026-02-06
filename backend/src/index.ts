@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 
+import { sendReminderNotifications } from './handlers/reminders'
 import activities from './routes/activities'
 import auth from './routes/auth'
 import categories from './routes/categories'
@@ -56,4 +57,9 @@ app.onError((err, c) => {
   )
 })
 
-export default app
+export default {
+  fetch: app.fetch,
+  scheduled: async (_event: ScheduledEvent, env: Env, ctx: ExecutionContext) => {
+    ctx.waitUntil(sendReminderNotifications(env))
+  },
+}

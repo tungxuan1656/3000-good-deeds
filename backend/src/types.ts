@@ -151,6 +151,19 @@ export interface UpdateGoalRequest {
   isEnabled?: boolean
 }
 
+export interface PushSubscriptionKeys {
+  p256dh: string
+  auth: string
+}
+
+export interface PushSubscriptionPayload {
+  endpoint: string
+  expirationTime?: number | null
+  keys: PushSubscriptionKeys
+  userAgent?: string
+  platform?: string
+}
+
 export interface FirebaseJwtPayload {
   name?: string
   picture?: string
