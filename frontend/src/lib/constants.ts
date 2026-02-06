@@ -43,3 +43,5 @@ export const GOAL_LABELS: Record<GoalTypeDTO, string> = {
   monthly: 'Mục tiêu tháng',
   yearly: 'Mục tiêu năm',
 }
+
+export const MOOD_TAGS = ['An vui', 'Biết ơn', 'Nhẹ lòng', 'Ấm áp', 'Bình an', 'Hy vọng']

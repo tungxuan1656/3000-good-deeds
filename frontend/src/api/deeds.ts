@@ -4,6 +4,7 @@ import type {
   DeedDTO,
   DeedsResponse,
   GetDeedsRequest,
+  UpdateDeedRequest,
 } from '../types/api'
 import { client } from './client'
 import { API_ENDPOINTS } from './endpoints'
@@ -18,6 +19,15 @@ export const getDeeds = async (params: GetDeedsRequest): Promise<ApiResponse<Dee
 
 export const createDeed = async (data: CreateDeedRequest): Promise<ApiResponse<DeedDTO>> => {
   const response = await client.post<ApiResponse<DeedDTO>>(API_ENDPOINTS.deeds.list, data)
+
+  return response.data
+}
+
+export const updateDeed = async (
+  id: string,
+  data: UpdateDeedRequest,
+): Promise<ApiResponse<DeedDTO>> => {
+  const response = await client.put<ApiResponse<DeedDTO>>(API_ENDPOINTS.deeds.update(id), data)
 
   return response.data
 }

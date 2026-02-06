@@ -25,7 +25,9 @@ import { Spinner } from '@/components/ui/spinner'
 import { useCategories } from '@/hooks/api/use-categories'
 import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { MOOD_TAGS } from '@/lib/constants'
 
+import { TagButton } from '../ui/tag'
 import { Textarea } from '../ui/textarea'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 
@@ -33,8 +35,6 @@ export interface CheckInDrawerHandle {
   open: (categoryCode?: string) => void
   close: () => void
 }
-
-const moodOptions = ['An vui', 'Biết ơn', 'Nhẹ lòng', 'Ấm áp', 'Bình an', 'Hy vọng']
 
 export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
   const isMobile = useIsMobile()
@@ -167,18 +167,13 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
           {step === 3 && (
             <div className='flex flex-col gap-4'>
               <div className='flex flex-wrap gap-2'>
-                {moodOptions.map((tag) => (
-                  <button
+                {MOOD_TAGS.map((tag) => (
+                  <TagButton
                     key={tag}
-                    className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                      moodTags.includes(tag)
-                        ? 'border-primary/40 bg-primary/15 text-primary'
-                        : 'text-foreground border-black/5 bg-white/80'
-                    }`}
-                    type='button'
-                    onClick={() => toggleMoodTag(tag)}>
-                    {tag}
-                  </button>
+                    isActive={moodTags.includes(tag)}
+                    label={tag}
+                    onToggle={() => toggleMoodTag(tag)}
+                  />
                 ))}
               </div>
             </div>

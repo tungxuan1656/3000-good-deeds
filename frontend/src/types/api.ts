@@ -71,6 +71,13 @@ export interface CreateDeedRequest {
   performedAt?: number
 }
 
+export interface UpdateDeedRequest {
+  categoryCode?: string
+  description?: string
+  labels?: string
+  performedAt?: number
+}
+
 export interface DailyQuoteDTO {
   id: string
   content: string
