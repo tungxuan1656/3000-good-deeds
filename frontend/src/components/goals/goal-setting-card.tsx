@@ -1,12 +1,13 @@
-import { PlusIcon } from 'lucide-react'
+import { CheckIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
 import { getGoals, upsertGoals } from '@/api/goals'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { GOAL_LABELS } from '@/lib/constants'
+
+import { Button } from '../ui/button'
 
 type GoalType = 'weekly' | 'monthly' | 'yearly'
 
@@ -114,48 +115,39 @@ const GoalSettingCard = () => {
   }
 
   return (
-    <div className='gap-4'>
-      <div className='flex items-center justify-between'>
+    <div className='flex flex-col gap-4'>
+      <div className='flex items-start justify-between'>
         <div>
           <p className='text-foreground text-base font-semibold'>Thiết lập mục tiêu mới</p>
           <p className='text-muted-foreground mt-1 text-xs'>Chọn nhịp phù hợp với bạn.</p>
         </div>
-        <div className='bg-secondary/40 flex h-9 w-9 items-center justify-center rounded-full'>
-          <PlusIcon className='text-primary h-4 w-4' />
-        </div>
+        <Button disabled={isLoading || isSaving} size={'xs'} onClick={() => void handleSave()}>
+          <CheckIcon className='mr-1' />
+          {isSaving ? 'Đang lưu...' : 'Lưu tất cả mục tiêu'}
+        </Button>
       </div>
-      <div className='grid gap-4'>
+      <div className='grid gap-2'>
         {goalTypes.map((type) => (
-          <div
-            key={type}
-            className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/70 p-4'>
-            <div className='flex flex-wrap items-center justify-between gap-3'>
-              <p className='text-foreground text-sm font-semibold'>{GOAL_LABELS[type]}</p>
-              <div className='flex items-center gap-3'>
-                <Input
-                  className='w-24 rounded-2xl border border-black/5 bg-white px-3 py-2 text-sm'
-                  disabled={isLoading || isSaving}
-                  min={1}
-                  type='number'
-                  value={goalForms[type].targetCount}
-                  onChange={(event) => handleTargetChange(type, event.target.value)}
-                />
-                <Switch
-                  checked={goalForms[type].isEnabled}
-                  disabled={isLoading || isSaving}
-                  onCheckedChange={(value) => handleToggle(type, value)}
-                />
-              </div>
+          <div key={type} className='flex items-center justify-between gap-3'>
+            <p className='text-foreground text-sm font-semibold'>{GOAL_LABELS[type]}</p>
+            <div className='flex items-center gap-5'>
+              <Input
+                className='w-24 rounded-full text-sm'
+                disabled={isLoading || isSaving}
+                min={1}
+                type='number'
+                value={goalForms[type].targetCount}
+                onChange={(event) => handleTargetChange(type, event.target.value)}
+              />
+              <Switch
+                checked={goalForms[type].isEnabled}
+                disabled={isLoading || isSaving}
+                onCheckedChange={(value) => handleToggle(type, value)}
+              />
             </div>
           </div>
         ))}
       </div>
-      <Button
-        className='h-11 w-full rounded-full'
-        disabled={isLoading || isSaving}
-        onClick={() => void handleSave()}>
-        {isSaving ? 'Đang lưu...' : 'Lưu tất cả mục tiêu'}
-      </Button>
     </div>
   )
 }
