@@ -9,10 +9,11 @@ export async function getDeeds(
   db: D1Database,
   user: User,
   limit = 20,
-  offset = 0,
+  cursor?: string,
   from?: number,
   to?: number,
-): Promise<GoodDeed[]> {
+) {
+  const pageLimit = Math.min(Math.max(limit, 1), 50)
   const whereClauses: string[] = ['d.user_id = ?']
   const bindings: Array<string | number> = [user.id]
 
@@ -26,6 +27,13 @@ export async function getDeeds(
     bindings.push(to)
   }
 
+  if (cursor) {
+    // Parse composite cursor: "performedAt_id"
+    const [cursorPerformedAt, cursorId] = cursor.split('_')
+    whereClauses.push('(d.performed_at < ? OR (d.performed_at = ? AND d.id < ?))')
+    bindings.push(Number(cursorPerformedAt), Number(cursorPerformedAt), cursorId)
+  }
+
   const { results } = await db
     .prepare(
       `SELECT 
@@ -33,14 +41,14 @@ export async function getDeeds(
         d.performed_at as performedAt, d.created_at as createdAt, d.updated_at as updatedAt
        FROM good_deeds d
        WHERE ${whereClauses.join(' AND ')}
-       ORDER BY d.performed_at DESC, d.created_at DESC
-       LIMIT ? OFFSET ?`,
+       ORDER BY d.performed_at DESC, d.id DESC
+       LIMIT ?`,
     )
-    .bind(...bindings, limit, offset)
+    .bind(...bindings, pageLimit + 1)
     .all()
 
   // Map result to GoodDeed structure
-  return results.map((row: any) => {
+  const deeds = results.map((row: any) => {
     return {
       id: row.id,
       userId: row.userId,
@@ -52,6 +60,20 @@ export async function getDeeds(
       updatedAt: row.updatedAt,
     }
   })
+
+  const sliced = deeds.slice(0, pageLimit)
+  const hasMore = deeds.length > pageLimit
+  const lastItem = sliced[sliced.length - 1]
+  const nextCursor = hasMore && lastItem ? `${lastItem.performedAt}_${lastItem.id}` : null
+
+  return {
+    data: sliced,
+    pagination: {
+      hasMore,
+      nextCursor,
+      limit: pageLimit,
+    },
+  }
 }
 
 export async function createDeed(

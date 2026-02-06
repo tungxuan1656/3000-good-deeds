@@ -1,5 +1,6 @@
 import { format, isToday, isYesterday } from 'date-fns'
 import { vi } from 'date-fns/locale'
+import { Loader2 } from 'lucide-react'
 import * as React from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
@@ -11,12 +12,18 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import type { DeedDTO } from '@/types/api'
 
 const TimelinePage = () => {
-  const { data: deedsResponse, isLoading, isFetching } = useDeeds({ limit: 50 })
-  const deeds = deedsResponse?.data ?? []
+  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useDeeds({
+    limit: 20,
+  })
+
+  const deeds = React.useMemo(() => {
+    return data?.pages.flatMap((page) => page.data?.data ?? []) ?? []
+  }, [data])
 
   const timelineGroups = React.useMemo(() => {
     const groups: Array<{
@@ -59,7 +66,7 @@ const TimelinePage = () => {
     return groups
   }, [deeds])
 
-  const showLoading = (isLoading || isFetching) && deeds.length === 0
+  const showLoading = isLoading && deeds.length === 0
   const isEmpty = !showLoading && timelineGroups.length === 0
 
   return (
@@ -116,6 +123,24 @@ const TimelinePage = () => {
                 </div>
               </CardSection>
             ))}
+
+            {hasNextPage && (
+              <div className='flex justify-center py-4'>
+                <Button
+                  disabled={isFetchingNextPage}
+                  variant='outline'
+                  onClick={() => void fetchNextPage()}>
+                  {isFetchingNextPage ? (
+                    <>
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                      Đang tải...
+                    </>
+                  ) : (
+                    'Tải thêm'
+                  )}
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </MainColumn>

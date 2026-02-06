@@ -11,15 +11,14 @@ deeds.use('/*', authMiddleware)
 
 deeds.get('/', async (c) => {
   const currentUser = c.get('user')
-  const page = parseInt(c.req.query('page') || '1')
   const limit = parseInt(c.req.query('limit') || '20')
-  const offset = (page - 1) * limit
+  const cursor = c.req.query('cursor') || undefined
   const fromParam = c.req.query('from')
   const toParam = c.req.query('to')
   const from = fromParam ? parseInt(fromParam) : undefined
   const to = toParam ? parseInt(toParam) : undefined
 
-  const result = await getDeeds(c.env.DB, currentUser, limit, offset, from, to)
+  const result = await getDeeds(c.env.DB, currentUser, limit, cursor, from, to)
 
   return c.json(successResponse(result))
 })

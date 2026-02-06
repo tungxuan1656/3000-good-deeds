@@ -1,9 +1,17 @@
-import type { ApiResponse, CreateDeedRequest, DeedDTO, GetDeedsRequest } from '../types/api'
+import type {
+  ApiResponse,
+  CreateDeedRequest,
+  DeedDTO,
+  DeedsResponse,
+  GetDeedsRequest,
+} from '../types/api'
 import { client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
-export const getDeeds = async (params: GetDeedsRequest): Promise<ApiResponse<DeedDTO[]>> => {
-  const response = await client.get<ApiResponse<DeedDTO[]>>(API_ENDPOINTS.deeds.list, { params })
+export const getDeeds = async (params: GetDeedsRequest): Promise<ApiResponse<DeedsResponse>> => {
+  const response = await client.get<ApiResponse<DeedsResponse>>(API_ENDPOINTS.deeds.list, {
+    params,
+  })
 
   return response.data
 }

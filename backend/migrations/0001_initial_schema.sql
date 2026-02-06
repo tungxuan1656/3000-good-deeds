@@ -109,6 +109,9 @@ CREATE TABLE IF NOT EXISTS good_deeds (
 CREATE INDEX IF NOT EXISTS idx_deeds_user_date
 ON good_deeds(user_id, performed_at);
 
+CREATE INDEX IF NOT EXISTS idx_deeds_paging 
+ON good_deeds (user_id, performed_at DESC, id DESC);
+
 CREATE INDEX IF NOT EXISTS idx_deeds_user_local_date
 ON good_deeds(user_id, local_date);
 

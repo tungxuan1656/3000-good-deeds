@@ -38,7 +38,7 @@ export const TodaySection = () => {
     to: todayRange.to,
     limit: 20,
   })
-  const deeds = deedsResponse?.data ?? []
+  const deeds = deedsResponse?.pages.flatMap((page) => page.data?.data ?? []) ?? []
   const showLoading = (isLoading || isFetching) && deeds.length === 0
   const isEmpty = !showLoading && deeds.length === 0
 

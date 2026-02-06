@@ -50,6 +50,18 @@ export interface GetDeedsRequest {
   from?: number
   to?: number
   limit?: number
+  cursor?: string
+}
+
+export interface DeedsPagination {
+  hasMore: boolean
+  nextCursor: string | null
+  limit: number
+}
+
+export interface DeedsResponse {
+  data: DeedDTO[]
+  pagination: DeedsPagination
 }
 
 export interface CreateDeedRequest {

@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getCalendar } from '../../api/activities'
 
 export const ACTIVITIES_KEYS = {
+  all: ['activities'] as const,
+  all_calendar: ['activities', 'calendar'] as const,
   calendar: (from?: string, to?: string) => ['activities', 'calendar', from, to] as const,
 }
 
