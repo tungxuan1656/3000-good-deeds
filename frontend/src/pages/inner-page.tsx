@@ -1,4 +1,4 @@
-import { BookOpenIcon, HeartHandshakeIcon, LeafIcon, SparklesIcon } from 'lucide-react'
+import { BookOpenIcon, HeartHandshakeIcon, LeafIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
@@ -18,18 +18,6 @@ const InnerPage = () => {
         <CardSection className='gap-4'>
           <p className='text-foreground text-base font-semibold'>Chọn một không gian</p>
           <div className='flex flex-col gap-3'>
-            <Link
-              className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to={PATHS.INNER_QUOTE}>
-              <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100'>
-                <SparklesIcon className='h-5 w-5 text-amber-600' />
-              </div>
-              <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Pháp ngữ hôm nay</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Đọc một câu nhắc dịu nhẹ.</p>
-              </div>
-            </Link>
-
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
               to={PATHS.INNER_RANDOM_ACTS}>

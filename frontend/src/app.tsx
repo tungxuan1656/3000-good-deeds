@@ -12,7 +12,6 @@ import InnerJournalEditorPage from '@/pages/inner-journal-editor-page'
 import InnerJournalPage from '@/pages/inner-journal-page'
 import InnerMeditationPage from '@/pages/inner-meditation-page'
 import InnerPage from '@/pages/inner-page'
-import InnerQuotePage from '@/pages/inner-quote-page'
 import InnerRandomActsPage from '@/pages/inner-random-acts-page'
 import LoginPage from '@/pages/login-page'
 import SettingsPage from '@/pages/settings-page'
@@ -39,7 +38,6 @@ function App() {
               <Route element={<StatsPage />} path={PATHS.STATS} />
               <Route element={<GoalsPage />} path={PATHS.GOALS} />
               <Route element={<InnerPage />} path={PATHS.INNER} />
-              <Route element={<InnerQuotePage />} path={PATHS.INNER_QUOTE} />
               <Route element={<InnerRandomActsPage />} path={PATHS.INNER_RANDOM_ACTS} />
               <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL} />
               <Route element={<InnerJournalEditorPage />} path={PATHS.INNER_JOURNAL_NEW} />

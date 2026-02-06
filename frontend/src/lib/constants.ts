@@ -19,7 +19,6 @@ export const PATHS = {
   DEEDS: '/deeds',
   DEED_DETAIL: (id: string) => `/deeds/${id}`,
   INNER: '/inner',
-  INNER_QUOTE: '/inner/quote',
   INNER_RANDOM_ACTS: '/inner/random-acts',
   INNER_JOURNAL: '/inner/journal',
   INNER_JOURNAL_NEW: '/inner/journal/new',
