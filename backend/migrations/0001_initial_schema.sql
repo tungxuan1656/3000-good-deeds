@@ -181,40 +181,7 @@ CREATE INDEX IF NOT EXISTS idx_goal_history_user_period
 ON goal_history(user_id, type, period_time);
 
 -- ============================================
--- 8. ACHIEVEMENTS (Definitions)
--- ============================================
-CREATE TABLE IF NOT EXISTS achievement_definitions (
-  id TEXT PRIMARY KEY,               -- stable ID
-  code TEXT UNIQUE NOT NULL,         -- 'STREAK_3', 'FIRST_DEED'
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  icon_key TEXT,
-  condition_json TEXT NOT NULL,      -- criteria schema (JSON)
-  order_index INTEGER DEFAULT 0,
-  is_active BOOLEAN DEFAULT 1,
-
-  created_at INTEGER NOT NULL,
-  updated_at INTEGER NOT NULL
-);
-
--- ============================================
--- 9. USER ACHIEVEMENTS
--- ============================================
-CREATE TABLE IF NOT EXISTS user_achievements (
-  id TEXT PRIMARY KEY,               -- ULID
-  user_id TEXT NOT NULL,
-  achievement_id TEXT NOT NULL,
-  unlocked_at INTEGER NOT NULL,
-
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (achievement_id) REFERENCES achievement_definitions(id)
-);
-
-CREATE UNIQUE INDEX IF NOT EXISTS idx_user_achievement_unique
-ON user_achievements(user_id, achievement_id);
-
--- ============================================
--- 10. SYSTEM SETTINGS (Feature flags, content configs)
+-- 8. SYSTEM SETTINGS (Feature flags, content configs)
 -- ============================================
 CREATE TABLE IF NOT EXISTS system_settings (
   id TEXT PRIMARY KEY,               -- ULID
@@ -224,7 +191,7 @@ CREATE TABLE IF NOT EXISTS system_settings (
 );
 
 -- ============================================
--- 11. DHARMA QUOTES (Cultivation)
+-- 9. DHARMA QUOTES (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS dharma_quotes (
   id TEXT PRIMARY KEY,               -- ULID
@@ -237,7 +204,7 @@ CREATE TABLE IF NOT EXISTS dharma_quotes (
 );
 
 -- ============================================
--- 12. JOURNAL ENTRIES (Cultivation)
+-- 10. JOURNAL ENTRIES (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS journal_entries (
   id TEXT PRIMARY KEY,               -- ULID
@@ -260,7 +227,7 @@ CREATE INDEX IF NOT EXISTS idx_journal_entries_paging
 ON journal_entries (user_id, created_at DESC, id DESC);
 
 -- ============================================
--- 13. RANDOM ACTS (Cultivation)
+-- 11. RANDOM ACTS (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS random_acts (
   id TEXT PRIMARY KEY,               -- ULID

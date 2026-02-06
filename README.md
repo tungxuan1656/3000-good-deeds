@@ -39,7 +39,7 @@ See `docs/backend/02_architecture.md` and `docs/frontend/design/04_frontend_arch
 
 ## Backend
 - Auth (Google OAuth)
-- User, Deed, Category, Goal, Achievement, Reminder management
+- User, Deed, Category, Goal, Reminder management
 - Secure, scalable, and well-tested
 - See `backend/README.md` and `docs/backend/`
 

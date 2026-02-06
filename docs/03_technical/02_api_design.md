@@ -48,7 +48,6 @@
 
 ### Gamification
 *   `GET /stats/summary` - Lấy thống kê tổng hợp.
-*   `GET /achievements` - Lấy danh sách huy hiệu.
 
 ---
 

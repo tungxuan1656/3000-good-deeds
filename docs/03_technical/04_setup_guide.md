@@ -37,7 +37,7 @@ npm run migrate:local
 # Lệnh này tương đương: wrangler d1 migrations apply DB --local
 
 # 3. (Optional) Seed dữ liệu mẫu
-# Seed categories + achievements + random acts + dharma quotes
+# Seed categories + random acts + dharma quotes
 npm run seed:data -- --local
 ```
 

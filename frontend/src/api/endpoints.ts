@@ -29,10 +29,6 @@ export const API_ENDPOINTS = {
     calendar: '/activities/calendar',
     streak: '/activities/streak',
   },
-  achievements: {
-    definitions: '/achievements/definitions',
-    mine: '/achievements',
-  },
   reminders: {
     settings: '/reminders/settings',
   },

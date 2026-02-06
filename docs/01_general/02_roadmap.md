@@ -36,7 +36,6 @@ Tài liệu này phác thảo lộ trình xây dựng phiên bản MVP (Minimum 
 **Mục tiêu:** Nhắc nhở và khích lệ người dùng không bỏ cuộc.
 
 *   [ ] **Mục tiêu (Goals):** Đặt mục tiêu (VD: 1 ngày 3 việc thiện).
-*   [ ] **Thành tựu (Achievements):** Huy hiệu đơn giản (VD: "Người mới bắt đầu", "3 ngày liên tiếp").
 *   [ ] **Nhắc nhở (Notifications):** Thông báo đẩy (Web Push) vào giờ cố định.
 
 ## Giai đoạn 4: Ổn định & Mở rộng (Stable & Scale)

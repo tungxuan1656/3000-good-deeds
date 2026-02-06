@@ -2,7 +2,7 @@
 
 ## 1. Tổng quan
 Tài liệu này liệt kê toàn bộ các màn hình (Screens) và trạng thái (States) cần xây dựng cho Frontend.
-Tổng cộng: **18 Màn hình chính** & **~21 Trạng thái con**.
+Tổng cộng: **17 Màn hình chính** & **~18 Trạng thái con**.
 
 ---
 
@@ -80,19 +80,11 @@ Tổng cộng: **18 Màn hình chính** & **~21 Trạng thái con**.
     *   **Setup New Goal:** Form tạo mục tiêu (Daily/Weekly).
     *   **Goal Completed:** Trạng thái hoàn thành xuất sắc.
 
-### 8️⃣ Achievements (Thành tựu)
-*   **Màn hình chính:**
-    11. **Badges Collection:** Lưới hiển thị các huy hiệu.
-*   **Trạng thái con:**
-    *   **Locked:** Icon xám, hiển thị điều kiện mở khoá.
-    *   **Unlocked:** Icon sáng, hiển thị ngày đạt được.
-    *   **New Unlock Modal:** Popup chúc mừng khi vừa đạt được.
-
 ---
 
 ## 🔵 NHÓM E: NHẮC NHỞ
 
-### 9️⃣ Reminder Settings
+### 8️⃣ Reminder Settings
 *   *(Tích hợp trong màn Profile, nhưng có logic UI riêng)*
 *   **Trạng thái:**
     *   Toggle OFF.
@@ -102,32 +94,32 @@ Tổng cộng: **18 Màn hình chính** & **~21 Trạng thái con**.
 
 ## 🧘 NHÓM F: CÔNG CỤ TU TẬP (INNER TOOLS)
 
-### 🔟 Inner Hub (Kho tàng)
+### 9️⃣ Inner Hub (Kho tàng)
 *   **Màn hình chính:**
-    12. **Inner Landing:** Menu liết kê các công cụ (Pháp ngữ, Sổ tay, Thiền...).
+    11. **Inner Landing:** Menu liết kê các công cụ (Pháp ngữ, Sổ tay, Thiền...).
 
-### 1️⃣1️⃣ Pháp ngữ (Daily Quote)
+### 🔟 Pháp ngữ (Daily Quote)
 *   **Màn hình chính:**
-    13. **Full Quote View:** Hiển thị ảnh nền + Text đẹp để đọc/share.
+    12. **Full Quote View:** Hiển thị ảnh nền + Text đẹp để đọc/share.
 
-### 1️⃣2️⃣ Gieo duyên (Random Acts)
+### 1️⃣1️⃣ Gieo duyên (Random Acts)
 *   **Màn hình chính:**
-    14. **Card Gợi ý:** Hiển thị 1 việc thiện ngẫu nhiên.
+    13. **Card Gợi ý:** Hiển thị 1 việc thiện ngẫu nhiên.
 *   **Trạng thái:**
     *   Next (Bỏ qua).
     *   Accept (Lưu vào Todo/Goal).
 
-### 1️⃣3️⃣ Sổ tay tâm hồn (Soul Journal)
+### 1️⃣2️⃣ Sổ tay tâm hồn (Soul Journal)
 *   **Màn hình chính:**
-    15. **Journal List:** Danh sách nhật ký (Sám hối / Biết ơn).
-    16. **Editor:** Màn hình viết nhật ký.
+    14. **Journal List:** Danh sách nhật ký (Sám hối / Biết ơn).
+    15. **Editor:** Màn hình viết nhật ký.
 *   **Trạng thái:**
     *   Mode Sám hối (Theme tối/trầm).
     *   Mode Biết ơn (Theme sáng/ấm).
 
-### 1️⃣4️⃣ Thiền & Thở
+### 1️⃣3️⃣ Thiền & Thở
 *   **Màn hình chính:**
-    17. **Meditation Player:**
+    16. **Meditation Player:**
         *   Vòng tròn hít thở (Animation).
         *   Đồng hồ đếm ngược (Timer).
 *   **Trạng thái:**
@@ -137,9 +129,9 @@ Tổng cộng: **18 Màn hình chính** & **~21 Trạng thái con**.
 
 ## ⚙️ NHÓM G: CÁ NHÂN
 
-### 1️⃣5️⃣ Hồ sơ & Cài đặt
+### 1️⃣4️⃣ Hồ sơ & Cài đặt
 *   **Màn hình chính:**
-    18. **Profile:**
+    17. **Profile:**
         *   Info (Avatar, Name).
         *   Settings (Language, Reminder).
         *   Help / About.
@@ -150,6 +142,6 @@ Tổng cộng: **18 Màn hình chính** & **~21 Trạng thái con**.
 ---
 
 ## Tổng kết
-*   **Số lượng màn hình:** ~18 màn.
+*   **Số lượng màn hình:** ~17 màn.
 *   **Độ phức tạp:** Trung bình - Thấp. Chủ yếu là list, detail, và form nhập liệu đơn giản.
 *   **Điểm nhấn UX:** Animations (Confetti, Breathing, Swipe), Transitions mượt mà.

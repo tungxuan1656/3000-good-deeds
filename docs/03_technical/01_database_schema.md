@@ -124,26 +124,6 @@ Lịch sử tiến độ theo từng chu kỳ.
 **Constraints:**
 - UNIQUE (`user_id`, `type`, `period_time`) - Một chu kỳ chỉ có 1 bản ghi
 
-### `achievement_definitions`
-Định nghĩa huy hiệu.
-| Column             | Type          | Description                   |
-| :----------------- | :------------ | :---------------------------- |
-| **id**             | TEXT (PK)     | ULID                          |
-| **code**           | TEXT (Unique) | Mã ('STREAK_3', 'FIRST_DEED') |
-| **title**          | TEXT          | Tên huy hiệu                  |
-| **condition_json** | TEXT          | Cấu hình điều kiện (JSON)     |
-
-### `user_achievements`
-Huy hiệu người dùng đã đạt.
-| Column             | Type      | Description                            |
-| :----------------- | :-------- | :------------------------------------- |
-| **id**             | TEXT (PK) | ULID                                   |
-| **user_id**        | TEXT (FK) | Reference `users.id`                   |
-| **achievement_id** | TEXT (FK) | Reference `achievement_definitions.id` |
-| **unlocked_at**    | INTEGER   | Thời điểm mở khóa                      |
-
----
-
 ## 4. Cultivation Tools (Giai đoạn 2.5)
 
 ### `dharma_quotes`

@@ -1,7 +1,6 @@
 import type { CreateDeedRequest, GoodDeed, UpdateDeedRequest, User } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
 import { computeLocalPeriods } from '../utils'
-import { checkAndUnlockAchievements } from './achievements'
 import { handleDeedCreate, handleDeedDelete } from './goal-history'
 
 // Get deeds list (with filters)
@@ -116,9 +115,6 @@ export async function createDeed(
     .run()
 
   await handleDeedCreate(db, user, { localWeek, localMonth, localYear })
-
-  // Check achievements
-  await checkAndUnlockAchievements(db, user.id)
 
   return await getDeedById(db, newId)
 }

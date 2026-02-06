@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url'
 import { parse } from 'csv-parse/sync'
 import { ulid } from 'ulid'
 
-import { seedAchievements, seedCategories, seedRandomActs } from '../src/seed'
+import { seedCategories, seedRandomActs } from '../src/seed'
 
 type Target = 'local' | 'remote' | 'preview'
 
@@ -155,18 +155,6 @@ async function main() {
        VALUES (${sqlString(category.code)}, ${sqlString(category.name)}, ${sqlString(
          category.description,
        )}, ${sqlString(category.icon)}, ${sqlString(category.style)}, ${category.order_index}, 1, 1, ${now}, ${now});`,
-    )
-  }
-
-  for (const achievement of seedAchievements) {
-    const now = Date.now()
-    statements.push(
-      `INSERT OR REPLACE INTO achievement_definitions (id, code, title, description, icon_key, condition_json, order_index, is_active, created_at, updated_at)
-       VALUES (${sqlString(achievement.id)}, ${sqlString(achievement.code)}, ${sqlString(
-         achievement.title,
-       )}, ${sqlString(achievement.description)}, ${sqlString(
-         achievement.icon_key,
-       )}, ${sqlString(achievement.condition_json)}, ${achievement.order_index}, 1, ${now}, ${now});`,
     )
   }
 

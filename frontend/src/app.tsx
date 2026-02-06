@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AppLayout from '@/components/layout/app-layout'
 import { ScrollToTop } from '@/components/layout/scroll-to-top'
 import { PATHS } from '@/lib/constants'
-import AchievementsPage from '@/pages/achievements-page'
-import DeedDetailPage from '@/pages/deed-detail-page'
 import GoalsPage from '@/pages/goals-page'
 import HomePage from '@/pages/home-page'
 import InnerJournalHistoryPage from '@/pages/inner-journal-history-page'
@@ -33,14 +31,11 @@ function App() {
             <Route element={<AppLayout />}>
               <Route element={<HomePage />} path={PATHS.HOME} />
               <Route element={<TimelinePage />} path={PATHS.TIMELINE} />
-              <Route element={<DeedDetailPage />} path={PATHS.DEED_DETAIL(':id')} />
-              <Route element={<AchievementsPage />} path={PATHS.ACHIEVEMENTS} />
               <Route element={<StatsPage />} path={PATHS.STATS} />
               <Route element={<GoalsPage />} path={PATHS.GOALS} />
               <Route element={<InnerPage />} path={PATHS.INNER} />
               <Route element={<InnerRandomActsPage />} path={PATHS.INNER_RANDOM_ACTS} />
               <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL} />
-              <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL_NEW} />
               <Route element={<InnerJournalHistoryPage />} path={PATHS.INNER_JOURNAL_HISTORY} />
               <Route element={<InnerMeditationPage />} path={PATHS.INNER_MEDITATION} />
               <Route element={<SettingsPage />} path={PATHS.SETTINGS} />

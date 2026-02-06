@@ -208,7 +208,7 @@ Sử dụng `Drawer` hoặc `Sheet` (Bottom position) thay vì Modal giữa màn
 
 *   **Allowed:** Fade In, Slide Up, Opacity Change.
 *   **Forbidden:** Elastic bounce, Shake, Flashing interactions.
-*   **Confetti:** Chỉ dùng rất tiết chế cho Thành tựu lớn (Big Achievements).
+*   **Confetti:** Chỉ dùng rất tiết chế cho khoảnh khắc đặc biệt.
 
 ---
 

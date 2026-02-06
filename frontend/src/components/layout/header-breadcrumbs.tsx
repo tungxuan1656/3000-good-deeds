@@ -13,7 +13,6 @@ import {
 const breadcrumbLabels: Record<string, string> = {
   timeline: 'Hành trình',
   deeds: 'Việc thiện',
-  achievements: 'Thành tựu',
   stats: 'Thống kê',
   goals: 'Mục tiêu',
   inner: 'Nội tâm',

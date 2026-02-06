@@ -25,36 +25,6 @@ export const seedCategories = [
   },
 ]
 
-export const seedAchievements = [
-  {
-    id: '01KGH777EHT5J81GAABTPMHPFR',
-    code: 'FIRST_DEED',
-    title: 'Hạt giống đầu tiên',
-    description: 'Thực hiện việc thiện đầu tiên của bạn',
-    icon_key: 'sprout',
-    condition_json: JSON.stringify({ type: 'count_total', value: 1 }),
-    order_index: 1,
-  },
-  {
-    id: '01KGH777EHVXYAM7Z5BTX2M51F',
-    code: 'STREAK_3',
-    title: 'Khởi động đà thiện',
-    description: 'Duy trì chuỗi việc thiện trong 3 ngày liên tiếp',
-    icon_key: 'flame',
-    condition_json: JSON.stringify({ type: 'streak_days', value: 3 }),
-    order_index: 2,
-  },
-  {
-    id: '01KGH777EH93MXVHZP19H9F6RV',
-    code: 'COUNT_10',
-    title: 'Người gieo hạt chăm chỉ',
-    description: 'Đạt mốc 10 việc thiện',
-    icon_key: 'award',
-    condition_json: JSON.stringify({ type: 'count_total', value: 10 }),
-    order_index: 3,
-  },
-]
-
 export const seedQuotes = [
   {
     id: '01KGH777EHEHHDHSY3CPTJ5XQE',
@@ -122,29 +92,6 @@ export async function seed(db: any) {
         cat.icon,
         cat.style,
         cat.order_index,
-        Date.now(),
-        Date.now(),
-      )
-      .run()
-  }
-
-  console.log('🏆 Seeding Achievements...')
-  for (const ach of seedAchievements) {
-    await db
-      .prepare(
-        `
-            INSERT OR REPLACE INTO achievement_definitions (id, code, title, description, icon_key, condition_json, order_index, is_active, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
-        `,
-      )
-      .bind(
-        ach.id,
-        ach.code,
-        ach.title,
-        ach.description,
-        ach.icon_key,
-        ach.condition_json,
-        ach.order_index,
         Date.now(),
         Date.now(),
       )

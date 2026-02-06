@@ -17,7 +17,6 @@ Dành cho Product Owner, Designer & Developer để hiểu chi tiết chức nă
 *   [02_profile.md](./02_specs/features/02_profile.md): Hồ sơ & Cài đặt tài khoản.
 *   [03_stats.md](./02_specs/features/03_stats.md): Thống kê.
 *   [04_goals.md](./02_specs/features/04_goals.md): Mục tiêu.
-*   [05_achievements.md](./02_specs/features/05_achievements.md): Thành tựu & Huy hiệu.
 *   [06_reminders.md](./02_specs/features/06_reminders.md): Nhắc nhở.
 *   [07_cultivation.md](./02_specs/features/07_cultivation.md): Công cụ tu tập (Pháp ngữ, Gieo duyên, Thiền/Thở...).
 *   [08_soul_journal.md](./02_specs/features/08_soul_journal.md): Sổ tay Tâm hồn (Sám hối, Biết ơn; privacy-first; không sửa/xoá).

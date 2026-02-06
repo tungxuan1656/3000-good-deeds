@@ -76,25 +76,6 @@ export interface GoalHistory {
   updatedAt: number
 }
 
-// Achievement Entity
-export interface AchievementDefinition {
-  id: string
-  name: string
-  description: string
-  criteriaType: 'count' | 'streak' | 'unknown'
-  criteriaValue: number
-  icon: string | null
-}
-
-export interface UserAchievement {
-  id: string
-  userId: string
-  achievementId: string
-  earnedAt: number
-  // Expanded
-  details?: AchievementDefinition
-}
-
 // Stats DTO
 export interface UserStats {
   totalDeeds: number
