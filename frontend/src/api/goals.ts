@@ -21,13 +21,11 @@ export const upsertGoals = async (data: UpsertGoalsRequest): Promise<ApiResponse
 }
 
 export const getGoalHistory = async (
-  goalId: string,
   params?: GetGoalHistoryRequest,
 ): Promise<ApiResponse<GoalHistoryResponse>> => {
-  const response = await client.get<ApiResponse<GoalHistoryResponse>>(
-    API_ENDPOINTS.goals.history(goalId),
-    { params },
-  )
+  const response = await client.get<ApiResponse<GoalHistoryResponse>>(API_ENDPOINTS.goals.history, {
+    params,
+  })
 
   return response.data
 }

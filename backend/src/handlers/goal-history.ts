@@ -239,23 +239,28 @@ export const syncCurrentGoalHistoryTarget = async (
 export const getGoalHistoryPage = async (
   db: D1Database,
   userId: string,
-  goalId: string,
   limit: number,
   cursor?: number,
+  type?: GoalType,
 ) => {
   const pageLimit = Math.min(Math.max(limit, 1), 50)
-  const bindings: Array<string | number> = [goalId, userId]
-  let cursorCondition = ''
+  const bindings: Array<string | number> = [userId]
+  const conditions = ['user_id = ?']
+
+  if (type) {
+    conditions.push('type = ?')
+    bindings.push(type)
+  }
 
   if (cursor) {
-    cursorCondition = 'AND created_at < ?'
+    conditions.push('created_at < ?')
     bindings.push(cursor)
   }
 
   const { results } = await db
     .prepare(
       `SELECT * FROM goal_history
-       WHERE goal_id = ? AND user_id = ? ${cursorCondition}
+       WHERE ${conditions.join(' AND ')}
        ORDER BY created_at DESC
        LIMIT ?`,
     )

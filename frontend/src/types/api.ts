@@ -148,4 +148,5 @@ export interface UpsertGoalsRequest {
 export interface GetGoalHistoryRequest {
   limit?: number
   cursor?: number
+  type?: GoalTypeDTO
 }

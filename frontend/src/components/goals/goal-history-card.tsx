@@ -1,52 +1,11 @@
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-
-import { getGoalHistory, getGoals } from '@/api/goals'
-import type { GoalHistoryDTO } from '@/types/api'
+import { useGoalHistory } from '@/hooks/api/use-goals'
 
 import { GoalHistoryItem } from './goal-history-item'
 
 const GoalHistoryCard = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [historyGoals, setHistoryGoals] = useState<GoalHistoryDTO[]>([])
+  const { data: historyResponse, isLoading } = useGoalHistory({ limit: 20 })
 
-  const loadHistory = async () => {
-    setIsLoading(true)
-
-    try {
-      const goalsResponse = await getGoals()
-      if (!goalsResponse.success || !goalsResponse.data) {
-        throw new Error('Không thể tải mục tiêu')
-      }
-
-      const goals = goalsResponse.data
-      if (goals.length === 0) {
-        setHistoryGoals([])
-
-        return
-      }
-
-      const historyResponses = await Promise.all(
-        goals.map((goal) => getGoalHistory(goal.id, { limit: 20 })),
-      )
-
-      const histories = historyResponses
-        .filter((res) => res.success && res.data)
-        .flatMap((res) => res.data?.data ?? [])
-        .sort((a, b) => b.startDate - a.startDate)
-
-      setHistoryGoals(histories)
-    } catch (error) {
-      console.error(error)
-      toast.error('Không thể tải lịch sử mục tiêu')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    void loadHistory()
-  }, [])
+  const historyGoals = historyResponse?.success ? (historyResponse.data?.data ?? []) : []
 
   return (
     <div className='gap-4'>

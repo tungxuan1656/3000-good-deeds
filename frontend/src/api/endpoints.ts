@@ -20,7 +20,7 @@ export const API_ENDPOINTS = {
   goals: {
     list: '/goals',
     upsert: '/goals',
-    history: (id: string) => `/goals/${id}/history`,
+    history: '/goals/history',
   },
   stats: {
     summary: '/stats/summary',

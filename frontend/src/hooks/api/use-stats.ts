@@ -4,7 +4,6 @@ import { getStatsSummary } from '../../api/stats'
 
 export const STATS_KEYS = {
   summary: ['stats', 'summary'] as const,
-  goals: ['stats', 'goals'] as const,
 }
 
 export const useStatsSummary = () => {

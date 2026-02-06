@@ -2,9 +2,9 @@ import { CheckIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
-import { getGoals, upsertGoals } from '@/api/goals'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
+import { useGoals, useUpsertGoals } from '@/hooks/api/use-goals'
 import { GOAL_LABELS } from '@/lib/constants'
 
 import { Button } from '../ui/button'
@@ -18,24 +18,18 @@ type GoalFormState = {
 
 const GoalSettingCard = () => {
   const goalTypes = useMemo(() => ['weekly', 'monthly', 'yearly'] as const, [])
-  const [isLoading, setIsLoading] = useState(true)
-  const [isSaving, setIsSaving] = useState(false)
   const [goalForms, setGoalForms] = useState<Record<GoalType, GoalFormState>>({
     weekly: { targetCount: '1', isEnabled: false },
     monthly: { targetCount: '1', isEnabled: false },
     yearly: { targetCount: '1', isEnabled: false },
   })
 
-  const loadGoals = async () => {
-    setIsLoading(true)
+  const { data: goalsResponse, isLoading } = useGoals()
+  const upsertGoalsMutation = useUpsertGoals()
 
-    try {
-      const response = await getGoals()
-      if (!response.success || !response.data) {
-        throw new Error('Không thể tải mục tiêu')
-      }
-
-      const goals = response.data
+  useEffect(() => {
+    if (goalsResponse?.success && goalsResponse.data) {
+      const goals = goalsResponse.data
       const forms = goalTypes.reduce(
         (acc, type) => {
           const goal = goals.find((item) => item.type === type)
@@ -51,17 +45,8 @@ const GoalSettingCard = () => {
       )
 
       setGoalForms(forms)
-    } catch (error) {
-      console.error(error)
-      toast.error('Không thể tải mục tiêu')
-    } finally {
-      setIsLoading(false)
     }
-  }
-
-  useEffect(() => {
-    void loadGoals()
-  }, [])
+  }, [goalsResponse, goalTypes])
 
   const handleTargetChange = (type: GoalType, value: string) => {
     setGoalForms((prev) => ({
@@ -97,20 +82,12 @@ const GoalSettingCard = () => {
       return
     }
 
-    setIsSaving(true)
-
     try {
-      const response = await upsertGoals({ goals: payload })
-      if (!response.success) {
-        throw new Error('Không thể cập nhật mục tiêu')
-      }
-
-      await loadGoals()
+      await upsertGoalsMutation.mutateAsync({ goals: payload })
+      toast.success('Đã lưu mục tiêu thành công')
     } catch (error) {
       console.error(error)
       toast.error('Không thể cập nhật mục tiêu')
-    } finally {
-      setIsSaving(false)
     }
   }
 
@@ -121,9 +98,12 @@ const GoalSettingCard = () => {
           <p className='text-foreground text-base font-semibold'>Thiết lập mục tiêu mới</p>
           <p className='text-muted-foreground mt-1 text-xs'>Chọn nhịp phù hợp với bạn.</p>
         </div>
-        <Button disabled={isLoading || isSaving} size={'xs'} onClick={() => void handleSave()}>
+        <Button
+          disabled={isLoading || upsertGoalsMutation.isPending}
+          size={'xs'}
+          onClick={() => void handleSave()}>
           <CheckIcon className='mr-1' />
-          {isSaving ? 'Đang lưu...' : 'Lưu tất cả mục tiêu'}
+          {upsertGoalsMutation.isPending ? 'Đang lưu...' : 'Lưu tất cả mục tiêu'}
         </Button>
       </div>
       <div className='grid gap-2'>
@@ -133,7 +113,7 @@ const GoalSettingCard = () => {
             <div className='flex items-center gap-5'>
               <Input
                 className='w-24 rounded-full text-sm'
-                disabled={isLoading || isSaving}
+                disabled={isLoading || upsertGoalsMutation.isPending}
                 min={1}
                 type='number'
                 value={goalForms[type].targetCount}
@@ -141,7 +121,7 @@ const GoalSettingCard = () => {
               />
               <Switch
                 checked={goalForms[type].isEnabled}
-                disabled={isLoading || isSaving}
+                disabled={isLoading || upsertGoalsMutation.isPending}
                 onCheckedChange={(value) => handleToggle(type, value)}
               />
             </div>

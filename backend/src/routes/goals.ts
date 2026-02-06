@@ -47,14 +47,14 @@ goals.post('/', async (c) => {
   }
 })
 
-goals.get('/:id/history', async (c) => {
+goals.get('/history', async (c) => {
   const currentUser = c.get('user')
-  const goalId = c.req.param('id')
   const limit = Number(c.req.query('limit') || 20)
   const cursor = c.req.query('cursor') ? Number(c.req.query('cursor')) : undefined
+  const type = c.req.query('type') as 'weekly' | 'monthly' | 'yearly' | undefined
 
   try {
-    const result = await getGoalHistoryPage(c.env.DB, currentUser.id, goalId, limit, cursor)
+    const result = await getGoalHistoryPage(c.env.DB, currentUser.id, limit, cursor, type)
 
     return c.json(successResponse(result))
   } catch (e) {
