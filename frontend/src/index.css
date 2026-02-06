@@ -6,7 +6,7 @@
 
 @theme {
   --font-sans: 'Manrope', 'sans-serif';
-  --radius: 0.5rem;
+  --radius: 1rem;
 
   --color-body: hsl(var(--body));
   --color-speech: hsl(var(--speech));
@@ -37,44 +37,41 @@
 
 :root {
   /* Backgrounds */
-  --background: oklch(1 0 0); /* #F6F3EE */
-  --foreground: oklch(0.145 0 0); /* #2E2E2E */
+  --background: #f6f3ee; /* #F6F3EE */
+  --foreground: #212121; /* #2E2E2E */
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card: rgb(255, 255, 255);
+  --card-foreground: #202020;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
 
-  --primary: oklch(0.205 0 0); /* #7A9B86 */
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: #7a9b86; /* #7A9B86 */
+  --primary-foreground: #fafafa;
 
-  --secondary: oklch(0.97 0 0); /* #BFD4C3 */
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary: #bfd4c3; /* #BFD4C3 */
+  --secondary-foreground: #171717;
 
-  --muted: oklch(0.97 0 0); /* Light gray for backgrounds */
-  --muted-foreground: oklch(0.556 0 0); /* #A0A0A0 */
+  --muted: #f5f5f5; /* Light gray for backgrounds */
+  --muted-foreground: #737373; /* #A0A0A0 */
 
-  --accent: oklch(0.97 0 0); /* #E6C77A Highlight */
-  --accent-foreground: oklch(0.205 0 0);
+  --accent: #e6c77a; /* #E6C77A Highlight */
+  --accent-foreground: #343434;
 
-  --destructive: oklch(0.577 0.245 27.325); /* #E57373 */
+  --destructive: #e57373; /* #E57373 */
   --destructive-foreground: 0 0% 100%;
 
   /* Borders: effectively black/5 on white is very light. 
      Using a solid color approx #F2F2F2 for borders if needed, 
      or just black with alpha if tailwind supports it in var. 
      Safe bet: a neutral light gray. */
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0); /* Focus ring matches primary */
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: 141.8 14.2% 54.3%; /* Focus ring matches primary */
 
   --radius: 0.625rem;
 
   /* Custom Semantic Colors */
-  --body: 31.1 83.4% 69.2%; /* #F2B36F */
-  --speech: 205.1 49.3% 70.6%; /* #8FBAD9 */
-  --mind: 258 51.7% 77.3%; /* #B9A7E3 */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -88,13 +85,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --body: #f2b36f; /* #F2B36F */
+  --speech: #8fbad9; /* #8FBAD9 */
+  --mind: #b9a7e3; /* #B9A7E3 */
 }
 
 .dark {
   /* Optional Dark Mode - Keeping generic dark values for now but aligned with hue if possible, 
      or just leaving standard dark defaults but slightly warmer? 
      For now, using standard dark defaults to be safe as it is "optional/future" */
-  --background: oklch(0.145 0 0);
+  --background: #0a0a0a;
   --foreground: oklch(0.985 0 0);
 
   --card: oklch(0.205 0 0);
@@ -122,9 +123,6 @@
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 
-  --body: 31.1 83.4% 69.2%;
-  --speech: 205.1 49.3% 70.6%;
-  --mind: 258 51.7% 77.3%;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -138,6 +136,10 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --body: #f2b36f; /* #F2B36F */
+  --speech: #8fbad9; /* #8FBAD9 */
+  --mind: #b9a7e3; /* #B9A7E3 */
 }
 
 @layer base {
