@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import {
@@ -46,16 +47,18 @@ export const HeaderBreadcrumbs = () => {
           const isLast = index === breadcrumbs.length - 1
 
           return (
-            <BreadcrumbItem key={crumb.path}>
+            <React.Fragment key={crumb.path}>
               {index > 0 && <BreadcrumbSeparator className='text-muted-foreground/50' />}
-              {isLast ? (
-                <BreadcrumbPage className='font-medium'>{crumb.label}</BreadcrumbPage>
-              ) : (
-                <BreadcrumbLink asChild className='font-medium'>
-                  <Link to={crumb.path}>{crumb.label}</Link>
-                </BreadcrumbLink>
-              )}
-            </BreadcrumbItem>
+              <BreadcrumbItem key={crumb.path}>
+                {isLast ? (
+                  <BreadcrumbPage className='font-medium'>{crumb.label}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild className='font-medium'>
+                    <Link to={crumb.path}>{crumb.label}</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+            </React.Fragment>
           )
         })}
       </BreadcrumbList>
