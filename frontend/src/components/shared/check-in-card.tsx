@@ -5,7 +5,7 @@ import { useCategories } from '@/hooks/api/use-categories'
 
 import { Button } from '../ui/button'
 import { CardSection } from './card-section'
-import { CheckInDrawer, type CheckInDrawerHandle } from './check-in-drawer'
+import { CheckInSheet, type CheckInDrawerHandle } from './check-in-sheet'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 import Leaf from './leaf'
 
@@ -19,7 +19,7 @@ export function CheckInCard() {
 
   return (
     <CardSection>
-      <CheckInDrawer ref={checkInRef} />
+      <CheckInSheet ref={checkInRef} />
       <Leaf className='h-32 w-32 rotate-180' position='top-right' variant={4} />
       <div className='flex flex-col gap-4'>
         <div>

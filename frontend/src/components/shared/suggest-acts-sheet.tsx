@@ -1,15 +1,14 @@
-import { RefreshCwIcon, SparklesIcon, XIcon } from 'lucide-react'
+import { RefreshCwIcon, SparklesIcon } from 'lucide-react'
 import React from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer'
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -19,7 +18,7 @@ export interface SuggestActsDrawerHandle {
   close: () => void
 }
 
-export const SuggestActsDrawer = React.forwardRef<SuggestActsDrawerHandle>((_props, ref) => {
+export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_props, ref) => {
   const isMobile = useIsMobile()
   const [open, setOpen] = React.useState(false)
   const { data, isFetching, refetch } = useRandomActs(5, open)
@@ -35,23 +34,14 @@ export const SuggestActsDrawer = React.forwardRef<SuggestActsDrawerHandle>((_pro
   }
 
   return (
-    <Drawer direction={isMobile ? 'bottom' : 'right'} open={open} onOpenChange={onOpenChange}>
-      <DrawerContent>
-        <DrawerHeader className='flex flex-row'>
-          <div className='flex-1 text-left'>
-            <DrawerTitle>Gợi ý việc thiện</DrawerTitle>
-            <DrawerDescription>Chọn một điều nhỏ để bắt đầu ngay hôm nay.</DrawerDescription>
-          </div>
-          <DrawerClose asChild>
-            <Button
-              aria-label='Đóng'
-              className='h-9 w-9 self-start rounded-full bg-gray-200'
-              size='icon'
-              variant='ghost'>
-              <XIcon className='h-4 w-4' />
-            </Button>
-          </DrawerClose>
-        </DrawerHeader>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        className={isMobile ? 'rounded-t-2xl' : ''}
+        side={isMobile ? 'bottom' : 'right'}>
+        <SheetHeader>
+          <SheetTitle>Gợi ý việc thiện</SheetTitle>
+          <SheetDescription>Chọn một điều nhỏ để bắt đầu ngay hôm nay.</SheetDescription>
+        </SheetHeader>
 
         <div className='mx-4 flex items-center justify-between gap-3'>
           <div className='text-muted-foreground flex items-center gap-2 text-xs'>
@@ -79,7 +69,7 @@ export const SuggestActsDrawer = React.forwardRef<SuggestActsDrawerHandle>((_pro
             </div>
           ))}
         </div>
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   )
 })

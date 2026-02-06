@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import {
-  SuggestActsDrawer,
   type SuggestActsDrawerHandle,
-} from '@/components/shared/suggest-acts-drawer'
+  SuggestActsSheet,
+} from '@/components/shared/suggest-acts-sheet'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { PATHS } from '@/lib/constants'
@@ -98,7 +98,7 @@ export const TodaySection = () => {
         Gợi ý điều nhỏ để bắt đầu
       </Button>
 
-      <SuggestActsDrawer ref={suggestActsDrawerRef} />
+      <SuggestActsSheet ref={suggestActsDrawerRef} />
     </CardSection>
   )
 }

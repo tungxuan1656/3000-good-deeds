@@ -2,7 +2,7 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { CardSection } from '@/components/shared/card-section'
-import { CheckInDrawer, type CheckInDrawerHandle } from '@/components/shared/check-in-drawer'
+import { CheckInSheet, type CheckInDrawerHandle } from '@/components/shared/check-in-sheet'
 import { GoodDeedCategoryMiniButton } from '@/components/shared/good-deed-category-button'
 import { Button } from '@/components/ui/button'
 import { useCategories } from '@/hooks/api/use-categories'
@@ -51,7 +51,7 @@ export const MiniCheckInCard = ({
         <PlusIcon className='size-4' />
         Ghi nhận việc thiện
       </Button>
-      <CheckInDrawer ref={checkInRef} />
+      <CheckInSheet ref={checkInRef} />
     </CardSection>
   )
 }
