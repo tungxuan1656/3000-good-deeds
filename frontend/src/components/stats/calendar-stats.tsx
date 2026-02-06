@@ -61,16 +61,16 @@ export const CalendarStats = () => {
         <h2 className='text-foreground text-xl font-semibold'>
           {format(currentMonth, 'MMMM/yyyy', { locale: vi }).toUpperCase()}
         </h2>
-        <div className='flex items-center gap-2'>
+        <div className='mb-2 flex items-center gap-2'>
           <Button
-            className='h-9 w-9 rounded-full'
+            className='h-9 w-9 rounded-full bg-white shadow-sm'
             size='icon'
             variant='outline'
             onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
           <Button
-            className='h-9 w-9 rounded-full'
+            className='h-9 w-9 rounded-full bg-white shadow-sm'
             size='icon'
             variant='outline'
             onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}>
@@ -108,20 +108,26 @@ export const CalendarStats = () => {
                 key={key}
                 className={cn(
                   'flex min-h-16 flex-col items-center justify-between rounded-2xl border border-black/5 bg-white/80 p-2 shadow-sm',
-                  !isCurrentMonth && 'opacity-50',
+                  !isCurrentMonth && 'border-none opacity-50 shadow-none',
                   isFuture && 'opacity-40',
                   isCurrentDay && 'ring-primary/40 ring-2 ring-offset-2 ring-offset-white',
                 )}>
-                <span className='text-foreground text-sm font-semibold'>{format(day, 'd')}</span>
-                {isLoading ? (
-                  <span className='bg-muted h-4 w-10 animate-pulse rounded-full' />
-                ) : count > 0 ? (
-                  <span className='bg-primary/15 text-primary rounded-full px-2 py-1 text-xs font-semibold'>
-                    {count}
-                  </span>
-                ) : (
-                  <span className='text-muted-foreground text-xs'>—</span>
-                )}
+                {isCurrentMonth ? (
+                  <>
+                    <span className='text-foreground text-sm font-semibold'>
+                      {format(day, 'd')}
+                    </span>
+                    {isLoading ? (
+                      <span className='bg-muted h-4 w-10 animate-pulse rounded-full' />
+                    ) : count > 0 ? (
+                      <span className='bg-primary/15 text-primary rounded-full px-2 py-1 text-xs font-semibold'>
+                        {count}
+                      </span>
+                    ) : (
+                      <span className='text-muted-foreground text-xs'>—</span>
+                    )}
+                  </>
+                ) : null}
               </div>
             )
           })}
