@@ -50,7 +50,7 @@ goals.post('/', async (c) => {
 goals.get('/history', async (c) => {
   const currentUser = c.get('user')
   const limit = Number(c.req.query('limit') || 20)
-  const cursor = c.req.query('cursor') ? Number(c.req.query('cursor')) : undefined
+  const cursor = c.req.query('cursor') || undefined
   const type = c.req.query('type') as 'weekly' | 'monthly' | 'yearly' | undefined
 
   try {
