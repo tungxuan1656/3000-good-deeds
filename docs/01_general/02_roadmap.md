@@ -29,7 +29,7 @@ Tài liệu này phác thảo lộ trình xây dựng phiên bản MVP (Minimum 
 
 *   [x] **Pháp ngữ (Random Quotes):** Hiển thị lời dạy hiền triết ngẫu nhiên (cache theo phiên).
 *   [x] **Gieo duyên lành (Random Acts):** Gợi ý việc thiện ngẫu nhiên.
-*   [ ] **Sổ tay tâm hồn (Soul Journal):** Viết nhật ký Sám hối & Biết ơn (Riêng tư).
+*   [ ] **Sổ tay tâm hồn (Soul Journal):** Viết nhật ký Sám hối & Biết ơn (Riêng tư). (Spec: [08_soul_journal.md](../02_specs/features/08_soul_journal.md))
 *   [ ] **Hỗ trợ thiền & thở:** Timer đơn giản & Hướng dẫn thở 4-7-8.
 
 ## Giai đoạn 3: Duy trì thói quen (Habit)

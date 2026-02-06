@@ -19,7 +19,8 @@ Dành cho Product Owner, Designer & Developer để hiểu chi tiết chức nă
 *   [04_goals.md](./02_specs/features/04_goals.md): Mục tiêu.
 *   [05_achievements.md](./02_specs/features/05_achievements.md): Thành tựu & Huy hiệu.
 *   [06_reminders.md](./02_specs/features/06_reminders.md): Nhắc nhở.
-*   [07_cultivation.md](./02_specs/features/07_cultivation.md): Công cụ tu tập (Pháp ngữ, Sổ tay...).
+*   [07_cultivation.md](./02_specs/features/07_cultivation.md): Công cụ tu tập (Pháp ngữ, Gieo duyên, Thiền/Thở...).
+*   [08_soul_journal.md](./02_specs/features/08_soul_journal.md): Sổ tay Tâm hồn (Sám hối, Biết ơn; privacy-first; không sửa/xoá).
 
 ### [03. Kỹ thuật (Technical)](./03_technical)
 Dành cho Developer & DevOps.
