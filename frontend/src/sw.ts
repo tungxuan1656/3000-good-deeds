@@ -22,33 +22,48 @@ clientsClaim()
 precacheAndRoute(self.__WB_MANIFEST)
 
 self.addEventListener('push', (event) => {
-  const data = event.data?.json?.() as PushPayload | undefined
+  let data: PushPayload | undefined
+
+  if (event.data) {
+    try {
+      data = event.data.json()
+    } catch {
+      data = { body: event.data.text() }
+    }
+  }
+
   const title = data?.title ?? 'Nhắc nhở việc thiện'
   const body = data?.body ?? 'Đến giờ ghi nhận việc thiện 🌱'
   const url = data?.url ?? '/'
+  const targetUrl = new URL(url, self.location.origin).toString()
 
   event.waitUntil(
     self.registration.showNotification(title, {
       body,
       icon: '/icons/icon-192.png',
       badge: '/icons/icon-192.png',
-      data: { url },
+      data: { url: targetUrl },
     }),
   )
 })
 
 self.addEventListener('notificationclick', (event) => {
-  const targetUrl = (event.notification.data as { url?: string } | undefined)?.url ?? '/'
+  const targetUrl =
+    (event.notification.data as { url?: string } | undefined)?.url ??
+    new URL('/', self.location.origin).toString()
   event.notification.close()
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       const existing = clients.find((client) => 'focus' in client)
       if (existing) {
-        existing.focus()
-        existing.navigate(targetUrl)
+        return (existing as WindowClient).focus().then((focused) => {
+          if ('navigate' in focused) {
+            return focused.navigate(targetUrl)
+          }
 
-        return
+          return undefined
+        })
       }
 
       return self.clients.openWindow(targetUrl)

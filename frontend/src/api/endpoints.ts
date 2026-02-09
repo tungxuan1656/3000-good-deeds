@@ -33,6 +33,7 @@ export const API_ENDPOINTS = {
     settings: '/reminders/settings',
     pushKey: '/reminders/push-key',
     subscriptions: '/reminders/subscriptions',
+    test: '/reminders/test',
   },
   cultivation: {
     randomQuote: '/cultivation/quotes/random',

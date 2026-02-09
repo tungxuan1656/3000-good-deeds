@@ -1,16 +1,10 @@
-import {
-  BellIcon,
-  CheckCircle2Icon,
-  LogOutIcon,
-  Trash2Icon,
-  UserIcon,
-  XCircleIcon,
-} from 'lucide-react'
+import { BellIcon, LogOutIcon, Trash2Icon, UserIcon } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
+import NotificationSettingsCard from '@/components/settings/notification-settings-card'
 import {
   CardSection,
   ConfirmDialog,
@@ -22,15 +16,8 @@ import {
 import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Spinner } from '@/components/ui/spinner'
-import { useUpdateUser, useUser } from '@/hooks/api/use-user'
+import { useUser } from '@/hooks/api/use-user'
 import { PATHS } from '@/lib/constants'
-import {
-  isPushSupported,
-  subscribeToPushNotifications,
-  unsubscribeFromPushNotifications,
-} from '@/lib/push-notifications'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
@@ -38,10 +25,6 @@ const SettingsPage = () => {
   const userFromStore = useAuthStore.use.user()
   const refreshToken = useAuthStore.use.refreshToken()
   const { data: userResponse } = useUser()
-  const updateUser = useUpdateUser()
-  const [reminderTime, setReminderTime] = useState('20:30')
-  const [pushSupported, setPushSupported] = useState(true)
-  const [pushError, setPushError] = useState<string | null>(null)
   const [deleteText, setDeleteText] = useState('')
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const deleteDialogRef = useRef<ConfirmDialogHandle>(null)
@@ -61,13 +44,8 @@ const SettingsPage = () => {
   useEffect(() => {
     if (user) {
       authActions.setUser(user)
-      setReminderTime(user.reminderTime ?? '20:30')
     }
   }, [user])
-
-  useEffect(() => {
-    setPushSupported(isPushSupported())
-  }, [])
 
   const handleLogout = async () => {
     try {
@@ -79,54 +57,6 @@ const SettingsPage = () => {
     } finally {
       authActions.logout()
       navigate(PATHS.LOGIN, { replace: true })
-    }
-  }
-
-  const handleReminderToggle = async (nextValue: boolean) => {
-    try {
-      setPushError(null)
-
-      if (nextValue) {
-        const result = await subscribeToPushNotifications()
-        if (!result.success) {
-          setPushError(result.error ?? 'Không thể bật nhắc nhở lúc này.')
-
-          return
-        }
-      } else {
-        await unsubscribeFromPushNotifications()
-      }
-
-      const response = await updateUser.mutateAsync({
-        reminderEnabled: nextValue,
-      })
-      if (response?.data) {
-        authActions.setUser(response.data)
-      }
-    } catch (error) {
-      console.log(error)
-
-      setPushError('Không thể cập nhật nhắc nhở. Vui lòng thử lại sau.')
-    }
-  }
-
-  const handleReminderTimeBlur = async () => {
-    try {
-      if (!reminderTime.match(/^\d{2}:\d{2}$/)) {
-        setReminderTime(user?.reminderTime ?? '20:30')
-
-        return
-      }
-      if (reminderTime === user?.reminderTime) return
-
-      const response = await updateUser.mutateAsync({
-        reminderTime,
-      })
-      if (response?.data) {
-        authActions.setUser(response.data)
-      }
-    } catch {
-      // Keep local value; backend validation will show on next successful fetch
     }
   }
 
@@ -176,62 +106,7 @@ const SettingsPage = () => {
           </div>
         </CardSection>
 
-        <CardSection className='gap-4'>
-          <div className='flex items-center justify-between'>
-            <div>
-              <div className='flex items-center gap-2 text-xs font-semibold tracking-widest uppercase'>
-                {user?.reminderEnabled ? (
-                  <span className='flex items-center text-emerald-600'>
-                    <CheckCircle2Icon className='inline h-4 w-4' />
-                    <span className='ml-1'>Đang bật</span>
-                  </span>
-                ) : (
-                  <span className='text-muted-foreground flex items-center'>
-                    <XCircleIcon className='inline h-4 w-4' />
-                    <span className='ml-1'>Đang tắt</span>
-                  </span>
-                )}
-              </div>
-              <p className='text-foreground mt-2 text-base font-semibold'>Thông báo nhắc nhở</p>
-              <p className='text-muted-foreground mt-1 text-xs'>Chỉ một lần mỗi ngày.</p>
-              {!pushSupported && (
-                <p className='text-muted-foreground mt-1 text-xs'>
-                  Thiết bị này chưa hỗ trợ Web Push hoặc cần cài đặt PWA (iOS Safari).
-                </p>
-              )}
-              {pushError && <p className='mt-1 text-xs text-red-600'>{pushError}</p>}
-            </div>
-            <Button
-              disabled={!pushSupported && !user?.reminderEnabled}
-              variant={user?.reminderEnabled ? 'outline' : 'default'}
-              onClick={() => handleReminderToggle(!user?.reminderEnabled)}>
-              {updateUser.isPending ? <Spinner /> : null}
-              {user?.reminderEnabled ? 'Tắt thông báo' : 'Bật thông báo'}
-            </Button>
-          </div>
-          {user?.reminderEnabled && (
-            <div className='flex flex-col gap-2'>
-              <div className='flex items-center justify-between gap-4'>
-                <Label className='text-foreground text-xs font-semibold tracking-widest uppercase'>
-                  Chọn giờ nhắc
-                </Label>
-                <Input
-                  className='w-36 rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
-                  type='time'
-                  value={reminderTime}
-                  onBlur={handleReminderTimeBlur}
-                  onChange={(event) => setReminderTime(event.target.value)}
-                />
-              </div>
-              <p className='text-muted-foreground text-xs'>
-                Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
-              </p>
-              <p className='text-muted-foreground text-xs'>
-                Thông báo mẫu: “Đến giờ ghi nhận việc thiện 🌱”.
-              </p>
-            </div>
-          )}
-        </CardSection>
+        <NotificationSettingsCard user={user} />
 
         <CardSection className='gap-4'>
           <div className='flex items-center justify-between'>

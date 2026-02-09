@@ -5,6 +5,9 @@ import { getLocalDateStringByTimezone, getZonedTimeParts } from '../utils'
 const REMINDER_TITLE = 'Đến giờ ghi nhận việc thiện 🌱'
 const REMINDER_BODY = 'Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?'
 const REMINDER_URL = '/'
+const TEST_TITLE = 'Thông báo mẫu'
+const TEST_BODY = 'Đến giờ ghi nhận việc thiện 🌱'
+const TEST_URL = '/'
 
 type ReminderUser = {
   id: string
@@ -89,6 +92,53 @@ function ensureVapidConfigured(env: Env) {
   webpush.setVapidDetails(env.VAPID_SUBJECT, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY)
 
   return true
+}
+
+export async function sendTestNotification(env: Env, userId: string) {
+  if (!ensureVapidConfigured(env)) {
+    return { sent: 0, total: 0, missingVapid: true }
+  }
+
+  const subscriptions = await loadSubscriptions(env.DB, userId)
+  if (subscriptions.length === 0) {
+    return { sent: 0, total: 0 }
+  }
+
+  const payload = JSON.stringify({
+    title: TEST_TITLE,
+    body: TEST_BODY,
+    url: TEST_URL,
+  })
+
+  let sent = 0
+
+  for (const sub of subscriptions) {
+    const subscription = {
+      endpoint: sub.endpoint,
+      keys: {
+        p256dh: sub.p256dh,
+        auth: sub.auth,
+      },
+    }
+
+    try {
+      await webpush.sendNotification(subscription, payload, {
+        urgency: 'normal',
+        TTL: 60 * 10,
+      })
+
+      sent += 1
+    } catch (error: any) {
+      const statusCode = error?.statusCode ?? error?.status
+      if (statusCode === 404 || statusCode === 410) {
+        await deactivateSubscription(env.DB, sub.id)
+      } else {
+        console.error('Failed to send test push', error)
+      }
+    }
+  }
+
+  return { sent, total: subscriptions.length }
 }
 
 export async function sendReminderNotifications(env: Env, timestamp: number = Date.now()) {

@@ -32,3 +32,13 @@ export const unsubscribePush = async (payload: {
 
   return response.data
 }
+
+export const testPushNotification = async (): Promise<
+  ApiResponse<{ sent: number; total: number }>
+> => {
+  const response = await client.post<ApiResponse<{ sent: number; total: number }>>(
+    API_ENDPOINTS.reminders.test,
+  )
+
+  return response.data
+}

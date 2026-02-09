@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 
+import { sendTestNotification } from '../handlers/reminders'
 import { getUser, updateUser } from '../handlers/users'
 import { authMiddleware } from '../middlewares/auth'
 import type { PushSubscriptionPayload, UpdateUserRequest } from '../types'
@@ -123,6 +124,34 @@ reminders.delete('/subscriptions', async (c) => {
     .run()
 
   return c.json(successResponse({ success: true }))
+})
+
+reminders.post('/test', async (c) => {
+  const currentUser = c.get('user')
+  const user = await getUser(c.env.DB, currentUser.id)
+
+  if (!user.reminderEnabled) {
+    return c.json(
+      errorResponse(ErrorCodes.BAD_REQUEST, 'Bạn cần bật thông báo trước khi thử.'),
+      400,
+    )
+  }
+
+  const result = await sendTestNotification(c.env, currentUser.id)
+
+  if (result.missingVapid) {
+    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Thiếu cấu hình VAPID.'), 500)
+  }
+
+  if (result.total === 0) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Chưa có đăng ký nhận thông báo.'), 400)
+  }
+
+  if (result.sent === 0) {
+    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Không thể gửi thông báo thử.'), 500)
+  }
+
+  return c.json(successResponse({ sent: result.sent, total: result.total }))
 })
 
 export default reminders
