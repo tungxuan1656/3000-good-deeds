@@ -1,4 +1,4 @@
-import { BookOpenIcon, HeartHandshakeIcon, LeafIcon } from 'lucide-react'
+import { BookOpenIcon, LeafIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
@@ -10,26 +10,14 @@ const InnerPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Pháp ngữ, sổ tay, thiền thở — những bước nhỏ nuôi dưỡng tâm từ bi và chánh niệm.'
-          subtitle='Nội tâm'
+          description='Thiền thở và sổ tay tâm hồn — những bước nhỏ nuôi dưỡng tâm từ bi và chánh niệm.'
+          subtitle='Tu tập'
           title='Không gian tu tập'
         />
 
         <CardSection className='gap-4'>
-          <p className='text-foreground text-base font-semibold'>Chọn một không gian</p>
+          <p className='text-foreground text-base font-semibold'>Chọn một thực hành</p>
           <div className='flex flex-col gap-3'>
-            <Link
-              className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to={PATHS.INNER_RANDOM_ACTS}>
-              <div className='bg-secondary/40 flex h-12 w-12 items-center justify-center rounded-2xl'>
-                <HeartHandshakeIcon className='text-primary h-5 w-5' />
-              </div>
-              <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Gợi ý việc thiện</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Khởi tâm từ bi trong đời sống.</p>
-              </div>
-            </Link>
-
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
               to={PATHS.INNER_JOURNAL}>
@@ -49,7 +37,7 @@ const InnerPage = () => {
                 <LeafIcon className='text-primary h-5 w-5' />
               </div>
               <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Thiền & thở</p>
+                <p className='text-foreground text-base font-semibold'>Thiền thở</p>
                 <p className='text-muted-foreground mt-1 text-sm'>Thở sâu, trở về hiện tại.</p>
               </div>
             </Link>

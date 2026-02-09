@@ -1,29 +1,26 @@
 import { Outlet } from 'react-router-dom'
 
-import { AppSidebar } from '@/components/layout'
+import { AppSidebar, BottomTab } from '@/components/layout'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
-import MenuDropdown from '../shared/menu-dropdown'
 import { Toaster } from '../ui/sonner'
-import { HeaderBreadcrumbs } from './header-breadcrumbs'
+import { AppBack } from './app-back'
+import { AppHeader } from './app-header'
 
 const AppLayout = () => {
   return (
-    <SidebarProvider className='bg-background relative min-h-screen pb-24'>
+    <SidebarProvider className='bg-background relative min-h-screen pb-24 md:pb-0'>
       <AppSidebar />
       <SidebarInset>
         <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6 sm:gap-7 sm:px-6 lg:gap-8 lg:px-8'>
-          <header className='flex items-center gap-4'>
-            <div className='md:hidden'>
-              <MenuDropdown />
-            </div>
-            <HeaderBreadcrumbs />
-          </header>
+          <AppHeader />
           <main className='flex flex-col gap-6'>
             <Outlet />
           </main>
           <Toaster position='top-center' />
         </div>
+        <BottomTab />
+        <AppBack />
       </SidebarInset>
     </SidebarProvider>
   )

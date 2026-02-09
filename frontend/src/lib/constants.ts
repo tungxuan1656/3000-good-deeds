@@ -1,7 +1,9 @@
 import {
+  HeartHandshakeIcon,
   HomeIcon,
   LeafIcon,
   LineChartIcon,
+  MoreHorizontalIcon,
   SettingsIcon,
   TargetIcon,
   TimerIcon,
@@ -17,6 +19,7 @@ export const PATHS = {
   GOALS: '/goals',
   DEEDS: '/deeds',
   INNER: '/inner',
+  MORE: '/more',
   INNER_RANDOM_ACTS: '/inner/random-acts',
   INNER_JOURNAL: '/inner/journal',
   INNER_JOURNAL_HISTORY: '/inner/journal/history',
@@ -45,10 +48,19 @@ export const INNER_JOURNAL_IMMUTABLE_NOTE =
 export const APP_MENU_ITEMS = [
   { label: 'Trang chủ', path: PATHS.HOME, icon: HomeIcon },
   { label: 'Hành trình', path: PATHS.TIMELINE, icon: TimerIcon },
+  { label: 'Tu tập', path: PATHS.INNER, icon: LeafIcon },
   { label: 'Thống kê', path: PATHS.STATS, icon: LineChartIcon },
   { label: 'Mục tiêu', path: PATHS.GOALS, icon: TargetIcon },
-  { label: 'Nội tâm', path: PATHS.INNER, icon: LeafIcon },
+  { label: 'Gợi ý việc thiện', path: PATHS.INNER_RANDOM_ACTS, icon: HeartHandshakeIcon },
   { label: 'Cài đặt', path: PATHS.SETTINGS, icon: SettingsIcon },
+]
+
+export const BOTTOM_TAB_ITEMS = [
+  { label: 'Trang chủ', path: PATHS.HOME, icon: HomeIcon },
+  { label: 'Hành trình', path: PATHS.TIMELINE, icon: TimerIcon },
+  { label: 'Tu tập', path: PATHS.INNER, icon: LeafIcon },
+  { label: 'Thống kê', path: PATHS.STATS, icon: LineChartIcon },
+  { label: 'Thêm', path: PATHS.MORE, icon: MoreHorizontalIcon },
 ]
 
 export const GOAL_TYPES = ['weekly', 'monthly', 'yearly'] as const

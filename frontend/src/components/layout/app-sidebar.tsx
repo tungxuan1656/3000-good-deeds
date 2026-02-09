@@ -67,8 +67,16 @@ export const AppSidebar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               {APP_MENU_ITEMS.map(({ label, path, icon: Icon }) => {
-                const isActive =
-                  path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
+                const isActive = (() => {
+                  if (path === PATHS.HOME) return location.pathname === PATHS.HOME
+                  if (path === PATHS.INNER) {
+                    return [PATHS.INNER, PATHS.INNER_JOURNAL, PATHS.INNER_MEDITATION].some(
+                      (innerPath) => location.pathname.startsWith(innerPath),
+                    )
+                  }
+
+                  return location.pathname.startsWith(path)
+                })()
 
                 return (
                   <SidebarMenuItem key={label}>

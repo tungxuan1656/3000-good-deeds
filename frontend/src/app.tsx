@@ -12,6 +12,7 @@ import InnerMeditationPage from '@/pages/inner-meditation-page'
 import InnerPage from '@/pages/inner-page'
 import InnerRandomActsPage from '@/pages/inner-random-acts-page'
 import LoginPage from '@/pages/login-page'
+import MorePage from '@/pages/more-page'
 import SettingsPage from '@/pages/settings-page'
 import StatsPage from '@/pages/stats-page'
 import TimelinePage from '@/pages/timeline-page'
@@ -38,6 +39,7 @@ function App() {
               <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL} />
               <Route element={<InnerJournalHistoryPage />} path={PATHS.INNER_JOURNAL_HISTORY} />
               <Route element={<InnerMeditationPage />} path={PATHS.INNER_MEDITATION} />
+              <Route element={<MorePage />} path={PATHS.MORE} />
               <Route element={<SettingsPage />} path={PATHS.SETTINGS} />
             </Route>
           </Route>
