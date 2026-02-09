@@ -52,7 +52,7 @@ const MenuDropdown = () => {
       <DropdownMenuContent align='start' className='w-64 rounded-2xl bg-white p-2 shadow-xl'>
         <Link to={PATHS.SETTINGS}>
           <div className='flex items-center gap-3 rounded-2xl border border-black/5 bg-white px-1 py-2'>
-            <div className='bg-secondary/40 text-foreground flex h-10 min-h-10 w-10 min-w-10 items-center justify-center rounded-full'>
+            <div className='bg-secondary/40 text-foreground flex h-10 min-h-10 w-10 min-w-10 items-center justify-center overflow-hidden rounded-full'>
               <img alt={displayName} src={user?.avatarUrl ?? ''} />
             </div>
             <div className='min-w-0'>
