@@ -162,17 +162,25 @@ export default config;
 
 ## 7️⃣ NAVIGATION (CỰC KỲ QUAN TRỌNG)
 
-### ❌ Không dùng:
-*   Bottom Tab Bar (Gây xao nhãng).
+Ứng dụng dùng **Responsive Hybrid Navigation**:
+
+### ✅ Mobile (< 768px)
+*   **Bottom Navigation** cho các điểm đến chính (ít, rõ, không rối).
+*   **FAB** ở Home để “Ghi nhận nhanh”.
+*   Tránh nhồi thêm tab; các mục phụ đưa vào “Menu”.
+
+Gợi ý 5 slots:
+1) Home · 2) Stats · 3) (FAB) · 4) Cultivation · 5) Menu
+
+### ✅ Desktop/Web (>= 768px)
+*   **Left Sidebar** cố định.
+*   Nút “+ Ghi nhận” đặt nổi bật trong sidebar.
+
+### ❌ Tránh:
 *   Mega Menu.
 *   Breadcrumbs phức tạp.
 
-### ✅ Đúng chuẩn:
-*   **Hamburger Menu (Top-left):** Truy cập tính năng phụ (Profile, Settings).
-*   **Avatar Action (Top-right):** Shortcut.
-*   **Drawer Navigation:** Menu trượt từ trái sang (`Sheet` component từ shadcn).
-
-### Menu Items Order:
+### Menu Items Order (dùng cho Sidebar / Menu tab)
 1.  Trang chủ (Home)
 2.  Hành trình (Timeline)
 3.  Thống kê (Stats)

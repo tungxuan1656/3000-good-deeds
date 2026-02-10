@@ -46,7 +46,7 @@ Hệ thống sử dụng 3 nhóm cốt lõi (Mặc định):
 
 ## 5. Quy tắc nghiệp vụ (Business Rules)
 1.  **Create Time:** Mặc định là thời điểm hiện tại (`now`), nhưng cho phép chọn ngày quá khứ.
-2.  **Privacy:** Mặc định `is_private = true`.
+2.  **Privacy:** Luôn private (`is_private = true`) và **không có toggle** trong UI.
 3.  **Validation:** Bắt buộc chọn Danh mục. Ghi chú có thể để trống.
 4.  **Limits:** Không giới hạn số lượng, nhưng nếu > 10 việc/ngày có thể hiển thị lời nhắc nhẹ nhàng (để tránh spam/ảo tưởng).
 

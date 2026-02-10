@@ -34,7 +34,7 @@ Tổng cộng: **17 Màn hình chính** & **~18 Trạng thái con**.
 *   **Luồng:** Mở Bottom Sheet hoặc Modal từ Home.
 *   **Các bước (Steps):**
     3.  **Step 1 - Loại:** Chọn Thân / Khẩu / Ý (Cards to).
-    4.  **Step 2 - Chi tiết:** Nhập text + Toggle "Riêng tư".
+    4.  **Step 2 - Chi tiết:** Nhập text (dữ liệu luôn riêng tư).
     5.  **Step 3 - Hình ảnh (Optional):** Upload/Camera hoặc Skip.
     6.  **Step 4 - Cảm xúc (Labels):** Chọn tag (An vui, Biết ơn...) -> Finish.
 *   **Trạng thái con:**
@@ -77,7 +77,7 @@ Tổng cộng: **17 Màn hình chính** & **~18 Trạng thái con**.
 *   **Màn hình chính:**
     10. **Goals Overview:** Hiển thị mục tiêu đang chạy & Lịch sử.
 *   **Trạng thái con:**
-    *   **Setup New Goal:** Form tạo mục tiêu (Daily/Weekly).
+    *   **Setup New Goal:** Form tạo mục tiêu (Weekly/Monthly/Yearly).
     *   **Goal Completed:** Trạng thái hoàn thành xuất sắc.
 
 ---

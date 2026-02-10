@@ -62,8 +62,8 @@
 
 ## Session Management
 
-- **Access Token**: Hết hạn sau 15 phút (cấu hình từ backend)
-- **Refresh Token**: Hết hạn sau 30 ngày
+- **Access Token**: Hết hạn sau 24 giờ (cấu hình từ backend)
+- **Refresh Token**: Hết hạn sau 6 tháng
 - Khi access token hết hạn, client tự động sử dụng refresh token để lấy token mới
 - Nếu refresh token cũng hết hạn, user cần đăng nhập lại
 
@@ -134,7 +134,7 @@ const response = await client.get('/deeds')
 
 ## Bảo mật
 
-- Access token ngắn hạn (15 phút) giảm thiểu rủi ro nếu bị lộ
+- Access token (24h) cân bằng giữa trải nghiệm và an toàn; vẫn cần cơ chế thu hồi/rotate khi cần
 - Refresh token dài hạn nhưng chỉ dùng để lấy token mới
 - Tokens lưu trong localStorage (trong production nên cân nhắc httpOnly cookie)
 - Backend validate token với JWT secret

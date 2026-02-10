@@ -22,6 +22,6 @@ Hệ thống sử dụng **Google Sign-In** làm phương thức đăng nhập d
 6.  Frontend lưu token vào `localStorage` (hoặc Cookie httpOnly).
 
 ## 4. Session Management
-*   **Access Token:** Hết hạn sau 1 giờ.
-*   **Refresh Token:** Hết hạn sau 30 ngày.
+*   **Access Token:** Hết hạn sau 24 giờ.
+*   **Refresh Token:** Hết hạn sau 6 tháng.
 *   Khi Access Token hết hạn -> Frontend dùng Refresh Token để xin cấp mới (Silent Refresh).

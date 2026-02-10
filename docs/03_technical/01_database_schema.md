@@ -127,7 +127,7 @@ Lịch sử tiến độ theo từng chu kỳ.
 ## 4. Cultivation Tools (Giai đoạn 2.5)
 
 ### `dharma_quotes`
-Pháp ngữ mỗi ngày.
+Pháp ngữ (cache theo phiên ở client).
 | Column      | Type      | Description      |
 | :---------- | :-------- | :--------------- |
 | **id**      | TEXT (PK) | ULID             |
