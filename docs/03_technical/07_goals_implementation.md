@@ -10,7 +10,7 @@ Hướng dẫn kỹ thuật triển khai tính năng Goals & Goal History.
 
 **Hệ thống KHÔNG BAO GIỜ tạo goal_history cho period đã qua.**
 
-Chi tiết về business logic, decision flow, và ví dụ xem tại [04_goals.md](../../02_specs/04_goals.md#53-khi-user-thêm--xóa-việc-thiện-good_deeds).
+Chi tiết về business logic, decision flow, và ví dụ xem tại [04_goals.md](../../02_specs/04_goals.md#53-khi-user-thêm--xoá-việc-thiện-good_deeds).
 
 ---
 
@@ -106,7 +106,7 @@ File: `backend/migrations/0004_add_goals_and_goal_history.sql`
 | `ensureGoalHistory()`          | ✅ (chỉ current period)          | ❌                         |
 | `updateGoalHistory()`          | ❌                               | ✅ (bất kỳ period đã có)   |
 | `upsertGoal()` (enable)        | ✅ (current period ngay lập tức) | ❌                         |
-| `upsertGoal()` (disable)       | ❌ (xóa current period history)  | ❌                         |
+| `upsertGoal()` (disable)       | ❌ (xoá current period history)  | ❌                         |
 | `upsertGoal()` (target change) | ❌                               | ✅ (current period)        |
 | `handleDeedCreate()`           | Via `ensureGoalHistory()`       | Via `updateGoalHistory()` |
 | `handleDeedDelete()`           | ❌                               | Via `updateGoalHistory()` |

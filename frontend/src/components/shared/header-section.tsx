@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 import { CardSection } from './card-section'
 import Leaf from './leaf'
 
@@ -5,9 +7,17 @@ type HeaderSectionProps = {
   title: string
   subtitle?: string
   description?: string
+  note?: string
+  action?: ReactNode
 }
 
-export const HeaderSection = ({ title, subtitle, description }: HeaderSectionProps) => {
+export const HeaderSection = ({
+  title,
+  subtitle,
+  description,
+  note,
+  action,
+}: HeaderSectionProps) => {
   return (
     <CardSection as='header'>
       <Leaf position='top-right' variant={1} />
@@ -23,6 +33,12 @@ export const HeaderSection = ({ title, subtitle, description }: HeaderSectionPro
         <p className='text-muted-foreground/90 mt-3 max-w-xl text-sm leading-relaxed sm:text-base'>
           {description}
         </p>
+      ) : null}
+      {note || action ? (
+        <div className='mt-1 flex flex-wrap items-center'>
+          {note ? <p className='text-muted-foreground/90 text-sm leading-relaxed'>{note}</p> : null}
+          {action ? <div className='ml-auto flex items-center'>{action}</div> : null}
+        </div>
       ) : null}
     </CardSection>
   )

@@ -128,7 +128,7 @@ Ghi nhận việc thiện mới.
 ```
 
 ### `DELETE /deeds/:id`
-Xóa việc thiện.
+Xoá việc thiện.
 
 **Response (200 OK):**
 ```json
@@ -218,7 +218,7 @@ Lấy nhật ký Sám hối / Biết ơn.
 ```
 
 ### `POST /journal`
-Viết nhật ký mới (Không thể sửa/xóa sau khi viết).
+Viết nhật ký mới (Không thể sửa/xoá sau khi viết).
 
 **Request Body:**
 ```json
@@ -283,7 +283,7 @@ Tạo hoặc cập nhật mục tiêu.
 
   **Notes:**
   - Tạo hoặc bật mục tiêu sẽ tự động tạo bản ghi `goal_history` cho chu kỳ hiện tại
-  - Tắt mục tiêu sẽ xóa `goal_history` của chu kỳ hiện tại
+  - Tắt mục tiêu sẽ xoá `goal_history` của chu kỳ hiện tại
   - Update `targetCount` chỉ ảnh hưởng chu kỳ hiện tại
 **Response (200 OK):**
 ```json
@@ -303,7 +303,7 @@ Tạo hoặc cập nhật mục tiêu.
 - Thay đổi `targetCount` chỉ ảnh hưởng chu kỳ hiện tại và tương lai, không cập nhật lịch sử
 
 ### `DELETE /goals/:id`
-Xóa mục tiêu vĩnh viễn (bao gồm cả lịch sử).
+Xoá mục tiêu vĩnh viễn (bao gồm cả lịch sử).
 
 **Response (200 OK):**
 ```json

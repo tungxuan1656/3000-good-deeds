@@ -24,7 +24,7 @@ Mục tiêu chỉ đóng vai trò:
 ### 1.2. Không hình phạt – Không guilt-tripping
 - Không có trạng thái "thất bại"
 - Không thông báo tiêu cực
-- Không reset hay xóa lịch sử vì "không đạt"
+- Không reset hay xoá lịch sử vì "không đạt"
 
 Lịch sử mục tiêu là **ghi nhận trung thực**, không phải bảng điểm.
 
@@ -138,7 +138,7 @@ UI hiển thị trạng thái:
 
 ---
 
-### 5.3. Khi user thêm / xóa việc thiện (good_deeds)
+### 5.3. Khi user thêm / xoá việc thiện (good_deeds)
 
 #### 🔒 QUY TẮC BẤT DI BẤT DỊCH
 
@@ -163,7 +163,7 @@ Hệ thống cần:
   - Nếu `goal_history` của period đó tồn tại → recompute `actual_count` và `completed`
   - Nếu không tồn tại → không làm gì
 
-**Nhóm B: Xóa deed**
+**Nhóm B: Xoá deed**
 - Với mọi type (weekly/monthly/yearly):
   - Nếu `goal_history` của period đó tồn tại → recompute `actual_count` và `completed`
   - Không quan tâm goal đang bật hay không
@@ -252,7 +252,7 @@ Không dùng ngôn ngữ gây áp lực hoặc trách móc.
 
 ## 7. Các trường hợp biên (Edge Cases)
 
-- Xóa toàn bộ deed trong 1 chu kỳ → `actual_count = 0`
+- Xoá toàn bộ deed trong 1 chu kỳ → `actual_count = 0`
 - Đổi timezone → chỉ ảnh hưởng deed mới
 - Chỉnh sửa ngày deed → cập nhật lại history đúng chu kỳ (chỉ khi history đã tồn tại)
 - User không đạt mục tiêu → vẫn có history, `completed = false`

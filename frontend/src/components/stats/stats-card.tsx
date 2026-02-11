@@ -13,13 +13,13 @@ export const StatsCard = () => {
 
   const summaryCards = [
     {
-      title: 'Tổng',
+      title: 'Đã ghi nhận',
       value: (summary ? String(summary.totalDeeds) : '--') + ' việc thiện',
     },
-    {
-      title: 'Chuỗi ngày',
-      value: summary ? `${summary.streakDays} ngày` : '--',
-    },
+    // {
+    //   title: 'Chuỗi ngày',
+    //   value: summary ? `${summary.streakDays} ngày` : '--',
+    // },
   ]
 
   return (

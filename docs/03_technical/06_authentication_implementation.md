@@ -129,7 +129,7 @@ const response = await client.get('/deeds')
 - ✅ Token được lưu vào localStorage
 - ✅ Protected routes redirect về login khi chưa auth
 - ✅ Access token tự động refresh khi hết hạn
-- ✅ Logout xóa tokens và redirect về login
+- ✅ Logout xoá tokens và redirect về login
 - ✅ Error handling khi Google OAuth thất bại
 
 ## Bảo mật

@@ -27,10 +27,10 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
   const handleDelete = async () => {
     try {
       await deleteDeed.mutateAsync(deed.id)
-      toast.success('Đã xóa việc thiện')
+      toast.success('Đã xoá việc thiện')
     } catch (error) {
       console.error(error)
-      toast.error('Không thể xóa việc thiện')
+      toast.error('Không thể xoá việc thiện')
     }
   }
 
@@ -61,7 +61,7 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
                 className='text-destructive focus:text-destructive'
                 onClick={() => setShowDeleteDialog(true)}>
                 <Trash2 className='mr-2 h-4 w-4' />
-                Xóa
+                Xoá
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -75,11 +75,11 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
       <EditDeedDialog deed={deed} open={showEditDialog} onOpenChange={setShowEditDialog} />
 
       <ConfirmDialog
-        cancelLabel='Hủy'
-        confirmLabel='Xóa'
-        description='Việc thiện này sẽ bị xóa vĩnh viễn. Bạn có chắc chắn muốn tiếp tục?'
+        cancelLabel='Giữ lại'
+        confirmLabel='Xoá việc này'
+        description='Nếu xoá, bạn sẽ không xem lại được ghi nhận này nữa.'
         open={showDeleteDialog}
-        title='Xác nhận xóa việc thiện'
+        title='Xoá ghi nhận này?'
         variant='destructive'
         onCancel={() => setShowDeleteDialog(false)}
         onConfirm={() => void handleDelete()}

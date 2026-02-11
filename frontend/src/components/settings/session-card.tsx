@@ -17,7 +17,8 @@ const SessionCard = ({ onLogout }: SessionCardProps) => {
       <CardSection className='gap-4'>
         <div>
           <p className='text-foreground text-base font-semibold'>Phiên đăng nhập</p>
-          <p className='text-muted-foreground mt-1 text-xs'>Quản lý đăng nhập của bạn.</p>
+          <p className='text-muted-foreground mt-1 text-sm'>Quản lý đăng nhập của bạn.</p>
+          <p className='text-muted-foreground mt-1 text-sm'>Đăng xuất không xoá dữ liệu.</p>
         </div>
         <Button
           className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80'

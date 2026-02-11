@@ -19,7 +19,8 @@ const InnerJournalEditorPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Chọn cách quán chiếu và viết điều cần giữ lại.'
+          description='Chọn cách quán chiếu và viết điều cần nhìn rõ.'
+          note='Mọi ghi nhận đều riêng tư.'
           subtitle='Viết nhật ký'
           title='Một trang chánh niệm'
         />
@@ -55,8 +56,8 @@ const InnerJournalEditorPage = () => {
             className='min-h-44 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
             placeholder='Hôm nay mình...'
           />
-          <p className='text-muted-foreground text-xs'>Chỉ mình bạn thấy nội dung này.</p>
-          <Button className='h-11 w-full rounded-full'>Lưu nhật ký</Button>
+          <p className='text-muted-foreground text-sm'>Chỉ mình bạn thấy nội dung này.</p>
+          <Button className='h-11 w-full rounded-full'>Lưu lại</Button>
         </CardSection>
       </MainColumn>
 

@@ -6,10 +6,12 @@ import {
   CardSection,
   DailyQuoteCard,
   HeaderSection,
+  InfoButton,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
+import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerMeditationPage = () => {
   const phases = useMemo(
@@ -87,7 +89,14 @@ const InnerMeditationPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
+          action={
+            <InfoButton
+              description={INFO_COPY.breathing.description}
+              title={INFO_COPY.breathing.title}
+            />
+          }
           description='Thở chậm để trở về chánh niệm và an trú nơi tâm.'
+          note='Bạn có thể điều chỉnh nhịp thở cho phù hợp với cơ thể.'
           subtitle='Thiền & thở'
           title='Trở về với hơi thở'
         />

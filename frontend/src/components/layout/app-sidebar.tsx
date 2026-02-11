@@ -110,7 +110,7 @@ export const AppSidebar = () => {
         ref={logoutDialogRef}
         cancelLabel='Để sau'
         confirmLabel='Đăng xuất'
-        description='Bạn có thể đăng nhập lại bất cứ lúc nào.'
+        description='Đăng xuất không xoá dữ liệu. Bạn có thể đăng nhập lại bất cứ lúc nào.'
         title='Đăng xuất khỏi tài khoản?'
         onConfirm={() => {
           logoutDialogRef.current?.close()

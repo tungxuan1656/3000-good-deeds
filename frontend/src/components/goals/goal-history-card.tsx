@@ -19,8 +19,8 @@ const GoalHistoryCard = () => {
       {!isLoading && historyGoals.length === 0 && (
         <EmptyDataView
           Icon={<LeafIcon />}
-          description='Hãy ghi nhận những việc thiện bạn đã làm nhé!'
-          title='Chưa có dữ liệu thống kê'
+          description='Bạn chưa đặt mục tiêu nào, nên chưa có gì để hiển thị ở đây. Hãy đặt ra một mục tiêu nhỏ phù hợp với bạn để bắt đầu nhé!'
+          title='Chưa có mục tiêu nào được đặt ra'
         />
       )}
 

@@ -46,7 +46,7 @@ export const WeeklyRhythmCard = () => {
         <div>
           <h3 className='text-foreground text-base font-semibold'>Nhịp điệu trong tuần</h3>
           <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
-            {activeCount}/7 ngày đã gieo hạt. Hãy giữ nhịp nhẹ nhàng.
+            {activeCount}/7 ngày đã ghi nhận. Hãy giữ tâm nhẹ nhàng nhé.
           </p>
         </div>
         <Button

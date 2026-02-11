@@ -19,7 +19,7 @@ type MiniCheckInCardProps = {
 
 export const MiniCheckInCard = ({
   title = 'Việc thiện hôm nay',
-  description = 'Bạn đã thực hành điều gì hôm nay?',
+  description = 'Bạn đã làm được điều gì hôm nay?',
   className,
 }: MiniCheckInCardProps) => {
   const checkInRef = useRef<CheckInDrawerHandle>(null)
@@ -34,7 +34,7 @@ export const MiniCheckInCard = ({
       <Leaf variant={5} />
       <div>
         <h3 className='text-foreground text-sm font-semibold'>{title}</h3>
-        <p className='text-muted-foreground/90 mt-2 text-xs leading-relaxed'>{description}</p>
+        <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>{description}</p>
       </div>
       <div className='flex gap-2'>
         {categories.map((category) => {

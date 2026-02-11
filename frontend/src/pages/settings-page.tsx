@@ -49,6 +49,7 @@ const SettingsPage = () => {
       <MainColumn>
         <HeaderSection
           description='Điều chỉnh nhắc nhở và tài khoản để giữ nếp sống chánh niệm.'
+          note='Bạn có thể xuất hoặc xoá dữ liệu của mình bất cứ lúc nào.'
           subtitle='Cài đặt'
           title='Tuỳ chỉnh trải nghiệm'
         />

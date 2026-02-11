@@ -94,6 +94,8 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
           <DialogDescription>Cập nhật thông tin việc thiện của bạn.</DialogDescription>
         </DialogHeader>
 
+        <p className='text-muted-foreground text-sm'>Ghi nhận này chỉ mình bạn thấy.</p>
+
         <div className='flex flex-col gap-4 py-4'>
           <div className='flex gap-2'>
             {categories.map((cat) => (
@@ -138,6 +140,7 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            <p className='text-muted-foreground text-sm'>Có thể để trống nếu bạn muốn.</p>
           </div>
 
           <div className='flex flex-col gap-2'>
@@ -152,6 +155,9 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
                 />
               ))}
             </div>
+            <p className='text-muted-foreground text-sm'>
+              Nhãn chỉ để tự nhận diện, không cần đúng hay sai.
+            </p>
           </div>
         </div>
 

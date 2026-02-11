@@ -2,11 +2,13 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { useCategories } from '@/hooks/api/use-categories'
+import { INFO_COPY } from '@/lib/info-copy'
 
 import { Button } from '../ui/button'
 import { CardSection } from './card-section'
 import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
+import { InfoButton } from './info-button'
 import Leaf from './leaf'
 
 export function CheckInCard() {
@@ -23,9 +25,12 @@ export function CheckInCard() {
       <Leaf className='h-32 w-32 rotate-180' position='top-right' variant={4} />
       <div className='flex flex-col gap-4'>
         <div>
-          <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
+          <div className='flex items-center justify-between gap-2'>
+            <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
+            <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
+          </div>
           <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
-            Bạn đã thực hành điều gì hôm nay?
+            Bạn đã làm được điều gì hôm nay?
           </p>
         </div>
         <div className='relative flex flex-col gap-3'>
@@ -41,7 +46,7 @@ export function CheckInCard() {
         </div>
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
           <Button onClick={() => openCheckIn()}>
-            <PlusIcon className='size-5' />
+            <PlusIcon className='size-4' />
             Ghi nhận việc thiện
           </Button>
         </div>

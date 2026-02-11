@@ -2,15 +2,29 @@ import { BookOpenIcon, LeafIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { CardSection, HeaderSection, MiniCheckInCard, WeeklyRhythmCard } from '@/components/shared'
+import {
+  CardSection,
+  HeaderSection,
+  InfoButton,
+  MiniCheckInCard,
+  WeeklyRhythmCard,
+} from '@/components/shared'
 import { PATHS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerPage = () => {
   return (
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Thiền thở và sổ tay tâm hồn — những bước nhỏ nuôi dưỡng tâm từ bi và chánh niệm.'
+          action={
+            <InfoButton
+              description={INFO_COPY.cultivation.description}
+              title={INFO_COPY.cultivation.title}
+            />
+          }
+          description='Thiền thở và sổ tay quán chiếu — những bước nhỏ để quay về với mình.'
+          note='Chọn một thực hành phù hợp với hiện tại của bạn.'
           subtitle='Tu tập'
           title='Không gian tu tập'
         />
@@ -25,8 +39,10 @@ const InnerPage = () => {
                 <BookOpenIcon className='text-primary h-5 w-5' />
               </div>
               <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Sổ tay tâm hồn</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Viết lại điều bạn muốn giữ.</p>
+                <p className='text-foreground text-base font-semibold'>Sổ tay quán chiếu</p>
+                <p className='text-muted-foreground mt-1 text-sm'>
+                  Viết xuống để nhìn rõ và buông nhẹ.
+                </p>
               </div>
             </Link>
 

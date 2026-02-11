@@ -33,7 +33,7 @@ npm run check
 
 ## Migration và dữ liệu mẫu
 - `migrations/` chứa các bước thay đổi schema. Khi cần thay đổi cấu trúc, tạo file mới với tên tăng dần và viết SQL tương ứng.
-- `npm run db:reset` xóa và tạo lại database local rồi chạy toàn bộ migration.
+- `npm run db:reset` xoá và tạo lại database local rồi chạy toàn bộ migration.
 - `npm run seed:test` import dữ liệu mẫu (users, deeds, goals, reactions) để dễ kiểm thử trên local.
 
 ## Tài liệu trọng yếu
@@ -49,7 +49,7 @@ npm run check
 | `npm run check`          | Kiểm tra TypeScript và dry-run deploy.                 |
 | `npm run migrate:local`  | Áp migration vào D1 local.                             |
 | `npm run migrate:remote` | Áp migration vào D1 môi trường remote.                 |
-| `npm run db:reset`       | Xóa database local và chạy lại migration.              |
+| `npm run db:reset`       | Xoá database local và chạy lại migration.              |
 | `npm run seed:test`      | Nhập dữ liệu test mẫu (ví dụ users, deeds, reactions). |
 | `npm run deploy`         | Deploy lên Cloudflare Workers production.              |
 

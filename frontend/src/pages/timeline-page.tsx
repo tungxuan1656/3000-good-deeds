@@ -75,7 +75,8 @@ const TimelinePage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Ghi lại việc thiện để nuôi dưỡng tâm từ bi và chánh niệm.'
+          description='Nhật ký việc thiện của riêng bạn — để nhìn lại, không phải để so sánh.'
+          note='Mỗi việc thiện, dù rất nhỏ, đều đáng trân trọng.'
           subtitle='Hành trình'
           title='Nhật ký việc thiện'
         />
@@ -84,7 +85,7 @@ const TimelinePage = () => {
         {isEmpty && (
           <EmptyDataView
             Icon={<LeafyGreenIcon />}
-            description='Hãy bắt đầu từ một việc nhỏ.'
+            description='Khi sẵn sàng, bạn có thể ghi nhận một việc thiện nhỏ.'
             title='Bạn chưa ghi nhận việc thiện nào'
           />
         )}

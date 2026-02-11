@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { testPushNotification } from '@/api/reminders'
-import { CardSection } from '@/components/shared'
+import { CardSection, InfoButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
 import { useUpdateUser } from '@/hooks/api/use-user'
+import { INFO_COPY } from '@/lib/info-copy'
 import {
   isPushSupported,
   subscribeToPushNotifications,
@@ -132,14 +133,20 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
               </span>
             )}
           </div>
-          <p className='text-foreground mt-2 text-base font-semibold'>Thông báo nhắc nhở</p>
-          <p className='text-muted-foreground mt-1 text-xs'>Chỉ một lần mỗi ngày.</p>
+          <div className='flex items-center gap-2'>
+            <p className='text-foreground text-base font-semibold'>Thông báo nhắc nhở</p>
+            <InfoButton
+              description={INFO_COPY.reminders.description}
+              title={INFO_COPY.reminders.title}
+            />
+          </div>
+          <p className='text-muted-foreground mt-1 text-sm'>Chỉ một lần mỗi ngày.</p>
           {!pushSupported && (
-            <p className='text-muted-foreground mt-1 text-xs'>
+            <p className='text-muted-foreground mt-1 text-sm'>
               Thiết bị này chưa hỗ trợ Web Push hoặc cần cài đặt PWA (iOS Safari).
             </p>
           )}
-          {pushError && <p className='mt-1 text-xs text-red-600'>{pushError}</p>}
+          {pushError && <p className='mt-1 text-sm text-red-600'>{pushError}</p>}
         </div>
         <Button
           disabled={isToggleLoading || (!pushSupported && !user?.reminderEnabled)}
@@ -163,17 +170,17 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
               onChange={(event) => setReminderTime(event.target.value)}
             />
           </div>
-          <p className='text-muted-foreground text-xs'>
+          <p className='text-muted-foreground text-sm'>
             Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
           </p>
-          <p className='text-muted-foreground text-xs'>
+          <p className='text-muted-foreground text-sm'>
             Thông báo mẫu: “Đến giờ ghi nhận việc thiện 🌱”.
           </p>
           <div className='flex justify-end'>
             <Button
-              className='h-9 rounded-full'
               disabled={isTestLoading || isToggleLoading || !pushSupported}
-              variant='secondary'
+              size='sm'
+              variant='outline'
               onClick={handleTestNotification}>
               {isTestLoading ? <Spinner /> : null}
               Gửi thông báo thử

@@ -12,7 +12,7 @@ Tu tập là vấn đề cá nhân.
 Chúng ta thường thấy các app dùng thủ thuật để "gây nghiện" (addiction). Chúng tôi từ chối làm điều đó.
 *   **Không Spam thông báo:** Chỉ gửi khi người dùng yêu cầu (Reminder).
 *   **Không tạo cảm giác tội lỗi (No Guilt-tripping):** Nếu người dùng quên vào app 1 tuần, hãy chào đón họ quay lại, đừng trách móc họ làm mất chuỗi (streak).
-*   **Dễ dàng rời đi:** Nút "Xóa tài khoản" phải dễ tìm và có hiệu lực tức thì.
+*   **Dễ dàng rời đi:** Nút "Xoá tài khoản" phải dễ tìm và có hiệu lực tức thì.
 
 ## 3. Tôn trọng sự thật (Truthfulness)
 *   **Không phóng đại:** Không hứa hẹn những kết quả siêu hình (VD: "Dùng app này sẽ trúng số/hết bệnh").

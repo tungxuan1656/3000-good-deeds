@@ -26,10 +26,12 @@ import { useCategories } from '@/hooks/api/use-categories'
 import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { MOOD_TAGS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/info-copy'
 
 import { TagButton } from '../ui/tag'
 import { Textarea } from '../ui/textarea'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
+import { InfoButton } from './info-button'
 
 export interface CheckInDrawerHandle {
   open: (categoryCode?: string) => void
@@ -107,11 +109,14 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
         className={isMobile ? 'rounded-t-2xl' : ''}
         side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
-          <SheetTitle>Ghi lại một việc thiện</SheetTitle>
+          <div className='flex items-center justify-between gap-2'>
+            <SheetTitle>Ghi lại một việc thiện</SheetTitle>
+            <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
+          </div>
           <SheetDescription>
             {step === 1 && 'Bạn muốn ghi nhận việc thiện nào?'}
-            {step === 2 && 'Một dòng nhỏ để lưu lại khoảnh khắc này.'}
-            {step === 3 && 'Chuyển hóa cảm xúc của tâm của bạn.'}
+            {step === 2 && 'Một dòng ngắn để bạn nhớ lại điều đã làm.'}
+            {step === 3 && 'Chọn cảm xúc để tự nhận diện, không cần đúng hay sai.'}
           </SheetDescription>
         </SheetHeader>
 
@@ -161,6 +166,7 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
               />
+              <p className='text-muted-foreground text-sm'>Ghi nhận này chỉ mình bạn thấy.</p>
             </div>
           )}
 
@@ -222,8 +228,10 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
               <SparklesIcon className='text-primary h-5 w-5' />
             </div>
             <div>
-              <p className='text-foreground text-sm font-medium'>Gieo một hạt giống lành</p>
-              <p className='text-muted-foreground text-xs'>Bước nhỏ hôm nay sẽ tạo nên thay đổi.</p>
+              <p className='text-foreground text-sm font-medium'>Gieo một việc thiện</p>
+              <p className='text-muted-foreground text-xs'>
+                Bước nhỏ hôm nay vẫn rất đáng trân trọng.
+              </p>
             </div>
           </div>
         </div>

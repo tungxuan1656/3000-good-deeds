@@ -34,6 +34,7 @@ const InnerJournalHistoryPage = () => {
       <MainColumn>
         <HeaderSection
           description='Xem lại những dòng đã viết. Mỗi bài là một khoảnh khắc đã được giữ nguyên.'
+          note='Đọc lại khi cần soi chiếu. Bạn có thể xoá bài viết trong 15 phút đầu sau khi lưu.'
           subtitle='Sổ tay'
           title='Những ngày cũ'
         />

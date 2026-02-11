@@ -9,6 +9,7 @@ import {
   CardSection,
   DailyQuoteCard,
   HeaderSection,
+  InfoButton,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
@@ -23,6 +24,7 @@ import {
   type InnerJournalType,
   PATHS,
 } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/info-copy'
 
 const schema = z.object({
   type: z.enum(['gratitude', 'repentance']),
@@ -75,9 +77,15 @@ const InnerJournalPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Ghi lại quán chiếu để nuôi dưỡng tâm.'
+          action={
+            <InfoButton
+              description={INFO_COPY.journal.description}
+              title={INFO_COPY.journal.title}
+            />
+          }
+          description='Ghi lại quán chiếu để nhìn rõ và thấy được sự chuyển biến của tâm.'
           subtitle='Sổ tay'
-          title='Sổ tay tâm hồn'
+          title='Sổ tay quán chiếu'
         />
 
         <form onSubmit={(event) => void handleSubmit(event)}>
@@ -108,7 +116,7 @@ const InnerJournalPage = () => {
                 value={content}
                 onChange={(event) => setContent(event.target.value)}
               />
-              <p className='text-muted-foreground text-xs leading-relaxed'>
+              <p className='text-muted-foreground text-sm leading-relaxed'>
                 {INNER_JOURNAL_IMMUTABLE_NOTE}
               </p>
               {errorText && <p className='text-destructive text-xs'>{errorText}</p>}

@@ -51,6 +51,7 @@ const MorePage = () => {
       <MainColumn>
         <HeaderSection
           description='Mục tiêu, gợi ý việc thiện, nhắc nhở và tài khoản của bạn.'
+          note='Bạn có thể tuỳ chỉnh theo thói quen của mình.'
           subtitle='Thêm'
           title='Quản lý & tuỳ chỉnh'
         />
@@ -66,7 +67,9 @@ const MorePage = () => {
               </div>
               <div className='flex-1'>
                 <p className='text-foreground text-base font-semibold'>Mục tiêu</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Theo dõi các mục tiêu của bạn.</p>
+                <p className='text-muted-foreground mt-1 text-sm'>
+                  Giữ thói quen theo tuần, tháng, năm.
+                </p>
               </div>
             </Link>
 
@@ -78,7 +81,9 @@ const MorePage = () => {
               </div>
               <div className='flex-1'>
                 <p className='text-foreground text-base font-semibold'>Gợi ý việc thiện</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Khởi tâm từ bi mỗi ngày.</p>
+                <p className='text-muted-foreground mt-1 text-sm'>
+                  Một gợi ý nhỏ để khởi tâm từ bi.
+                </p>
               </div>
             </Link>
           </div>

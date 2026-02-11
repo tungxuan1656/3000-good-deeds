@@ -48,7 +48,7 @@ const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
             <p className='text-muted-foreground text-xs'>{displayEmail}</p>
           </div>
         </div>
-        <div className='text-muted-foreground text-xs'>
+        <div className='text-muted-foreground text-sm'>
           Thông tin này được lấy từ tài khoản đăng nhập.
         </div>
       </div>

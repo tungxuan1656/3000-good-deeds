@@ -72,8 +72,8 @@ Dùng trong check-in, tooltip, hoặc màn giải thích nhanh.
 
 ### 4.2. CTA nhạy cảm (cần mô tả rõ ràng)
 
-- **Xóa việc này** (deed)
-- **Xóa tài khoản** (kèm mô tả dữ liệu bị xóa)
+- **Xoá việc này** (deed)
+- **Xoá tài khoản** (kèm mô tả dữ liệu bị xoá)
 - **Tắt nhắc nhở** (kèm nhắc: có thể bật lại bất cứ lúc nào)
 - **Xuất dữ liệu của tôi**
 
@@ -94,15 +94,15 @@ Dùng trong check-in, tooltip, hoặc màn giải thích nhanh.
 
 ### 5.3. Confirm dialogs
 
-- Xóa deed
-  - Title: “Bạn có muốn xóa ghi nhận này không?”
-  - Body: “Nếu xóa, bạn sẽ không xem lại được ghi nhận này nữa. Bạn có thể chọn giữ lại hoặc buông bỏ.”
-  - CTA: Primary “Xóa việc này”, Secondary “Giữ lại”.
+- Xoá deed
+  - Title: “Bạn có muốn xoá ghi nhận này không?”
+  - Body: “Nếu xoá, bạn sẽ không xem lại được ghi nhận này nữa. Bạn có thể chọn giữ lại hoặc buông bỏ.”
+  - CTA: Primary “Xoá việc này”, Secondary “Giữ lại”.
 
-- Xóa tài khoản
-  - Title: “Xóa tài khoản và dữ liệu?”
-  - Body: “Dữ liệu việc thiện, sổ tay quán chiếu và cài đặt sẽ được xóa khỏi hệ thống. Bạn có thể quay lại bắt đầu lại bất kỳ lúc nào.”
-  - CTA: Primary “Xóa tài khoản”, Secondary “Giữ tài khoản”.
+- Xoá tài khoản
+  - Title: “Xoá tài khoản và dữ liệu?”
+  - Body: “Dữ liệu việc thiện, sổ tay quán chiếu và cài đặt sẽ được xoá khỏi hệ thống. Bạn có thể quay lại bắt đầu lại bất kỳ lúc nào.”
+  - CTA: Primary “Xoá tài khoản”, Secondary “Giữ tài khoản”.
 
 ### 5.4. Lỗi mạng / lỗi chung
 

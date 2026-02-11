@@ -96,14 +96,17 @@ const GoalSettingCard = () => {
       <div className='flex items-start justify-between'>
         <div>
           <p className='text-foreground text-base font-semibold'>Thiết lập mục tiêu mới</p>
-          <p className='text-muted-foreground mt-1 text-xs'>Chọn nhịp phù hợp với bạn.</p>
+          <p className='text-muted-foreground mt-1 text-sm'>Chọn mục tiêu phù hợp với bạn.</p>
+          <p className='text-muted-foreground mt-1 text-sm'>
+            Bạn có thể bắt đầu nhỏ và chỉnh lại khi cần.
+          </p>
         </div>
         <Button
           disabled={isLoading || upsertGoalsMutation.isPending}
           size={'xs'}
           onClick={() => void handleSave()}>
           <CheckIcon className='mr-1' />
-          {upsertGoalsMutation.isPending ? 'Đang lưu...' : 'Lưu tất cả mục tiêu'}
+          {upsertGoalsMutation.isPending ? 'Đang lưu...' : 'Lưu mục tiêu'}
         </Button>
       </div>
       <div className='grid gap-2'>

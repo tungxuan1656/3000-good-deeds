@@ -38,7 +38,7 @@
 ### Deeds (Cốt lõi)
 *   `GET /deeds` - Lấy danh sách (hỗ trợ filter date).
 *   `POST /deeds` - Thêm mới.
-*   `DELETE /deeds/:id` - Xóa.
+*   `DELETE /deeds/:id` - Xoá.
 
 ### Cultivation (Tu tập)
 *   `GET /cultivation/quotes/random` - Lấy pháp ngữ ngẫu nhiên.

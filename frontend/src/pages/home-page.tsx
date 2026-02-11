@@ -10,13 +10,19 @@ import {
   ReminderSuggestCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { InfoButton } from '@/components/shared'
+import { INFO_COPY } from '@/lib/info-copy'
 
 const HomePage = () => {
   return (
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Hôm nay bạn muốn ghi lại điều gì để nuôi dưỡng lòng biết ơn?'
+          action={
+            <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
+          }
+          description='Ghi nhận một việc thiện nhỏ và dành một phút nhìn lại tâm mình.'
+          note='Mọi ghi nhận đều riêng tư và không dùng để so sánh.'
           subtitle={format(new Date(), "EEEE', ngày' dd'/'MM", { locale: vi })}
           title='Hôm nay của bạn'
         />

@@ -53,6 +53,9 @@ export const TodaySection = () => {
           <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
             {format(new Date(), "EEEE, 'ngày' dd 'tháng' MM", { locale: vi })}
           </p>
+          <p className='text-muted-foreground mt-2 text-sm'>
+            {'Một việc thiện nhỏ cũng đủ làm tâm bạn an nhiên hơn rất nhiều.'}
+          </p>
         </div>
         <Button
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
@@ -66,7 +69,7 @@ export const TodaySection = () => {
       {showLoading && <SkeletonList length={1} />}
       {isEmpty && (
         <EmptyDataView
-          description='Hãy gieo một hạt giống lành!'
+          description='Khi sẵn sàng, bạn có thể ghi nhận một việc thiện nhỏ.'
           title='Hôm nay chưa có việc thiện nào'
         />
       )}

@@ -14,7 +14,7 @@ Tài liệu này phác thảo lộ trình xây dựng phiên bản MVP (Minimum 
 *   [ ] **Nhật ký việc thiện:**
     *   Thêm mới việc thiện (Thân/Khẩu/Ý).
     *   Xem lịch sử theo dòng thời gian.
-    *   Chỉnh sửa/Xóa.
+    *   Chỉnh sửa/Xoá.
 
 ## Giai đoạn 2: Quán chiếu & Thống kê (Reflection)
 **Mục tiêu:** Giúp người dùng nhìn lại quá trình tu tập của mình.

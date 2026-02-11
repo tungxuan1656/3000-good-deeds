@@ -78,6 +78,9 @@ const LoginPage = () => {
               <p className='text-muted-foreground/90 text-base leading-relaxed'>
                 Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.
               </p>
+              <p className='text-muted-foreground text-sm'>
+                Dữ liệu của bạn mặc định riêng tư và có thể xoá hoặc xuất bất cứ lúc nào.
+              </p>
 
               {error && (
                 <div className='rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>

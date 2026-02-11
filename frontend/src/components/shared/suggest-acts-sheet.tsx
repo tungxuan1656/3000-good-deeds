@@ -1,6 +1,7 @@
 import { RefreshCwIcon, SparklesIcon } from 'lucide-react'
 import React from 'react'
 
+import { InfoButton } from '@/components/shared/info-button'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -12,6 +13,7 @@ import {
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { INFO_COPY } from '@/lib/info-copy'
 
 export interface SuggestActsDrawerHandle {
   open: (categoryCode?: string) => void
@@ -39,7 +41,13 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
         className={isMobile ? 'rounded-t-2xl' : ''}
         side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
-          <SheetTitle>Gợi ý việc thiện</SheetTitle>
+          <div className='flex items-center justify-between gap-2'>
+            <SheetTitle>Gợi ý việc thiện</SheetTitle>
+            <InfoButton
+              description={INFO_COPY.randomActs.description}
+              title={INFO_COPY.randomActs.title}
+            />
+          </div>
           <SheetDescription>Chọn một điều nhỏ để bắt đầu ngay hôm nay.</SheetDescription>
         </SheetHeader>
 

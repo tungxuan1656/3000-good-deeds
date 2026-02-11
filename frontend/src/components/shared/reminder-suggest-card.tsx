@@ -16,7 +16,7 @@ export const ReminderSuggestCard = () => {
     <CardSection padding='md'>
       <h3 className='text-foreground text-base font-semibold'>Nhắc nhở dịu nhẹ</h3>
       <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
-        “Một điều tử tế mỗi ngày, tâm an yên hơn mỗi tối.”
+        “Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút.”
       </p>
       <Link to={PATHS.SETTINGS}>
         <Button className='text-foreground mt-4 h-11 w-full rounded-full border border-black/5 bg-white text-sm font-medium hover:bg-white/80'>

@@ -14,6 +14,7 @@ const DeedDetailPage = () => {
     <div className='mx-auto flex w-full max-w-3xl flex-col gap-4'>
       <HeaderSection
         description='Xem lại, chỉnh sửa hoặc ghi nhận cảm xúc trong việc thiện này.'
+        note='Ghi nhận này chỉ mình bạn thấy.'
         subtitle='Chi tiết'
         title='Chi tiết việc thiện'
       />
@@ -43,7 +44,7 @@ const DeedDetailPage = () => {
               value={note}
               onChange={(event) => setNote(event.target.value)}
             />
-            <p className='text-muted-foreground text-xs'>Ghi chú có thể để trống.</p>
+            <p className='text-muted-foreground text-sm'>Ghi chú có thể để trống.</p>
           </div>
         )}
 
@@ -104,18 +105,20 @@ const DeedDetailPage = () => {
         <CardSection className='border border-red-200/60 bg-red-50/60'>
           <div className='flex flex-col gap-3'>
             <div>
-              <p className='text-foreground text-sm font-semibold'>Bạn có chắc muốn xoá?</p>
-              <p className='text-muted-foreground mt-1 text-xs leading-relaxed'>
-                Hành động này không thể hoàn tác.
+              <p className='text-foreground text-sm font-semibold'>
+                Bạn có muốn xoá ghi nhận này không?
+              </p>
+              <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
+                Nếu xoá, bạn sẽ không xem lại được ghi nhận này nữa.
               </p>
             </div>
             <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-              <Button className='h-10 w-full rounded-full sm:w-auto'>Xoá việc thiện</Button>
+              <Button className='h-10 w-full rounded-full sm:w-auto'>Xoá ghi nhận này</Button>
               <Button
                 className='text-muted-foreground hover:text-foreground h-10 w-full rounded-full sm:w-auto'
                 variant='ghost'
                 onClick={() => setShowDeleteConfirm(false)}>
-                Để sau
+                Giữ lại
               </Button>
             </div>
           </div>

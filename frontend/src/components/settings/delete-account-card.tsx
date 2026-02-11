@@ -24,11 +24,10 @@ const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         <div className='flex items-start justify-between gap-4'>
           <div>
             <p className='text-foreground text-base font-semibold'>Xoá tài khoản</p>
-            <p className='text-muted-foreground mt-1 text-xs leading-relaxed'>
-              Toàn bộ dữ liệu sẽ bị xoá vĩnh viễn. Hãy cân nhắc kỹ.
-            </p>
-            <p className='text-muted-foreground mt-2 text-xs'>
-              Bạn có muốn lưu lại nhật ký trước khi rời đi không?
+            <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
+              {
+                'Tất cả dữ liệu của bạn sẽ bị xoá và không thể khôi phục lại được. Xin hãy cân nhắc kỹ lựa chọn này!'
+              }
             </p>
           </div>
           <div className='flex h-9 w-9 items-center justify-center rounded-full bg-red-100'>
@@ -46,8 +45,8 @@ const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         ref={deleteDialogRef}
         cancelLabel='Để sau'
         confirmDisabled={deleteText !== 'DELETE'}
-        confirmLabel='Xoá vĩnh viễn'
-        description='Nhập chữ “DELETE” để xác nhận.'
+        confirmLabel='Xoá tài khoản'
+        description='Nhập chữ “DELETE” để xác nhận. Bạn có thể quay lại bắt đầu lại bất cứ lúc nào.'
         title='Xác nhận xoá tài khoản'
         variant='destructive'
         onConfirm={() => {
