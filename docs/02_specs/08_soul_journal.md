@@ -1,8 +1,8 @@
-# 08. SỔ TAY TÂM HỒN (SOUL JOURNAL)
+# 08. SỔ TAY QUÁN CHIẾU (SOUL JOURNAL)
 
 ## 1. Mục đích (Purpose)
 
-Sổ tay Tâm hồn là một **không gian riêng tư để quán chiếu nội tâm**, giúp người dùng dừng lại, nhìn thẳng vào tâm mình và nuôi dưỡng sự chuyển hoá bên trong.
+Sổ tay quán chiếu là một **không gian riêng tư để quán chiếu nội tâm**, giúp người dùng dừng lại, nhìn thẳng vào tâm mình và nuôi dưỡng sự chuyển hoá bên trong.
 
 Tính năng này **không dùng để ghi nhận thành tích**, không nhằm phân tích hay đánh giá, mà chỉ phục vụ một việc duy nhất: **thấy rõ – ghi lại – buông xuống**.
 
@@ -14,7 +14,7 @@ Tính năng này **không dùng để ghi nhận thành tích**, không nhằm p
 * Bổ trợ cho tính năng **Nhật ký việc thiện**, nhưng **không trùng vai**:
 
   * Nhật ký việc thiện: ghi nhận *hành động*.
-  * Sổ tay tâm hồn: quán chiếu *tâm ý*.
+  * Sổ tay quán chiếu: quán chiếu *tâm ý*.
 
 ---
 
@@ -91,7 +91,7 @@ Microcopy gợi ý chung:
 
 ## 6. UX Flow (Tóm tắt)
 
-1. Vào **Sổ tay Tâm hồn**.
+1. Vào **Sổ tay quán chiếu**.
 2. Chọn chế độ: *Sám hối* hoặc *Biết ơn*.
 3. Đọc câu dẫn.
 4. Viết nội dung.
@@ -111,7 +111,7 @@ Microcopy gợi ý chung:
 
 ## 8. Thông điệp thiết kế
 
-> **Sổ tay Tâm hồn không giúp người dùng trở nên “tốt hơn” ngay lập tức,**
+> **Sổ tay quán chiếu không giúp người dùng trở nên “tốt hơn” ngay lập tức,**
 > **mà giúp họ thành thật hơn với chính mình trong từng khoảnh khắc.**
 
 Giữ được sự nhẹ nhàng này quan trọng hơn việc thêm bất kỳ tính năng nào khác.

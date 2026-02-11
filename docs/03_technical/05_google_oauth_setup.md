@@ -61,13 +61,13 @@ GOOGLE_CLIENT_SECRET=your-client-secret
 1. Khởi động backend:
    ```bash
    cd backend
-   npm run dev
+   pnpm run dev
    ```
 
 2. Khởi động frontend:
    ```bash
    cd frontend
-   npm run dev
+   pnpm run dev
    ```
 
 3. Truy cập `http://localhost:5173/login`

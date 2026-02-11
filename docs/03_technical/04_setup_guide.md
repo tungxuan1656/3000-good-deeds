@@ -4,15 +4,15 @@ Tài liệu này giúp bạn setup môi trường và chạy dự án (Backend +
 
 ## 1. Yêu cầu (Prerequisites)
 *   **Node.js:** v18 trở lên (Khuyên dùng v20 LTS).
-*   **npm:** v9 trở lên.
-*   **Wrangler CLI:** `npm install -g wrangler` (Để chạy Cloudflare Workers/D1).
+*   **pnpm:** (Khuyên dùng, vì project dùng pnpm workspace).
+*   **Wrangler CLI:** `pnpm add -g wrangler` (Để chạy Cloudflare Workers/D1).
 
 ## 2. Cài đặt (Installation)
 Dự án là Monorepo. Tại thư mục gốc:
 
 ```bash
 # 1. Cài đặt dependencies cho toàn bộ project
-npm install
+pnpm install
 ```
 
 ## 3. Backend Setup
@@ -33,18 +33,18 @@ cd backend
 # npx wrangler d1 migrations create DB <tên_migration>
 
 # 2. Chạy migration trên local
-npm run migrate:local
+pnpm run migrate:local
 # Lệnh này tương đương: wrangler d1 migrations apply DB --local
 
 # 3. (Optional) Seed dữ liệu mẫu
 # Seed categories + random acts + dharma quotes
-npm run seed:data -- --local
+pnpm run seed:data -- --local
 ```
 
 ### Chạy Backend Server
 ```bash
 # Tại folder backend/
-npm run dev
+pnpm run dev
 ```
 Server sẽ chạy tại: `http://localhost:8787`
 
@@ -64,7 +64,7 @@ VITE_API_URL=http://localhost:8787/api/v1
 ### Chạy Frontend Server
 ```bash
 # Tại folder gốc hoặc cd frontend/
-npm run dev
+pnpm run dev
 # (Script gốc trong package.json có thể là "dev:frontend")
 ```
 Server sẽ chạy tại: `http://localhost:5173` (hoặc port khác nếu 5173 bận).
@@ -78,10 +78,10 @@ Server sẽ chạy tại: `http://localhost:5173` (hoặc port khác nếu 5173 
 
 ## 6. Các lệnh thường dùng
 
-| Lệnh                     | Mô tả                        |
-| :----------------------- | :--------------------------- |
-| `npm run dev` (Backend)  | Chạy backend dev server      |
-| `npm run dev` (Frontend) | Chạy frontend dev server     |
-| `npm run migrate:local`  | Update database schema local |
-| `npm run type-check`     | Kiểm tra lỗi TypeScript      |
-| `npm run format`         | Format code với Prettier     |
+| Lệnh                      | Mô tả                        |
+| :------------------------ | :--------------------------- |
+| `pnpm run dev` (Backend)  | Chạy backend dev server      |
+| `pnpm run dev` (Frontend) | Chạy frontend dev server     |
+| `pnpm run migrate:local`  | Update database schema local |
+| `pnpm run type-check`     | Kiểm tra lỗi TypeScript      |
+| `pnpm run format`         | Format code với Prettier     |

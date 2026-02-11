@@ -226,6 +226,8 @@ Sử dụng `Drawer` hoặc `Sheet` (Bottom position) thay vì Modal giữa màn
 *   **Ví dụ:**
     *   ✅ "Bạn muốn ghi lại điều gì?"
     *   ❌ "Nhập nội dung bắt buộc"
+
+Tham chiếu bộ quy chuẩn dùng chung: `docs/01_general/04_microcopy_guideline.md`.
     *   ✅ "Hành trình vạn dặm bắt đầu từ một bước chân" (Empty state)
 
 ---

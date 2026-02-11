@@ -35,7 +35,7 @@ Hệ thống sử dụng 3 nhóm cốt lõi (Mặc định):
 2.  Chọn **Danh mục** (Icon + Tên).
 3.  (Optional) Nhập **Ghi chú** ngắn.
 4.  Nhấn **Lưu**.
-5.  Thông báo: "Đã ghi nhận một hạt giống lành".
+5.  Thông báo: "Đã ghi nhận một việc thiện".
 
 ### 4.2. Xem lịch sử (View)
 1.  Vào tab **Nhật ký**.

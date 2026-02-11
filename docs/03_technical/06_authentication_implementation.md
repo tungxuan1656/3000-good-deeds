@@ -118,8 +118,8 @@ const response = await client.get('/deeds')
 ### Local Development
 
 1. Cấu hình Google OAuth (xem `05_google_oauth_setup.md`)
-2. Khởi động backend: `cd backend && npm run dev`
-3. Khởi động frontend: `cd frontend && npm run dev`
+2. Khởi động backend: `cd backend && pnpm run dev`
+3. Khởi động frontend: `cd frontend && pnpm run dev`
 4. Truy cập `http://localhost:5173/login`
 5. Test login flow
 

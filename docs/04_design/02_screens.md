@@ -19,7 +19,7 @@ Tổng cộng: **17 Màn hình chính** & **~18 Trạng thái con**.
 *   **Màn hình chính:**
     2.  **Home:**
         *   Header: Chào hỏi + Avatar.
-        *   Quote: Pháp ngữ hôm nay.
+        *   Quote: Pháp ngữ cho phiên này.
         *   Action: FAB (+) to Check-in.
         *   Summary: Progress bar mục tiêu (nếu có).
 *   **Trạng thái con:**
@@ -109,7 +109,7 @@ Tổng cộng: **17 Màn hình chính** & **~18 Trạng thái con**.
     *   Next (Bỏ qua).
     *   Accept (Lưu vào Todo/Goal).
 
-### 1️⃣2️⃣ Sổ tay tâm hồn (Soul Journal)
+### 1️⃣2️⃣ Sổ tay quán chiếu (Soul Journal)
 *   **Màn hình chính:**
     14. **Journal List:** Danh sách nhật ký (Sám hối / Biết ơn).
     15. **Editor:** Màn hình viết nhật ký.

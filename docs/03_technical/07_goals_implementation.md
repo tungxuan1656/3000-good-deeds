@@ -2,7 +2,7 @@
 
 Hướng dẫn kỹ thuật triển khai tính năng Goals & Goal History.
 
-> **Tham khảo:** [Feature Spec](../../02_specs/features/04_goals.md) cho business logic và quy tắc chi tiết đầy đủ.
+> **Tham khảo:** [Feature Spec](../../02_specs/04_goals.md) cho business logic và quy tắc chi tiết đầy đủ.
 
 ---
 
@@ -10,7 +10,7 @@ Hướng dẫn kỹ thuật triển khai tính năng Goals & Goal History.
 
 **Hệ thống KHÔNG BAO GIỜ tạo goal_history cho period đã qua.**
 
-Chi tiết về business logic, decision flow, và ví dụ xem tại [04_goals.md](../../02_specs/features/04_goals.md#53-khi-user-thêm--xóa-việc-thiện-good_deeds).
+Chi tiết về business logic, decision flow, và ví dụ xem tại [04_goals.md](../../02_specs/04_goals.md#53-khi-user-thêm--xóa-việc-thiện-good_deeds).
 
 ---
 
@@ -200,4 +200,4 @@ Không bao giờ tạo history cho period khi goal chưa tồn tại.
 ---
 
 **Last updated:** 2026-02-05  
-**Tham khảo thêm:** [Feature Spec: 04_goals.md](../../02_specs/features/04_goals.md)
+**Tham khảo thêm:** [Feature Spec: 04_goals.md](../../02_specs/04_goals.md)

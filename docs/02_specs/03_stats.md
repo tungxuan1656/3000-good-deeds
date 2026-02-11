@@ -8,12 +8,12 @@ Giúp người dùng nhìn lại hành trình tu tập của mình qua các con 
 ---
 
 ## 2. User Stories
-| ID      | Là một...  | Tôi muốn...                             | Để...                                      |
-| :------ | :--------- | :-------------------------------------- | :----------------------------------------- |
-| **S01** | Người dùng | Xem tổng số việc thiện đã làm           | Biết mình đã gieo bao nhiêu hạt giống lành |
-| **S02** | Người dùng | Xem biểu đồ theo thời gian (Ngày/Tuần)  | Quan sát tần suất tu tập                   |
-| **S03** | Người dùng | Xem phân bố theo Danh mục (Thân/Khẩu/Ý) | Biết mình đang thiên về hành động nào      |
-| **S04** | Người dùng | Xem chuỗi ngày liên tục (Streak)        | Có thêm động lực duy trì sự đều đặn        |
+| ID      | Là một...  | Tôi muốn...                             | Để...                                 |
+| :------ | :--------- | :-------------------------------------- | :------------------------------------ |
+| **S01** | Người dùng | Xem tổng số việc thiện đã ghi nhận      | Nhìn lại nhịp tu tập của mình         |
+| **S02** | Người dùng | Xem biểu đồ theo thời gian (Ngày/Tuần)  | Quan sát tần suất tu tập              |
+| **S03** | Người dùng | Xem phân bố theo Danh mục (Thân/Khẩu/Ý) | Biết mình đang thiên về hành động nào |
+| **S04** | Người dùng | Xem chuỗi ngày liên tục (Streak)        | Có thêm động lực duy trì sự đều đặn   |
 
 ---
 
