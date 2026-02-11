@@ -51,13 +51,24 @@ const InnerRandomActsPage = () => {
           ) : act ? (
             <>
               <div className='border-primary/20 rounded-2xl border-2 bg-white/80 p-5'>
-                <p className='text-foreground text-lg leading-relaxed font-semibold'>
-                  {act.content}
-                </p>
-                <div className='text-muted-foreground mt-4 flex items-center gap-2 text-sm'>
-                  <HelpCircleIcon className='h-3.5 w-3.5' />
-                  Gợi ý ngẫu nhiên để bạn tham khảo
+                <div className='flex flex-wrap items-center gap-2'>
+                  <span className='text-muted-foreground text-xs'>Gợi ý ngẫu nhiên</span>
                 </div>
+                <h3 className='text-foreground mt-3 text-lg font-semibold'>{act.name}</h3>
+                {act.detail ? (
+                  <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>{act.detail}</p>
+                ) : null}
+                {act.note ? (
+                  <div className='text-muted-foreground mt-4 flex items-center gap-2 text-xs'>
+                    <HelpCircleIcon className='h-3.5 w-3.5' />
+                    {act.note}
+                  </div>
+                ) : (
+                  <div className='text-muted-foreground mt-4 flex items-center gap-2 text-xs'>
+                    <HelpCircleIcon className='h-3.5 w-3.5' />
+                    Gợi ý để bạn tham khảo
+                  </div>
+                )}
               </div>
               <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
                 <Button

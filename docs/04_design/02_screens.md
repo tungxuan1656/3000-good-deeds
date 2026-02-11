@@ -104,7 +104,7 @@ Tổng cộng: **17 Màn hình chính** & **~18 Trạng thái con**.
 
 ### 1️⃣1️⃣ Gieo duyên (Random Acts)
 *   **Màn hình chính:**
-    13. **Card Gợi ý:** Hiển thị 1 việc thiện ngẫu nhiên.
+    1.  **Card Gợi ý:** Hiển thị 1 việc thiện ngẫu nhiên (name + detail + note).
 *   **Trạng thái:**
     *   Next (Bỏ qua).
     *   Accept (Lưu vào Todo/Goal).

@@ -31,14 +31,6 @@ app.route('/api/v1/cultivation', cultivation)
 app.route('/api/v1/journal', journal)
 app.route('/api/v1/auth', auth)
 
-import { seed } from './seed'
-
-app.post('/api/v1/seed', async (c) => {
-  await seed(c.env.DB)
-
-  return c.json({ success: true, message: 'Seeded' })
-})
-
 // 404 Handler
 app.notFound((c) => {
   return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'Không tìm thấy đường dẫn'), 404)

@@ -9,7 +9,32 @@ import { fileURLToPath } from 'node:url'
 import { parse } from 'csv-parse/sync'
 import { ulid } from 'ulid'
 
-import { seedCategories, seedRandomActs } from '../src/seed'
+const seedCategories = [
+  {
+    code: 'body',
+    name: 'Thân thiện',
+    description: 'Hành động cụ thể bằng thân',
+    icon: '/icons/icon_than.png',
+    style: 'bg-body/20 hover:bg-body/40',
+    order_index: 1,
+  },
+  {
+    code: 'speech',
+    name: 'Khẩu thiện',
+    description: 'Lời nói ái ngữ, chân thật',
+    icon: '/icons/icon_khau.png',
+    style: 'bg-speech/20 hover:bg-speech/40',
+    order_index: 2,
+  },
+  {
+    code: 'mind',
+    name: 'Ý thiện',
+    description: 'Suy nghĩ lành, buông xả',
+    icon: '/icons/icon_y.png',
+    style: 'bg-mind/20 hover:bg-mind/40',
+    order_index: 3,
+  },
+]
 
 type Target = 'local' | 'remote' | 'preview'
 
@@ -139,12 +164,36 @@ async function loadQuotes(csvPath: string) {
     .filter((quote) => quote.content.length > 0)
 }
 
+async function loadRandomActs(csvPath: string) {
+  const rawCsv = await fs.readFile(csvPath, 'utf-8')
+  const parsed = parse(rawCsv, {
+    columns: true,
+    skip_empty_lines: true,
+    relax_quotes: true,
+  })
+
+  if (!Array.isArray(parsed) || parsed.length === 0) {
+    throw new Error('No random acts were found in the CSV file')
+  }
+
+  return parsed
+    .map((row) => ({
+      category: String((row as Record<string, string>).category ?? '').trim(),
+      name: String((row as Record<string, string>).name ?? '').trim(),
+      detail: String((row as Record<string, string>).detail ?? '').trim(),
+      note: String((row as Record<string, string>).note ?? '').trim(),
+    }))
+    .filter((act) => act.category.length > 0 && act.name.length > 0)
+}
+
 async function main() {
   const options = parseArgs()
   const scriptDir = path.dirname(fileURLToPath(import.meta.url))
-  const csvPath = path.join(scriptDir, '..', 'resources', 'dharma_quotes', 'kinhphapcu-all.csv')
+  const quotesPath = path.join(scriptDir, '..', 'resources', 'kinhphapcu-all.csv')
+  const randomActsPath = path.join(scriptDir, '..', 'resources', 'random-acts-all.csv')
 
-  const quotes = await loadQuotes(csvPath)
+  const quotes = await loadQuotes(quotesPath)
+  const randomActs = await loadRandomActs(randomActsPath)
 
   const statements: string[] = ['BEGIN TRANSACTION;']
 
@@ -168,11 +217,13 @@ async function main() {
     )
   }
 
-  for (const act of seedRandomActs) {
+  for (const act of randomActs) {
     const now = Date.now()
     statements.push(
-      `INSERT OR REPLACE INTO random_acts (id, content, created_at, updated_at)
-       VALUES (${sqlString(act.id)}, ${sqlString(act.content)}, ${now}, ${now});`,
+      `INSERT OR REPLACE INTO random_acts (id, category, name, detail, note, created_at, updated_at)
+       VALUES (${sqlString(ulid())}, ${sqlString(act.category)}, ${sqlString(
+         act.name,
+       )}, ${sqlString(act.detail || null)}, ${sqlString(act.note || null)}, ${now}, ${now});`,
     )
   }
 

@@ -21,7 +21,7 @@ export async function getRandomAct(db: D1Database): Promise<RandomAct | null> {
   const act = await db
     .prepare(
       `SELECT 
-        id, content, 
+        id, category, name, detail, note,
         created_at as createdAt, updated_at as updatedAt 
       FROM random_acts 
       ORDER BY RANDOM() 
@@ -37,7 +37,7 @@ export async function getRandomActs(db: D1Database, limit = 10): Promise<RandomA
   const { results } = await db
     .prepare(
       `SELECT 
-        id, content, 
+        id, category, name, detail, note,
         created_at as createdAt, updated_at as updatedAt 
       FROM random_acts 
       ORDER BY RANDOM() 

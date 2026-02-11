@@ -43,6 +43,7 @@
 ### Cultivation (Tu tập)
 *   `GET /cultivation/quotes/random` - Lấy pháp ngữ ngẫu nhiên.
 *   `GET /cultivation/acts/random` - Gợi ý việc thiện.
+*   `GET /cultivation/acts/random-list` - Danh sách gợi ý việc thiện (ngẫu nhiên).
 *   `GET /journal` - Lấy danh sách nhật ký.
 *   `POST /journal` - Viết nhật ký.
 

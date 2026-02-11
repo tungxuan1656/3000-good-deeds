@@ -212,7 +212,10 @@ export interface CreateJournalRequest {
 
 export interface RandomAct {
   id: string
-  content: string
+  category: 'body' | 'speech' | 'mind'
+  name: string
+  detail: string | null
+  note: string | null
   createdAt: number
   updatedAt: number
 }

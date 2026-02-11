@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix",
+    "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix && tsc --noEmit --project tsconfig.app.json",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "type-check": "tsc --noEmit --project tsconfig.app.json",

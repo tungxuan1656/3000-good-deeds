@@ -10,10 +10,6 @@ NC='\033[0m'
 
 echo "🚀 Starting API Tests..."
 
-echo "0. Seeding Initial Data..."
-curl -s -X POST "$API_URL/seed" -H "Content-Type: application/json" | grep "\"success\":true" > /dev/null && echo -e "${GREEN}✅ Seeded${NC}" || echo -e "${RED}❌ Seed Failed${NC}"
-
-# 1. Generate Test Token (Bypass Google Auth for local test)
 echo "1. Generating Test Token..."
 # Using tsx or node to run the script. Assuming tsx is available or compile. 
 # Since this is local dev environment with npm run dev, we might not have direct tsx.
@@ -36,12 +32,6 @@ echo -e "${GREEN}✅ Token Generated${NC}"
 # The `generate_test_token.ts` just makes a token. It doesn't insert user into DB.
 # Middleware checks `getUser(db, userId)`. If user not found -> 401.
 # So we MUST insert the user first. 
-# We can use the `/api/v1/seed` endpoint? No, seed adds categories.
-# We can't use /auth/google without code.
-# We can manually insert user via sql or expose a temporary `create_test_user` endpoint?
-# Or update `seed.ts` to include a test user? 
-# Or update `generate_test_token.ts` to also call a DB command? No D1 access easily from script unless using wrangler d1 execute.
-
 # Let's use `wrangler d1 execute` to insert the test user!
 echo "   Inserting Test User into DB..."
 npx wrangler d1 execute DB --local --command "INSERT INTO users (id, email, display_name, created_at, updated_at) VALUES ('$USER_ID', 'test@example.com', 'Test User', $(date +%s)*1000, $(date +%s)*1000)" > /dev/null

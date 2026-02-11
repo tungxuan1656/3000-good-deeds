@@ -63,7 +63,7 @@
     "migrate:remote": "wrangler d1 migrations apply DB --remote",
     "predeploy": "npm run migrate:remote",
     "seed:data": "tsx scripts/seed_data.ts",
-    "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix",
+    "lint": "eslint ./src --ext .js,.ts,.tsx,.jsx --fix && tsc --noEmit --project tsconfig.json",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css}\"",
     "type-check": "tsc --noEmit --project tsconfig.json"

@@ -87,7 +87,11 @@ export interface DailyQuoteDTO {
 }
 
 export interface RandomActDTO {
-  content: string
+  id: string
+  category: 'body' | 'speech' | 'mind'
+  name: string
+  detail?: string | null
+  note?: string | null
 }
 
 export interface JournalEntryDTO {

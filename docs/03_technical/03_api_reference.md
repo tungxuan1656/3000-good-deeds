@@ -189,8 +189,35 @@ Lấy gợi ý một việc thiện ngẫu nhiên.
 {
   "success": true,
   "data": {
-    "content": "Nhắn tin hỏi thăm một người bạn cũ."
+    "id": "ra_01",
+    "category": "speech",
+    "name": "Nhắn tin hỏi thăm một người bạn cũ",
+    "detail": "Gửi một lời hỏi thăm ngắn, chân thành.",
+    "note": "Kết nối nhẹ nhàng"
   },
+  "error": null
+}
+```
+
+### `GET /cultivation/acts/random-list`
+Lấy danh sách gợi ý việc thiện ngẫu nhiên.
+
+**Query Parameters:**
+- `limit` (number): Số lượng gợi ý (Default: 10, Max: 50).
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "ra_01",
+      "category": "body",
+      "name": "Nhặt rác nơi công cộng",
+      "detail": "Nhặt một mẩu rác nhỏ trên đường.",
+      "note": "Giữ gìn môi trường chung"
+    }
+  ],
   "error": null
 }
 ```

@@ -146,5 +146,17 @@ Nhật ký tu tập.
 | **emotion**    | TEXT      | Cảm xúc (Optional)                              |
 | **is_private** | BOOLEAN   | Luôn là 1 (Private)                             |
 
+### `random_acts`
+Gợi ý việc thiện ngẫu nhiên.
+| Column       | Type      | Description                    |
+| :----------- | :-------- | :----------------------------- |
+| **id**       | TEXT (PK) | ULID                           |
+| **category** | TEXT      | 'body' \| 'speech' \| 'mind'   |
+| **name**     | TEXT      | Tên gợi ý ngắn                 |
+| **detail**   | TEXT      | Mô tả chi tiết (Optional)      |
+| **note**     | TEXT      | Gợi ý/ngữ cảnh thêm (Optional) |
+| *created_at* | INTEGER   | Unix Timestamp                 |
+| *updated_at* | INTEGER   | Unix Timestamp                 |
+
 ---
 *Lưu ý: Tất cả thời gian lưu dưới dạng INTEGER (Unix Timestamp Milliseconds).*

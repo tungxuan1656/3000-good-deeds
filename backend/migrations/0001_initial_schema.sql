@@ -259,7 +259,10 @@ ON journal_entries (user_id, created_at DESC, id DESC);
 -- ============================================
 CREATE TABLE IF NOT EXISTS random_acts (
   id TEXT PRIMARY KEY,               -- ULID
-  content TEXT NOT NULL,
+  category TEXT NOT NULL,            -- 'body' | 'speech' | 'mind'
+  name TEXT NOT NULL,
+  detail TEXT,
+  note TEXT,
 
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL
