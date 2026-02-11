@@ -17,7 +17,7 @@ import { EmptyDataView } from '@/components/shared/empty-data-view'
 import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
-import { ONBOARDING_CONTENT } from '@/lib/constants'
+import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import type { DeedDTO } from '@/types/api'
 
 const TimelinePage = () => {
@@ -79,8 +79,10 @@ const TimelinePage = () => {
         <HeaderSection
           action={
             <TourGuideButton
+              autoOpen
               flowTitle={ONBOARDING_CONTENT.journey.title}
               steps={ONBOARDING_CONTENT.journey.steps}
+              storageKey={ONBOARDING_KEYS.journey}
             />
           }
           description='Nhật ký việc thiện của riêng bạn — để nhìn lại, không phải để so sánh.'

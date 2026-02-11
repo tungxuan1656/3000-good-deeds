@@ -190,3 +190,12 @@ export const ONBOARDING_CONTENT = {
     ],
   },
 }
+
+export const ONBOARDING_KEYS = {
+  general: 'onboarding.general.v1',
+  deeds: 'onboarding.deeds.v1',
+  quoteRandomActs: 'onboarding.quoteRandomActs.v1',
+  journey: 'onboarding.journey.v1',
+  stats: 'onboarding.stats.v1',
+  journal: 'onboarding.journal.v1',
+}

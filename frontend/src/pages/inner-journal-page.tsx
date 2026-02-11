@@ -24,6 +24,7 @@ import {
   INNER_JOURNAL_TYPE_LABELS,
   type InnerJournalType,
   ONBOARDING_CONTENT,
+  ONBOARDING_KEYS,
   PATHS,
 } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
@@ -86,8 +87,10 @@ const InnerJournalPage = () => {
                 title={INFO_COPY.journal.title}
               />
               <TourGuideButton
+                autoOpen
                 flowTitle={ONBOARDING_CONTENT.journal.title}
                 steps={ONBOARDING_CONTENT.journal.steps}
+                storageKey={ONBOARDING_KEYS.journal}
               />
             </div>
           }

@@ -11,7 +11,7 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { InfoButton, TourGuideButton } from '@/components/shared'
-import { ONBOARDING_CONTENT } from '@/lib/constants'
+import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const HomePage = () => {
@@ -23,8 +23,10 @@ const HomePage = () => {
             <div className='flex items-center gap-1'>
               <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
               <TourGuideButton
+                autoOpen
                 flowTitle={ONBOARDING_CONTENT.general.title}
                 steps={ONBOARDING_CONTENT.general.steps}
+                storageKey={ONBOARDING_KEYS.general}
               />
             </div>
           }

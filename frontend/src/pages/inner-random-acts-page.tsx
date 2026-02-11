@@ -12,7 +12,7 @@ import { InfoButton, TourGuideButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
-import { ONBOARDING_CONTENT } from '@/lib/constants'
+import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerRandomActsPage = () => {
@@ -30,8 +30,10 @@ const InnerRandomActsPage = () => {
                 title={INFO_COPY.randomActs.title}
               />
               <TourGuideButton
+                autoOpen
                 flowTitle={ONBOARDING_CONTENT.quoteRandomActs.title}
                 steps={ONBOARDING_CONTENT.quoteRandomActs.steps}
+                storageKey={ONBOARDING_KEYS.quoteRandomActs}
               />
             </div>
           }

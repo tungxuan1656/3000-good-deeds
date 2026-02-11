@@ -8,7 +8,7 @@ import {
 } from '@/components/shared'
 import { CalendarStats } from '@/components/stats/calendar-stats'
 import { StatsCard } from '@/components/stats/stats-card'
-import { ONBOARDING_CONTENT } from '@/lib/constants'
+import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const StatsPage = () => {
@@ -20,8 +20,10 @@ const StatsPage = () => {
             <div className='flex items-center gap-1'>
               <InfoButton description={INFO_COPY.stats.description} title={INFO_COPY.stats.title} />
               <TourGuideButton
+                autoOpen
                 flowTitle={ONBOARDING_CONTENT.stats.title}
                 steps={ONBOARDING_CONTENT.stats.steps}
+                storageKey={ONBOARDING_KEYS.stats}
               />
             </div>
           }

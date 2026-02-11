@@ -61,7 +61,9 @@ export const OnboardingDialog = ({
     <Dialog modal={true} open={open} onOpenChange={onOpenChange}>
       <DialogContent className={cn('gap-4 sm:gap-5', className)} showCloseButton={false}>
         <DialogHeader className='gap-1'>
-          <p className='text-muted-foreground text-xs font-semibold uppercase'>{flowTitle}</p>
+          <p className='text-muted-foreground text-xs font-medium tracking-widest uppercase'>
+            {flowTitle}
+          </p>
           <DialogTitle className='text-base font-semibold'>{step.title}</DialogTitle>
           <div className='absolute top-4 right-4 rounded-full bg-gray-200 p-1'>
             <XIcon className='text-muted-foreground/60 size-4' onClick={handleClose} />
