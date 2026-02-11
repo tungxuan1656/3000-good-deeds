@@ -8,10 +8,11 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { InfoButton } from '@/components/shared'
+import { InfoButton, TourGuideButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
+import { ONBOARDING_CONTENT } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerRandomActsPage = () => {
@@ -23,10 +24,16 @@ const InnerRandomActsPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <InfoButton
-              description={INFO_COPY.randomActs.description}
-              title={INFO_COPY.randomActs.title}
-            />
+            <div className='flex items-center gap-1'>
+              <InfoButton
+                description={INFO_COPY.randomActs.description}
+                title={INFO_COPY.randomActs.title}
+              />
+              <TourGuideButton
+                flowTitle={ONBOARDING_CONTENT.quoteRandomActs.title}
+                steps={ONBOARDING_CONTENT.quoteRandomActs.steps}
+              />
+            </div>
           }
           description='Chọn một việc thiện nhỏ phù hợp với mình lúc này.'
           note='Bạn có thể bỏ qua hoặc đổi gợi ý bất cứ lúc nào.'

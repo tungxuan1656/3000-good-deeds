@@ -13,6 +13,7 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { TourGuideButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
@@ -22,6 +23,7 @@ import {
   INNER_JOURNAL_TYPE_GUIDANCE,
   INNER_JOURNAL_TYPE_LABELS,
   type InnerJournalType,
+  ONBOARDING_CONTENT,
   PATHS,
 } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
@@ -78,10 +80,16 @@ const InnerJournalPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <InfoButton
-              description={INFO_COPY.journal.description}
-              title={INFO_COPY.journal.title}
-            />
+            <div className='flex items-center gap-1'>
+              <InfoButton
+                description={INFO_COPY.journal.description}
+                title={INFO_COPY.journal.title}
+              />
+              <TourGuideButton
+                flowTitle={ONBOARDING_CONTENT.journal.title}
+                steps={ONBOARDING_CONTENT.journal.steps}
+              />
+            </div>
           }
           description='Ghi lại quán chiếu để nhìn rõ và thấy được sự chuyển biến của tâm.'
           subtitle='Sổ tay'

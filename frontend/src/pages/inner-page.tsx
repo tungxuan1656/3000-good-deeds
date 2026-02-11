@@ -9,7 +9,8 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { PATHS } from '@/lib/constants'
+import { TourGuideButton } from '@/components/shared'
+import { ONBOARDING_CONTENT, PATHS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerPage = () => {
@@ -18,10 +19,16 @@ const InnerPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <InfoButton
-              description={INFO_COPY.cultivation.description}
-              title={INFO_COPY.cultivation.title}
-            />
+            <div className='flex items-center gap-1'>
+              <InfoButton
+                description={INFO_COPY.cultivation.description}
+                title={INFO_COPY.cultivation.title}
+              />
+              <TourGuideButton
+                flowTitle={ONBOARDING_CONTENT.journal.title}
+                steps={ONBOARDING_CONTENT.journal.steps}
+              />
+            </div>
           }
           description='Sổ tay quán chiếu — một bước nhỏ để quay về với mình.'
           note='Viết xuống để nhìn rõ và buông nhẹ.'

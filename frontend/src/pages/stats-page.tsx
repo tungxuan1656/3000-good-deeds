@@ -1,7 +1,14 @@
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { DailyQuoteCard, HeaderSection, InfoButton, MiniCheckInCard } from '@/components/shared'
+import {
+  DailyQuoteCard,
+  HeaderSection,
+  InfoButton,
+  MiniCheckInCard,
+  TourGuideButton,
+} from '@/components/shared'
 import { CalendarStats } from '@/components/stats/calendar-stats'
 import { StatsCard } from '@/components/stats/stats-card'
+import { ONBOARDING_CONTENT } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const StatsPage = () => {
@@ -10,7 +17,13 @@ const StatsPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <InfoButton description={INFO_COPY.stats.description} title={INFO_COPY.stats.title} />
+            <div className='flex items-center gap-1'>
+              <InfoButton description={INFO_COPY.stats.description} title={INFO_COPY.stats.title} />
+              <TourGuideButton
+                flowTitle={ONBOARDING_CONTENT.stats.title}
+                steps={ONBOARDING_CONTENT.stats.steps}
+              />
+            </div>
           }
           description='Nhìn lại để hiểu tâm của mình, không phải để so sánh.'
           note='Các con số chỉ là tấm gương để soi chiếu.'

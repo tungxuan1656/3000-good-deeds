@@ -10,7 +10,8 @@ import {
   ReminderSuggestCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { InfoButton } from '@/components/shared'
+import { InfoButton, TourGuideButton } from '@/components/shared'
+import { ONBOARDING_CONTENT } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const HomePage = () => {
@@ -19,7 +20,13 @@ const HomePage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
+            <div className='flex items-center gap-1'>
+              <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
+              <TourGuideButton
+                flowTitle={ONBOARDING_CONTENT.general.title}
+                steps={ONBOARDING_CONTENT.general.steps}
+              />
+            </div>
           }
           description='Ghi nhận một việc thiện nhỏ và dành một phút nhìn lại tâm mình.'
           note='Mọi ghi nhận đều riêng tư và không dùng để so sánh.'

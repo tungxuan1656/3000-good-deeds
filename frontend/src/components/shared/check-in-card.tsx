@@ -2,6 +2,7 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { useCategories } from '@/hooks/api/use-categories'
+import { ONBOARDING_CONTENT } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 import { Button } from '../ui/button'
@@ -10,6 +11,7 @@ import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 import { InfoButton } from './info-button'
 import Leaf from './leaf'
+import { TourGuideButton } from './tour-guide-button'
 
 export function CheckInCard() {
   const checkInRef = useRef<CheckInDrawerHandle>(null)
@@ -27,7 +29,13 @@ export function CheckInCard() {
         <div>
           <div className='flex items-center justify-between gap-2'>
             <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
-            <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
+            <div className='flex items-center gap-1'>
+              <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
+              <TourGuideButton
+                flowTitle={ONBOARDING_CONTENT.deeds.title}
+                steps={ONBOARDING_CONTENT.deeds.steps}
+              />
+            </div>
           </div>
           <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
             Bạn đã làm được điều gì hôm nay?
