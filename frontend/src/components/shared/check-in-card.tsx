@@ -2,7 +2,7 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { useCategories } from '@/hooks/api/use-categories'
-import { ONBOARDING_CONTENT } from '@/lib/constants'
+import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/info-copy'
 
 import { Button } from '../ui/button'
@@ -32,8 +32,10 @@ export function CheckInCard() {
             <div className='flex items-center gap-1'>
               <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
               <TourGuideButton
+                autoOpen
                 flowTitle={ONBOARDING_CONTENT.deeds.title}
                 steps={ONBOARDING_CONTENT.deeds.steps}
+                storageKey={ONBOARDING_KEYS.deeds}
               />
             </div>
           </div>

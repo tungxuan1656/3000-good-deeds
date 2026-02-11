@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import { loginGoogle } from '@/api/auth'
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
+import { TourGuideButton } from '@/components/shared/tour-guide-button'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { PATHS } from '@/lib/constants'
+import { ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
 import { authActions } from '@/stores/auth-store'
 
 const LoginPage = () => {
@@ -62,18 +63,26 @@ const LoginPage = () => {
           <div className='flex flex-col justify-center gap-6'>
             <CardSection className='flex flex-col gap-6'>
               <Leaf className='opacity-30' position='top-right' variant={2} />
-              <div className='flex items-center gap-4'>
-                <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white/80 shadow-sm'>
-                  <img alt='Mầm từ bi' className='h-10 w-10' src='/icons/icon_sprout.png' />
+              <div className='flex items-start justify-between gap-4'>
+                <div className='flex items-center gap-4'>
+                  <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white/80 shadow-sm'>
+                    <img alt='Mầm từ bi' className='h-10 w-10' src='/icons/icon_sprout.png' />
+                  </div>
+                  <div>
+                    <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
+                      3000 Việc Thiện
+                    </p>
+                    <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
+                      Nuôi dưỡng tâm từ bi
+                    </h1>
+                  </div>
                 </div>
-                <div>
-                  <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
-                    3000 Việc Thiện
-                  </p>
-                  <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
-                    Nuôi dưỡng tâm từ bi
-                  </h1>
-                </div>
+                <TourGuideButton
+                  autoOpen
+                  flowTitle={ONBOARDING_CONTENT.general.title}
+                  steps={ONBOARDING_CONTENT.general.steps}
+                  storageKey={ONBOARDING_KEYS.general}
+                />
               </div>
               <p className='text-muted-foreground/90 text-base leading-relaxed'>
                 Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.

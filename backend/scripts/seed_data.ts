@@ -13,7 +13,7 @@ const seedCategories = [
   {
     code: 'body',
     name: 'Thân thiện',
-    description: 'Hành động cụ thể bằng thân',
+    description: 'Những hành động tốt như giúp đỡ, bảo vệ, bố thí,...',
     icon: '/icons/icon_than.png',
     style: 'bg-body/20 hover:bg-body/40',
     order_index: 1,
@@ -29,7 +29,7 @@ const seedCategories = [
   {
     code: 'mind',
     name: 'Ý thiện',
-    description: 'Suy nghĩ lành, buông xả',
+    description: 'Suy nghĩ hiểu, thương, không ganh ghét, tham lam, sân hận, ác ý, tà kiến.',
     icon: '/icons/icon_y.png',
     style: 'bg-mind/20 hover:bg-mind/40',
     order_index: 3,

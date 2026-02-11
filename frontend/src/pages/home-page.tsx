@@ -23,7 +23,6 @@ const HomePage = () => {
             <div className='flex items-center gap-1'>
               <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
               <TourGuideButton
-                autoOpen
                 flowTitle={ONBOARDING_CONTENT.general.title}
                 steps={ONBOARDING_CONTENT.general.steps}
                 storageKey={ONBOARDING_KEYS.general}
