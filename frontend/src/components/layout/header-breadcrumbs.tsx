@@ -20,7 +20,6 @@ const breadcrumbLabels: Record<string, string> = {
   quote: 'Trích dẫn',
   'random-acts': 'Gợi ý việc thiện',
   journal: 'Sổ tay quán chiếu',
-  meditation: 'Thiền & thở',
   settings: 'Cài đặt',
   history: 'Lịch sử',
 }

@@ -30,7 +30,7 @@ const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
               }
             </p>
           </div>
-          <div className='flex h-9 w-9 items-center justify-center rounded-full bg-red-100'>
+          <div className='flex items-center justify-center rounded-full'>
             <Trash2Icon className='h-4 w-4 text-red-600' />
           </div>
         </div>

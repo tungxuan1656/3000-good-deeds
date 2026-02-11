@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
-const innerPaths = [PATHS.INNER, PATHS.INNER_JOURNAL, PATHS.INNER_MEDITATION]
+const innerPaths = [PATHS.INNER, PATHS.INNER_JOURNAL]
 const morePaths = [PATHS.MORE, PATHS.GOALS, PATHS.SETTINGS, PATHS.INNER_RANDOM_ACTS]
 
 const isPathActive = (pathname: string, targetPath: string) => {

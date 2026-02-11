@@ -8,7 +8,6 @@ import GoalsPage from '@/pages/goals-page'
 import HomePage from '@/pages/home-page'
 import InnerJournalHistoryPage from '@/pages/inner-journal-history-page'
 import InnerJournalPage from '@/pages/inner-journal-page'
-import InnerMeditationPage from '@/pages/inner-meditation-page'
 import InnerPage from '@/pages/inner-page'
 import InnerRandomActsPage from '@/pages/inner-random-acts-page'
 import LoginPage from '@/pages/login-page'
@@ -38,7 +37,6 @@ function App() {
               <Route element={<InnerRandomActsPage />} path={PATHS.INNER_RANDOM_ACTS} />
               <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL} />
               <Route element={<InnerJournalHistoryPage />} path={PATHS.INNER_JOURNAL_HISTORY} />
-              <Route element={<InnerMeditationPage />} path={PATHS.INNER_MEDITATION} />
               <Route element={<MorePage />} path={PATHS.MORE} />
               <Route element={<SettingsPage />} path={PATHS.SETTINGS} />
             </Route>

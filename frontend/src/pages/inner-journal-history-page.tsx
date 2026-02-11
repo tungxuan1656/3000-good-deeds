@@ -43,7 +43,7 @@ const InnerJournalHistoryPage = () => {
         {isEmpty && (
           <EmptyDataView
             Icon={<BookOpenIcon />}
-            description='Khi bạn viết một dòng, nơi này sẽ tự đầy.'
+            description='Khi bạn viết một dòng, nơi này sẽ xuất hiện bài viết của bạn.'
             title='Chưa có bài viết nào'
           />
         )}

@@ -1,4 +1,4 @@
-import { BookOpenIcon, LeafIcon } from 'lucide-react'
+import { BookOpenIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
@@ -23,14 +23,14 @@ const InnerPage = () => {
               title={INFO_COPY.cultivation.title}
             />
           }
-          description='Thiền thở và sổ tay quán chiếu — những bước nhỏ để quay về với mình.'
-          note='Chọn một thực hành phù hợp với hiện tại của bạn.'
+          description='Sổ tay quán chiếu — một bước nhỏ để quay về với mình.'
+          note='Viết xuống để nhìn rõ và buông nhẹ.'
           subtitle='Tu tập'
           title='Không gian tu tập'
         />
 
         <CardSection className='gap-4'>
-          <p className='text-foreground text-base font-semibold'>Chọn một thực hành</p>
+          <p className='text-foreground text-base font-semibold'>Sổ tay quán chiếu</p>
           <div className='flex flex-col gap-3'>
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
@@ -43,18 +43,6 @@ const InnerPage = () => {
                 <p className='text-muted-foreground mt-1 text-sm'>
                   Viết xuống để nhìn rõ và buông nhẹ.
                 </p>
-              </div>
-            </Link>
-
-            <Link
-              className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
-              to={PATHS.INNER_MEDITATION}>
-              <div className='bg-body/20 flex h-12 w-12 items-center justify-center rounded-2xl'>
-                <LeafIcon className='text-primary h-5 w-5' />
-              </div>
-              <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Thiền thở</p>
-                <p className='text-muted-foreground mt-1 text-sm'>Thở sâu, trở về hiện tại.</p>
               </div>
             </Link>
           </div>

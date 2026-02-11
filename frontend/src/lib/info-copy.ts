@@ -22,7 +22,7 @@ export const INFO_COPY = {
   cultivation: {
     title: 'Không gian tu tập',
     description:
-      'Tu tập là quay vào bên trong. Bạn có thể chọn một thực hành nhỏ phù hợp lúc này, không cần làm đủ hay làm nhanh.',
+      'Tu tập là quay vào bên trong. Sổ tay quán chiếu là nơi bạn viết xuống điều mình thấy rõ, để nhìn lại và buông nhẹ.',
   },
   journal: {
     title: 'Sổ tay quán chiếu',

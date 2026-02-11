@@ -22,14 +22,14 @@ const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
 
   return (
     <CardSection className='gap-4'>
-      <div className='flex items-center justify-between'>
+      <div className='flex justify-between'>
         <div>
           <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
             Hồ sơ
           </p>
           <p className='text-foreground mt-2 text-base font-semibold'>Tài khoản của bạn</p>
         </div>
-        <div className='bg-secondary/40 flex h-10 w-10 items-center justify-center rounded-full'>
+        <div className='flex justify-center rounded-full'>
           <UserIcon className='text-primary h-5 w-5' />
         </div>
       </div>

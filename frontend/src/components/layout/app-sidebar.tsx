@@ -70,8 +70,8 @@ export const AppSidebar = () => {
                 const isActive = (() => {
                   if (path === PATHS.HOME) return location.pathname === PATHS.HOME
                   if (path === PATHS.INNER) {
-                    return [PATHS.INNER, PATHS.INNER_JOURNAL, PATHS.INNER_MEDITATION].some(
-                      (innerPath) => location.pathname.startsWith(innerPath),
+                    return [PATHS.INNER, PATHS.INNER_JOURNAL].some((innerPath) =>
+                      location.pathname.startsWith(innerPath),
                     )
                   }
 
