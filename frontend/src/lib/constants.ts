@@ -13,6 +13,8 @@ import type { GoalTypeDTO } from '@/types/api'
 
 export const PATHS = {
   LOGIN: '/login',
+  TERMS: '/terms',
+  PRIVACY: '/privacy',
   HOME: '/',
   TIMELINE: '/timeline',
   STATS: '/stats',

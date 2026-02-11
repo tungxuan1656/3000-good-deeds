@@ -1,6 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { loginGoogle } from '@/api/auth'
 import { CardSection } from '@/components/shared/card-section'
@@ -108,13 +108,13 @@ const LoginPage = () => {
 
             <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
               Bằng cách tiếp tục, bạn đồng ý với{' '}
-              <span className='underline decoration-dashed underline-offset-2'>
+              <Link className='underline decoration-dashed underline-offset-2' to={PATHS.TERMS}>
                 Điều khoản sử dụng
-              </span>{' '}
+              </Link>{' '}
               và{' '}
-              <span className='underline decoration-dashed underline-offset-2'>
+              <Link className='underline decoration-dashed underline-offset-2' to={PATHS.PRIVACY}>
                 Chính sách riêng tư
-              </span>
+              </Link>
               .
             </p>
           </div>

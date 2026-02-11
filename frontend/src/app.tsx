@@ -12,8 +12,10 @@ import InnerPage from '@/pages/inner-page'
 import InnerRandomActsPage from '@/pages/inner-random-acts-page'
 import LoginPage from '@/pages/login-page'
 import MorePage from '@/pages/more-page'
+import PrivacyPolicyPage from '@/pages/privacy-policy-page'
 import SettingsPage from '@/pages/settings-page'
 import StatsPage from '@/pages/stats-page'
+import TermsOfUsePage from '@/pages/terms-of-use-page'
 import TimelinePage from '@/pages/timeline-page'
 import ProtectedRoute from '@/routes/protected-route'
 
@@ -27,6 +29,8 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route element={<LoginPage />} path={PATHS.LOGIN} />
+          <Route element={<TermsOfUsePage />} path={PATHS.TERMS} />
+          <Route element={<PrivacyPolicyPage />} path={PATHS.PRIVACY} />
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route element={<HomePage />} path={PATHS.HOME} />
