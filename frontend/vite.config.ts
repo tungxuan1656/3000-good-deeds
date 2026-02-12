@@ -1,9 +1,9 @@
-import path from 'path'
-import { readFileSync } from 'fs'
-import { VitePWA } from 'vite-plugin-pwa'
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import { readFileSync } from 'fs'
+import path from 'path'
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
 
 const packageJson = JSON.parse(
   readFileSync(path.resolve(__dirname, './package.json'), 'utf-8'),
@@ -37,9 +37,9 @@ export default defineConfig(({ mode }) => ({
       },
 
       manifest: {
-        name: '3000-good-deeds',
-        short_name: '3000-good-deeds',
-        description: '3000-good-deeds',
+        name: '3000 Việc Thiện',
+        short_name: '3000 Việc Thiện',
+        description: '3000 Việc Thiện - Nơi để bạn tu tập',
         theme_color: '#ffffff',
       },
 
