@@ -12,6 +12,7 @@ import {
   CardSection,
   DailyQuoteCard,
   HeaderSection,
+  LegalFooter,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
@@ -81,6 +82,8 @@ const MorePage = () => {
             </Link>
           ))}
         </CardSection>
+
+        <LegalFooter />
       </MainColumn>
 
       <SideColumn hideInMobile>

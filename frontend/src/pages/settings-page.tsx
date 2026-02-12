@@ -10,6 +10,7 @@ import SessionCard from '@/components/settings/session-card'
 import {
   DailyQuoteCard,
   HeaderSection,
+  LegalFooter,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
@@ -59,6 +60,8 @@ const SettingsPage = () => {
         <NotificationSettingsCard user={user} />
         <SessionCard onLogout={handleLogout} />
         <DeleteAccountCard />
+
+        <LegalFooter />
       </MainColumn>
 
       <SideColumn hideInMobile>

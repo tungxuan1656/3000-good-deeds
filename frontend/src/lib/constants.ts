@@ -28,6 +28,9 @@ export const PATHS = {
   SETTINGS: '/settings',
 }
 
+export const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || ''
+export const APP_VERSION = __APP_VERSION__
+
 export const INNER_JOURNAL_TYPES = ['gratitude', 'repentance'] as const
 export type InnerJournalType = (typeof INNER_JOURNAL_TYPES)[number]
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { CardSection, HeaderSection } from '@/components/shared'
+import { CardSection, HeaderSection, LegalFooter } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { PATHS } from '@/lib/constants'
 
@@ -171,17 +171,9 @@ const TermsOfUsePage = () => {
               liên hệ chúng tôi qua kênh hỗ trợ được công bố trong Ứng dụng/website.
             </p>
           </Section>
-
-          <div className='pt-2'>
-            <p className='text-muted-foreground text-xs leading-relaxed'>
-              Gợi ý nhẹ: Nếu bạn muốn hiểu rõ cách dữ liệu được xử lý, vui lòng đọc thêm{' '}
-              <Link className='text-foreground underline underline-offset-4' to={PATHS.PRIVACY}>
-                Chính sách riêng tư
-              </Link>
-              .
-            </p>
-          </div>
         </CardSection>
+
+        <LegalFooter />
       </div>
     </div>
   )
