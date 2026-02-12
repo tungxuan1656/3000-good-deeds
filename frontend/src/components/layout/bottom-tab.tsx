@@ -19,7 +19,7 @@ export const BottomTab = () => {
   const location = useLocation()
 
   return (
-    <div className='fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white backdrop-blur md:hidden'>
+    <div className='pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white backdrop-blur md:hidden'>
       <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-2'>
         {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
           const active = isPathActive(location.pathname, path)
@@ -42,7 +42,6 @@ export const BottomTab = () => {
           )
         })}
       </div>
-      <div className='h-[env(safe-area-inset-bottom)]' />
     </div>
   )
 }
