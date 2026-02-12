@@ -195,7 +195,12 @@ async function main() {
   const quotes = await loadQuotes(quotesPath)
   const randomActs = await loadRandomActs(randomActsPath)
 
-  const statements: string[] = ['BEGIN TRANSACTION;']
+  const wrapInSqlTransaction = options.target === 'local'
+  const statements: string[] = []
+
+  if (wrapInSqlTransaction) {
+    statements.push('BEGIN TRANSACTION;')
+  }
 
   for (const category of seedCategories) {
     const now = Date.now()
@@ -227,7 +232,9 @@ async function main() {
     )
   }
 
-  statements.push('COMMIT;')
+  if (wrapInSqlTransaction) {
+    statements.push('COMMIT;')
+  }
 
   const sql = statements.join('\n')
 
@@ -236,7 +243,8 @@ async function main() {
   await fs.writeFile(sqlFilePath, sql)
 
   try {
-    console.log(`Generated SQL script with ${statements.length - 2} statements at ${sqlFilePath}`)
+    const statementCount = wrapInSqlTransaction ? statements.length - 2 : statements.length
+    console.log(`Generated SQL script with ${statementCount} statements at ${sqlFilePath}`)
 
     const commandArgs = ['wrangler', 'd1', 'execute', options.dbBinding, '--file', sqlFilePath]
     if (options.target === 'local') {
