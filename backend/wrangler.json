@@ -1,13 +1,13 @@
 {
   "compatibility_date": "2025-10-08",
   "main": "src/index.ts",
-  "name": "3000-good-deeds-backend",
+  "name": "3000-good-deeds",
   "upload_source_maps": true,
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "3000-good-deeds-db",
-      "database_id": "2d5eb897-3021-40bf-b081-b06b9d060b39"
+      "database_name": "3000-good-deeds-database",
+      "database_id": "f2fff8c2-b625-49c3-9822-a6cbf6569940"
     }
   ],
   "observability": {
