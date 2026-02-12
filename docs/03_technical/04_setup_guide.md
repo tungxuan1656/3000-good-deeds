@@ -85,3 +85,9 @@ Server sẽ chạy tại: `http://localhost:5173` (hoặc port khác nếu 5173 
 | `pnpm run migrate:local`  | Update database schema local |
 | `pnpm run type-check`     | Kiểm tra lỗi TypeScript      |
 | `pnpm run format`         | Format code với Prettier     |
+
+## 7. Deploy Production
+
+Checklist đầy đủ để deploy production (Backend Cloudflare Workers + Frontend Firebase Hosting):
+
+- [08_production_deploy_checklist.md](./08_production_deploy_checklist.md)

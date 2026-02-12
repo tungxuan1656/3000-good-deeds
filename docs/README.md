@@ -27,6 +27,7 @@ Dành cho Developer & DevOps.
 *   [00_architecture.md](./03_technical/00_architecture.md): Kiến trúc hệ thống.
 *   [01_database_schema.md](./03_technical/01_database_schema.md): Sơ đồ CSDL (D1).
 *   [02_api_design.md](./03_technical/02_api_design.md): Danh sách API Endpoints.
+*   [08_production_deploy_checklist.md](./03_technical/08_production_deploy_checklist.md): Checklist deploy production (Cloudflare Workers + Firebase Hosting).
 
 ### [04. Thiết kế (Design)](./04_design)
 Dành cho UI/UX Designer & Frontend Dev.
