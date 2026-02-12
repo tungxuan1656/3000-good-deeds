@@ -19,6 +19,8 @@ import TermsOfUsePage from '@/pages/terms-of-use-page'
 import TimelinePage from '@/pages/timeline-page'
 import ProtectedRoute from '@/routes/protected-route'
 
+import { AppBack } from './components/layout/app-back'
+
 // Get Google Client ID from environment variables
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
@@ -46,6 +48,7 @@ function App() {
             </Route>
           </Route>
         </Routes>
+        <AppBack />
       </Router>
     </GoogleOAuthProvider>
   )

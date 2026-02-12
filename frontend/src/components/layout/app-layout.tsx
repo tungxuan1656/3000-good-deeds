@@ -4,7 +4,6 @@ import { AppSidebar, BottomTab } from '@/components/layout'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 import { Toaster } from '../ui/sonner'
-import { AppBack } from './app-back'
 import { AppHeader } from './app-header'
 
 const AppLayout = () => {
@@ -20,7 +19,6 @@ const AppLayout = () => {
           <Toaster position='top-center' />
         </div>
         <BottomTab />
-        <AppBack />
       </SidebarInset>
     </SidebarProvider>
   )
