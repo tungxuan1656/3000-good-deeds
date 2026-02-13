@@ -8,7 +8,7 @@ import Leaf from '@/components/shared/leaf'
 import { TourGuideButton } from '@/components/shared/tour-guide-button'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
+import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
 import { authActions } from '@/stores/auth-store'
 
 const LoginPage = () => {
@@ -116,6 +116,9 @@ const LoginPage = () => {
                 Chính sách riêng tư
               </Link>
               .
+            </p>
+            <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
+              Phiên bản {APP_VERSION}
             </p>
           </div>
 
