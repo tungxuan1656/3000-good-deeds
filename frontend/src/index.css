@@ -191,6 +191,11 @@
   padding-top: env(safe-area-inset-top);
 }
 
+@utility mt-safe {
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
