@@ -1,46 +1,20 @@
-import { LogOutIcon } from 'lucide-react'
-import { useRef } from 'react'
+import { CardSection } from '@/components/shared'
 
-import { CardSection, ConfirmDialog } from '@/components/shared'
-import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
-import { Button } from '@/components/ui/button'
+import { LogoutButton } from './logout-button'
 
-interface SessionCardProps {
-  onLogout: () => void
-}
-
-const SessionCard = ({ onLogout }: SessionCardProps) => {
-  const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
-
+const SessionCard = () => {
   return (
-    <>
-      <CardSection className='gap-4'>
-        <div>
-          <p className='text-foreground text-base font-semibold'>Phiên đăng nhập</p>
-          <p className='text-muted-foreground mt-1 text-sm'>Quản lý đăng nhập của bạn.</p>
-          <p className='text-muted-foreground mt-1 text-sm'>Đăng xuất không xoá dữ liệu.</p>
-        </div>
-        <Button
-          className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80'
-          variant='secondary'
-          onClick={() => logoutDialogRef.current?.open()}>
-          <LogOutIcon className='h-4 w-4' />
-          Đăng xuất
-        </Button>
-      </CardSection>
-
-      <ConfirmDialog
-        ref={logoutDialogRef}
-        cancelLabel='Để sau'
-        confirmLabel='Đăng xuất'
-        description='Bạn có thể đăng nhập lại bất cứ lúc nào.'
-        title='Đăng xuất khỏi tài khoản?'
-        onConfirm={() => {
-          logoutDialogRef.current?.close()
-          onLogout()
-        }}
+    <CardSection className='gap-4'>
+      <div>
+        <p className='text-foreground text-base font-semibold'>Phiên đăng nhập</p>
+        <p className='text-muted-foreground mt-1 text-sm'>Quản lý đăng nhập của bạn.</p>
+        <p className='text-muted-foreground mt-1 text-sm'>Đăng xuất không xoá dữ liệu.</p>
+      </div>
+      <LogoutButton
+        className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80'
+        variant='secondary'
       />
-    </>
+    </CardSection>
   )
 }
 

@@ -8,6 +8,7 @@ import {
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
+import { LogoutButton } from '@/components/settings/logout-button'
 import {
   CardSection,
   DailyQuoteCard,
@@ -82,6 +83,7 @@ const MorePage = () => {
             </Link>
           ))}
         </CardSection>
+        <LogoutButton className='text-destructive' variant={'ghost'} />
 
         <LegalFooter />
       </MainColumn>

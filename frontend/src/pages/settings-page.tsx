@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { logout } from '@/api/auth'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import AccountProfileCard from '@/components/settings/account-profile-card'
 import DeleteAccountCard from '@/components/settings/delete-account-card'
@@ -15,12 +13,9 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { useUser } from '@/hooks/api/use-user'
-import { PATHS } from '@/lib/constants'
-import { unsubscribeFromPushNotifications } from '@/lib/push-notifications'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
-  const navigate = useNavigate()
   const userFromStore = useAuthStore.use.user()
   const { data: userResponse } = useUser()
 
@@ -31,18 +26,6 @@ const SettingsPage = () => {
       authActions.setUser(user)
     }
   }, [user])
-
-  const handleLogout = async () => {
-    try {
-      await unsubscribeFromPushNotifications()
-      await logout()
-    } catch {
-      // Ignore logout errors and still clear local state
-    } finally {
-      authActions.logout()
-      navigate(PATHS.LOGIN, { replace: true })
-    }
-  }
 
   return (
     <MainContainer>
@@ -57,7 +40,7 @@ const SettingsPage = () => {
         <AccountProfileCard user={user} />
 
         <NotificationSettingsCard user={user} />
-        <SessionCard onLogout={handleLogout} />
+        <SessionCard />
         <DeleteAccountCard />
 
         <LegalFooter />
