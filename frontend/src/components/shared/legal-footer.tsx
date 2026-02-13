@@ -35,14 +35,10 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
                 className='text-foreground font-medium underline underline-offset-2'
                 type='button'
                 onClick={handleCopyEmail}>
-                {email}
-              </button>
-              <button
-                aria-label='Sao chép email hỗ trợ'
-                className='text-foreground hover:text-foreground ml-1 inline-flex align-middle'
-                type='button'
-                onClick={handleCopyEmail}>
-                <CopyIcon className='h-3.5 w-3.5' />
+                <span className='flex items-center gap-1'>
+                  {email}
+                  <CopyIcon className='h-3.5 w-3.5' />
+                </span>
               </button>
             </>
           ) : (

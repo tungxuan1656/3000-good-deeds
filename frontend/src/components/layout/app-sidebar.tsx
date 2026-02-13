@@ -1,10 +1,6 @@
-import { LogOutIcon, UserRoundIcon } from 'lucide-react'
-import { useRef } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { UserRoundIcon } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
 
-import { logout } from '@/api/auth'
-import { ConfirmDialog } from '@/components/shared'
-import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import {
   Sidebar,
   SidebarContent,
@@ -19,28 +15,15 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
-import { unsubscribeFromPushNotifications } from '@/lib/push-notifications'
-import { authActions, useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth-store'
+
+import { LogoutButton } from '../settings/logout-button'
 
 export const AppSidebar = () => {
   const location = useLocation()
-  const navigate = useNavigate()
   const user = useAuthStore.use.user()
-  const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const displayName = user?.displayName ?? 'Bạn'
   const displayEmail = user?.email ?? 'Chưa có email'
-
-  const handleLogout = async () => {
-    try {
-      await unsubscribeFromPushNotifications()
-      await logout()
-    } catch {
-      // Ignore logout errors and still clear local state
-    } finally {
-      authActions.logout()
-      navigate(PATHS.LOGIN, { replace: true })
-    }
-  }
 
   return (
     <Sidebar className='bg-white'>
@@ -96,26 +79,10 @@ export const AppSidebar = () => {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              className='text-destructive'
-              onClick={() => logoutDialogRef.current?.open()}>
-              <LogOutIcon />
-              <span>Đăng xuất</span>
-            </SidebarMenuButton>
+            <LogoutButton className='text-destructive w-full font-semibold' variant={'ghost'} />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-      <ConfirmDialog
-        ref={logoutDialogRef}
-        cancelLabel='Để sau'
-        confirmLabel='Đăng xuất'
-        description='Đăng xuất không xoá dữ liệu. Bạn có thể đăng nhập lại bất cứ lúc nào.'
-        title='Đăng xuất khỏi tài khoản?'
-        onConfirm={() => {
-          logoutDialogRef.current?.close()
-          handleLogout()
-        }}
-      />
     </Sidebar>
   )
 }
