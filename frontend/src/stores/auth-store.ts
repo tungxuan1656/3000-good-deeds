@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 import type { AuthResponse, UserDTO } from '@/types/api'
 
@@ -23,6 +23,7 @@ const _useAuthStore = create<AuthState>()(
       }),
       {
         name: 'auth-storage',
+        storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
           isAuthenticated: state.isAuthenticated,
           user: state.user,
