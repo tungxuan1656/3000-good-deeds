@@ -23,7 +23,7 @@ export interface SuggestActsDrawerHandle {
 export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_props, ref) => {
   const isMobile = useIsMobile()
   const [open, setOpen] = React.useState(false)
-  const { data, isFetching, refetch } = useRandomActs(5, open)
+  const { data, isFetching, refetch } = useRandomActs(2, open)
   const acts = data?.data ?? []
   const categoryMeta = {
     body: { label: 'Thân', className: 'bg-body/20 text-foreground' },
@@ -46,7 +46,7 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
         className={isMobile ? 'rounded-t-2xl' : ''}
         side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
-          <div className='flex items-center justify-between gap-2'>
+          <div className='flex items-center gap-1'>
             <SheetTitle>Gợi ý việc thiện</SheetTitle>
             <InfoButton
               description={INFO_COPY.randomActs.description}
@@ -65,7 +65,7 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
             className='h-8 rounded-full px-3 text-xs'
             disabled={isFetching}
             size='sm'
-            variant='secondary'
+            variant='outline'
             onClick={() => refetch()}>
             {isFetching ? <Spinner /> : <RefreshCwIcon className='h-4 w-4' />}
             Đổi gợi ý

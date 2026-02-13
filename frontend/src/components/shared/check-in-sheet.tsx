@@ -109,7 +109,7 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
         className={isMobile ? 'rounded-t-2xl' : ''}
         side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
-          <div className='flex items-center justify-between gap-2 pr-4'>
+          <div className='flex items-center gap-1 pr-4'>
             <SheetTitle>Ghi lại một việc thiện</SheetTitle>
             <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
           </div>
