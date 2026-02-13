@@ -127,7 +127,6 @@ const LoginPage = () => {
 
   const handleGoogleLogin = () => {
     setError(null)
-
     if (useRedirectFlow) {
       redirectGoogleLogin()
 
