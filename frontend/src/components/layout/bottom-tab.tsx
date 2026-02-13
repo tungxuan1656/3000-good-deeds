@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
@@ -17,33 +19,47 @@ const isPathActive = (pathname: string, targetPath: string) => {
 export const BottomTab = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const [mounted, setMounted] = useState(false)
 
-  return (
-    <div className='pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white backdrop-blur md:hidden'>
-      <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-0.5'>
-        {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
-          const active = isPathActive(location.pathname, path)
+  useEffect(() => {
+    setMounted(true)
 
-          return (
-            <button
-              key={label}
-              className='flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors'
-              type='button'
-              onClick={() => navigate(path)}>
-              <Icon
-                className={cn('size-5', active ? 'text-primary' : 'text-muted-foreground/70')}
-              />
-              <span
-                className={cn(
-                  'text-xs font-medium',
-                  active ? 'text-primary font-semibold' : 'text-muted-foreground/70',
-                )}>
-                {label}
-              </span>
-            </button>
-          )
-        })}
+    return () => setMounted(false)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
+  return createPortal(
+    <div className='pointer-events-none fixed inset-x-0 bottom-0 z-80 md:hidden'>
+      <div className='pb-safe pointer-events-auto border-t border-black/10 bg-white backdrop-blur'>
+        <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-0.5'>
+          {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
+            const active = isPathActive(location.pathname, path)
+
+            return (
+              <button
+                key={label}
+                className='flex flex-1 touch-manipulation flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors'
+                type='button'
+                onClick={() => navigate(path)}>
+                <Icon
+                  className={cn('size-5', active ? 'text-primary' : 'text-muted-foreground/70')}
+                />
+                <span
+                  className={cn(
+                    'text-xs font-medium',
+                    active ? 'text-primary font-semibold' : 'text-muted-foreground/70',
+                  )}>
+                  {label}
+                </span>
+              </button>
+            )
+          })}
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
