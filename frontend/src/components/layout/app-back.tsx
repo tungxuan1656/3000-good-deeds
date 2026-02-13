@@ -18,7 +18,7 @@ export const AppBack = () => {
 
   return (
     <button
-      className='fixed top-4 left-3 rounded-full border border-black/5 bg-white p-2 shadow-sm'
+      className='t-safe fixed left-3 rounded-full border border-black/5 bg-white p-2 shadow-sm'
       onClick={() => window.history.back()}>
       <ArrowLeftIcon className='size-5' />
     </button>
