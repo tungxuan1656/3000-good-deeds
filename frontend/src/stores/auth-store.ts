@@ -1,25 +1,25 @@
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
-import type { AuthResponse, UserDTO } from '@/types/api'
+import type { AuthResponse, SessionResponse, UserDTO } from '@/types/api'
 
 import { createSelectors } from './types'
 
 interface AuthState {
+  isSessionChecked: boolean
   isAuthenticated: boolean
   user: UserDTO | null
   accessToken: string | null
-  refreshToken: string | null
 }
 
 const _useAuthStore = create<AuthState>()(
   devtools(
     persist(
       (_) => ({
+        isSessionChecked: false,
         isAuthenticated: false,
         user: null,
         accessToken: null,
-        refreshToken: null,
       }),
       {
         name: 'auth-storage',
@@ -28,7 +28,6 @@ const _useAuthStore = create<AuthState>()(
           isAuthenticated: state.isAuthenticated,
           user: state.user,
           accessToken: state.accessToken,
-          refreshToken: state.refreshToken,
         }),
       },
     ),
@@ -36,30 +35,41 @@ const _useAuthStore = create<AuthState>()(
 )
 
 export const authActions = {
+  markSessionChecked: (checked = true) => _useAuthStore.setState({ isSessionChecked: checked }),
   login: (authResponse: AuthResponse) => {
-    const { accessToken, refreshToken, user } = authResponse
+    const { accessToken, user } = authResponse
 
-    // Save tokens to localStorage for API client
+    // Save access token for API client
     localStorage.setItem('accessToken', accessToken)
-    localStorage.setItem('refreshToken', refreshToken)
 
     _useAuthStore.setState({
       isAuthenticated: true,
+      isSessionChecked: true,
       user,
       accessToken,
-      refreshToken,
+    })
+  },
+  restoreSession: (sessionResponse: SessionResponse) => {
+    const { accessToken, user } = sessionResponse
+
+    localStorage.setItem('accessToken', accessToken)
+
+    _useAuthStore.setState({
+      isAuthenticated: true,
+      isSessionChecked: true,
+      user,
+      accessToken,
     })
   },
   logout: () => {
     // Clear localStorage
     localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
 
     _useAuthStore.setState({
       isAuthenticated: false,
+      isSessionChecked: true,
       user: null,
       accessToken: null,
-      refreshToken: null,
     })
   },
   setUser: (user: UserDTO) => _useAuthStore.setState({ user }),

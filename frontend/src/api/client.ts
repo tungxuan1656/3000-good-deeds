@@ -9,6 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
 
 export const client = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -73,21 +74,18 @@ client.interceptors.response.use(
         originalRequest._retry = true
         isRefreshing = true
 
-        const refreshToken = localStorage.getItem('refreshToken')
-
-        if (!refreshToken) {
-          // No refresh token, redirect to login
-          isRefreshing = false
-          redirectToLogin()
-
-          return Promise.reject(error)
-        }
-
         try {
-          // Try to refresh the token
-          const response = await axios.post(`${API_URL}${API_ENDPOINTS.auth.refresh}`, {
-            refreshToken,
-          })
+          // Try to refresh using httpOnly cookie session
+          const response = await axios.post(
+            `${API_URL}${API_ENDPOINTS.auth.refresh}`,
+            {},
+            {
+              withCredentials: true,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          )
 
           const { accessToken } = response.data.data
 
@@ -125,7 +123,6 @@ client.interceptors.response.use(
 function redirectToLogin() {
   // Clear all auth data
   localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
   localStorage.removeItem('user')
   localStorage.removeItem('auth-storage')
 

@@ -1,5 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { loginGoogle } from '@/api/auth'
@@ -10,12 +10,20 @@ import { TourGuideButton } from '@/components/shared/tour-guide-button'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
-import { authActions } from '@/stores/auth-store'
+import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const LoginPage = () => {
   const navigate = useNavigate()
+  const isSessionChecked = useAuthStore.use.isSessionChecked()
+  const isAuthenticated = useAuthStore.use.isAuthenticated()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isSessionChecked && isAuthenticated) {
+      navigate(PATHS.HOME, { replace: true })
+    }
+  }, [isSessionChecked, isAuthenticated, navigate])
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
@@ -51,6 +59,14 @@ const LoginPage = () => {
     },
     flow: 'auth-code',
   })
+
+  if (!isSessionChecked) {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <div className='bg-background min-h-screen px-4 py-8 sm:px-6 lg:px-8'>

@@ -26,7 +26,6 @@ export const AppSidebar = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const user = useAuthStore.use.user()
-  const refreshToken = useAuthStore.use.refreshToken()
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const displayName = user?.displayName ?? 'Bạn'
   const displayEmail = user?.email ?? 'Chưa có email'
@@ -34,10 +33,7 @@ export const AppSidebar = () => {
   const handleLogout = async () => {
     try {
       await unsubscribeFromPushNotifications()
-
-      if (refreshToken) {
-        await logout(refreshToken)
-      }
+      await logout()
     } catch {
       // Ignore logout errors and still clear local state
     } finally {

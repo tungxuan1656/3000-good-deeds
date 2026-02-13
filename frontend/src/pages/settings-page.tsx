@@ -22,7 +22,6 @@ import { authActions, useAuthStore } from '@/stores/auth-store'
 const SettingsPage = () => {
   const navigate = useNavigate()
   const userFromStore = useAuthStore.use.user()
-  const refreshToken = useAuthStore.use.refreshToken()
   const { data: userResponse } = useUser()
 
   const user = userResponse?.data ?? userFromStore
@@ -36,10 +35,7 @@ const SettingsPage = () => {
   const handleLogout = async () => {
     try {
       await unsubscribeFromPushNotifications()
-
-      if (refreshToken) {
-        await logout(refreshToken)
-      }
+      await logout()
     } catch {
       // Ignore logout errors and still clear local state
     } finally {
