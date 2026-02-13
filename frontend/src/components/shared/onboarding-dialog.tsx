@@ -1,5 +1,5 @@
 import { XIcon } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -33,9 +33,47 @@ export const OnboardingDialog = ({
   className,
 }: OnboardingDialogProps) => {
   const [index, setIndex] = useState(0)
+  const sliderRef = useRef<HTMLDivElement | null>(null)
+  const isProgrammaticScrollRef = useRef(false)
 
   const step = useMemo(() => steps[index], [index, steps])
   const isLast = index === steps.length - 1
+
+  const scrollToIndex = useCallback(
+    (targetIndex: number, behavior: ScrollBehavior = 'smooth') => {
+      const slider = sliderRef.current
+      if (!slider) return
+
+      const clampedIndex = Math.max(0, Math.min(targetIndex, steps.length - 1))
+      const targetLeft = clampedIndex * slider.clientWidth
+
+      isProgrammaticScrollRef.current = true
+      slider.scrollTo({ left: targetLeft, behavior })
+
+      window.setTimeout(() => {
+        isProgrammaticScrollRef.current = false
+      }, 300)
+    },
+    [steps.length],
+  )
+
+  useEffect(() => {
+    if (!open) return
+
+    setIndex(0)
+    scrollToIndex(0, 'auto')
+  }, [open, scrollToIndex])
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      setIndex(0)
+      onOpenChange(false)
+
+      return
+    }
+
+    onOpenChange(true)
+  }
 
   const handleClose = () => {
     setIndex(0)
@@ -48,17 +86,40 @@ export const OnboardingDialog = ({
 
       return
     }
-    setIndex((prev) => Math.min(prev + 1, steps.length - 1))
+
+    setIndex((prev) => {
+      const nextIndex = Math.min(prev + 1, steps.length - 1)
+      scrollToIndex(nextIndex)
+
+      return nextIndex
+    })
   }
 
   const handlePrev = () => {
-    setIndex((prev) => Math.max(prev - 1, 0))
+    setIndex((prev) => {
+      const prevIndex = Math.max(prev - 1, 0)
+      scrollToIndex(prevIndex)
+
+      return prevIndex
+    })
+  }
+
+  const handleSliderScroll = () => {
+    if (isProgrammaticScrollRef.current) return
+
+    const slider = sliderRef.current
+    if (!slider || slider.clientWidth === 0) return
+
+    const nextIndex = Math.round(slider.scrollLeft / slider.clientWidth)
+    if (nextIndex !== index) {
+      setIndex(Math.max(0, Math.min(nextIndex, steps.length - 1)))
+    }
   }
 
   if (!step) return null
 
   return (
-    <Dialog modal={true} open={open} onOpenChange={onOpenChange}>
+    <Dialog modal={true} open={open} onOpenChange={handleOpenChange}>
       <DialogContent className={cn('gap-4 sm:gap-5', className)} showCloseButton={false}>
         <DialogHeader className='gap-1'>
           <p className='text-muted-foreground text-xs font-medium tracking-widest uppercase'>
@@ -71,8 +132,19 @@ export const OnboardingDialog = ({
         </DialogHeader>
 
         <div className='flex flex-col items-center gap-4'>
-          <div className='flex w-full items-center justify-center overflow-hidden rounded-3xl'>
-            <img alt={step.title} className='h-80 max-h-80 w-full object-cover' src={step.image} />
+          <div
+            ref={sliderRef}
+            className='flex w-full snap-x snap-mandatory overflow-x-auto scroll-smooth rounded-3xl [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+            onScroll={handleSliderScroll}>
+            {steps.map((item, imageIndex) => (
+              <div key={`${item.title}-${imageIndex}`} className='w-full shrink-0 snap-start'>
+                <img
+                  alt={item.title}
+                  className='h-80 max-h-80 w-full object-cover'
+                  src={item.image}
+                />
+              </div>
+            ))}
           </div>
           <p className='text-foreground text-sm leading-relaxed'>{step.description}</p>
         </div>
