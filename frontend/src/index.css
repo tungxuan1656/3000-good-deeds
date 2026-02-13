@@ -181,6 +181,16 @@
   padding-bottom: calc(env(safe-area-inset-bottom) - 12px);
 }
 
+@utility t-safe {
+  top: calc(constant(safe-area-inset-top) + 1rem);
+  top: calc(env(safe-area-inset-top) + 1rem);
+}
+
+@utility pt-safe {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
