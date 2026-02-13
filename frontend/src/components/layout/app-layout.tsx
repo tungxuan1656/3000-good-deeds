@@ -5,7 +5,11 @@ import { toast } from 'sonner'
 import { AppSidebar, BottomTab } from '@/components/layout'
 import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { isPushSupported, subscribeToPushNotifications } from '@/lib/push-notifications'
+import {
+  isPushSupported,
+  subscribeToPushNotifications,
+  syncPushSubscription,
+} from '@/lib/push-notifications'
 import { useAuthStore } from '@/stores/auth-store'
 
 import { AppHeader } from './app-header'
@@ -19,6 +23,19 @@ const AppLayout = () => {
     if (!user?.id || !user.reminderEnabled) return
     if (!isPushSupported()) return
 
+    const permission = Notification.permission
+
+    // Already granted: keep subscription synced silently, no need to ask again.
+    if (permission === 'granted') {
+      void syncPushSubscription({ requestPermission: false })
+
+      return
+    }
+
+    // Denied: do not reopen permission dialog repeatedly.
+    if (permission === 'denied') return
+
+    // default: ask user once via confirm dialog.
     refNotificationDialog.current?.open()
   }, [user?.id, user?.reminderEnabled])
 
