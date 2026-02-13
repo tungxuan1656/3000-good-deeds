@@ -9,6 +9,7 @@ import { isPushSupported, subscribeToPushNotifications } from '@/lib/push-notifi
 import { useAuthStore } from '@/stores/auth-store'
 
 import { AppHeader } from './app-header'
+import { PWAGuideDialog } from './pwa-guide-dialog'
 
 const AppLayout = () => {
   const user = useAuthStore.use.user()
@@ -58,6 +59,7 @@ const AppLayout = () => {
           refNotificationDialog.current?.close()
         }}
       />
+      <PWAGuideDialog />
     </SidebarProvider>
   )
 }
