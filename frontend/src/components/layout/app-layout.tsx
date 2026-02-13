@@ -1,12 +1,24 @@
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { AppSidebar, BottomTab } from '@/components/layout'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { isPushSupported, syncPushSubscriptionSilently } from '@/lib/push-notifications'
+import { useAuthStore } from '@/stores/auth-store'
 
 import { Toaster } from '../ui/sonner'
 import { AppHeader } from './app-header'
 
 const AppLayout = () => {
+  const user = useAuthStore.use.user()
+
+  useEffect(() => {
+    if (!user?.id || !user.reminderEnabled) return
+    if (!isPushSupported()) return
+
+    syncPushSubscriptionSilently()
+  }, [user?.id, user?.reminderEnabled])
+
   return (
     <SidebarProvider className='bg-background relative min-h-screen pb-24 md:pb-0'>
       <AppSidebar />
