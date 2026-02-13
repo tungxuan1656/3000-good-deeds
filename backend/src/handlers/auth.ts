@@ -1,12 +1,22 @@
 import { SignJWT } from 'jose'
 
-import type { AuthResponse, GoogleAuthRequest, GoogleTokenResponse, GoogleUserInfo } from '../types'
+import type {
+  AuthResponse,
+  GoogleAuthRequest,
+  GoogleTokenResponse,
+  GoogleUserInfo,
+  SessionResponse,
+} from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
 import { getUser } from './users'
 
 const JWT_SECRET = 'your-secret-key-change-me' // TODO: Move to Env
-const TOKEN_EXPIRY = '15m'
+const TOKEN_EXPIRY = '1m'
 const REFRESH_TOKEN_EXPIRY_DAYS = 30
+
+type LoginWithGoogleResult = AuthResponse & {
+  refreshToken: string
+}
 
 // Helper: Generate JWT
 async function generateAccessToken(userId: string, secret: string) {
@@ -24,12 +34,39 @@ function generateRefreshToken() {
   return crypto.randomUUID()
 }
 
+type RefreshTokenRecord = {
+  user_id: string
+  expires_at: number
+}
+
+async function getValidRefreshToken(
+  db: D1Database,
+  refreshToken: string,
+): Promise<RefreshTokenRecord> {
+  const storedToken = await db
+    .prepare(
+      'SELECT user_id, expires_at FROM refresh_tokens WHERE token_hash = ? AND revoked_at IS NULL',
+    )
+    .bind(refreshToken)
+    .first<RefreshTokenRecord>()
+
+  if (!storedToken) {
+    throw new Error('Refresh token không hợp lệ')
+  }
+
+  if (storedToken.expires_at < getCurrentTimestamp()) {
+    throw new Error('Refresh token đã hết hạn')
+  }
+
+  return storedToken
+}
+
 // Google Login Handler
 export async function loginWithGoogle(
   db: D1Database,
   env: Env, // We expect GOOGLE_CLIENT_ID/SECRET here
   body: GoogleAuthRequest,
-): Promise<AuthResponse> {
+): Promise<LoginWithGoogleResult> {
   const { code, redirectUri } = body
 
   // 1. Exchange code for Google Token
@@ -145,24 +182,27 @@ export async function refreshAccessToken(
   env: Env,
   refreshToken: string,
 ): Promise<{ accessToken: string }> {
-  // 1. Validate Refresh Token
-  const storedToken = await db
-    .prepare('SELECT * FROM refresh_tokens WHERE token_hash = ? AND revoked_at IS NULL')
-    .bind(refreshToken)
-    .first<any>()
+  const storedToken = await getValidRefreshToken(db, refreshToken)
 
-  if (!storedToken) {
-    throw new Error('Refresh token không hợp lệ')
-  }
-
-  if (storedToken.expires_at < getCurrentTimestamp()) {
-    throw new Error('Refresh token đã hết hạn')
-  }
-
-  // 2. Issue new Access Token
   const accessToken = await generateAccessToken(storedToken.user_id, env.JWT_SECRET || JWT_SECRET)
 
   return { accessToken }
+}
+
+export async function restoreSession(
+  db: D1Database,
+  env: Env,
+  refreshToken: string,
+): Promise<SessionResponse> {
+  const storedToken = await getValidRefreshToken(db, refreshToken)
+  const accessToken = await generateAccessToken(storedToken.user_id, env.JWT_SECRET || JWT_SECRET)
+  const user = await getUser(db, storedToken.user_id)
+
+  return {
+    accessToken,
+    user,
+    expiresIn: 3600,
+  }
 }
 
 export async function logout(db: D1Database, refreshToken: string) {

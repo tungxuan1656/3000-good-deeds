@@ -103,13 +103,22 @@ export interface GoogleAuthRequest {
   redirectUri?: string
 }
 
-export interface RefreshTokenRequest {
+export interface AuthResponse {
+  accessToken: string
+  user: User
+  expiresIn: number
+}
+
+export interface MobileAuthResponse extends AuthResponse {
   refreshToken: string
 }
 
-export interface AuthResponse {
+export interface RefreshTokenRequest {
+  refreshToken?: string
+}
+
+export interface SessionResponse {
   accessToken: string
-  refreshToken: string
   user: User
   expiresIn: number
 }
