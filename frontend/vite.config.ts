@@ -37,11 +37,15 @@ export default defineConfig(({ mode }) => ({
       },
 
       manifest: {
+        id: '/',
+        start_url: '/',
+        scope: '/',
+        display: 'standalone',
         name: '3000 Việc Thiện',
         short_name: '3000 Việc Thiện',
         description: '3000 Việc Thiện - Nơi để bạn tu tập',
-        theme_color: '#FFFFFF',
-        background_color: '#FFFFFF',
+        theme_color: '#F6F3EE',
+        background_color: '#F6F3EE',
         orientation: 'portrait',
         lang: 'vi',
         icons: [

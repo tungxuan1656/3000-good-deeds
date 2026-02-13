@@ -104,10 +104,14 @@ client.interceptors.response.use(
           // Retry the original request
           return client(originalRequest)
         } catch (refreshError) {
-          // Refresh failed, clear auth and redirect to login
+          // Only force logout if refresh token is actually invalid/unauthorized.
+          // For temporary network/server issues, keep local auth state to avoid unnecessary sign-outs.
           processQueue(new Error('Token refresh failed'))
           isRefreshing = false
-          redirectToLogin()
+
+          if (axios.isAxiosError(refreshError) && refreshError.response?.status === 401) {
+            redirectToLogin()
+          }
 
           return Promise.reject(refreshError)
         }
