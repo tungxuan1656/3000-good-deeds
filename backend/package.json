@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "description": "3000 Good Deeds Backend - Cloudflare Workers with D1 Database",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "cloudflare": {
     "label": "Worker + D1 Database",
     "products": [
