@@ -1,4 +1,4 @@
-import type { ApiResponse, AuthResponse, LoginRequest } from '../types/api'
+import type { ApiResponse, AuthResponse, LoginRequest, SessionResponse } from '../types/api'
 import { client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
@@ -8,10 +8,14 @@ export const loginGoogle = async (data: LoginRequest): Promise<ApiResponse<AuthR
   return response.data
 }
 
-export const logout = async (refreshToken?: string): Promise<ApiResponse<boolean>> => {
-  const response = await client.post<ApiResponse<boolean>>(API_ENDPOINTS.auth.logout, {
-    refreshToken,
-  })
+export const restoreSession = async (): Promise<ApiResponse<SessionResponse>> => {
+  const response = await client.get<ApiResponse<SessionResponse>>(API_ENDPOINTS.auth.session)
+
+  return response.data
+}
+
+export const logout = async (): Promise<ApiResponse<boolean>> => {
+  const response = await client.post<ApiResponse<boolean>>(API_ENDPOINTS.auth.logout)
 
   return response.data
 }

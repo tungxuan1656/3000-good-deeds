@@ -19,7 +19,12 @@ export interface UserDTO {
 
 export interface AuthResponse {
   accessToken: string
-  refreshToken: string
+  user: UserDTO
+  expiresIn: number
+}
+
+export interface SessionResponse {
+  accessToken: string
   user: UserDTO
   expiresIn: number
 }
