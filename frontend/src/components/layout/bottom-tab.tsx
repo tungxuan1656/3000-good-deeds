@@ -20,7 +20,7 @@ export const BottomTab = () => {
 
   return (
     <div className='pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white backdrop-blur md:hidden'>
-      <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-1'>
+      <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-0.5'>
         {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
           const active = isPathActive(location.pathname, path)
 
