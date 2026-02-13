@@ -19,6 +19,7 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
+import { unsubscribeFromPushNotifications } from '@/lib/push-notifications'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 export const AppSidebar = () => {
@@ -32,6 +33,8 @@ export const AppSidebar = () => {
 
   const handleLogout = async () => {
     try {
+      await unsubscribeFromPushNotifications()
+
       if (refreshToken) {
         await logout(refreshToken)
       }

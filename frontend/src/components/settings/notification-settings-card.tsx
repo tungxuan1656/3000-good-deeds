@@ -40,6 +40,22 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
     }
   }, [user])
 
+  useEffect(() => {
+    if (!user?.reminderEnabled || !pushSupported) {
+      setPushError(null)
+
+      return
+    }
+
+    if (Notification.permission !== 'granted') {
+      setPushError('Thiết bị này chưa được kích hoạt nhận nhắc nhở.')
+
+      return
+    }
+
+    setPushError(null)
+  }, [pushSupported, user?.reminderEnabled])
+
   const handleReminderToggle = async (nextValue: boolean) => {
     try {
       setIsToggleLoading(true)

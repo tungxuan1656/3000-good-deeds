@@ -16,6 +16,7 @@ import {
 } from '@/components/shared'
 import { useUser } from '@/hooks/api/use-user'
 import { PATHS } from '@/lib/constants'
+import { unsubscribeFromPushNotifications } from '@/lib/push-notifications'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
@@ -34,6 +35,8 @@ const SettingsPage = () => {
 
   const handleLogout = async () => {
     try {
+      await unsubscribeFromPushNotifications()
+
       if (refreshToken) {
         await logout(refreshToken)
       }
