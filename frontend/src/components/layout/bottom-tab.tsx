@@ -20,22 +20,22 @@ export const BottomTab = () => {
 
   return (
     <div className='pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white backdrop-blur md:hidden'>
-      <div className='mx-auto flex max-w-lg items-center justify-between px-2 pt-1.5 pb-0.5'>
+      <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-1'>
         {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
           const active = isPathActive(location.pathname, path)
 
           return (
             <button
               key={label}
-              className='flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-1 py-0 transition-colors'
+              className='flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors'
               type='button'
               onClick={() => navigate(path)}>
               <Icon
-                className={cn('size-4', active ? 'text-primary' : 'text-muted-foreground/70')}
+                className={cn('size-5', active ? 'text-primary' : 'text-muted-foreground/70')}
               />
               <span
                 className={cn(
-                  'text-[0.625rem] font-medium',
+                  'text-xs font-medium',
                   active ? 'text-primary font-semibold' : 'text-muted-foreground/70',
                 )}>
                 {label}
