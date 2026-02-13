@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { loginGoogle } from '@/api/auth'
+import { PWAGuideDialog } from '@/components/layout/pwa-guide-dialog'
 import { CardSection } from '@/components/shared/card-section'
 import Leaf from '@/components/shared/leaf'
 import { TourGuideButton } from '@/components/shared/tour-guide-button'
@@ -61,7 +62,7 @@ const LoginPage = () => {
       <div className='relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-4xl items-center'>
         <div className='grid w-full gap-8 lg:grid-cols-[1.1fr_0.9fr]'>
           <div className='flex flex-col justify-center gap-6'>
-            <CardSection className='flex flex-col gap-6'>
+            <CardSection className='flex flex-col gap-3'>
               <Leaf className='opacity-30' position='top-right' variant={2} />
               <div className='flex items-start justify-between gap-4'>
                 <div className='flex items-center gap-4'>
@@ -98,12 +99,13 @@ const LoginPage = () => {
               )}
 
               <Button
-                className='bg-primary hover:bg-primary/90 h-12 w-full rounded-full'
+                className='bg-primary hover:bg-primary/90 mt-3 h-12 w-full rounded-full'
                 disabled={isLoading}
                 onClick={() => handleGoogleLogin()}>
                 {isLoading ? <Spinner /> : null}
-                {isLoading ? 'Đang đăng nhập...' : 'Tiếp tục với Google'}
+                {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập với Google'}
               </Button>
+              <PWAGuideDialog showIcon />
             </CardSection>
 
             <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>

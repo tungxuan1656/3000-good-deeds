@@ -42,7 +42,7 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
       title,
       description,
       confirmLabel = 'Xác nhận',
-      cancelLabel = 'Để sau',
+      cancelLabel,
       variant = 'default',
       confirmDisabled,
       confirmLoading,
@@ -110,9 +110,11 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
               onClick={handleConfirm}>
               {confirmLoading ? 'Đang xử lý...' : confirmLabel}
             </Button>
-            <Button className='h-10 rounded-full px-4' variant='outline' onClick={handleCancel}>
-              {cancelLabel}
-            </Button>
+            {cancelLabel ? (
+              <Button className='h-10 rounded-full px-4' variant='outline' onClick={handleCancel}>
+                {cancelLabel}
+              </Button>
+            ) : null}
           </DialogFooter>
         </DialogContent>
       </Dialog>
