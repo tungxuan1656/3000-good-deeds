@@ -40,7 +40,34 @@ export default defineConfig(({ mode }) => ({
         name: '3000 Việc Thiện',
         short_name: '3000 Việc Thiện',
         description: '3000 Việc Thiện - Nơi để bạn tu tập',
-        theme_color: '#ffffff',
+        theme_color: '#F4ECDF',
+        background_color: '#F4ECDF',
+        orientation: 'portrait',
+        lang: 'vi',
+        icons: [
+          {
+            src: 'pwa-64x64.png',
+            sizes: '64x64',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: 'maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+        ],
       },
 
       injectManifest: {
