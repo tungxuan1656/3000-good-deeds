@@ -2,13 +2,17 @@ import { ArrowLeftIcon } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 
 import { useIsMobile } from '@/hooks/use-mobile'
-import { BOTTOM_TAB_ITEMS } from '@/lib/constants'
+import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
 
 export const AppBack = () => {
   const isMobile = useIsMobile()
   const path = useLocation().pathname
 
-  if (!isMobile || BOTTOM_TAB_ITEMS.map(({ path }) => path).includes(path)) {
+  if (
+    !isMobile ||
+    BOTTOM_TAB_ITEMS.map(({ path }) => path).includes(path) ||
+    path === PATHS.LOGIN
+  ) {
     return null
   }
 
