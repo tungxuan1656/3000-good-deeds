@@ -20,6 +20,7 @@ import TimelinePage from '@/pages/timeline-page'
 import ProtectedRoute from '@/routes/protected-route'
 
 import { AppBack } from './components/layout/app-back'
+import { Toaster } from './components/ui/sonner'
 
 // Get Google Client ID from environment variables
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
@@ -48,6 +49,7 @@ function App() {
             </Route>
           </Route>
         </Routes>
+        <Toaster position='top-center' />
         <AppBack />
       </Router>
     </GoogleOAuthProvider>

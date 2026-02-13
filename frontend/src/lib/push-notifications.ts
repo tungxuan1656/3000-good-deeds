@@ -277,10 +277,6 @@ export const subscribeToPushNotifications = async (): Promise<PushSyncResult> =>
   return syncPushSubscription({ requestPermission: true })
 }
 
-export const syncPushSubscriptionSilently = async (): Promise<PushSyncResult> => {
-  return syncPushSubscription({ requestPermission: true })
-}
-
 export const unsubscribeFromPushNotifications = async () => {
   const storedEndpoint = getStoredEndpoint()
 
