@@ -1,9 +1,9 @@
 import {
+  GripIcon,
   HeartHandshakeIcon,
   HomeIcon,
   LeafIcon,
   LineChartIcon,
-  MoreHorizontalIcon,
   SettingsIcon,
   TargetIcon,
   TimerIcon,
@@ -64,7 +64,7 @@ export const BOTTOM_TAB_ITEMS = [
   { label: 'Hành trình', path: PATHS.TIMELINE, icon: TimerIcon },
   { label: 'Tu tập', path: PATHS.INNER, icon: LeafIcon },
   { label: 'Thống kê', path: PATHS.STATS, icon: LineChartIcon },
-  { label: 'Thêm', path: PATHS.MORE, icon: MoreHorizontalIcon },
+  { label: 'Thêm', path: PATHS.MORE, icon: GripIcon },
 ]
 
 export const GOAL_TYPES = ['weekly', 'monthly', 'yearly'] as const
