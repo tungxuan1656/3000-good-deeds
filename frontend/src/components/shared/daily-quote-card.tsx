@@ -3,6 +3,7 @@ import { RefreshCwIcon, SparklesIcon } from 'lucide-react'
 import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
 import { useRandomQuote } from '@/hooks/api/use-cultivation'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 import { cn } from '@/lib/utils'
 
@@ -15,15 +16,14 @@ type DailyQuoteCardProps = {
   className?: string
 }
 
-export const DailyQuoteCard = ({
-  label = 'Pháp ngữ ngẫu nhiên',
-  source = 'Lời nhắc từ thiện tâm',
-  className,
-}: DailyQuoteCardProps) => {
+export const DailyQuoteCard = ({ label, source, className }: DailyQuoteCardProps) => {
+  const resolvedLabel = label ?? t('quote.card.label')
+  const resolvedSource = source ?? t('quote.card.defaultSource')
   const { data, isFetching, refetch } = useRandomQuote()
   const apiQuote = data?.data
-  const displayQuote = apiQuote?.content || 'Mỗi việc thiện nhỏ đều đáng trân trọng.'
-  const displaySource = [apiQuote?.author ?? '', apiQuote?.source ?? ''].join(', ') || source
+  const displayQuote = apiQuote?.content || t('quote.card.defaultQuote')
+  const displaySource =
+    [apiQuote?.author ?? '', apiQuote?.source ?? ''].join(', ') || resolvedSource
 
   return (
     <CardSection className={cn(className)}>
@@ -34,7 +34,7 @@ export const DailyQuoteCard = ({
           <div className='text-muted-foreground/80 mb-3 flex items-center justify-between gap-2 font-medium'>
             <div className='flex items-center gap-2'>
               <SparklesIcon className='text-accent h-4 w-4' />
-              {label}
+              {resolvedLabel}
             </div>
             <div className='flex items-center gap-1'>
               <InfoButton description={INFO_COPY.quote.description} title={INFO_COPY.quote.title} />

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useCategories } from '@/hooks/api/use-categories'
 import { useDeleteDeed } from '@/hooks/api/use-deeds'
+import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
 import { CardInlineSection } from './card-inline-section'
@@ -27,10 +28,10 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
   const handleDelete = async () => {
     try {
       await deleteDeed.mutateAsync(deed.id)
-      toast.success('Đã xoá việc thiện')
+      toast.success(t('deeds.card.messages.deleted'))
     } catch (error) {
       console.error(error)
-      toast.error('Không thể xoá việc thiện')
+      toast.error(t('deeds.card.messages.deleteFailed'))
     }
   }
 
@@ -55,13 +56,13 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
             <DropdownMenuContent align='end' className='rounded-xl'>
               <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
                 <Pencil className='mr-2 h-4 w-4' />
-                Chỉnh sửa
+                {t('deeds.card.actions.edit')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className='text-destructive focus:text-destructive'
                 onClick={() => setShowDeleteDialog(true)}>
                 <Trash2 className='mr-2 h-4 w-4' />
-                Xoá
+                {t('deeds.card.actions.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -75,11 +76,11 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
       <EditDeedDialog deed={deed} open={showEditDialog} onOpenChange={setShowEditDialog} />
 
       <ConfirmDialog
-        cancelLabel='Giữ lại'
-        confirmLabel='Xoá việc này'
-        description='Nếu xoá, bạn sẽ không xem lại được ghi nhận này nữa.'
+        cancelLabel={t('deeds.card.deleteDialog.cancel')}
+        confirmLabel={t('deeds.card.deleteDialog.confirm')}
+        description={t('deeds.card.deleteDialog.description')}
         open={showDeleteDialog}
-        title='Xoá ghi nhận này?'
+        title={t('deeds.card.deleteDialog.title')}
         variant='destructive'
         onCancel={() => setShowDeleteDialog(false)}
         onConfirm={() => void handleDelete()}

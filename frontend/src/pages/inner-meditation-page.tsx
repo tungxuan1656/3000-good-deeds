@@ -11,22 +11,23 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerMeditationPage = () => {
   const phases = useMemo(
     () => [
-      { label: 'Hít vào', seconds: 4 },
-      { label: 'Giữ', seconds: 4 },
-      { label: 'Thở ra', seconds: 4 },
+      { label: t('pages.innerMeditation.phases.inhale'), seconds: 4 },
+      { label: t('pages.innerMeditation.phases.hold'), seconds: 4 },
+      { label: t('pages.innerMeditation.phases.exhale'), seconds: 4 },
     ],
     [],
   )
   const durations = useMemo(
     () => [
-      { label: '3 phút', minutes: 3 },
-      { label: '5 phút', minutes: 5 },
-      { label: '10 phút', minutes: 10 },
+      { label: t('pages.innerMeditation.durations.3m'), minutes: 3 },
+      { label: t('pages.innerMeditation.durations.5m'), minutes: 5 },
+      { label: t('pages.innerMeditation.durations.10m'), minutes: 10 },
     ],
     [],
   )
@@ -95,10 +96,10 @@ const InnerMeditationPage = () => {
               title={INFO_COPY.breathing.title}
             />
           }
-          description='Thở chậm để trở về chánh niệm và an trú nơi tâm.'
-          note='Bạn có thể điều chỉnh nhịp thở cho phù hợp với cơ thể.'
-          subtitle='Thiền & thở'
-          title='Trở về với hơi thở'
+          description={t('pages.innerMeditation.header.description')}
+          note={t('pages.innerMeditation.header.note')}
+          subtitle={t('pages.innerMeditation.header.subtitle')}
+          title={t('pages.innerMeditation.header.title')}
         />
 
         <CardSection className='gap-4'>
@@ -116,7 +117,7 @@ const InnerMeditationPage = () => {
                 </span>
               </div>
             </div>
-            <p className='text-muted-foreground text-xs'>Chu kỳ 4-4-4</p>
+            <p className='text-muted-foreground text-xs'>{t('pages.innerMeditation.cycle')}</p>
             <div className='text-foreground text-2xl font-semibold'>{timeLabel}</div>
           </div>
 
@@ -148,7 +149,7 @@ const InnerMeditationPage = () => {
                 setIsFinished(false)
               }}>
               <PlayIcon className='h-4 w-4' />
-              Bắt đầu
+              {t('pages.innerMeditation.actions.start')}
             </Button>
             <Button
               className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
@@ -158,7 +159,7 @@ const InnerMeditationPage = () => {
                 setIsRunning(false)
               }}>
               <PauseIcon className='h-4 w-4' />
-              Tạm dừng
+              {t('pages.innerMeditation.actions.pause')}
             </Button>
             <Button
               className='text-muted-foreground hover:text-foreground h-11 w-full rounded-full sm:w-auto'
@@ -170,13 +171,13 @@ const InnerMeditationPage = () => {
                 setPhaseState({ index: 0, secondsLeft: phases[0].seconds })
               }}>
               <TimerIcon className='h-4 w-4' />
-              Đặt lại
+              {t('pages.innerMeditation.actions.reset')}
             </Button>
           </div>
 
           {isFinished && (
             <div className='text-muted-foreground rounded-2xl border border-black/5 bg-white/80 px-4 py-3 text-sm'>
-              Bạn cảm thấy thế nào lúc này?
+              {t('pages.innerMeditation.finishedPrompt')}
             </div>
           )}
         </CardSection>

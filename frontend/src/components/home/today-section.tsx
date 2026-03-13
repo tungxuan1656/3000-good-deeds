@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 
 import { GoodDeedCard } from '../shared'
 import { EmptyDataView } from '../shared/empty-data-view'
@@ -49,28 +50,26 @@ export const TodaySection = () => {
       <Leaf position='top-left' variant={4} />
       <div className='mb-4 flex items-start justify-between gap-3'>
         <div>
-          <h2 className='text-foreground text-lg font-semibold'>Hôm nay</h2>
+          <h2 className='text-foreground text-lg font-semibold'>{t('home.todaySection.title')}</h2>
           <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
-            {format(new Date(), "EEEE, 'ngày' dd 'tháng' MM", { locale: vi })}
+            {format(new Date(), t('dates.formats.dayMonth'), { locale: vi })}
           </p>
-          <p className='text-muted-foreground mt-2 text-sm'>
-            {'Một việc thiện nhỏ cũng đủ làm tâm bạn an nhiên hơn rất nhiều.'}
-          </p>
+          <p className='text-muted-foreground mt-2 text-sm'>{t('home.todaySection.subtitle')}</p>
         </div>
         <Button
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
           onClick={() => navigate(PATHS.TIMELINE)}>
-          Xem tất cả
+          {t('common.actions.viewAll')}
         </Button>
       </div>
 
       {showLoading && <SkeletonList length={1} />}
       {isEmpty && (
         <EmptyDataView
-          description='Khi sẵn sàng, bạn có thể ghi nhận một việc thiện nhỏ.'
-          title='Hôm nay chưa có việc thiện nào'
+          description={t('home.todaySection.emptyDescription')}
+          title={t('home.todaySection.emptyTitle')}
         />
       )}
 
@@ -87,7 +86,7 @@ export const TodaySection = () => {
         size='sm'
         onClick={() => suggestActsDrawerRef.current?.open()}>
         <LightbulbIcon className='size-4' />
-        Gợi ý điều nhỏ để bắt đầu
+        {t('home.todaySection.suggestAction')}
       </Button>
 
       <SuggestActsSheet ref={suggestActsDrawerRef} />

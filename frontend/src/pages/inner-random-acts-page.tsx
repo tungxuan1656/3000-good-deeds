@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerRandomActsPage = () => {
@@ -37,10 +38,10 @@ const InnerRandomActsPage = () => {
               />
             </div>
           }
-          description='Chọn một việc thiện nhỏ phù hợp với mình lúc này.'
-          note='Bạn có thể bỏ qua hoặc đổi gợi ý bất cứ lúc nào.'
-          subtitle='Gợi ý việc thiện'
-          title='Một gợi ý trong ngày'
+          description={t('pages.randomActs.header.description')}
+          note={t('pages.randomActs.header.note')}
+          subtitle={t('pages.randomActs.header.subtitle')}
+          title={t('pages.randomActs.header.title')}
         />
 
         <CardSection className='gap-4'>
@@ -52,7 +53,9 @@ const InnerRandomActsPage = () => {
             <>
               <div className='border-primary/20 rounded-2xl border-2 bg-white/80 p-5'>
                 <div className='flex flex-wrap items-center gap-2'>
-                  <span className='text-muted-foreground text-xs'>Gợi ý ngẫu nhiên</span>
+                  <span className='text-muted-foreground text-xs'>
+                    {t('pages.randomActs.randomLabel')}
+                  </span>
                 </div>
                 <h3 className='text-foreground mt-3 text-lg font-semibold'>{act.name}</h3>
                 {act.detail ? (
@@ -66,7 +69,7 @@ const InnerRandomActsPage = () => {
                 ) : (
                   <div className='text-muted-foreground mt-4 flex items-center gap-2 text-xs'>
                     <HelpCircleIcon className='h-3.5 w-3.5' />
-                    Gợi ý để bạn tham khảo
+                    {t('pages.randomActs.fallbackNote')}
                   </div>
                 )}
               </div>
@@ -83,14 +86,14 @@ const InnerRandomActsPage = () => {
                   ) : (
                     <RefreshCwIcon className='h-4 w-4 transition-transform duration-300 group-hover:rotate-180' />
                   )}
-                  Gợi ý khác
+                  {t('pages.randomActs.actions.refresh')}
                 </Button>
               </div>
             </>
           ) : (
             <div className='rounded-2xl border border-black/5 bg-white/80 p-5'>
               <p className='text-muted-foreground text-center text-sm'>
-                Chưa có gợi ý lúc này. Bạn có thể thử lại sau.
+                {t('pages.randomActs.empty')}
               </p>
             </div>
           )}

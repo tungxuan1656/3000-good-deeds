@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 export type OnboardingStep = {
@@ -167,10 +168,10 @@ export const OnboardingDialog = ({
             disabled={index === 0}
             variant='outline'
             onClick={handlePrev}>
-            Quay lại
+            {t('onboarding.dialog.back')}
           </Button>
           <Button className='h-10 rounded-full px-4' onClick={handleNext}>
-            {isLast ? 'Bắt đầu' : 'Tiếp tục'}
+            {isLast ? t('onboarding.dialog.start') : t('onboarding.dialog.continue')}
           </Button>
         </DialogFooter>
       </DialogContent>

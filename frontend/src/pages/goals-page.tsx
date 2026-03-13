@@ -8,6 +8,7 @@ import {
   InfoButton,
   MiniCheckInCard,
 } from '@/components/shared'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const GoalsPage = () => {
@@ -18,10 +19,10 @@ const GoalsPage = () => {
           action={
             <InfoButton description={INFO_COPY.goals.description} title={INFO_COPY.goals.title} />
           }
-          description='Đặt mục tiêu vừa sức và điều kiện của bạn nhé!.'
-          note='Bạn có thể điều chỉnh mục tiêu bất cứ lúc nào.'
-          subtitle='Mục tiêu'
-          title='Giữ nhịp đều đặn'
+          description={t('pages.goals.header.description')}
+          note={t('pages.goals.header.note')}
+          subtitle={t('pages.goals.header.subtitle')}
+          title={t('pages.goals.header.title')}
         />
 
         <CardSection className='gap-4'>

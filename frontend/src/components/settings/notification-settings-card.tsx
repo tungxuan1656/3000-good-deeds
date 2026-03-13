@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
 import { useUpdateUser } from '@/hooks/api/use-user'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 import {
   isPushSupported,
@@ -48,7 +49,7 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
     }
 
     if (Notification.permission !== 'granted') {
-      setPushError('Thiết bị này chưa được kích hoạt nhận nhắc nhở.')
+      setPushError(t('settings.notifications.errors.permissionNotGranted'))
 
       return
     }
@@ -64,7 +65,7 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
       if (nextValue) {
         const result = await subscribeToPushNotifications()
         if (!result.success) {
-          setPushError(result.error ?? 'Không thể bật nhắc nhở lúc này.')
+          setPushError(result.error ?? t('settings.notifications.errors.enableFailed'))
 
           return
         }
@@ -80,7 +81,7 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
       }
     } catch (error) {
       console.log(error)
-      setPushError('Không thể cập nhật nhắc nhở. Vui lòng thử lại sau.')
+      setPushError(t('settings.notifications.errors.updateFailed'))
     } finally {
       setIsToggleLoading(false)
     }
@@ -113,18 +114,18 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
 
       const response = await testPushNotification()
       if (!response.success) {
-        const message = response.error ?? 'Không thể gửi thông báo thử.'
+        const message = response.error ?? t('settings.notifications.errors.testSendFailed')
         setPushError(message)
         toast.error(message)
 
         return
       }
 
-      toast.success('Đã gửi thông báo thử. Vui lòng kiểm tra thiết bị.')
+      toast.success(t('settings.notifications.messages.testSent'))
     } catch (error) {
       console.log(error)
 
-      const message = 'Không thể gửi thông báo thử. Vui lòng thử lại sau.'
+      const message = t('settings.notifications.errors.testSendRetry')
       setPushError(message)
       toast.error(message)
     } finally {
@@ -140,26 +141,30 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
             {user?.reminderEnabled ? (
               <span className='flex items-center text-emerald-600'>
                 <CheckCircle2Icon className='inline h-4 w-4' />
-                <span className='ml-1'>Đang bật</span>
+                <span className='ml-1'>{t('settings.notifications.status.enabled')}</span>
               </span>
             ) : (
               <span className='text-muted-foreground flex items-center'>
                 <XCircleIcon className='inline h-4 w-4' />
-                <span className='ml-1'>Đang tắt</span>
+                <span className='ml-1'>{t('settings.notifications.status.disabled')}</span>
               </span>
             )}
           </div>
           <div className='flex items-center gap-2'>
-            <p className='text-foreground text-base font-semibold'>Thông báo nhắc nhở</p>
+            <p className='text-foreground text-base font-semibold'>
+              {t('settings.notifications.title')}
+            </p>
             <InfoButton
               description={INFO_COPY.reminders.description}
               title={INFO_COPY.reminders.title}
             />
           </div>
-          <p className='text-muted-foreground mt-1 text-sm'>Chỉ một lần mỗi ngày.</p>
+          <p className='text-muted-foreground mt-1 text-sm'>
+            {t('settings.notifications.subtitle')}
+          </p>
           {!pushSupported && (
             <p className='text-muted-foreground mt-1 text-sm'>
-              Thiết bị này chưa hỗ trợ Web Push hoặc cần cài đặt PWA (iOS Safari).
+              {t('settings.notifications.unsupportedHint')}
             </p>
           )}
           {pushError && <p className='mt-1 text-sm text-red-600'>{pushError}</p>}
@@ -169,14 +174,16 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
           variant={user?.reminderEnabled ? 'outline' : 'default'}
           onClick={() => handleReminderToggle(!user?.reminderEnabled)}>
           {isToggleLoading ? <Spinner /> : null}
-          {user?.reminderEnabled ? 'Tắt thông báo' : 'Bật thông báo'}
+          {user?.reminderEnabled
+            ? t('settings.notifications.actions.disable')
+            : t('settings.notifications.actions.enable')}
         </Button>
       </div>
       {user?.reminderEnabled && (
         <div className='flex flex-col gap-2'>
           <div className='flex items-center justify-between gap-4'>
             <Label className='text-foreground text-xs font-semibold tracking-widest uppercase'>
-              Chọn giờ nhắc
+              {t('settings.notifications.reminderTimeLabel')}
             </Label>
             <Input
               className='w-36 rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
@@ -187,10 +194,10 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
             />
           </div>
           <p className='text-muted-foreground text-sm'>
-            Hệ thống sẽ bỏ qua nhắc nhở nếu bạn đã check-in trong ngày.
+            {t('settings.notifications.reminderBehavior')}
           </p>
           <p className='text-muted-foreground text-sm'>
-            Thông báo mẫu: “Đến giờ ghi nhận việc thiện 🌱”.
+            {t('settings.notifications.sampleMessage')}
           </p>
           <div className='flex justify-end'>
             <Button
@@ -199,7 +206,7 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
               variant='outline'
               onClick={handleTestNotification}>
               {isTestLoading ? <Spinner /> : null}
-              Gửi thông báo thử
+              {t('settings.notifications.actions.sendTest')}
             </Button>
           </div>
         </div>

@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { t } from '@/lib/i18n'
 
 const InnerJournalEditorPage = () => {
   const [mode, setMode] = useState<'grateful' | 'repent'>('grateful')
@@ -19,10 +20,10 @@ const InnerJournalEditorPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Chọn cách quán chiếu và viết điều cần nhìn rõ.'
-          note='Mọi ghi nhận đều riêng tư.'
-          subtitle='Viết nhật ký'
-          title='Một trang chánh niệm'
+          description={t('pages.innerJournalEditor.header.description')}
+          note={t('pages.innerJournalEditor.header.note')}
+          subtitle={t('pages.innerJournalEditor.header.subtitle')}
+          title={t('pages.innerJournalEditor.header.title')}
         />
 
         <CardSection className={`gap-4 ${mode === 'repent' ? 'bg-muted/60' : ''}`}>
@@ -35,7 +36,7 @@ const InnerJournalEditorPage = () => {
               }`}
               type='button'
               onClick={() => setMode('grateful')}>
-              Biết ơn
+              {t('journal.types.gratitude.label')}
             </button>
             <button
               className={`rounded-full border px-4 py-2 text-sm font-medium ${
@@ -45,19 +46,23 @@ const InnerJournalEditorPage = () => {
               }`}
               type='button'
               onClick={() => setMode('repent')}>
-              Sám hối
+              {t('journal.types.repentance.label')}
             </button>
           </div>
           <Input
             className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
-            placeholder='Tiêu đề'
+            placeholder={t('pages.innerJournalEditor.form.titlePlaceholder')}
           />
           <Textarea
             className='min-h-44 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
-            placeholder='Hôm nay mình...'
+            placeholder={t('pages.innerJournalEditor.form.contentPlaceholder')}
           />
-          <p className='text-muted-foreground text-sm'>Chỉ mình bạn thấy nội dung này.</p>
-          <Button className='h-11 w-full rounded-full'>Lưu lại</Button>
+          <p className='text-muted-foreground text-sm'>
+            {t('pages.innerJournalEditor.form.privateNote')}
+          </p>
+          <Button className='h-11 w-full rounded-full'>
+            {t('pages.innerJournalEditor.form.save')}
+          </Button>
         </CardSection>
       </MainColumn>
 

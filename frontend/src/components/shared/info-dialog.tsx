@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 type InfoDialogProps = {
@@ -24,7 +25,7 @@ export const InfoDialog = ({
   onOpenChange,
   title,
   description,
-  closeLabel = 'Đóng',
+  closeLabel = t('common.actions.close'),
   className,
   ...contentProps
 }: InfoDialogProps) => {

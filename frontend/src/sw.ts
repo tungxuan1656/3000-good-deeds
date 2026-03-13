@@ -18,6 +18,11 @@ type PushPayload = {
   url?: string
 }
 
+// NOTE: Service worker runs outside React/i18n runtime.
+// Keep Vietnamese fallback copy here unless a dedicated worker-locale loader is introduced.
+const DEFAULT_PUSH_TITLE = 'Nhắc nhở việc thiện'
+const DEFAULT_PUSH_BODY = 'Đến giờ ghi nhận việc thiện 🌱'
+
 clientsClaim()
 precacheAndRoute(self.__WB_MANIFEST)
 
@@ -32,8 +37,8 @@ self.addEventListener('push', (event) => {
     }
   }
 
-  const title = data?.title ?? 'Nhắc nhở việc thiện'
-  const body = data?.body ?? 'Đến giờ ghi nhận việc thiện 🌱'
+  const title = data?.title ?? DEFAULT_PUSH_TITLE
+  const body = data?.body ?? DEFAULT_PUSH_BODY
   const url = data?.url ?? '/'
   const targetUrl = new URL(url, self.location.origin).toString()
 

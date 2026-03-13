@@ -1,3 +1,5 @@
+import { t } from '@/lib/i18n'
+
 export type MobileOs = 'android' | 'ios' | 'other'
 
 export const getMobileOs = (): MobileOs => {
@@ -31,19 +33,19 @@ export const shouldShowPwaInstallGuide = (isMobile: boolean) => {
 export const getPwaInstallGuideSteps = (os: MobileOs): string[] => {
   if (os === 'android') {
     return [
-      'Bước 1: Mở trang web trên trình duyệt Chrome trên điện thoại Android.',
-      'Bước 2: Nhấn vào biểu tượng menu 3 chấm (⋮) ở góc trên bên phải.',
-      'Bước 3: Chọn "Cài đặt ứng dụng" (Install app) hoặc "Thêm vào màn hình chính" (Add to Home Screen).',
-      'Bước 4: Xác nhận cài đặt. Biểu tượng ứng dụng sẽ xuất hiện trên màn hình chính và trong ngăn ứng dụng.',
+      t('pwa.installGuide.android.step1'),
+      t('pwa.installGuide.android.step2'),
+      t('pwa.installGuide.android.step3'),
+      t('pwa.installGuide.android.step4'),
     ]
   }
 
   if (os === 'ios') {
     return [
-      'Bước 1: Mở trang web trên trình duyệt Safari (không sử dụng trình duyệt khác) trên iPhone/iPad.',
-      'Bước 2: Nhấn vào nút Chia sẻ (hình vuông có mũi tên hướng lên) ở thanh công cụ.',
-      'Bước 3: Chọn "Thêm vào Màn hình chính" (Add to Home Screen).',
-      'Bước 4: Nhấn "Thêm" để xác nhận. Biểu tượng ứng dụng sẽ xuất hiện trên màn hình chính.',
+      t('pwa.installGuide.ios.step1'),
+      t('pwa.installGuide.ios.step2'),
+      t('pwa.installGuide.ios.step3'),
+      t('pwa.installGuide.ios.step4'),
     ]
   }
 

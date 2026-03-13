@@ -12,6 +12,7 @@ import {
 } from '@/components/shared'
 import { InfoButton, TourGuideButton } from '@/components/shared'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const HomePage = () => {
@@ -29,10 +30,10 @@ const HomePage = () => {
               />
             </div>
           }
-          description='Ghi nhận một việc thiện nhỏ và dành một phút nhìn lại tâm mình.'
-          note='Mọi ghi nhận đều riêng tư và không dùng để so sánh.'
-          subtitle={format(new Date(), "EEEE', ngày' dd'/'MM", { locale: vi })}
-          title='Hôm nay của bạn'
+          description={t('home.header.description')}
+          note={t('home.header.note')}
+          subtitle={format(new Date(), t('dates.formats.homeHeaderSubtitle'), { locale: vi })}
+          title={t('home.header.title')}
         />
 
         {/* Quote Section */}

@@ -13,6 +13,7 @@ import {
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 export interface SuggestActsDrawerHandle {
@@ -26,9 +27,12 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
   const { data, isFetching, refetch } = useRandomActs(2, open)
   const acts = data?.data ?? []
   const categoryMeta = {
-    body: { label: 'Thân', className: 'bg-body/20 text-foreground' },
-    speech: { label: 'Khẩu', className: 'bg-speech/20 text-foreground' },
-    mind: { label: 'Ý', className: 'bg-mind/20 text-foreground' },
+    body: { label: t('suggestActs.categories.body'), className: 'bg-body/20 text-foreground' },
+    speech: {
+      label: t('suggestActs.categories.speech'),
+      className: 'bg-speech/20 text-foreground',
+    },
+    mind: { label: t('suggestActs.categories.mind'), className: 'bg-mind/20 text-foreground' },
   }
 
   React.useImperativeHandle(ref, () => ({
@@ -47,19 +51,19 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
         side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
           <div className='flex items-center gap-1'>
-            <SheetTitle>Gợi ý việc thiện</SheetTitle>
+            <SheetTitle>{t('suggestActs.title')}</SheetTitle>
             <InfoButton
               description={INFO_COPY.randomActs.description}
               title={INFO_COPY.randomActs.title}
             />
           </div>
-          <SheetDescription>Chọn một điều nhỏ để bắt đầu ngay hôm nay.</SheetDescription>
+          <SheetDescription>{t('suggestActs.description')}</SheetDescription>
         </SheetHeader>
 
         <div className='mx-4 flex items-center justify-between gap-3'>
           <div className='text-muted-foreground flex items-center gap-2 text-xs'>
             <SparklesIcon className='h-4 w-4' />
-            {acts.length} gợi ý ngẫu nhiên
+            {t('suggestActs.randomCount', { count: acts.length })}
           </div>
           <Button
             className='h-8 rounded-full px-3 text-xs'
@@ -68,7 +72,7 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
             variant='outline'
             onClick={() => refetch()}>
             {isFetching ? <Spinner /> : <RefreshCwIcon className='h-4 w-4' />}
-            Đổi gợi ý
+            {t('suggestActs.refresh')}
           </Button>
         </div>
 

@@ -5,6 +5,7 @@ import { CardSection, ConfirmDialog } from '@/components/shared'
 import type { ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { t } from '@/lib/i18n'
 
 interface DeleteAccountCardProps {
   onConfirm?: () => void
@@ -23,11 +24,11 @@ const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
       <CardSection className='border border-red-200/60 bg-red-50/60'>
         <div className='flex items-start justify-between gap-4'>
           <div>
-            <p className='text-foreground text-base font-semibold'>Xoá tài khoản</p>
+            <p className='text-foreground text-base font-semibold'>
+              {t('settings.deleteAccount.title')}
+            </p>
             <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
-              {
-                'Tất cả dữ liệu của bạn sẽ bị xoá và không thể khôi phục lại được. Xin hãy cân nhắc kỹ lựa chọn này!'
-              }
+              {t('settings.deleteAccount.description')}
             </p>
           </div>
           <div className='flex items-center justify-center rounded-full'>
@@ -37,17 +38,17 @@ const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         <Button
           className='mt-3 h-10 w-full rounded-full bg-red-500 text-white hover:bg-red-500/90'
           onClick={() => deleteDialogRef.current?.open()}>
-          Xoá tài khoản
+          {t('settings.deleteAccount.action')}
         </Button>
       </CardSection>
 
       <ConfirmDialog
         ref={deleteDialogRef}
-        cancelLabel='Để sau'
+        cancelLabel={t('common.actions.later')}
         confirmDisabled={deleteText !== 'DELETE'}
-        confirmLabel='Xoá tài khoản'
-        description='Nhập chữ “DELETE” để xác nhận. Bạn có thể quay lại bắt đầu lại bất cứ lúc nào.'
-        title='Xác nhận xoá tài khoản'
+        confirmLabel={t('settings.deleteAccount.action')}
+        description={t('settings.deleteAccount.confirmDescription')}
+        title={t('settings.deleteAccount.confirmTitle')}
         variant='destructive'
         onConfirm={() => {
           deleteDialogRef.current?.close()

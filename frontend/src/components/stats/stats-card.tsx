@@ -1,6 +1,7 @@
 import { LeafIcon } from 'lucide-react'
 
 import { useStatsSummary } from '@/hooks/api/use-stats'
+import { t } from '@/lib/i18n'
 
 import { CardSection } from '../shared'
 import { EmptyDataView } from '../shared/empty-data-view'
@@ -13,13 +14,11 @@ export const StatsCard = () => {
 
   const summaryCards = [
     {
-      title: 'Đã ghi nhận',
-      value: (summary ? String(summary.totalDeeds) : '--') + ' việc thiện',
+      title: t('stats.card.recordedTitle'),
+      value: summary
+        ? t('stats.card.totalValue', { count: summary.totalDeeds })
+        : t('stats.card.totalValueFallback'),
     },
-    // {
-    //   title: 'Chuỗi ngày',
-    //   value: summary ? `${summary.streakDays} ngày` : '--',
-    // },
   ]
 
   return (
@@ -29,8 +28,8 @@ export const StatsCard = () => {
       {isEmpty && !isLoading && (
         <EmptyDataView
           Icon={<LeafIcon />}
-          description='Hãy ghi nhận những việc thiện bạn đã làm nhé!'
-          title='Chưa có dữ liệu thống kê'
+          description={t('stats.card.emptyDescription')}
+          title={t('stats.card.emptyTitle')}
         />
       )}
 

@@ -3,6 +3,7 @@ import { useRef } from 'react'
 
 import { useCategories } from '@/hooks/api/use-categories'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 import { Button } from '../ui/button'
@@ -28,7 +29,7 @@ export function CheckInCard() {
       <div className='flex flex-col gap-4'>
         <div>
           <div className='flex items-center justify-between gap-2'>
-            <h2 className='text-foreground text-lg font-semibold'>Việc thiện hôm nay</h2>
+            <h2 className='text-foreground text-lg font-semibold'>{t('checkIn.card.title')}</h2>
             <div className='flex items-center gap-1'>
               <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
               <TourGuideButton
@@ -40,7 +41,7 @@ export function CheckInCard() {
             </div>
           </div>
           <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
-            Bạn đã làm được điều gì hôm nay?
+            {t('checkIn.card.description')}
           </p>
         </div>
         <div className='relative flex flex-col gap-3'>
@@ -57,7 +58,7 @@ export function CheckInCard() {
         <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
           <Button onClick={() => openCheckIn()}>
             <PlusIcon className='size-4' />
-            Ghi nhận việc thiện
+            {t('checkIn.card.addAction')}
           </Button>
         </div>
       </div>

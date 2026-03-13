@@ -26,6 +26,7 @@ import { useCategories } from '@/hooks/api/use-categories'
 import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { MOOD_TAGS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 import { TagButton } from '../ui/tag'
@@ -67,7 +68,7 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
 
   const handleContinue = React.useCallback(() => {
     if (step === 2 && note.length < 5) {
-      toast.error('Vui lòng nhập ghi chú với tối thiểu 5 ký tự.')
+      toast.error(t('checkIn.sheet.validation.minNote'))
 
       return
     }
@@ -98,7 +99,7 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
   }
 
   const formattedDate = React.useMemo(() => {
-    const value = format(selectedDate, "EEEE, 'ngày' dd 'tháng' MM 'năm' yyyy", { locale: vi })
+    const value = format(selectedDate, t('dates.formats.fullDate'), { locale: vi })
 
     return value.charAt(0).toUpperCase() + value.slice(1)
   }, [selectedDate])
@@ -110,13 +111,13 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
         side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
           <div className='flex items-center gap-1 pr-4'>
-            <SheetTitle>Ghi lại một việc thiện</SheetTitle>
+            <SheetTitle>{t('checkIn.sheet.title')}</SheetTitle>
             <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
           </div>
           <SheetDescription>
-            {step === 1 && 'Bạn muốn ghi nhận việc thiện nào?'}
-            {step === 2 && 'Một dòng ngắn để bạn nhớ lại điều đã làm.'}
-            {step === 3 && 'Chọn cảm xúc để tự nhận diện, không cần đúng hay sai.'}
+            {step === 1 && t('checkIn.sheet.stepDescription.1')}
+            {step === 2 && t('checkIn.sheet.stepDescription.2')}
+            {step === 3 && t('checkIn.sheet.stepDescription.3')}
           </SheetDescription>
         </SheetHeader>
 
@@ -162,11 +163,11 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
               </div>
               <Textarea
                 className='min-h-28 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
-                placeholder='Ví dụ: Nhường đường cho người lớn tuổi...'
+                placeholder={t('checkIn.sheet.notePlaceholder')}
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
               />
-              <p className='text-muted-foreground text-sm'>Ghi nhận này chỉ mình bạn thấy.</p>
+              <p className='text-muted-foreground text-sm'>{t('checkIn.sheet.privateNote')}</p>
             </div>
           )}
 
@@ -204,11 +205,11 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
                 variant='ghost'
                 onClick={() => setStep((prev) => Math.max(1, prev - 1))}>
                 <ChevronLeftIcon className='h-4 w-4' />
-                Quay lại
+                {t('onboarding.dialog.back')}
               </Button>
               {step < 3 ? (
                 <Button className='h-11 rounded-full px-6' onClick={handleContinue}>
-                  Tiếp tục
+                  {t('onboarding.dialog.continue')}
                   <ChevronRightIcon className='h-4 w-4' />
                 </Button>
               ) : (
@@ -217,7 +218,9 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
                   disabled={createDeed.isPending}
                   onClick={handleSubmit}>
                   {createDeed.isPending ? <Spinner /> : <CheckIcon className='h-4 w-4' />}
-                  {createDeed.isPending ? 'Đang lưu...' : 'Lưu lại'}
+                  {createDeed.isPending
+                    ? t('common.actions.saving')
+                    : t('checkIn.sheet.saveAction')}
                 </Button>
               )}
             </div>
@@ -230,9 +233,11 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
               <SparklesIcon className='text-primary h-5 w-5' />
             </div>
             <div>
-              <p className='text-foreground text-sm font-medium'>Gieo một việc thiện</p>
+              <p className='text-foreground text-sm font-medium'>
+                {t('checkIn.sheet.footerTitle')}
+              </p>
               <p className='text-muted-foreground text-xs'>
-                Bước nhỏ hôm nay vẫn rất đáng trân trọng.
+                {t('checkIn.sheet.footerDescription')}
               </p>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { InfoIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { t } from '@/lib/i18n'
 
 import { InfoDialog } from './info-dialog'
 
@@ -16,7 +17,7 @@ export const InfoButton = ({
   title,
   description,
   className,
-  label = 'Thông tin',
+  label = t('common.labels.info'),
 }: InfoButtonProps) => {
   const [open, setOpen] = useState(false)
 

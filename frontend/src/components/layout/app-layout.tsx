@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { AppSidebar, BottomTab } from '@/components/layout'
 import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { t } from '@/lib/i18n'
 import {
   isPushSupported,
   subscribeToPushNotifications,
@@ -44,11 +45,11 @@ const AppLayout = () => {
       const result = await subscribeToPushNotifications()
 
       if (!result.success) {
-        toast.error(result.error ?? 'Không thể bật thông báo lúc này.')
+        toast.error(result.error ?? t('pwa.notifications.enableFailed'))
 
         return
       }
-      toast.success('Đã bật thông báo nhắc nhở trên thiết bị này.')
+      toast.success(t('pwa.notifications.enabled'))
     } finally {
     }
   }
@@ -67,9 +68,9 @@ const AppLayout = () => {
       </SidebarInset>
       <ConfirmDialog
         ref={refNotificationDialog}
-        confirmLabel='Bật thông báo'
-        description='Để app có thể nhắc nhẹ mỗi ngày, bạn cần cấp quyền thông báo cho thiết bị này.'
-        title='Cho phép thông báo nhắc nhở?'
+        confirmLabel={t('pwa.notifications.enableAction')}
+        description={t('pwa.notifications.permissionDescription')}
+        title={t('pwa.notifications.permissionTitle')}
         onCancel={() => refNotificationDialog.current?.close()}
         onConfirm={() => {
           handleConfirmPushPermission()

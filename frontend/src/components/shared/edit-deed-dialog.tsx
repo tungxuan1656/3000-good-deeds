@@ -20,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useCategories } from '@/hooks/api/use-categories'
 import { useUpdateDeed } from '@/hooks/api/use-deeds'
 import { MOOD_TAGS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
 import { TagButton } from '../ui/tag'
@@ -72,16 +73,16 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
         },
       })
 
-      toast.success('Đã cập nhật việc thiện')
+      toast.success(t('deeds.edit.messages.updated'))
       onOpenChange(false)
     } catch (error) {
       console.error(error)
-      toast.error('Không thể cập nhật việc thiện')
+      toast.error(t('deeds.edit.messages.updateFailed'))
     }
   }
 
   const formattedDate = React.useMemo(() => {
-    const value = format(selectedDate, "EEEE, 'ngày' dd 'tháng' MM 'năm' yyyy", { locale: vi })
+    const value = format(selectedDate, t('dates.formats.fullDate'), { locale: vi })
 
     return value.charAt(0).toUpperCase() + value.slice(1)
   }, [selectedDate])
@@ -90,11 +91,11 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Chỉnh sửa việc thiện</DialogTitle>
-          <DialogDescription>Cập nhật thông tin việc thiện của bạn.</DialogDescription>
+          <DialogTitle>{t('deeds.edit.title')}</DialogTitle>
+          <DialogDescription>{t('deeds.edit.description')}</DialogDescription>
         </DialogHeader>
 
-        <p className='text-muted-foreground text-sm'>Ghi nhận này chỉ mình bạn thấy.</p>
+        <p className='text-muted-foreground text-sm'>{t('deeds.edit.privateNote')}</p>
 
         <div className='flex flex-col gap-4 py-4'>
           <div className='flex gap-2'>
@@ -109,7 +110,7 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Label htmlFor='date'>Ngày thực hiện</Label>
+            <Label htmlFor='date'>{t('deeds.edit.fields.date')}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -132,19 +133,19 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Label htmlFor='description'>Ghi chú</Label>
+            <Label htmlFor='description'>{t('deeds.edit.fields.note')}</Label>
             <Textarea
               className='min-h-25 rounded-2xl border-2'
               id='description'
-              placeholder='Viết ghi chú về việc thiện này...'
+              placeholder={t('deeds.edit.fields.notePlaceholder')}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <p className='text-muted-foreground text-sm'>Có thể để trống nếu bạn muốn.</p>
+            <p className='text-muted-foreground text-sm'>{t('deeds.edit.fields.noteHint')}</p>
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Label htmlFor='labels'>Nhãn cảm xúc</Label>
+            <Label htmlFor='labels'>{t('deeds.edit.fields.moodTags')}</Label>
             <div className='flex flex-wrap gap-2'>
               {MOOD_TAGS.map((tag) => {
                 return (
@@ -157,18 +158,16 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
                 )
               })}
             </div>
-            <p className='text-muted-foreground text-sm'>
-              Nhãn chỉ để tự nhận diện, không cần đúng hay sai.
-            </p>
+            <p className='text-muted-foreground text-sm'>{t('deeds.edit.fields.moodTagsHint')}</p>
           </div>
         </div>
 
         <DialogFooter>
           <Button variant='outline' onClick={() => onOpenChange(false)}>
-            Hủy
+            {t('common.actions.cancel')}
           </Button>
           <Button disabled={updateDeed.isPending} onClick={() => void handleSubmit()}>
-            {updateDeed.isPending ? 'Đang lưu...' : 'Lưu thay đổi'}
+            {updateDeed.isPending ? t('common.actions.saving') : t('deeds.edit.saveChanges')}
           </Button>
         </DialogFooter>
       </DialogContent>

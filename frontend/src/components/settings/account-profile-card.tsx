@@ -2,6 +2,7 @@ import { UserIcon } from 'lucide-react'
 import { useMemo } from 'react'
 
 import { CardSection } from '@/components/shared'
+import { t } from '@/lib/i18n'
 import type { UserDTO } from '@/types/api'
 
 interface AccountProfileCardProps {
@@ -9,8 +10,8 @@ interface AccountProfileCardProps {
 }
 
 const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
-  const displayName = user?.displayName ?? 'Bạn'
-  const displayEmail = user?.email ?? 'Chưa có email'
+  const displayName = user?.displayName ?? t('layout.user.fallbackName')
+  const displayEmail = user?.email ?? t('layout.user.emailMissing')
   const avatarUrl = user?.avatarUrl
   const initials = useMemo(() => {
     const nameSource = displayName || displayEmail
@@ -25,9 +26,11 @@ const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
       <div className='flex justify-between'>
         <div>
           <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            Hồ sơ
+            {t('settings.account.heading')}
           </p>
-          <p className='text-foreground mt-2 text-base font-semibold'>Tài khoản của bạn</p>
+          <p className='text-foreground mt-2 text-base font-semibold'>
+            {t('settings.account.title')}
+          </p>
         </div>
         <div className='flex justify-center rounded-full'>
           <UserIcon className='text-primary h-5 w-5' />
@@ -48,9 +51,7 @@ const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
             <p className='text-muted-foreground text-xs'>{displayEmail}</p>
           </div>
         </div>
-        <div className='text-muted-foreground text-sm'>
-          Thông tin này được lấy từ tài khoản đăng nhập.
-        </div>
+        <div className='text-muted-foreground text-sm'>{t('settings.account.helper')}</div>
       </div>
     </CardSection>
   )

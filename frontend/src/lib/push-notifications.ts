@@ -1,4 +1,5 @@
 import { getVapidPublicKey, subscribePush, unsubscribePush } from '@/api/reminders'
+import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth-store'
 import type { PushSubscriptionPayloadDTO } from '@/types/api'
 
@@ -159,15 +160,15 @@ export const syncPushSubscription = async ({
   const currentUser = useAuthStore.getState().user
 
   if (!currentUser?.id) {
-    return { success: false, error: 'Chưa đăng nhập.', code: 'unauthenticated' }
+    return { success: false, error: t('push.errors.unauthenticated'), code: 'unauthenticated' }
   }
 
   if (!requestPermission && !currentUser.reminderEnabled) {
-    return { success: false, error: 'Bạn đang tắt nhắc nhở.', code: 'reminder-disabled' }
+    return { success: false, error: t('push.errors.reminderDisabled'), code: 'reminder-disabled' }
   }
 
   if (!isPushSupported()) {
-    return { success: false, error: 'Thiết bị chưa hỗ trợ Web Push.', code: 'unsupported' }
+    return { success: false, error: t('push.errors.unsupported'), code: 'unsupported' }
   }
 
   let permission = Notification.permission
@@ -178,7 +179,7 @@ export const syncPushSubscription = async ({
   if (permission === 'default') {
     return {
       success: false,
-      error: 'Thiết bị này chưa cấp quyền thông báo.',
+      error: t('push.errors.permissionDefault'),
       code: 'permission-default',
     }
   }
@@ -186,7 +187,7 @@ export const syncPushSubscription = async ({
   if (permission !== 'granted') {
     return {
       success: false,
-      error: 'Bạn cần cấp quyền thông báo để bật nhắc nhở.',
+      error: t('push.errors.permissionDenied'),
       code: 'permission-denied',
     }
   }
@@ -198,7 +199,7 @@ export const syncPushSubscription = async ({
   if (!publicKey) {
     return {
       success: false,
-      error: 'Không lấy được khoá thông báo từ máy chủ.',
+      error: t('push.errors.missingPublicKey'),
       code: 'missing-public-key',
     }
   }
@@ -228,7 +229,7 @@ export const syncPushSubscription = async ({
   if (!payloadJson.endpoint) {
     return {
       success: false,
-      error: 'Subscription endpoint không hợp lệ.',
+      error: t('push.errors.invalidEndpoint'),
       code: 'invalid-endpoint',
     }
   }
@@ -247,7 +248,7 @@ export const syncPushSubscription = async ({
   if (!payload.keys.p256dh || !payload.keys.auth) {
     return {
       success: false,
-      error: 'Không thể tạo khoá Web Push hợp lệ.',
+      error: t('push.errors.invalidKeys'),
       code: 'invalid-keys',
     }
   }

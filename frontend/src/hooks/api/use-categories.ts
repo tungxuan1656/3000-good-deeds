@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
 import { getCategories } from '../../api/categories'
+import { t } from '../../lib/i18n'
 import type { DeedCategoryDTO } from '../../types/api'
 
 const ONE_DAY = 1000 * 60 * 60 * 24
@@ -13,22 +14,22 @@ export const CATEGORY_KEYS = {
 const FALLBACK_CATEGORIES: DeedCategoryDTO[] = [
   {
     code: 'body',
-    name: 'Thân thiện',
-    description: 'Hành động cụ thể bằng thân',
+    name: t('categories.fallback.body.name'),
+    description: t('categories.fallback.body.description'),
     style: 'bg-body/20 hover:bg-body/40',
     icon: '/icons/icon_than.png',
   },
   {
     code: 'speech',
-    name: 'Khẩu thiện',
-    description: 'Lời nói ái ngữ, chân thật',
+    name: t('categories.fallback.speech.name'),
+    description: t('categories.fallback.speech.description'),
     style: 'bg-speech/20 hover:bg-speech/40',
     icon: '/icons/icon_khau.png',
   },
   {
     code: 'mind',
-    name: 'Ý thiện',
-    description: 'Suy nghĩ lành, buông xả',
+    name: t('categories.fallback.mind.name'),
+    description: t('categories.fallback.mind.description'),
     style: 'bg-mind/20 hover:bg-mind/40',
     icon: '/icons/icon_y.png',
   },
