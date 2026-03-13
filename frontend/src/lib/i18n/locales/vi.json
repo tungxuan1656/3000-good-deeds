@@ -1,0 +1,206 @@
+{
+  "common": {
+    "actions": {
+      "save": "Lưu",
+      "saving": "Đang lưu...",
+      "viewHistory": "Xem lại những ngày cũ",
+      "delete": "Xóa",
+      "deletePost": "Xóa bài viết",
+      "later": "Để sau"
+    },
+    "status": {
+      "today": "Hôm nay",
+      "yesterday": "Hôm qua",
+      "day": "Ngày"
+    },
+    "errors": {
+      "invalidContent": "Nội dung chưa hợp lệ",
+      "saveFailed": "Lưu thất bại",
+      "deleteFailed": "Không thể xóa"
+    },
+    "success": {
+      "saved": "Đã lưu",
+      "deleted": "Đã xóa"
+    }
+  },
+  "layout": {
+    "menu": {
+      "title": "Menu",
+      "home": "Trang chủ",
+      "timeline": "Hành trình",
+      "inner": "Tu tập",
+      "stats": "Thống kê",
+      "goals": "Mục tiêu",
+      "suggestedDeeds": "Gợi ý việc thiện",
+      "settings": "Cài đặt",
+      "more": "Thêm"
+    },
+    "user": {
+      "fallbackName": "Bạn",
+      "emailMissing": "Chưa có email"
+    }
+  },
+  "constants": {
+    "innerJournal": {
+      "types": {
+        "gratitude": "Biết ơn",
+        "repentance": "Sám hối"
+      },
+      "immutableNote": "Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung sẽ không sửa lại được, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống."
+    },
+    "goals": {
+      "weekly": "Mục tiêu tuần",
+      "monthly": "Mục tiêu tháng",
+      "yearly": "Mục tiêu năm"
+    },
+    "moodTags": {
+      "peaceful": "An vui",
+      "grateful": "Biết ơn",
+      "lightHearted": "Nhẹ lòng",
+      "warm": "Ấm áp",
+      "calm": "Bình an",
+      "hopeful": "Hy vọng"
+    }
+  },
+  "goals": {
+    "labels": {
+      "weekly": "Mục tiêu tuần",
+      "monthly": "Mục tiêu tháng",
+      "yearly": "Mục tiêu năm"
+    }
+  },
+  "deeds": {
+    "moodTags": {
+      "peaceful": "An vui",
+      "grateful": "Biết ơn",
+      "lightHearted": "Nhẹ lòng",
+      "warm": "Ấm áp",
+      "calm": "Bình an",
+      "hopeful": "Hy vọng"
+    }
+  },
+  "journal": {
+    "types": {
+      "gratitude": {
+        "label": "Biết ơn",
+        "guidance": "Hãy dành một khoảnh khắc nhận ra điều tốt đẹp đã đến với mình trong ngày, dù rất nhỏ, ghi lại để nuôi dưỡng sự trân trọng và giúp tâm mình lắng dịu hơn."
+      },
+      "repentance": {
+        "label": "Sám hối",
+        "guidance": "Hãy chậm lại một chút, nhìn thẳng vào điều đã khiến tâm bạn bất an hôm nay, ghi lại với sự trung thực và nhẹ nhàng, không để tự trách, chỉ để thấy rõ và buông xuống."
+      }
+    },
+    "page": {
+      "title": "Sổ tay quán chiếu",
+      "subtitle": "Sổ tay",
+      "description": "Ghi lại quán chiếu để nhìn rõ và thấy được sự chuyển biến của tâm.",
+      "placeholder": "Viết ngắn thôi, chỉ điều bạn thật sự nhận ra trong lòng...",
+      "immutableNote": "Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung sẽ không sửa lại được, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống.",
+      "deleteTitle": "Xóa bài viết?",
+      "deleteDescription": "Nếu xóa, bạn sẽ không xem lại được bài viết này nữa."
+    },
+    "validation": {
+      "emptyContent": "Bạn có thể viết ngắn thôi, nhưng đừng để trống."
+    }
+  },
+  "onboarding": {
+    "general": {
+      "title": "Chào mừng",
+      "steps": [
+        {
+          "title": "Đây không phải mạng xã hội",
+          "description": "Đây là không gian riêng để bạn nhìn lại chính mình, không khoe khoang và không so sánh."
+        },
+        {
+          "title": "Không chấm điểm - Không thao túng",
+          "description": "Ứng dụng không dùng điểm số hay cơ chế gây nghiện. Mọi thứ đều nhẹ nhàng và tự nguyện."
+        },
+        {
+          "title": "Mỗi việc nhỏ đều quý",
+          "description": "Một hành động tử tế nhỏ cũng đủ nuôi dưỡng tâm mình mỗi ngày."
+        },
+        {
+          "title": "Dữ liệu thuộc về bạn",
+          "description": "Mọi ghi nhận đều riêng tư. Bạn có thể xuất hoặc xóa dữ liệu bất cứ lúc nào."
+        }
+      ]
+    },
+    "deeds": {
+      "title": "Ghi nhận việc thiện",
+      "steps": [
+        {
+          "title": "Thân - Khẩu - Ý",
+          "description": "Bạn có thể ghi nhận theo ba nhóm để nhìn rõ cách mình thực hành mỗi ngày."
+        },
+        {
+          "title": "Ghi nhận để nhìn lại",
+          "description": "Chỉ cần vài dòng ngắn để nhớ lại điều đã làm, không cần dài."
+        },
+        {
+          "title": "Riêng tư tuyệt đối",
+          "description": "Ghi nhận này chỉ mình bạn thấy. Không công khai, không chia sẻ."
+        },
+        {
+          "title": "Sau khi lưu",
+          "description": "Bạn có thể xem lại trong hành trình để soi chiếu khi cần."
+        }
+      ]
+    },
+    "quoteRandomActs": {
+      "title": "Pháp ngữ và Gieo duyên",
+      "steps": [
+        {
+          "title": "Pháp ngữ theo phiên",
+          "description": "Mỗi lần mở app, một câu pháp ngữ sẽ đồng hành với bạn trong phiên đó."
+        },
+        {
+          "title": "Gợi ý việc thiện nhỏ",
+          "description": "Gợi ý chỉ để khởi tâm. Nếu phù hợp thì thử, không phù hợp có thể bỏ qua."
+        }
+      ]
+    },
+    "journey": {
+      "title": "Hành trình",
+      "steps": [
+        {
+          "title": "Đường dài - không vội",
+          "description": "Hành trình là tiến trình dài hạn, không phải cuộc đua."
+        },
+        {
+          "title": "Giữ nhịp nhẹ nhàng",
+          "description": "Mỗi bước nhỏ đều đáng trân trọng. Hãy đi theo nhịp của mình."
+        }
+      ]
+    },
+    "stats": {
+      "title": "Thống kê",
+      "steps": [
+        {
+          "title": "Soi chiếu, không phán xét",
+          "description": "Các con số chỉ để nhìn lại thói quen của mình, không phải để đánh giá."
+        },
+        {
+          "title": "Chuỗi ngày chỉ là nhịp",
+          "description": "Đứt quãng cũng không sao. Hãy bắt đầu lại khi bạn sẵn sàng."
+        }
+      ]
+    },
+    "journal": {
+      "title": "Sổ tay quán chiếu",
+      "steps": [
+        {
+          "title": "Không gian riêng tư",
+          "description": "Một nơi an toàn để bạn nhìn lại thân - khẩu - ý của mình."
+        },
+        {
+          "title": "Viết xong là đặt xuống",
+          "description": "Viết để nhìn rõ rồi buông nhẹ. Không cần giữ lại cảm xúc nặng nề."
+        },
+        {
+          "title": "Sám hối / Biết ơn",
+          "description": "Hai chế độ giúp bạn quán chiếu theo cách phù hợp với mình."
+        }
+      ]
+    }
+  }
+}

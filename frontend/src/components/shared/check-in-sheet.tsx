@@ -173,14 +173,16 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
           {step === 3 && (
             <div className='flex flex-col gap-4'>
               <div className='flex flex-wrap gap-2'>
-                {MOOD_TAGS.map((tag) => (
-                  <TagButton
-                    key={tag}
-                    isActive={moodTags.includes(tag)}
-                    label={tag}
-                    onToggle={() => toggleMoodTag(tag)}
-                  />
-                ))}
+                {MOOD_TAGS.map((tag) => {
+                  return (
+                    <TagButton
+                      key={tag}
+                      isActive={moodTags.includes(tag)}
+                      label={tag}
+                      onToggle={() => toggleMoodTag(tag)}
+                    />
+                  )
+                })}
               </div>
             </div>
           )}

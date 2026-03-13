@@ -1,4 +1,5 @@
 import './index.css'
+import './lib/i18n'
 
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
