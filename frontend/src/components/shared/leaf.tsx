@@ -25,7 +25,7 @@ const positionClasses: Record<LeafPosition, string> = {
   'center-right': 'top-1/2 -right-4 -translate-y-1/2',
 }
 
-const Leaf = ({ variant, position = 'top-right', className }: LeafProps) => {
+export const Leaf = ({ variant, position = 'top-right', className }: LeafProps) => {
   return (
     <img
       alt=''
@@ -39,5 +39,3 @@ const Leaf = ({ variant, position = 'top-right', className }: LeafProps) => {
     />
   )
 }
-
-export default Leaf

@@ -1,0 +1,16 @@
+export const PATHS = {
+  LOGIN: '/login',
+  TERMS: '/terms',
+  PRIVACY: '/privacy',
+  HOME: '/',
+  TIMELINE: '/timeline',
+  STATS: '/stats',
+  GOALS: '/goals',
+  DEEDS: '/deeds',
+  INNER: '/inner',
+  MORE: '/more',
+  INNER_RANDOM_ACTS: '/inner/random-acts',
+  INNER_JOURNAL: '/inner/journal',
+  INNER_JOURNAL_HISTORY: '/inner/journal/history',
+  SETTINGS: '/settings',
+}

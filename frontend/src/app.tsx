@@ -1,8 +1,8 @@
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import AppLayout from '@/components/layout/app-layout'
-import { ScrollToTop } from '@/components/layout/scroll-to-top'
+import { AppBack, AppLayout, ScrollToTop } from '@/components/layout'
+import { useBootstrapSession } from '@/hooks/shared/use-bootstrap-session'
 import { PATHS } from '@/lib/constants'
 import GoalsPage from '@/pages/goals-page'
 import HomePage from '@/pages/home-page'
@@ -19,9 +19,7 @@ import TermsOfUsePage from '@/pages/terms-of-use-page'
 import TimelinePage from '@/pages/timeline-page'
 import ProtectedRoute from '@/routes/protected-route'
 
-import { AppBack } from './components/layout/app-back'
 import { Toaster } from './components/ui/sonner'
-import { useBootstrapSession } from './hooks/use-bootstrap-session'
 
 // Get Google Client ID from environment variables
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''

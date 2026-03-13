@@ -1,137 +1,21 @@
 import { CheckCircle2Icon, XCircleIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
-import { testPushNotification } from '@/api/reminders'
 import { CardSection, InfoButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
-import { useUpdateUser } from '@/hooks/api/use-user'
+import { useNotificationSettings } from '@/hooks/settings'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
-import {
-  isPushSupported,
-  subscribeToPushNotifications,
-  unsubscribeFromPushNotifications,
-} from '@/lib/push-notifications'
-import { authActions } from '@/stores/auth-store'
 import type { UserDTO } from '@/types/api'
 
 interface NotificationSettingsCardProps {
   user?: UserDTO | null
 }
 
-const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
-  const updateUser = useUpdateUser()
-  const [reminderTime, setReminderTime] = useState('20:30')
-  const [pushSupported, setPushSupported] = useState(true)
-  const [pushError, setPushError] = useState<string | null>(null)
-  const [isToggleLoading, setIsToggleLoading] = useState(false)
-  const [isTestLoading, setIsTestLoading] = useState(false)
-
-  useEffect(() => {
-    setPushSupported(isPushSupported())
-  }, [])
-
-  useEffect(() => {
-    if (user) {
-      setReminderTime(user.reminderTime ?? '20:30')
-    }
-  }, [user])
-
-  useEffect(() => {
-    if (!user?.reminderEnabled || !pushSupported) {
-      setPushError(null)
-
-      return
-    }
-
-    if (Notification.permission !== 'granted') {
-      setPushError(t('settings.notifications.errors.permissionNotGranted'))
-
-      return
-    }
-
-    setPushError(null)
-  }, [pushSupported, user?.reminderEnabled])
-
-  const handleReminderToggle = async (nextValue: boolean) => {
-    try {
-      setIsToggleLoading(true)
-      setPushError(null)
-
-      if (nextValue) {
-        const result = await subscribeToPushNotifications()
-        if (!result.success) {
-          setPushError(result.error ?? t('settings.notifications.errors.enableFailed'))
-
-          return
-        }
-      } else {
-        await unsubscribeFromPushNotifications()
-      }
-
-      const response = await updateUser.mutateAsync({
-        reminderEnabled: nextValue,
-      })
-      if (response?.data) {
-        authActions.setUser(response.data)
-      }
-    } catch (error) {
-      console.log(error)
-      setPushError(t('settings.notifications.errors.updateFailed'))
-    } finally {
-      setIsToggleLoading(false)
-    }
-  }
-
-  const handleReminderTimeBlur = async () => {
-    try {
-      if (!reminderTime.match(/^\d{2}:\d{2}$/)) {
-        setReminderTime(user?.reminderTime ?? '20:30')
-
-        return
-      }
-      if (reminderTime === user?.reminderTime) return
-
-      const response = await updateUser.mutateAsync({
-        reminderTime,
-      })
-      if (response?.data) {
-        authActions.setUser(response.data)
-      }
-    } catch {
-      // Keep local value; backend validation will show on next successful fetch
-    }
-  }
-
-  const handleTestNotification = async () => {
-    try {
-      setIsTestLoading(true)
-      setPushError(null)
-
-      const response = await testPushNotification()
-      if (!response.success) {
-        const message = response.error ?? t('settings.notifications.errors.testSendFailed')
-        setPushError(message)
-        toast.error(message)
-
-        return
-      }
-
-      toast.success(t('settings.notifications.messages.testSent'))
-    } catch (error) {
-      console.log(error)
-
-      const message = t('settings.notifications.errors.testSendRetry')
-      setPushError(message)
-      toast.error(message)
-    } finally {
-      setIsTestLoading(false)
-    }
-  }
+export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
+  const { ui, status, actions } = useNotificationSettings(user)
 
   return (
     <CardSection className='gap-4'>
@@ -162,18 +46,18 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
           <p className='text-muted-foreground mt-1 text-sm'>
             {t('settings.notifications.subtitle')}
           </p>
-          {!pushSupported && (
+          {!ui.pushSupported && (
             <p className='text-muted-foreground mt-1 text-sm'>
               {t('settings.notifications.unsupportedHint')}
             </p>
           )}
-          {pushError && <p className='mt-1 text-sm text-red-600'>{pushError}</p>}
+          {ui.pushError && <p className='mt-1 text-sm text-red-600'>{ui.pushError}</p>}
         </div>
         <Button
-          disabled={isToggleLoading || (!pushSupported && !user?.reminderEnabled)}
+          disabled={status.isToggleLoading || (!ui.pushSupported && !user?.reminderEnabled)}
           variant={user?.reminderEnabled ? 'outline' : 'default'}
-          onClick={() => handleReminderToggle(!user?.reminderEnabled)}>
-          {isToggleLoading ? <Spinner /> : null}
+          onClick={() => actions.handleReminderToggle(!user?.reminderEnabled)}>
+          {status.isToggleLoading ? <Spinner /> : null}
           {user?.reminderEnabled
             ? t('settings.notifications.actions.disable')
             : t('settings.notifications.actions.enable')}
@@ -188,9 +72,9 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
             <Input
               className='w-36 rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
               type='time'
-              value={reminderTime}
-              onBlur={handleReminderTimeBlur}
-              onChange={(event) => setReminderTime(event.target.value)}
+              value={ui.reminderTime}
+              onBlur={actions.handleReminderTimeBlur}
+              onChange={(event) => actions.setReminderTime(event.target.value)}
             />
           </div>
           <p className='text-muted-foreground text-sm'>
@@ -201,11 +85,11 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
           </p>
           <div className='flex justify-end'>
             <Button
-              disabled={isTestLoading || isToggleLoading || !pushSupported}
+              disabled={status.isTestLoading || status.isToggleLoading || !ui.pushSupported}
               size='sm'
               variant='outline'
-              onClick={handleTestNotification}>
-              {isTestLoading ? <Spinner /> : null}
+              onClick={actions.handleTestNotification}>
+              {status.isTestLoading ? <Spinner /> : null}
               {t('settings.notifications.actions.sendTest')}
             </Button>
           </div>
@@ -214,5 +98,3 @@ const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
     </CardSection>
   )
 }
-
-export default NotificationSettingsCard

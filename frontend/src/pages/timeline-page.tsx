@@ -7,14 +7,14 @@ import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
   CardSection,
   DailyQuoteCard,
+  EmptyDataView,
   GoodDeedCard,
   HeaderSection,
   MiniCheckInCard,
+  SkeletonList,
+  TourGuideButton,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { TourGuideButton } from '@/components/shared'
-import { EmptyDataView } from '@/components/shared/empty-data-view'
-import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'

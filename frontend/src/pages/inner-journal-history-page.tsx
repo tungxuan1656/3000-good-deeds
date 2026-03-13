@@ -2,16 +2,16 @@ import { BookOpenIcon } from 'lucide-react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
-import { InnerJournalHistoryItem } from '@/components/inner/inner-journal-history-item'
+import { InnerJournalHistoryItem } from '@/components/inner'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
   DailyQuoteCard,
+  EmptyDataView,
   HeaderSection,
   MiniCheckInCard,
+  SkeletonList,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { EmptyDataView } from '@/components/shared/empty-data-view'
-import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useInnerJournalEntries } from '@/hooks/api/use-inner-journal'
 import { PATHS } from '@/lib/constants'

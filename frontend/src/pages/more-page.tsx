@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { LogoutButton } from '@/components/settings/logout-button'
+import { LogoutButton } from '@/components/settings'
 import {
   CardSection,
   DailyQuoteCard,

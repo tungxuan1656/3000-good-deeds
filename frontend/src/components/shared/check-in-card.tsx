@@ -3,15 +3,15 @@ import { useRef } from 'react'
 
 import { useCategories } from '@/hooks/api/use-categories'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 
 import { Button } from '../ui/button'
 import { CardSection } from './card-section'
 import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 import { InfoButton } from './info-button'
-import Leaf from './leaf'
+import { Leaf } from './leaf'
 import { TourGuideButton } from './tour-guide-button'
 
 export function CheckInCard() {

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { CardSection } from './card-section'
-import Leaf from './leaf'
+import { Leaf } from './leaf'
 
 type HeaderSectionProps = {
   title: string

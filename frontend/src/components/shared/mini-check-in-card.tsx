@@ -1,15 +1,15 @@
 import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
-import { CardSection } from '@/components/shared/card-section'
-import { type CheckInDrawerHandle, CheckInSheet } from '@/components/shared/check-in-sheet'
-import { GoodDeedCategoryMiniButton } from '@/components/shared/good-deed-category-button'
 import { Button } from '@/components/ui/button'
 import { useCategories } from '@/hooks/api/use-categories'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
-import Leaf from './leaf'
+import { CardSection } from './card-section'
+import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
+import { GoodDeedCategoryMiniButton } from './good-deed-category-button'
+import { Leaf } from './leaf'
 
 type MiniCheckInCardProps = {
   title?: string

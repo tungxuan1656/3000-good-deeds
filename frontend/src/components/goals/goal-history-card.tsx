@@ -7,7 +7,7 @@ import { EmptyDataView } from '../shared/empty-data-view'
 import { SkeletonList } from '../shared/skeleton-list'
 import { GoalHistoryItem } from './goal-history-item'
 
-const GoalHistoryCard = () => {
+export const GoalHistoryCard = () => {
   const { data: historyResponse, isLoading } = useGoalHistory({ limit: 20 })
 
   const historyGoals = historyResponse?.success ? (historyResponse.data?.data ?? []) : []
@@ -35,5 +35,3 @@ const GoalHistoryCard = () => {
     </div>
   )
 }
-
-export default GoalHistoryCard

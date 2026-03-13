@@ -12,9 +12,9 @@ import {
 } from '@/components/ui/sheet'
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/shared/use-mobile'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 
 export interface SuggestActsDrawerHandle {
   open: (categoryCode?: string) => void

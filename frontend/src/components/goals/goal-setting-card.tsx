@@ -17,7 +17,7 @@ type GoalFormState = {
   isEnabled: boolean
 }
 
-const GoalSettingCard = () => {
+export const GoalSettingCard = () => {
   const goalTypes = useMemo(() => ['weekly', 'monthly', 'yearly'] as const, [])
   const [goalForms, setGoalForms] = useState<Record<GoalType, GoalFormState>>({
     weekly: { targetCount: '1', isEnabled: false },
@@ -135,5 +135,3 @@ const GoalSettingCard = () => {
     </div>
   )
 }
-
-export default GoalSettingCard
