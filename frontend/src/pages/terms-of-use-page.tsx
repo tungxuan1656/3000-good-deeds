@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { CardSection, HeaderSection, LegalFooter } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 
 const UpdatedAt = () => {
   return (
@@ -37,15 +38,15 @@ const TermsOfUsePage = () => {
           action={
             <Link to={PATHS.LOGIN}>
               <Button
-                className='h-10 rounded-full border border-black/5 bg-white hover:bg-white/80'
+                className='h-10 rounded-full border border-black/5 bg-card hover:bg-card/80'
                 variant='secondary'>
-                Quay về đăng nhập
+                {t('legal.backToLogin')}
               </Button>
             </Link>
           }
-          description='Một vài điều rõ ràng để bạn dùng ứng dụng một cách an tâm, nhẹ nhàng và tôn trọng quyền riêng tư.'
-          subtitle='Pháp lý'
-          title='Điều khoản sử dụng'
+          description={t('pages.termsOfUse.header.description')}
+          subtitle={t('legal.subtitle')}
+          title={t('pages.termsOfUse.header.title')}
         />
 
         <CardSection className='gap-4'>

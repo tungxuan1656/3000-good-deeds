@@ -1,9 +1,6 @@
 import type {
   ApiResponse,
-  CreateJournalRequest,
   DailyQuoteDTO,
-  GetJournalRequest,
-  JournalEntryDTO,
   RandomActDTO,
 } from '../types/api'
 import { client } from './client'
@@ -30,22 +27,6 @@ export const getRandomActs = async (limit = 10): Promise<ApiResponse<RandomActDT
       params: { limit },
     },
   )
-
-  return response.data
-}
-
-export const getJournal = async (
-  params: GetJournalRequest,
-): Promise<ApiResponse<JournalEntryDTO[]>> => {
-  const response = await client.get<ApiResponse<JournalEntryDTO[]>>(API_ENDPOINTS.journal.list, {
-    params,
-  })
-
-  return response.data
-}
-
-export const createJournal = async (data: CreateJournalRequest): Promise<ApiResponse<void>> => {
-  const response = await client.post<ApiResponse<void>>(API_ENDPOINTS.journal.create, data)
 
   return response.data
 }

@@ -31,11 +31,8 @@ const TimelinePage = () => {
   }, [data])
 
   const timelineGroups = React.useMemo(() => {
-    const groups: Array<{
-      dateKey: string
-      dateLabel: string
-      items: DeedDTO[]
-    }> = []
+    const groupMap = new Map<string, { dateKey: string; dateLabel: string; items: DeedDTO[] }>()
+    const groupOrder: string[] = []
 
     deeds.forEach((item) => {
       const performedAt = item.performedAt || item.createdAt
@@ -51,24 +48,15 @@ const TimelinePage = () => {
         dateLabel = t('pages.timeline.dateLabel.day', { date: dateLabel })
       }
 
-      const existingGroup = groups.find((group) => group.dateKey === dateKey)
-      const targetGroup = existingGroup
-        ? existingGroup
-        : (() => {
-            const nextGroup = {
-              dateKey,
-              dateLabel,
-              items: [],
-            }
-            groups.push(nextGroup)
+      if (!groupMap.has(dateKey)) {
+        groupMap.set(dateKey, { dateKey, dateLabel, items: [] })
+        groupOrder.push(dateKey)
+      }
 
-            return nextGroup
-          })()
-
-      targetGroup.items.push(item)
+      groupMap.get(dateKey)!.items.push(item)
     })
 
-    return groups
+    return groupOrder.map((key) => groupMap.get(key)!)
   }, [deeds])
 
   const showLoading = isLoading && deeds.length === 0

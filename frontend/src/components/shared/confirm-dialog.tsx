@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
-import { forwardRef, useCallback, useImperativeHandle, useState } from 'react'
+import { forwardRef, useImperativeHandle, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -19,9 +19,6 @@ export type ConfirmDialogHandle = {
 }
 
 type ConfirmDialogProps = {
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
   title: string
   description?: string
   confirmLabel?: string
@@ -37,9 +34,6 @@ type ConfirmDialogProps = {
 export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>(
   (
     {
-      open,
-      defaultOpen = false,
-      onOpenChange,
       title,
       description,
       confirmLabel = t('common.actions.confirm'),
@@ -55,39 +49,29 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
     },
     ref,
   ) => {
-    const isControlled = open !== undefined
-    const [internalOpen, setInternalOpen] = useState(defaultOpen)
-
-    const dialogOpen = isControlled ? open : internalOpen
-
-    const setOpen = useCallback(
-      (next: boolean) => {
-        if (!isControlled) setInternalOpen(next)
-        onOpenChange?.(next)
-      },
-      [isControlled, onOpenChange],
-    )
+    const [isOpen, setIsOpen] = useState(false)
 
     useImperativeHandle(
       ref,
       () => ({
-        open: () => setOpen(true),
-        close: () => setOpen(false),
+        open: () => setIsOpen(true),
+        close: () => setIsOpen(false),
       }),
-      [setOpen],
+      [],
     )
 
     const handleCancel = () => {
       onCancel?.()
-      setOpen(false)
+      setIsOpen(false)
     }
 
     const handleConfirm = () => {
       onConfirm?.()
+      if (!confirmLoading) setIsOpen(false)
     }
 
     return (
-      <Dialog modal={true} open={dialogOpen} onOpenChange={setOpen}>
+      <Dialog modal={true} open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent
           className={cn('gap-4 sm:gap-5', className)}
           showCloseButton={false}

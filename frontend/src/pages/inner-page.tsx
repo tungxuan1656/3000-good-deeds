@@ -43,7 +43,7 @@ const InnerPage = () => {
           </p>
           <div className='flex flex-col gap-3'>
             <Link
-              className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
+              className='flex items-center gap-4 rounded-2xl border border-black/5 bg-card/80 px-4 py-4 transition-colors hover:bg-card'
               to={PATHS.INNER_JOURNAL}>
               <div className='bg-mind/20 flex h-12 w-12 items-center justify-center rounded-2xl'>
                 <BookOpenIcon className='text-primary h-5 w-5' />

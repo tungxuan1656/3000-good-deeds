@@ -20,7 +20,7 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
         <Leaf className='opacity-30' position='top-right' variant={2} />
         <div className='flex items-start justify-between gap-4'>
           <div className='flex items-center gap-4'>
-            <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white/80 shadow-sm'>
+            <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-card/80 shadow-sm'>
               <img
                 alt={t('auth.login.logoAlt')}
                 className='h-10 w-10'

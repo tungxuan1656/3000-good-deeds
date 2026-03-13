@@ -17,7 +17,7 @@ export const TagButton = ({
         `rounded-full border px-2.5 py-1 text-sm transition-colors`,
         isActive
           ? 'bg-primary/10 border-primary text-primary'
-          : 'text-foreground border-black/10 bg-white/80',
+          : 'text-foreground border-black/10 bg-card/80',
         className,
       )}
       type='button'

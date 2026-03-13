@@ -1,5 +1,5 @@
 import { MoreVertical, Pencil, Trash2 } from 'lucide-react'
-import { useState } from 'react'
+import { useRef } from 'react'
 import { toast } from 'sonner'
 
 import {
@@ -14,16 +14,16 @@ import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
 import { CardInlineSection } from './card-inline-section'
-import { ConfirmDialog } from './confirm-dialog'
-import { EditDeedDialog } from './edit-deed-dialog'
+import { ConfirmDialog, type ConfirmDialogHandle } from './confirm-dialog'
+import { EditDeedDialog, type EditDeedDialogHandle } from './edit-deed-dialog'
 
 export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
   const { codeToCategoryMap } = useCategories()
   const deleteDeed = useDeleteDeed()
   const meta = codeToCategoryMap[deed.categoryCode]
 
-  const [showEditDialog, setShowEditDialog] = useState(false)
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const editRef = useRef<EditDeedDialogHandle>(null)
+  const deleteRef = useRef<ConfirmDialogHandle>(null)
 
   const handleDelete = async () => {
     try {
@@ -54,13 +54,13 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
               <MoreVertical className='size-6' />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='rounded-xl'>
-              <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
+              <DropdownMenuItem onClick={() => editRef.current?.open(deed)}>
                 <Pencil className='mr-2 h-4 w-4' />
                 {t('deeds.card.actions.edit')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className='text-destructive focus:text-destructive'
-                onClick={() => setShowDeleteDialog(true)}>
+                onClick={() => deleteRef.current?.open()}>
                 <Trash2 className='mr-2 h-4 w-4' />
                 {t('deeds.card.actions.delete')}
               </DropdownMenuItem>
@@ -73,16 +73,15 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
         )}
       </CardInlineSection>
 
-      <EditDeedDialog deed={deed} open={showEditDialog} onOpenChange={setShowEditDialog} />
+      <EditDeedDialog ref={editRef} />
 
       <ConfirmDialog
+        ref={deleteRef}
         cancelLabel={t('deeds.card.deleteDialog.cancel')}
         confirmLabel={t('deeds.card.deleteDialog.confirm')}
         description={t('deeds.card.deleteDialog.description')}
-        open={showDeleteDialog}
         title={t('deeds.card.deleteDialog.title')}
         variant='destructive'
-        onCancel={() => setShowDeleteDialog(false)}
         onConfirm={() => void handleDelete()}
       />
     </>

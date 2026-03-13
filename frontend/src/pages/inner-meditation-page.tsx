@@ -108,7 +108,7 @@ const InnerMeditationPage = () => {
               className={`border-primary/20 bg-primary/10 flex h-44 w-44 items-center justify-center rounded-full border ${
                 isRunning ? 'ring-primary/20 ring-2' : ''
               }`}>
-              <div className='border-primary/30 flex h-28 w-28 items-center justify-center rounded-full border bg-white'>
+              <div className='border-primary/30 flex h-28 w-28 items-center justify-center rounded-full border bg-card'>
                 <span
                   className={`text-sm font-semibold ${
                     isRunning ? 'text-primary' : 'text-foreground'
@@ -128,7 +128,7 @@ const InnerMeditationPage = () => {
                 className={`rounded-full border px-4 py-2 text-sm font-medium disabled:opacity-50 ${
                   durationMinutes === item.minutes
                     ? 'border-primary/40 bg-primary/15 text-primary'
-                    : 'text-muted-foreground border-black/5 bg-white'
+                    : 'text-muted-foreground border-black/5 bg-card'
                 }`}
                 disabled={isRunning}
                 onClick={() => setDurationMinutes(item.minutes)}>
@@ -152,7 +152,7 @@ const InnerMeditationPage = () => {
               {t('pages.innerMeditation.actions.start')}
             </Button>
             <Button
-              className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
+              className='text-foreground h-11 w-full rounded-full border border-black/5 bg-card hover:bg-card/80 sm:w-auto'
               disabled={!isRunning}
               variant='secondary'
               onClick={() => {
@@ -176,7 +176,7 @@ const InnerMeditationPage = () => {
           </div>
 
           {isFinished && (
-            <div className='text-muted-foreground rounded-2xl border border-black/5 bg-white/80 px-4 py-3 text-sm'>
+            <div className='text-muted-foreground rounded-2xl border border-black/5 bg-card/80 px-4 py-3 text-sm'>
               {t('pages.innerMeditation.finishedPrompt')}
             </div>
           )}

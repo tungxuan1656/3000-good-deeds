@@ -46,12 +46,12 @@ const InnerRandomActsPage = () => {
 
         <CardSection className='gap-4'>
           {isFetching && !act ? (
-            <div className='flex min-h-50 items-center justify-center rounded-2xl border border-black/5 bg-white/80 p-5'>
+            <div className='flex min-h-50 items-center justify-center rounded-2xl border border-black/5 bg-card/80 p-5'>
               <Spinner />
             </div>
           ) : act ? (
             <>
-              <div className='border-primary/20 rounded-2xl border-2 bg-white/80 p-5'>
+              <div className='border-primary/20 rounded-2xl border-2 bg-card/80 p-5'>
                 <div className='flex flex-wrap items-center gap-2'>
                   <span className='text-muted-foreground text-xs'>
                     {t('pages.randomActs.randomLabel')}
@@ -75,7 +75,7 @@ const InnerRandomActsPage = () => {
               </div>
               <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
                 <Button
-                  className='text-foreground group h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80 sm:w-auto'
+                  className='text-foreground group h-11 w-full rounded-full border border-black/5 bg-card hover:bg-card/80 sm:w-auto'
                   disabled={isFetching}
                   variant='secondary'
                   onClick={() => {
@@ -91,7 +91,7 @@ const InnerRandomActsPage = () => {
               </div>
             </>
           ) : (
-            <div className='rounded-2xl border border-black/5 bg-white/80 p-5'>
+            <div className='rounded-2xl border border-black/5 bg-card/80 p-5'>
               <p className='text-muted-foreground text-center text-sm'>
                 {t('pages.randomActs.empty')}
               </p>

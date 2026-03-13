@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { loginGoogle } from '@/api/auth'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
-import { authActions, useAuthStore } from '@/stores/auth-store'
+import { authActions, useAuthStore } from '@/stores/auth.store'
 
 const isIosStandalonePwa = () => {
   if (typeof window === 'undefined') {

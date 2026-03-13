@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 import { Spinner } from '@/components/ui/spinner'
 import { PATHS } from '@/lib/constants'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth.store'
 
 const ProtectedRoute = () => {
   const isSessionChecked = useAuthStore.use.isSessionChecked()

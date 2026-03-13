@@ -30,7 +30,7 @@ type CheckInSheetFlowProps = {
   category: string | null
   resetSeed: number
   setStep: Dispatch<SetStateAction<number>>
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  onClose: () => void
   createDeed: CreateDeedAction
 }
 
@@ -51,10 +51,11 @@ export const CheckInSheetFlow = ({
   category,
   resetSeed,
   setStep,
-  setIsOpen,
+  onClose,
   createDeed,
 }: CheckInSheetFlowProps) => {
   const [formState, setFormState] = useState<CheckInFormState>(buildInitialFormState)
+  const activeMoodTagSet = useMemo(() => new Set(formState.moodTags), [formState.moodTags])
 
   useEffect(() => {
     setFormState(buildInitialFormState())
@@ -89,8 +90,8 @@ export const CheckInSheetFlow = ({
       performedAt: performedAt.getTime(),
     })
 
-    setIsOpen(false)
-  }, [category, createDeed, formState.moodTags, formState.note, formState.selectedDate, setIsOpen])
+    onClose()
+  }, [category, createDeed, formState.moodTags, formState.note, formState.selectedDate, onClose])
 
   const toggleMoodTag = useCallback((tag: string) => {
     setFormState((prev) => ({
@@ -150,7 +151,7 @@ export const CheckInSheetFlow = ({
                 return (
                   <TagButton
                     key={tag}
-                    isActive={formState.moodTags.includes(tag)}
+                    isActive={activeMoodTagSet.has(tag)}
                     label={tag}
                     onToggle={() => toggleMoodTag(tag)}
                   />

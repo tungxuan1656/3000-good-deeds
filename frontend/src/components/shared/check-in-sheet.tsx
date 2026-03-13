@@ -80,8 +80,8 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
         <CheckInSheetFlow
           category={category}
           createDeed={createDeed}
+          onClose={close}
           resetSeed={resetSeed}
-          setIsOpen={setIsOpen}
           setStep={setStep}
           step={step}
         />

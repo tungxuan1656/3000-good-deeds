@@ -5,7 +5,7 @@ import { PATHS } from '@/lib/constants'
 import { API_ENDPOINTS } from './endpoints'
 
 // Get API URL from env or default
-const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
+export const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
 
 export const client = axios.create({
   baseURL: API_URL,
@@ -21,6 +21,14 @@ let failedQueue: Array<{
   resolve: (value?: unknown) => void
   reject: (reason?: unknown) => void
 }> = []
+
+const AUTH_BEARER_EXCLUDED_ENDPOINTS = [API_ENDPOINTS.auth.google, API_ENDPOINTS.auth.refresh]
+
+const shouldSkipAuthHeader = (url?: string) => {
+  if (!url) return false
+
+  return AUTH_BEARER_EXCLUDED_ENDPOINTS.some((endpoint) => url === endpoint || url.endsWith(endpoint))
+}
 
 const processQueue = (error: Error | null = null) => {
   failedQueue.forEach((prom) => {
@@ -38,7 +46,7 @@ const processQueue = (error: Error | null = null) => {
 client.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken')
-    if (token) {
+    if (token && !shouldSkipAuthHeader(config.url)) {
       config.headers.Authorization = `Bearer ${token}`
     }
 
@@ -55,6 +63,10 @@ client.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
+    if (!originalRequest) {
+      return Promise.reject(error)
+    }
+
     if (error.response) {
       // Handle 401 Unauthorized - Try to refresh token
       if (error.response.status === 401 && !originalRequest._retry) {
@@ -64,6 +76,13 @@ client.interceptors.response.use(
             failedQueue.push({ resolve, reject })
           })
             .then(() => {
+              originalRequest._retry = true
+
+              const accessToken = localStorage.getItem('accessToken')
+              if (accessToken) {
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`
+              }
+
               return client(originalRequest)
             })
             .catch((err) => {
@@ -123,7 +142,6 @@ client.interceptors.response.use(
 function redirectToLogin() {
   // Clear all auth data
   localStorage.removeItem('accessToken')
-  localStorage.removeItem('user')
   localStorage.removeItem('auth-storage')
 
   // Redirect to login page if not already there

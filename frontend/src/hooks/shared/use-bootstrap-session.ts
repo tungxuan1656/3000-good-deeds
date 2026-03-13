@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
 import { restoreSession } from '@/api/auth'
-import { authActions, useAuthStore } from '@/stores/auth-store'
+import { authActions, useAuthStore } from '@/stores/auth.store'
 
 export const useBootstrapSession = () => {
   const isSessionChecked = useAuthStore.use.isSessionChecked()

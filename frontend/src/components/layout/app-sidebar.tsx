@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/sidebar'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth.store'
 
 import { LogoutButton } from '../settings/logout-button'
 
@@ -27,9 +27,9 @@ export const AppSidebar = () => {
   const displayEmail = user?.email ?? t('layout.user.emailMissing')
 
   return (
-    <Sidebar className='bg-white'>
+    <Sidebar className='bg-card'>
       <SidebarHeader>
-        <div className='mt-4 flex items-center gap-3 rounded-2xl border border-black/5 bg-white/80 px-3 py-2'>
+        <div className='mt-4 flex items-center gap-3 rounded-2xl border border-black/5 bg-card/80 px-3 py-2'>
           <div className='bg-secondary/40 text-foreground flex h-10 w-10 items-center justify-center rounded-full'>
             {user?.avatarUrl ? (
               <img alt={displayName} className='h-full w-full rounded-full' src={user.avatarUrl} />

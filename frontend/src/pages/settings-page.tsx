@@ -16,7 +16,7 @@ import {
 } from '@/components/shared'
 import { useUser } from '@/hooks/api/use-user'
 import { t } from '@/lib/i18n'
-import { authActions, useAuthStore } from '@/stores/auth-store'
+import { authActions, useAuthStore } from '@/stores/auth.store'
 
 const SettingsPage = () => {
   const userFromStore = useAuthStore.use.user()

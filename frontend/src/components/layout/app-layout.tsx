@@ -11,7 +11,7 @@ import {
   subscribeToPushNotifications,
   syncPushSubscription,
 } from '@/lib/utils/push-notifications'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth.store'
 
 import { AppHeader } from './app-header'
 import { PWAGuideDialog } from './pwa-guide-dialog'
@@ -50,7 +50,8 @@ export const AppLayout = () => {
         return
       }
       toast.success(t('pwa.notifications.enabled'))
-    } finally {
+    } catch {
+      toast.error(t('pwa.notifications.enableFailed'))
     }
   }
 

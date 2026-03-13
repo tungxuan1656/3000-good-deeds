@@ -3,9 +3,13 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
+import translationEN from './locales/en.json'
+import translationKR from './locales/kr.json'
 import translationVI from './locales/vi.json'
 
 const localesResource = {
+  en: { translation: translationEN },
+  kr: { translation: translationKR },
   vi: { translation: translationVI },
 }
 

@@ -74,18 +74,7 @@
       "invalidKeys": "Không thể tạo khóa Web Push hợp lệ."
     }
   },
-  "legal": {
-    "backToLogin": "Quay về đăng nhập",
-    "subtitle": "Pháp lý"
-  },
   "pwa": {
-    "notifications": {
-      "permissionTitle": "Bật thông báo nhắc nhở",
-      "permissionDescription": "Cho phép nhận thông báo để nhận nhắc nhở việc thiện mỗi ngày.",
-      "enableAction": "Bật thông báo",
-      "enabled": "Đã bật thông báo",
-      "enableFailed": "Không thể bật thông báo"
-    },
     "installGuide": {
       "android": {
         "step1": "Bước 1: Mở trang web trên trình duyệt Chrome trên điện thoại Android.",

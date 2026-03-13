@@ -1,6 +1,7 @@
 import type {
   ApiResponse,
   CreateJournalRequest,
+  GetJournalRequest,
   GetJournalEntriesRequest,
   JournalEntriesResponse,
   JournalEntryDTO,
@@ -46,6 +47,22 @@ export const deleteJournalEntry = async (
   const response = await client.delete<ApiResponse<{ deleted: boolean }>>(
     API_ENDPOINTS.journal.entryDetail(id),
   )
+
+  return response.data
+}
+
+export const getJournal = async (
+  params: GetJournalRequest,
+): Promise<ApiResponse<JournalEntryDTO[]>> => {
+  const response = await client.get<ApiResponse<JournalEntryDTO[]>>(API_ENDPOINTS.journal.list, {
+    params,
+  })
+
+  return response.data
+}
+
+export const createJournal = async (data: CreateJournalRequest): Promise<ApiResponse<void>> => {
+  const response = await client.post<ApiResponse<void>>(API_ENDPOINTS.journal.create, data)
 
   return response.data
 }

@@ -1,9 +1,13 @@
 import { BookOpenCheckIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Button } from '@/components/ui/button'
 
-import { OnboardingDialog, type OnboardingStep } from './onboarding-dialog'
+import {
+  OnboardingDialog,
+  type OnboardingDialogHandle,
+  type OnboardingStep,
+} from './onboarding-dialog'
 
 type TourGuideButtonProps = {
   flowTitle: string
@@ -22,26 +26,25 @@ export const TourGuideButton = ({
   autoOpen = false,
   storageKey,
 }: TourGuideButtonProps) => {
-  const [open, setOpen] = useState(false)
+  const onboardingDialogRef = useRef<OnboardingDialogHandle>(null)
 
   useEffect(() => {
     if (!autoOpen || !storageKey) return
     try {
       const hasSeen = localStorage.getItem(storageKey)
-      if (!hasSeen) setOpen(true)
+      if (!hasSeen) onboardingDialogRef.current?.open()
     } catch {
       // ignore
     }
   }, [autoOpen, storageKey])
 
-  const handleOpenChange = (nextOpen: boolean) => {
-    setOpen(nextOpen)
-    if (!nextOpen && storageKey) {
-      try {
-        localStorage.setItem(storageKey, 'seen')
-      } catch {
-        // ignore
-      }
+  const handleDialogClose = () => {
+    if (!storageKey) return
+
+    try {
+      localStorage.setItem(storageKey, 'seen')
+    } catch {
+      // ignore
     }
   }
 
@@ -52,14 +55,14 @@ export const TourGuideButton = ({
         className={className ?? 'text-muted-foreground hover:text-foreground'}
         size='icon'
         variant='ghost'
-        onClick={() => setOpen(true)}>
+        onClick={() => onboardingDialogRef.current?.open()}>
         <BookOpenCheckIcon className='h-4 w-4' />
       </Button>
       <OnboardingDialog
+        ref={onboardingDialogRef}
         flowTitle={flowTitle}
-        open={open}
         steps={steps}
-        onOpenChange={handleOpenChange}
+        onClose={handleDialogClose}
       />
     </>
   )

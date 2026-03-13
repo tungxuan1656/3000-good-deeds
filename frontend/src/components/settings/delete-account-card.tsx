@@ -13,10 +13,7 @@ interface DeleteAccountCardProps {
 export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
   const [deleteText, setDeleteText] = useState('')
   const deleteDialogRef = useRef<ConfirmDialogHandle>(null)
-
-  const handleDeleteOpenChange = (open: boolean) => {
-    if (!open) setDeleteText('')
-  }
+  const deleteKeyword = t('settings.deleteAccount.keyword')
 
   return (
     <>
@@ -36,7 +33,10 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         </div>
         <Button
           className='bg-destructive text-destructive-foreground hover:bg-destructive/90 mt-3 h-10 w-full rounded-full'
-          onClick={() => deleteDialogRef.current?.open()}>
+          onClick={() => {
+            setDeleteText('')
+            deleteDialogRef.current?.open()
+          }}>
           {t('settings.deleteAccount.action')}
         </Button>
       </CardSection>
@@ -44,19 +44,19 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
       <ConfirmDialog
         ref={deleteDialogRef}
         cancelLabel={t('common.actions.later')}
-        confirmDisabled={deleteText !== 'DELETE'}
+        confirmDisabled={deleteText !== deleteKeyword}
         confirmLabel={t('settings.deleteAccount.action')}
         description={t('settings.deleteAccount.confirmDescription')}
         title={t('settings.deleteAccount.confirmTitle')}
         variant='destructive'
         onConfirm={() => {
-          deleteDialogRef.current?.close()
+          setDeleteText('')
           onConfirm?.()
         }}
-        onOpenChange={handleDeleteOpenChange}>
+        onCancel={() => setDeleteText('')}>
         <Input
           className='border-input bg-card rounded-2xl border px-4 py-2 text-sm'
-          placeholder='DELETE'
+          placeholder={deleteKeyword}
           value={deleteText}
           onChange={(event) => setDeleteText(event.target.value)}
         />

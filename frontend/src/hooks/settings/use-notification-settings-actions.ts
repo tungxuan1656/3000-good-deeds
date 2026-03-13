@@ -8,7 +8,7 @@ import {
   subscribeToPushNotifications,
   unsubscribeFromPushNotifications,
 } from '@/lib/utils/push-notifications'
-import { authActions } from '@/stores/auth-store'
+import { authActions } from '@/stores/auth.store'
 import type { UserDTO } from '@/types/api'
 
 import { DEFAULT_REMINDER_TIME, TIME_INPUT_PATTERN } from './use-notification-settings-state'
@@ -79,7 +79,7 @@ export const useNotificationSettingsActions = ({
           }
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
         setPushError(t('settings.notifications.errors.updateFailed'))
 
         if (nextValue) {
@@ -133,7 +133,7 @@ export const useNotificationSettingsActions = ({
 
       toast.success(t('settings.notifications.messages.testSent'))
     } catch (error) {
-      console.log(error)
+      console.error(error)
 
       const message = t('settings.notifications.errors.testSendRetry')
       setPushError(message)

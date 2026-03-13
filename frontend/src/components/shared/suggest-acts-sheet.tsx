@@ -80,7 +80,7 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
           {acts.map((act, index) => (
             <div
               key={`${act.name}-${index}`}
-              className='flex items-start gap-3 rounded-2xl border border-black/5 bg-white/80 px-4 py-3 text-sm shadow-sm'>
+              className='flex items-start gap-3 rounded-2xl border border-black/5 bg-card/80 px-4 py-3 text-sm shadow-sm'>
               <span className='text-primary mt-0.5 text-xs font-semibold'>#{index + 1}</span>
               <div className='flex flex-col gap-1'>
                 <div className='flex flex-wrap items-center gap-2 text-xs'>

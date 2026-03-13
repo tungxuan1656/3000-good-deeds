@@ -40,7 +40,10 @@ export const TodaySection = () => {
     to: todayRange.to,
     limit: 20,
   })
-  const deeds = deedsResponse?.pages.flatMap((page) => page.data?.data ?? []) ?? []
+  const deeds = React.useMemo(
+    () => deedsResponse?.pages.flatMap((page) => page.data?.data ?? []) ?? [],
+    [deedsResponse],
+  )
   const showLoading = (isLoading || isFetching) && deeds.length === 0
   const isEmpty = !showLoading && deeds.length === 0
 
