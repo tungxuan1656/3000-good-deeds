@@ -1,8 +1,3 @@
-.github/skills
-.github/prompts
-.agent/skills
-.agents
-
 # Dependencies
 node_modules
 
