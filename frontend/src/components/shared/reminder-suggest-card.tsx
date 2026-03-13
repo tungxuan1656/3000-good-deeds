@@ -20,7 +20,7 @@ export const ReminderSuggestCard = () => {
         {t('reminder.card.quote')}
       </p>
       <Link to={PATHS.SETTINGS}>
-        <Button className='text-foreground mt-4 h-11 w-full rounded-full border border-black/5 bg-card text-sm font-medium hover:bg-card/80'>
+        <Button className='text-foreground bg-card hover:bg-card/80 mt-4 h-11 w-full rounded-full border border-black/5 text-sm font-medium'>
           {t('reminder.card.action')}
         </Button>
       </Link>

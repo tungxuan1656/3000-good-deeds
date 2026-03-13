@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 
 import { loginWithGoogle, logout, refreshAccessToken } from '../handlers/auth'
-import type { GoogleAuthRequest, RefreshTokenRequest } from '../types'
+import type { GoogleAuthRequest, LogoutRequest, RefreshTokenRequest } from '../types'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const auth = new Hono<{ Bindings: Env }>()
@@ -44,7 +44,7 @@ auth.post('/refresh', async (c) => {
 })
 
 auth.post('/logout', async (c) => {
-  const body = await c.req.json<RefreshTokenRequest>().catch(() => ({}) as RefreshTokenRequest)
+  const body = await c.req.json<LogoutRequest>().catch(() => ({}) as LogoutRequest)
   const refreshToken = body.refreshToken
 
   if (refreshToken) {

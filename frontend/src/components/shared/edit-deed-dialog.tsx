@@ -123,14 +123,14 @@ export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, re
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  className='border-input justify-between self-start rounded-2xl border-2 bg-card px-4 py-2 text-sm'
+                  className='border-input bg-card justify-between self-start rounded-2xl border-2 px-4 py-2 text-sm'
                   id='date'
                   variant='secondary'>
                   <CalendarIcon className='h-4 w-4' />
                   {formattedDate}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align='start' className='w-auto bg-card p-0'>
+              <PopoverContent align='start' className='bg-card w-auto p-0'>
                 <Calendar
                   disabled={(date) => date > new Date()}
                   mode='single'
