@@ -37,7 +37,7 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-white/80 p-4'>
+      <div className='flex flex-col gap-3 rounded-2xl border border-black/5 bg-card/80 p-4'>
         <div className='flex items-center gap-4'>
           <div className='bg-muted text-muted-foreground flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold'>
             {avatarUrl ? (

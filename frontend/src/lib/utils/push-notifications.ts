@@ -1,12 +1,23 @@
 import { getVapidPublicKey, subscribePush, unsubscribePush } from '@/api/reminders'
 import { t } from '@/lib/i18n'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth.store'
 import type { PushSubscriptionPayloadDTO } from '@/types/api'
 
-const SERVICE_WORKER_URL = import.meta.env.DEV ? '/dev-sw.js?dev-sw' : '/sw.js'
-const PUSH_ENDPOINT_STORAGE_KEY = 'push-subscription-endpoint'
-const PUSH_LAST_SYNCED_USER_ID_KEY = 'push-subscription-synced-user-id'
-const PUSH_LAST_SYNCED_ENDPOINT_KEY = 'push-subscription-synced-endpoint'
+import {
+  clearLastSyncedInfo,
+  clearStoredEndpoint,
+  getLastSyncedEndpoint,
+  getLastSyncedUserId,
+  getStoredEndpoint,
+  setLastSyncedInfo,
+  setStoredEndpoint,
+} from './push-subscription-storage'
+import {
+  getOrRegisterServiceWorker,
+  isPushSupported,
+  isSameApplicationServerKey,
+  urlBase64ToUint8Array,
+} from './push-sw'
 
 type PushSyncErrorCode =
   | 'unauthenticated'
@@ -24,126 +35,6 @@ type PushSyncResult = {
   code?: PushSyncErrorCode
 }
 
-const urlBase64ToUint8Array = (base64String: string) => {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
-  const rawData = window.atob(base64)
-  const outputArray = new Uint8Array(rawData.length)
-
-  for (let i = 0; i < rawData.length; i++) {
-    outputArray[i] = rawData.charCodeAt(i)
-  }
-
-  return outputArray
-}
-
-export const isPushSupported = () => {
-  return (
-    typeof window !== 'undefined' &&
-    'serviceWorker' in navigator &&
-    'PushManager' in window &&
-    'Notification' in window
-  )
-}
-
-const getStoredEndpoint = () => {
-  try {
-    return localStorage.getItem(PUSH_ENDPOINT_STORAGE_KEY)
-  } catch {
-    return null
-  }
-}
-
-const setStoredEndpoint = (endpoint: string) => {
-  try {
-    localStorage.setItem(PUSH_ENDPOINT_STORAGE_KEY, endpoint)
-  } catch {
-    // Ignore storage failures
-  }
-}
-
-const clearStoredEndpoint = () => {
-  try {
-    localStorage.removeItem(PUSH_ENDPOINT_STORAGE_KEY)
-  } catch {
-    // Ignore storage failures
-  }
-}
-
-const getLastSyncedUserId = () => {
-  try {
-    return localStorage.getItem(PUSH_LAST_SYNCED_USER_ID_KEY)
-  } catch {
-    return null
-  }
-}
-
-const getLastSyncedEndpoint = () => {
-  try {
-    return localStorage.getItem(PUSH_LAST_SYNCED_ENDPOINT_KEY)
-  } catch {
-    return null
-  }
-}
-
-const setLastSyncedInfo = (userId: string, endpoint: string) => {
-  try {
-    localStorage.setItem(PUSH_LAST_SYNCED_USER_ID_KEY, userId)
-    localStorage.setItem(PUSH_LAST_SYNCED_ENDPOINT_KEY, endpoint)
-  } catch {
-    // Ignore storage failures
-  }
-}
-
-const clearLastSyncedInfo = () => {
-  try {
-    localStorage.removeItem(PUSH_LAST_SYNCED_USER_ID_KEY)
-    localStorage.removeItem(PUSH_LAST_SYNCED_ENDPOINT_KEY)
-  } catch {
-    // Ignore storage failures
-  }
-}
-
-const toUint8Array = (value: ArrayBuffer | Uint8Array | null | undefined) => {
-  if (!value) return null
-  if (value instanceof Uint8Array) return value
-
-  return new Uint8Array(value)
-}
-
-const isSameApplicationServerKey = (
-  currentKey: ArrayBuffer | Uint8Array | null | undefined,
-  expectedKey: Uint8Array,
-) => {
-  const current = toUint8Array(currentKey)
-  if (!current || current.byteLength !== expectedKey.byteLength) {
-    return false
-  }
-
-  for (let i = 0; i < current.byteLength; i++) {
-    if (current[i] !== expectedKey[i]) {
-      return false
-    }
-  }
-
-  return true
-}
-
-const getOrRegisterServiceWorker = async () => {
-  const existing = await navigator.serviceWorker.getRegistration()
-  if (existing) {
-    await navigator.serviceWorker.ready
-
-    return existing
-  }
-
-  await navigator.serviceWorker.register(SERVICE_WORKER_URL, {
-    type: import.meta.env.DEV ? 'module' : 'classic',
-  })
-
-  return await navigator.serviceWorker.ready
-}
-
 const removeEndpointFromServer = async (endpoint: string) => {
   try {
     await unsubscribePush({ endpoint })
@@ -151,6 +42,8 @@ const removeEndpointFromServer = async (endpoint: string) => {
     // Best effort cleanup
   }
 }
+
+export { isPushSupported }
 
 export const syncPushSubscription = async ({
   requestPermission,

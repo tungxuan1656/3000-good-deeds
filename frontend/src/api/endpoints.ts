@@ -10,9 +10,7 @@ export const API_ENDPOINTS = {
   },
   deeds: {
     list: '/deeds',
-    create: '/deeds',
     update: (id: string) => `/deeds/${id}`,
-    delete: (id: string) => `/deeds/${id}`,
     detail: (id: string) => `/deeds/${id}`,
   },
   categories: {

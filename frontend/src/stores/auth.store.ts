@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
-import type { AuthResponse, SessionResponse, UserDTO } from '@/types/api'
+import type { AuthResponse, UserDTO } from '@/types/api'
 
 import { createSelectors } from './types'
 
@@ -57,7 +57,7 @@ export const authActions = {
   login: (authResponse: AuthResponse) => {
     applyAuthenticatedSession(authResponse)
   },
-  restoreSession: (sessionResponse: SessionResponse) => {
+  restoreSession: (sessionResponse: AuthResponse) => {
     applyAuthenticatedSession(sessionResponse)
   },
   logout: () => {

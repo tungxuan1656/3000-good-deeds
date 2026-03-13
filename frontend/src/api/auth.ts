@@ -1,15 +1,26 @@
-import type { ApiResponse, AuthResponse, LoginRequest, SessionResponse } from '../types/api'
-import { client } from './client'
+import axios from 'axios'
+
+import type { ApiResponse, AuthResponse, LoginRequest } from '../types/api'
+import { API_URL, client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
 export const loginGoogle = async (data: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
-  const response = await client.post<ApiResponse<AuthResponse>>(API_ENDPOINTS.auth.google, data)
+  const response = await axios.post<ApiResponse<AuthResponse>>(
+    `${API_URL}${API_ENDPOINTS.auth.google}`,
+    data,
+    {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
 
   return response.data
 }
 
-export const restoreSession = async (): Promise<ApiResponse<SessionResponse>> => {
-  const response = await client.get<ApiResponse<SessionResponse>>(API_ENDPOINTS.auth.session)
+export const restoreSession = async (): Promise<ApiResponse<AuthResponse>> => {
+  const response = await client.get<ApiResponse<AuthResponse>>(API_ENDPOINTS.auth.session)
 
   return response.data
 }

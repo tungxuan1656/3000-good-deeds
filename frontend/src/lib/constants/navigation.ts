@@ -13,6 +13,7 @@ import { t } from '@/lib/i18n'
 
 import { PATHS } from './paths'
 
+// Language-change in this app triggers a full page reload, so module-level t() calls are safe.
 export const APP_MENU_ITEMS = [
   { label: t('layout.menu.home'), path: PATHS.HOME, icon: HomeIcon },
   { label: t('layout.menu.timeline'), path: PATHS.TIMELINE, icon: TimerIcon },

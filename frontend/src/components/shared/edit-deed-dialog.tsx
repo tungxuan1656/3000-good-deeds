@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -26,20 +27,35 @@ import type { DeedDTO } from '@/types/api'
 import { TagButton } from '../ui/tag'
 import { GoodDeedCategoryMiniButton } from './good-deed-category-button'
 
-interface EditDeedDialogProps {
-  deed: DeedDTO | null
-  open: boolean
-  onOpenChange: (open: boolean) => void
+export type EditDeedDialogHandle = {
+  open: (deed: DeedDTO) => void
 }
 
-export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps) => {
+export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, ref) => {
   const { data: categories } = useCategories()
   const updateDeed = useUpdateDeed()
 
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [deed, setDeed] = React.useState<DeedDTO | null>(null)
   const [categoryCode, setCategoryCode] = React.useState('')
   const [description, setDescription] = React.useState('')
   const [moodTags, setMoodTags] = React.useState<string[]>([])
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date())
+
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      open: (d: DeedDTO) => {
+        setDeed(d)
+        setCategoryCode(d.categoryCode)
+        setDescription(d.description || '')
+        setMoodTags(d.labels ? d.labels.split(',').map((label) => label.trim()) : [])
+        setSelectedDate(new Date(d.performedAt || d.createdAt))
+        setIsOpen(true)
+      },
+    }),
+    [],
+  )
 
   const toggleMoodTag = (tag: string) => {
     setMoodTags((prev) =>
@@ -47,14 +63,7 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
     )
   }
 
-  React.useEffect(() => {
-    if (deed) {
-      setCategoryCode(deed.categoryCode)
-      setDescription(deed.description || '')
-      setMoodTags(deed.labels ? deed.labels.split(',').map((label) => label.trim()) : [])
-      setSelectedDate(new Date(deed.performedAt || deed.createdAt))
-    }
-  }, [deed])
+  const activeMoodTagSet = React.useMemo(() => new Set(moodTags), [moodTags])
 
   const handleSubmit = async () => {
     if (!deed) return
@@ -74,7 +83,7 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
       })
 
       toast.success(t('deeds.edit.messages.updated'))
-      onOpenChange(false)
+      setIsOpen(false)
     } catch (error) {
       console.error(error)
       toast.error(t('deeds.edit.messages.updateFailed'))
@@ -88,7 +97,7 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
   }, [selectedDate])
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t('deeds.edit.title')}</DialogTitle>
@@ -114,14 +123,14 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  className='border-input justify-between self-start rounded-2xl border-2 bg-white px-4 py-2 text-sm'
+                  className='border-input justify-between self-start rounded-2xl border-2 bg-card px-4 py-2 text-sm'
                   id='date'
                   variant='secondary'>
                   <CalendarIcon className='h-4 w-4' />
                   {formattedDate}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align='start' className='w-auto bg-white p-0'>
+              <PopoverContent align='start' className='w-auto bg-card p-0'>
                 <Calendar
                   disabled={(date) => date > new Date()}
                   mode='single'
@@ -147,25 +156,23 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
           <div className='flex flex-col gap-2'>
             <Label htmlFor='labels'>{t('deeds.edit.fields.moodTags')}</Label>
             <div className='flex flex-wrap gap-2'>
-              {MOOD_TAGS.map((tag) => {
-                return (
-                  <TagButton
-                    key={tag}
-                    isActive={moodTags.includes(tag)}
-                    label={tag}
-                    onToggle={() => toggleMoodTag(tag)}
-                  />
-                )
-              })}
+              {MOOD_TAGS.map((tag) => (
+                <TagButton
+                  key={tag}
+                  isActive={activeMoodTagSet.has(tag)}
+                  label={tag}
+                  onToggle={() => toggleMoodTag(tag)}
+                />
+              ))}
             </div>
             <p className='text-muted-foreground text-sm'>{t('deeds.edit.fields.moodTagsHint')}</p>
           </div>
         </div>
 
         <DialogFooter>
-          <Button variant='outline' onClick={() => onOpenChange(false)}>
-            {t('common.actions.cancel')}
-          </Button>
+          <DialogClose asChild>
+            <Button variant='outline'>{t('common.actions.cancel')}</Button>
+          </DialogClose>
           <Button disabled={updateDeed.isPending} onClick={() => void handleSubmit()}>
             {updateDeed.isPending ? t('common.actions.saving') : t('deeds.edit.saveChanges')}
           </Button>
@@ -173,4 +180,6 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
       </DialogContent>
     </Dialog>
   )
-}
+})
+
+EditDeedDialog.displayName = 'EditDeedDialog'

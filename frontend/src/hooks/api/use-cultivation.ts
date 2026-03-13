@@ -1,19 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import {
-  createJournal,
-  getJournal,
-  getRandomAct,
-  getRandomActs,
-  getRandomQuote,
-} from '../../api/cultivation'
+import { getRandomAct, getRandomActs, getRandomQuote } from '../../api/cultivation'
+import { createJournal, getJournal } from '../../api/inner-journal'
 import type { GetJournalRequest } from '../../types/api'
+
+const JOURNAL_ROOT_KEY = ['cultivation', 'journal'] as const
 
 export const CULTIVATION_KEYS = {
   quote: ['cultivation', 'quote'] as const,
   act: ['cultivation', 'act'] as const,
   acts: (limit: number) => ['cultivation', 'acts', limit] as const,
-  journal: (params: GetJournalRequest) => ['cultivation', 'journal', params] as const,
+  journalRoot: JOURNAL_ROOT_KEY,
+  journal: (params: GetJournalRequest) => [...JOURNAL_ROOT_KEY, params] as const,
 }
 
 const SIX_HOURS = 1000 * 60 * 60 * 6
@@ -60,7 +58,8 @@ export const useCreateJournal = () => {
   return useMutation({
     mutationFn: createJournal,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cultivation', 'journal'] })
+      // Invalidate all cultivation journal queries regardless of their params
+      queryClient.invalidateQueries({ queryKey: CULTIVATION_KEYS.journalRoot })
     },
   })
 }

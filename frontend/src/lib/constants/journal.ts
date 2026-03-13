@@ -1,5 +1,6 @@
 import { t } from '@/lib/i18n'
 
+// Language-change in this app triggers a full page reload, so module-level t() calls are safe.
 export const INNER_JOURNAL_TYPES = ['gratitude', 'repentance'] as const
 export type InnerJournalType = (typeof INNER_JOURNAL_TYPES)[number]
 

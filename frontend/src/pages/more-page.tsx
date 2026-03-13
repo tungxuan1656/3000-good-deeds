@@ -21,6 +21,7 @@ import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
+// Language-change in this app triggers a full page reload, so module-level t() calls are safe.
 const ROWS = [
   {
     title: t('pages.more.rows.account.title'),

@@ -9,7 +9,7 @@ export const GoodDeedCategoryButton = ({
   category: DeedCategoryDTO
   isActive?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const className = category.style ?? 'bg-white/80 hover:bg-white'
+  const className = category.style ?? 'bg-card/80 hover:bg-card'
   const icon = category.icon || undefined
 
   return (
@@ -42,7 +42,7 @@ export const GoodDeedCategoryMiniButton = ({
   category: DeedCategoryDTO
   isActive?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const className = category.style ?? 'bg-white/80 hover:bg-white'
+  const className = category.style ?? 'bg-card/80 hover:bg-card'
   const icon = category.icon || undefined
 
   return (

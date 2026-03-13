@@ -13,9 +13,9 @@ interface CardSectionProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const variantClasses: Record<CardSectionVariant, string> = {
-  default: 'bg-white/90',
-  soft: 'bg-white/80',
-  muted: 'bg-white/70',
+  default: 'bg-card/90',
+  soft: 'bg-card/80',
+  muted: 'bg-card/70',
 }
 
 const paddingClasses: Record<CardSectionPadding, string> = {

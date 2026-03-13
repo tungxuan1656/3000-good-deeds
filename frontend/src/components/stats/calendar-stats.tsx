@@ -25,6 +25,7 @@ import { cn } from '@/lib/utils'
 import { CardSection } from '../shared'
 import { Button } from '../ui/button'
 
+// Language-change in this app triggers a full page reload, so module-level t() calls are safe.
 const weekdayLabels = [
   t('stats.calendar.weekdays.mon'),
   t('stats.calendar.weekdays.tue'),
@@ -72,14 +73,14 @@ export const CalendarStats = () => {
         </h2>
         <div className='mb-2 flex items-center gap-2'>
           <Button
-            className='h-9 w-9 rounded-full bg-white shadow-sm'
+            className='h-9 w-9 rounded-full bg-card shadow-sm'
             size='icon'
             variant='outline'
             onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
           <Button
-            className='h-9 w-9 rounded-full bg-white shadow-sm'
+            className='h-9 w-9 rounded-full bg-card shadow-sm'
             size='icon'
             variant='outline'
             onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}>
@@ -116,10 +117,10 @@ export const CalendarStats = () => {
               <div
                 key={key}
                 className={cn(
-                  'flex min-h-16 flex-col items-center justify-between rounded-2xl border border-black/5 bg-white/80 p-2 shadow-sm',
+                  'flex min-h-16 flex-col items-center justify-between rounded-2xl border border-black/5 bg-card/80 p-2 shadow-sm',
                   !isCurrentMonth && 'border-none opacity-50 shadow-none',
                   isFuture && 'opacity-40',
-                  isCurrentDay && 'ring-primary/40 ring-2 ring-offset-2 ring-offset-white',
+                  isCurrentDay && 'ring-primary/40 ring-2 ring-offset-2 ring-offset-background',
                 )}>
                 {isCurrentMonth ? (
                   <>

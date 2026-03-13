@@ -23,12 +23,6 @@ export interface AuthResponse {
   expiresIn: number
 }
 
-export interface SessionResponse {
-  accessToken: string
-  user: UserDTO
-  expiresIn: number
-}
-
 export interface LoginRequest {
   code: string
   redirectUri?: string
@@ -58,7 +52,7 @@ export interface GetDeedsRequest {
   cursor?: string
 }
 
-export interface DeedsPagination {
+export interface PaginationMeta {
   hasMore: boolean
   nextCursor: string | null
   limit: number
@@ -66,7 +60,7 @@ export interface DeedsPagination {
 
 export interface DeedsResponse {
   data: DeedDTO[]
-  pagination: DeedsPagination
+  pagination: PaginationMeta
 }
 
 export interface CreateDeedRequest {
@@ -107,12 +101,6 @@ export interface JournalEntryDTO {
   createdAt: number
 }
 
-export interface JournalPagination {
-  hasMore: boolean
-  nextCursor: string | null
-  limit: number
-}
-
 export interface GetJournalEntriesRequest {
   limit?: number
   cursor?: string
@@ -121,7 +109,7 @@ export interface GetJournalEntriesRequest {
 
 export interface JournalEntriesResponse {
   data: JournalEntryDTO[]
-  pagination: JournalPagination
+  pagination: PaginationMeta
 }
 
 export interface GetJournalRequest {
@@ -167,15 +155,9 @@ export interface GoalHistoryDTO {
   updatedAt: number
 }
 
-export interface GoalHistoryPagination {
-  hasMore: boolean
-  nextCursor: string | null
-  limit: number
-}
-
 export interface GoalHistoryResponse {
   data: GoalHistoryDTO[]
-  pagination: GoalHistoryPagination
+  pagination: PaginationMeta
 }
 
 export interface PushSubscriptionKeysDTO {
@@ -191,10 +173,10 @@ export interface PushSubscriptionPayloadDTO {
   platform?: string
 }
 
-export type GoalTypeDTO = 'weekly' | 'monthly' | 'yearly'
+export type GoalType = 'weekly' | 'monthly' | 'yearly'
 
 export interface UpsertGoalRequest {
-  type: GoalTypeDTO
+  type: GoalType
   targetCount: number
   isEnabled: boolean
 }
@@ -206,5 +188,7 @@ export interface UpsertGoalsRequest {
 export interface GetGoalHistoryRequest {
   limit?: number
   cursor?: string
-  type?: GoalTypeDTO
+  type?: GoalType
 }
+
+export type UpdateUserRequest = Partial<Pick<UserDTO, 'displayName' | 'bio' | 'reminderTime' | 'reminderEnabled' | 'timezone' | 'themePreference' | 'privacyMode'>>

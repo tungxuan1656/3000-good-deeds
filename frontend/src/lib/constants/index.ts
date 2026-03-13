@@ -1,5 +1,6 @@
 export * from './app-meta'
 export * from './goals'
+export * from './info-copy'
 export * from './journal'
 export * from './moods'
 export * from './navigation'

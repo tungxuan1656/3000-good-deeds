@@ -4,7 +4,7 @@ import { Trash2Icon } from 'lucide-react'
 import * as React from 'react'
 import { toast } from 'sonner'
 
-import { CardSection, ConfirmDialog } from '@/components/shared'
+import { CardSection, ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { useDeleteInnerJournalEntry } from '@/hooks/api/use-inner-journal'
 import { type InnerJournalType } from '@/lib/constants'
@@ -19,7 +19,7 @@ type InnerJournalHistoryItemProps = {
 
 export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps) => {
   const deleteMutation = useDeleteInnerJournalEntry()
-  const [dialogOpen, setDialogOpen] = React.useState(false)
+  const dialogRef = React.useRef<ConfirmDialogHandle>(null)
 
   const canDelete = React.useMemo(() => {
     return Date.now() - entry.createdAt <= FIFTEEN_MINUTES
@@ -28,16 +28,17 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
   const date = React.useMemo(() => new Date(entry.createdAt), [entry.createdAt])
   const dateKey = format(date, 'dd/MM/yyyy')
 
-  let dateLabel = format(date, 'dd/MM', { locale: vi })
+  const dateBaseLabel = format(date, 'dd/MM', { locale: vi })
+  let dateLabel = dateBaseLabel
   if (isToday(date)) {
-    dateLabel = `${t('common.status.today')} · ${dateLabel}`
+    dateLabel = t('pages.timeline.dateLabel.today', { date: dateBaseLabel })
   } else if (isYesterday(date)) {
-    dateLabel = `${t('common.status.yesterday')} · ${dateLabel}`
+    dateLabel = t('pages.timeline.dateLabel.yesterday', { date: dateBaseLabel })
   } else {
-    dateLabel = `${t('common.status.day')} ${dateLabel}`
+    dateLabel = t('pages.timeline.dateLabel.day', { date: dateBaseLabel })
   }
 
-  const snippet = entry.content.length > 120 ? `${entry.content.slice(0, 120)}…` : entry.content
+  const snippet = entry.content.length > 120 ? entry.content.slice(0, 120) + '…' : entry.content
   const type = entry.type as InnerJournalType
   const typeLabel = t(`journal.types.${type}.label`)
 
@@ -55,40 +56,9 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
       }
 
       toast.success(t('common.success.deleted'))
-      setDialogOpen(false)
     } catch (_e) {
       toast.error(t('common.errors.deleteFailed'))
     }
-  }
-
-  const renderDeleteButton = () => {
-    if (!canDelete) {
-      return null
-    }
-
-    return (
-      <div className='sm:pl-3'>
-        <Button
-          className='h-6 rounded-full px-4 text-xs'
-          size='sm'
-          variant='outline'
-          onClick={() => setDialogOpen(true)}>
-          <Trash2Icon className='size-3' />
-          {t('common.actions.delete')}
-        </Button>
-        <ConfirmDialog
-          cancelLabel={t('common.actions.later')}
-          confirmLabel={t('common.actions.deletePost')}
-          confirmLoading={deleteMutation.isPending}
-          description={t('journal.page.deleteDescription')}
-          open={dialogOpen}
-          title={t('journal.page.deleteTitle')}
-          variant='destructive'
-          onConfirm={() => void handleConfirmDelete()}
-          onOpenChange={setDialogOpen}
-        />
-      </div>
-    )
   }
 
   return (
@@ -97,9 +67,30 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
         <span className='text-foreground text-lg font-semibold' title={dateKey}>
           {dateLabel} - {typeLabel}
         </span>
-        {renderDeleteButton()}
+        {canDelete && (
+          <div className='sm:pl-3'>
+            <Button
+              className='h-6 rounded-full px-4 text-xs'
+              size='sm'
+              variant='outline'
+              onClick={() => dialogRef.current?.open()}>
+              <Trash2Icon className='size-3' />
+              {t('common.actions.delete')}
+            </Button>
+          </div>
+        )}
       </div>
       <p className='text-muted-foreground text-sm leading-relaxed'>{snippet}</p>
+      <ConfirmDialog
+        ref={dialogRef}
+        cancelLabel={t('common.actions.later')}
+        confirmLabel={t('common.actions.deletePost')}
+        confirmLoading={deleteMutation.isPending}
+        description={t('journal.page.deleteDescription')}
+        title={t('journal.page.deleteTitle')}
+        variant='destructive'
+        onConfirm={() => void handleConfirmDelete()}
+      />
     </CardSection>
   )
 }

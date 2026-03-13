@@ -11,6 +11,7 @@ export const CATEGORY_KEYS = {
   all: ['categories'] as const,
 }
 
+// Language-change in this app triggers a full page reload, so module-level t() calls are safe.
 const FALLBACK_CATEGORIES: DeedCategoryDTO[] = [
   {
     code: 'body',

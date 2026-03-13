@@ -7,7 +7,7 @@ import { logout } from '@/api/auth'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { unsubscribeFromPushNotifications } from '@/lib/utils/push-notifications'
-import { authActions } from '@/stores/auth-store'
+import { authActions } from '@/stores/auth.store'
 
 import { ConfirmDialog, type ConfirmDialogHandle } from '../shared'
 import { Button } from '../ui/button'

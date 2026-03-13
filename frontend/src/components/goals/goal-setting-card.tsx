@@ -7,10 +7,9 @@ import { Switch } from '@/components/ui/switch'
 import { useGoals, useUpsertGoals } from '@/hooks/api/use-goals'
 import { GOAL_LABELS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
+import type { GoalType } from '@/types/api'
 
 import { Button } from '../ui/button'
-
-type GoalType = 'weekly' | 'monthly' | 'yearly'
 
 type GoalFormState = {
   targetCount: string
@@ -31,9 +30,10 @@ export const GoalSettingCard = () => {
   useEffect(() => {
     if (goalsResponse?.success && goalsResponse.data) {
       const goals = goalsResponse.data
+      const goalsMap = new Map(goals.map((item) => [item.type, item]))
       const forms = goalTypes.reduce(
         (acc, type) => {
-          const goal = goals.find((item) => item.type === type)
+          const goal = goalsMap.get(type)
 
           acc[type] = {
             targetCount: goal ? String(goal.targetCount) : '1',
