@@ -20,6 +20,11 @@ type UseNotificationSettingsActionsParams = {
   setPushError: (value: string | null) => void
 }
 
+type UpdateNotificationSettingsRequest = {
+  reminderEnabled?: boolean
+  reminderTime?: string
+}
+
 export const useNotificationSettingsActions = ({
   user,
   reminderTime,
@@ -31,7 +36,7 @@ export const useNotificationSettingsActions = ({
   const [isTestLoading, setIsTestLoading] = useState(false)
 
   const applyUserPatch = useCallback(
-    async (payload: { reminderEnabled?: boolean; reminderTime?: string }) => {
+    async (payload: UpdateNotificationSettingsRequest) => {
       const response = await updateUser.mutateAsync(payload)
       if (response?.data) {
         authActions.setUser(response.data)

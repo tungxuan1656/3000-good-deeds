@@ -12,7 +12,7 @@ export const SessionCard = () => {
         <p className='text-muted-foreground mt-1 text-sm'>{t('settings.session.helper')}</p>
       </div>
       <LogoutButton
-        className='text-foreground h-11 w-full rounded-full border border-black/5 bg-white hover:bg-white/80'
+        className='border-border bg-card text-foreground hover:bg-accent h-11 w-full rounded-full border'
         variant='secondary'
       />
     </CardSection>

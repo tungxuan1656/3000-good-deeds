@@ -20,7 +20,7 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
 
   return (
     <>
-      <CardSection className='border border-red-200/60 bg-red-50/60'>
+      <CardSection className='border-destructive/30 bg-destructive/10 border'>
         <div className='flex items-start justify-between gap-4'>
           <div>
             <p className='text-foreground text-base font-semibold'>
@@ -31,11 +31,11 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
             </p>
           </div>
           <div className='flex items-center justify-center rounded-full'>
-            <Trash2Icon className='h-4 w-4 text-red-600' />
+            <Trash2Icon className='text-destructive h-4 w-4' />
           </div>
         </div>
         <Button
-          className='mt-3 h-10 w-full rounded-full bg-red-500 text-white hover:bg-red-500/90'
+          className='bg-destructive text-destructive-foreground hover:bg-destructive/90 mt-3 h-10 w-full rounded-full'
           onClick={() => deleteDialogRef.current?.open()}>
           {t('settings.deleteAccount.action')}
         </Button>
@@ -55,7 +55,7 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         }}
         onOpenChange={handleDeleteOpenChange}>
         <Input
-          className='rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
+          className='border-input bg-card rounded-2xl border px-4 py-2 text-sm'
           placeholder='DELETE'
           value={deleteText}
           onChange={(event) => setDeleteText(event.target.value)}

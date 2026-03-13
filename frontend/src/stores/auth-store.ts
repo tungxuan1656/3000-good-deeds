@@ -12,58 +12,56 @@ interface AuthState {
   accessToken: string | null
 }
 
+const initialState: AuthState = {
+  isSessionChecked: false,
+  isAuthenticated: false,
+  user: null,
+  accessToken: null,
+}
+
+const setAccessTokenStorage = (accessToken: string) => {
+  localStorage.setItem('accessToken', accessToken)
+}
+
+const removeAccessTokenStorage = () => {
+  localStorage.removeItem('accessToken')
+}
+
+const applyAuthenticatedSession = (payload: { accessToken: string; user: UserDTO }) => {
+  setAccessTokenStorage(payload.accessToken)
+
+  _useAuthStore.setState({
+    isAuthenticated: true,
+    isSessionChecked: true,
+    user: payload.user,
+    accessToken: payload.accessToken,
+  })
+}
+
 const _useAuthStore = create<AuthState>()(
   devtools(
-    persist(
-      (_) => ({
-        isSessionChecked: false,
-        isAuthenticated: false,
-        user: null,
-        accessToken: null,
+    persist(() => initialState, {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        accessToken: state.accessToken,
       }),
-      {
-        name: 'auth-storage',
-        storage: createJSONStorage(() => localStorage),
-        partialize: (state) => ({
-          isAuthenticated: state.isAuthenticated,
-          user: state.user,
-          accessToken: state.accessToken,
-        }),
-      },
-    ),
+    }),
   ),
 )
 
 export const authActions = {
   markSessionChecked: (checked = true) => _useAuthStore.setState({ isSessionChecked: checked }),
   login: (authResponse: AuthResponse) => {
-    const { accessToken, user } = authResponse
-
-    // Save access token for API client
-    localStorage.setItem('accessToken', accessToken)
-
-    _useAuthStore.setState({
-      isAuthenticated: true,
-      isSessionChecked: true,
-      user,
-      accessToken,
-    })
+    applyAuthenticatedSession(authResponse)
   },
   restoreSession: (sessionResponse: SessionResponse) => {
-    const { accessToken, user } = sessionResponse
-
-    localStorage.setItem('accessToken', accessToken)
-
-    _useAuthStore.setState({
-      isAuthenticated: true,
-      isSessionChecked: true,
-      user,
-      accessToken,
-    })
+    applyAuthenticatedSession(sessionResponse)
   },
   logout: () => {
-    // Clear localStorage
-    localStorage.removeItem('accessToken')
+    removeAccessTokenStorage()
 
     _useAuthStore.setState({
       isAuthenticated: false,
@@ -74,8 +72,12 @@ export const authActions = {
   },
   setUser: (user: UserDTO) => _useAuthStore.setState({ user }),
   updateAccessToken: (token: string) => {
-    localStorage.setItem('accessToken', token)
+    setAccessTokenStorage(token)
     _useAuthStore.setState({ accessToken: token })
+  },
+  reset: () => {
+    removeAccessTokenStorage()
+    _useAuthStore.setState(initialState)
   },
 }
 
