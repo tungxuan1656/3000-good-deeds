@@ -181,10 +181,14 @@ export async function refreshAccessToken(
   const nextRefreshToken = generateRefreshToken()
   const refreshTokenExpiry = now + REFRESH_TOKEN_EXPIRY_DAYS * 86400 * 1000
 
-  await db
-    .prepare('UPDATE refresh_tokens SET revoked_at = ? WHERE token_hash = ?')
+  const result = await db
+    .prepare('UPDATE refresh_tokens SET revoked_at = ? WHERE token_hash = ? AND revoked_at IS NULL')
     .bind(now, refreshToken)
     .run()
+
+  if (result.meta.changes === 0) {
+    throw new Error('Refresh token đã được sử dụng hoặc không hợp lệ')
+  }
 
   await db
     .prepare(

@@ -11,6 +11,7 @@ interface AuthState {
   user: UserDTO | null
   accessToken: string | null
   refreshToken: string | null
+  _hasHydrated: boolean
 }
 
 const initialState: AuthState = {
@@ -18,6 +19,7 @@ const initialState: AuthState = {
   user: null,
   accessToken: null,
   refreshToken: null,
+  _hasHydrated: false,
 }
 
 const applyAuthenticatedSession = (payload: {
@@ -49,6 +51,15 @@ const _useAuthStore = create<AuthState>()(
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.accessToken && state?.refreshToken) {
+          authTokenStorage.setTokens({
+            accessToken: state.accessToken,
+            refreshToken: state.refreshToken,
+          })
+        }
+        _useAuthStore.setState({ _hasHydrated: true })
+      },
     }),
   ),
 )
