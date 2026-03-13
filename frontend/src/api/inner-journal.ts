@@ -1,8 +1,8 @@
 import type {
   ApiResponse,
   CreateJournalRequest,
-  GetJournalRequest,
   GetJournalEntriesRequest,
+  GetJournalRequest,
   JournalEntriesResponse,
   JournalEntryDTO,
 } from '../types/api'

@@ -127,7 +127,11 @@ client.interceptors.response.use(
       } catch (refreshError) {
         processQueue(new Error('Token refresh failed'))
         isRefreshing = false
-        redirectToLogin()
+
+        const status = (refreshError as any)?.response?.status
+        if (!status || status === 401 || status === 400) {
+          redirectToLogin()
+        }
 
         return Promise.reject(refreshError)
       }
