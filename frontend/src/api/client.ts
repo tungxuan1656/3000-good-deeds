@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import { authTokenStorage } from '@/lib/auth-tokens'
 import { PATHS } from '@/lib/constants'
+import { authActions } from '@/stores/auth.store'
 
 import type { ApiResponse, RefreshTokenResponse } from '../types/api'
 import { API_ENDPOINTS } from './endpoints'
@@ -112,7 +113,7 @@ client.interceptors.response.use(
 
         const { accessToken, refreshToken: nextRefreshToken } = response.data.data
 
-        authTokenStorage.setTokens({
+        authActions.updateTokens({
           accessToken,
           refreshToken: nextRefreshToken,
         })
@@ -137,8 +138,7 @@ client.interceptors.response.use(
 )
 
 function redirectToLogin() {
-  authTokenStorage.clear()
-  localStorage.removeItem('auth-storage')
+  authActions.reset()
 
   if (!window.location.pathname.includes(PATHS.LOGIN)) {
     window.location.href = PATHS.LOGIN
