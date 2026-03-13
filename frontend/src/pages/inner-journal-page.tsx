@@ -18,9 +18,9 @@ import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateInnerJournalEntry } from '@/hooks/api/use-inner-journal'
 import { type InnerJournalType, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { innerJournalSchema } from '@/lib/forms/form-schemas'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 
 const JOURNAL_TYPES: InnerJournalType[] = ['gratitude', 'repentance']
 

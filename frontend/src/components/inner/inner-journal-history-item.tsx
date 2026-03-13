@@ -4,14 +4,12 @@ import { Trash2Icon } from 'lucide-react'
 import * as React from 'react'
 import { toast } from 'sonner'
 
-import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { CardSection, ConfirmDialog } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { useDeleteInnerJournalEntry } from '@/hooks/api/use-inner-journal'
 import { type InnerJournalType } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import type { JournalEntryDTO } from '@/types/api'
-
-import { CardSection } from '../shared'
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000
 

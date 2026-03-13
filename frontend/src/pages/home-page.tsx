@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { vi } from 'date-fns/locale'
 
-import { TodaySection } from '@/components/home/today-section'
+import { TodaySection } from '@/components/home'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
   CheckInCard,
@@ -12,8 +12,8 @@ import {
 } from '@/components/shared'
 import { InfoButton, TourGuideButton } from '@/components/shared'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 
 const HomePage = () => {
   return (

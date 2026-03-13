@@ -9,7 +9,7 @@ interface AccountProfileCardProps {
   user?: UserDTO | null
 }
 
-const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
+export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   const displayName = user?.displayName ?? t('layout.user.fallbackName')
   const displayEmail = user?.email ?? t('layout.user.emailMissing')
   const avatarUrl = user?.avatarUrl
@@ -56,5 +56,3 @@ const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
     </CardSection>
   )
 }
-
-export default AccountProfileCard

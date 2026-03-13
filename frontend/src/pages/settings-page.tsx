@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import AccountProfileCard from '@/components/settings/account-profile-card'
-import DeleteAccountCard from '@/components/settings/delete-account-card'
-import NotificationSettingsCard from '@/components/settings/notification-settings-card'
-import SessionCard from '@/components/settings/session-card'
+import {
+  AccountProfileCard,
+  DeleteAccountCard,
+  NotificationSettingsCard,
+  SessionCard,
+} from '@/components/settings'
 import {
   DailyQuoteCard,
   HeaderSection,

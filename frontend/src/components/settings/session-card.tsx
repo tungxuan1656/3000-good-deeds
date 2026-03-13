@@ -3,7 +3,7 @@ import { t } from '@/lib/i18n'
 
 import { LogoutButton } from './logout-button'
 
-const SessionCard = () => {
+export const SessionCard = () => {
   return (
     <CardSection className='gap-4'>
       <div>
@@ -18,5 +18,3 @@ const SessionCard = () => {
     </CardSection>
   )
 }
-
-export default SessionCard

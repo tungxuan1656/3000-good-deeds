@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react'
 
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/shared/use-mobile'
 import { t } from '@/lib/i18n'
-import { getMobileOs, getPwaInstallGuideSteps, shouldShowPwaInstallGuide } from '@/lib/pwa-install'
+import {
+  getMobileOs,
+  getPwaInstallGuideSteps,
+  shouldShowPwaInstallGuide,
+} from '@/lib/utils/pwa-install'
 
 import { ConfirmDialog, type ConfirmDialogHandle } from '../shared'
 import { Button } from '../ui/button'

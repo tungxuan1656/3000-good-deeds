@@ -4,20 +4,19 @@ import { LightbulbIcon } from 'lucide-react'
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { CardSection } from '@/components/shared/card-section'
-import Leaf from '@/components/shared/leaf'
+import type { SuggestActsDrawerHandle } from '@/components/shared'
 import {
-  type SuggestActsDrawerHandle,
+  CardSection,
+  EmptyDataView,
+  GoodDeedCard,
+  Leaf,
+  SkeletonList,
   SuggestActsSheet,
-} from '@/components/shared/suggest-acts-sheet'
+} from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
-
-import { GoodDeedCard } from '../shared'
-import { EmptyDataView } from '../shared/empty-data-view'
-import { SkeletonList } from '../shared/skeleton-list'
 
 export const TodaySection = () => {
   const navigate = useNavigate()

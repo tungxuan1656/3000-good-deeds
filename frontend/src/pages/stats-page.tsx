@@ -6,11 +6,10 @@ import {
   MiniCheckInCard,
   TourGuideButton,
 } from '@/components/shared'
-import { CalendarStats } from '@/components/stats/calendar-stats'
-import { StatsCard } from '@/components/stats/stats-card'
+import { CalendarStats, StatsCard } from '@/components/stats'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 
 const StatsPage = () => {
   return (

@@ -1,4 +1,4 @@
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/shared/use-mobile'
 
 import { HeaderBreadcrumbs } from './header-breadcrumbs'
 

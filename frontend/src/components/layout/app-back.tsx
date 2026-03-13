@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/shared/use-mobile'
 import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
 
 export const AppBack = () => {

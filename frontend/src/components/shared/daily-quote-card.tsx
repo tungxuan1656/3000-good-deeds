@@ -3,12 +3,12 @@ import { RefreshCwIcon, SparklesIcon } from 'lucide-react'
 import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
 import { useRandomQuote } from '@/hooks/api/use-cultivation'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 import { cn } from '@/lib/utils'
 
 import { InfoButton } from './info-button'
-import Leaf from './leaf'
+import { Leaf } from './leaf'
 
 type DailyQuoteCardProps = {
   label?: string

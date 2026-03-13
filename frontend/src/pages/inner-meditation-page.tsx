@@ -11,8 +11,8 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerMeditationPage = () => {
   const phases = useMemo(

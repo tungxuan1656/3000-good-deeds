@@ -10,13 +10,13 @@ import {
   isPushSupported,
   subscribeToPushNotifications,
   syncPushSubscription,
-} from '@/lib/push-notifications'
+} from '@/lib/utils/push-notifications'
 import { useAuthStore } from '@/stores/auth-store'
 
 import { AppHeader } from './app-header'
 import { PWAGuideDialog } from './pwa-guide-dialog'
 
-const AppLayout = () => {
+export const AppLayout = () => {
   const user = useAuthStore.use.user()
   const refNotificationDialog = useRef<ConfirmDialogHandle>(null)
 
@@ -81,5 +81,3 @@ const AppLayout = () => {
     </SidebarProvider>
   )
 }
-
-export default AppLayout

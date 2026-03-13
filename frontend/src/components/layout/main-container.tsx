@@ -1,4 +1,4 @@
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/shared/use-mobile'
 
 export function MainContainer(props: React.HTMLAttributes<HTMLDivElement>) {
   return <div className='pt-safe grid gap-6 lg:grid-cols-[1fr_320px]' {...props} />
