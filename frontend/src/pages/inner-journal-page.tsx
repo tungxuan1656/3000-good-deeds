@@ -2,7 +2,6 @@ import { Loader2Icon } from 'lucide-react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
@@ -18,21 +17,12 @@ import { Button } from '@/components/ui/button'
 import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateInnerJournalEntry } from '@/hooks/api/use-inner-journal'
-import {
-  INNER_JOURNAL_IMMUTABLE_NOTE,
-  INNER_JOURNAL_TYPE_GUIDANCE,
-  INNER_JOURNAL_TYPE_LABELS,
-  type InnerJournalType,
-  ONBOARDING_CONTENT,
-  ONBOARDING_KEYS,
-  PATHS,
-} from '@/lib/constants'
+import { type InnerJournalType, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
+import { innerJournalSchema } from '@/lib/forms/form-schemas'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
-const schema = z.object({
-  type: z.enum(['gratitude', 'repentance']),
-  content: z.string().trim().min(1, 'Bạn có thể viết ngắn thôi — nhưng đừng để trống.'),
-})
+const JOURNAL_TYPES: InnerJournalType[] = ['gratitude', 'repentance']
 
 const InnerJournalPage = () => {
   const [type, setType] = React.useState<InnerJournalType>('gratitude')
@@ -47,9 +37,9 @@ const InnerJournalPage = () => {
     event.preventDefault()
     setErrorText(null)
 
-    const parsed = schema.safeParse({ type, content })
+    const parsed = innerJournalSchema.safeParse({ type, content })
     if (!parsed.success) {
-      const message = parsed.error.issues[0]?.message ?? 'Nội dung chưa hợp lệ'
+      const message = parsed.error.issues[0]?.message ?? t('common.errors.invalidContent')
       setErrorText(message)
 
       return
@@ -63,16 +53,17 @@ const InnerJournalPage = () => {
 
       if (!result.success) {
         const message =
-          (result as any).error?.message ?? (result.error ? String(result.error) : 'Lưu thất bại')
+          (result as any).error?.message ??
+          (result.error ? String(result.error) : t('common.errors.saveFailed'))
         toast.error(message)
 
         return
       }
 
       setContent('')
-      toast.success('Đã lưu')
+      toast.success(t('common.success.saved'))
     } catch (_e) {
-      toast.error('Lưu thất bại')
+      toast.error(t('common.errors.saveFailed'))
     }
   }
 
@@ -94,22 +85,22 @@ const InnerJournalPage = () => {
               />
             </div>
           }
-          description='Ghi lại quán chiếu để nhìn rõ và thấy được sự chuyển biến của tâm.'
-          subtitle='Sổ tay'
-          title='Sổ tay quán chiếu'
+          description={t('journal.page.description')}
+          subtitle={t('journal.page.subtitle')}
+          title={t('journal.page.title')}
         />
 
         <form onSubmit={(event) => void handleSubmit(event)}>
           <CardSection className='gap-4'>
             <div className='flex flex-wrap gap-2'>
-              {(Object.keys(INNER_JOURNAL_TYPE_LABELS) as InnerJournalType[]).map((key) => {
+              {JOURNAL_TYPES.map((key) => {
                 const isActive = key === type
 
                 return (
                   <TagButton
                     key={key}
                     isActive={isActive}
-                    label={INNER_JOURNAL_TYPE_LABELS[key]}
+                    label={t(`journal.types.${key}.label`)}
                     onToggle={() => setType(key)}
                   />
                 )
@@ -117,18 +108,18 @@ const InnerJournalPage = () => {
             </div>
 
             <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
-              “{INNER_JOURNAL_TYPE_GUIDANCE[type]}”
+              "{t(`journal.types.${type}.guidance`)}"
             </p>
 
             <div className='flex flex-col gap-2'>
               <Textarea
                 className='min-h-44 w-full resize-none rounded-2xl border border-black/5 bg-white px-4 py-3 text-sm leading-relaxed'
-                placeholder='Viết ngắn thôi, chỉ điều bạn thật sự nhận ra trong lòng…'
+                placeholder={t('journal.page.placeholder')}
                 value={content}
                 onChange={(event) => setContent(event.target.value)}
               />
               <p className='text-muted-foreground text-sm leading-relaxed'>
-                {INNER_JOURNAL_IMMUTABLE_NOTE}
+                {t('journal.page.immutableNote')}
               </p>
               {errorText && <p className='text-destructive text-xs'>{errorText}</p>}
             </div>
@@ -137,15 +128,15 @@ const InnerJournalPage = () => {
               {isSaving ? (
                 <>
                   <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />
-                  Đang lưu…
+                  {t('common.actions.saving')}
                 </>
               ) : (
-                'Lưu'
+                t('common.actions.save')
               )}
             </Button>
 
             <Button asChild variant='outline'>
-              <Link to={PATHS.INNER_JOURNAL_HISTORY}>Xem lại những ngày cũ</Link>
+              <Link to={PATHS.INNER_JOURNAL_HISTORY}>{t('common.actions.viewHistory')}</Link>
             </Button>
           </CardSection>
         </form>

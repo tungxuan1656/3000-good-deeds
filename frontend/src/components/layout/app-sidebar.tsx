@@ -15,6 +15,7 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth-store'
 
 import { LogoutButton } from '../settings/logout-button'
@@ -22,8 +23,8 @@ import { LogoutButton } from '../settings/logout-button'
 export const AppSidebar = () => {
   const location = useLocation()
   const user = useAuthStore.use.user()
-  const displayName = user?.displayName ?? 'Bạn'
-  const displayEmail = user?.email ?? 'Chưa có email'
+  const displayName = user?.displayName ?? t('layout.user.fallbackName')
+  const displayEmail = user?.email ?? t('layout.user.emailMissing')
 
   return (
     <Sidebar className='bg-white'>
@@ -45,7 +46,7 @@ export const AppSidebar = () => {
       <SidebarSeparator />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('layout.menu.title')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {APP_MENU_ITEMS.map(({ label, path, icon: Icon }) => {

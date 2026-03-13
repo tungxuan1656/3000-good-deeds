@@ -7,7 +7,8 @@ import { toast } from 'sonner'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { useDeleteInnerJournalEntry } from '@/hooks/api/use-inner-journal'
-import { INNER_JOURNAL_TYPE_LABELS, type InnerJournalType } from '@/lib/constants'
+import { type InnerJournalType } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import type { JournalEntryDTO } from '@/types/api'
 
 import { CardSection } from '../shared'
@@ -31,15 +32,16 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
 
   let dateLabel = format(date, 'dd/MM', { locale: vi })
   if (isToday(date)) {
-    dateLabel = `Hôm nay · ${dateLabel}`
+    dateLabel = `${t('common.status.today')} · ${dateLabel}`
   } else if (isYesterday(date)) {
-    dateLabel = `Hôm qua · ${dateLabel}`
+    dateLabel = `${t('common.status.yesterday')} · ${dateLabel}`
   } else {
-    dateLabel = `Ngày ${dateLabel}`
+    dateLabel = `${t('common.status.day')} ${dateLabel}`
   }
 
   const snippet = entry.content.length > 120 ? `${entry.content.slice(0, 120)}…` : entry.content
-  const typeLabel = INNER_JOURNAL_TYPE_LABELS[entry.type as InnerJournalType] ?? entry.type
+  const type = entry.type as InnerJournalType
+  const typeLabel = t(`journal.types.${type}.label`)
 
   const handleConfirmDelete = async () => {
     try {
@@ -47,16 +49,17 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
 
       if (!result.success) {
         const message =
-          (result as any).error?.message ?? (result.error ? String(result.error) : 'Không thể xoá')
+          (result as any).error?.message ??
+          (result.error ? String(result.error) : t('common.errors.deleteFailed'))
         toast.error(message)
 
         return
       }
 
-      toast.success('Đã xoá')
+      toast.success(t('common.success.deleted'))
       setDialogOpen(false)
     } catch (_e) {
-      toast.error('Không thể xoá')
+      toast.error(t('common.errors.deleteFailed'))
     }
   }
 
@@ -73,15 +76,15 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
           variant='outline'
           onClick={() => setDialogOpen(true)}>
           <Trash2Icon className='size-3' />
-          Xoá
+          {t('common.actions.delete')}
         </Button>
         <ConfirmDialog
-          cancelLabel='Để sau'
-          confirmLabel='Xoá bài viết'
+          cancelLabel={t('common.actions.later')}
+          confirmLabel={t('common.actions.deletePost')}
           confirmLoading={deleteMutation.isPending}
-          description='Nếu xoá, bạn sẽ không xem lại được bài viết này nữa.'
+          description={t('journal.page.deleteDescription')}
           open={dialogOpen}
-          title='Xoá bài viết?'
+          title={t('journal.page.deleteTitle')}
           variant='destructive'
           onConfirm={() => void handleConfirmDelete()}
           onOpenChange={setDialogOpen}

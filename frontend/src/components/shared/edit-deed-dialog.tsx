@@ -146,14 +146,16 @@ export const EditDeedDialog = ({ deed, open, onOpenChange }: EditDeedDialogProps
           <div className='flex flex-col gap-2'>
             <Label htmlFor='labels'>Nhãn cảm xúc</Label>
             <div className='flex flex-wrap gap-2'>
-              {MOOD_TAGS.map((tag) => (
-                <TagButton
-                  key={tag}
-                  isActive={moodTags.includes(tag)}
-                  label={tag}
-                  onToggle={() => toggleMoodTag(tag)}
-                />
-              ))}
+              {MOOD_TAGS.map((tag) => {
+                return (
+                  <TagButton
+                    key={tag}
+                    isActive={moodTags.includes(tag)}
+                    label={tag}
+                    onToggle={() => toggleMoodTag(tag)}
+                  />
+                )
+              })}
             </div>
             <p className='text-muted-foreground text-sm'>
               Nhãn chỉ để tự nhận diện, không cần đúng hay sai.
