@@ -3,7 +3,6 @@ export const API_ENDPOINTS = {
     google: '/auth/google',
     logout: '/auth/logout',
     refresh: '/auth/refresh',
-    session: '/auth/session',
   },
   users: {
     me: '/users/me',
