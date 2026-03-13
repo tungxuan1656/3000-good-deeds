@@ -110,13 +110,13 @@ export const CheckInSheetFlow = ({
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    className='border-input justify-between rounded-2xl border bg-white px-4 py-2 text-sm'
+                    className='border-input bg-card justify-between rounded-2xl border px-4 py-2 text-sm'
                     variant='secondary'>
                     <CalendarIcon className='h-4 w-4' />
                     {formattedDate}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent align='start' className='bg-white'>
+                <PopoverContent align='start' className='bg-popover'>
                   <Calendar
                     disabled={(date) => date > new Date()}
                     mode='single'
@@ -131,7 +131,7 @@ export const CheckInSheetFlow = ({
               </Popover>
             </div>
             <Textarea
-              className='min-h-28 w-full resize-none rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed'
+              className='bg-card min-h-28 w-full resize-none rounded-2xl px-4 py-3 text-sm leading-relaxed'
               placeholder={t('checkIn.sheet.notePlaceholder')}
               value={formState.note}
               onChange={(event) => {
@@ -166,7 +166,7 @@ export const CheckInSheetFlow = ({
           {[1, 2, 3].map((item) => (
             <span
               key={item}
-              className={`h-2 w-2 rounded-full ${item === step ? 'bg-primary' : 'bg-black/10'}`}
+              className={`h-2 w-2 rounded-full ${item === step ? 'bg-primary' : 'bg-muted'}`}
             />
           ))}
         </div>

@@ -1,126 +1,86 @@
-# Color Usage Guide
+# Color Guide (Project Accurate)
 
-Tất cả màu dùng CSS variable, tự động đổi theo dark mode (class `.dark`).
+Tài liệu này phản ánh đúng token màu đang khai báo trong `src/index.css` của project hiện tại.
 
----
+## 1) Source of truth
 
-## Semantic Colors (shadcn/ui)
+- Theme token được khai báo ở `:root` và `.dark` trong `src/index.css`.
+- Tailwind semantic class map qua `@theme inline` (ví dụ `--color-background`, `--color-primary`, ...).
+- Khi cần thêm màu mới: thêm token ở `index.css` trước, sau đó mới dùng class trong component.
 
-| Class                                        | Dùng khi                                  |
-| -------------------------------------------- | ----------------------------------------- |
-| `bg-background` / `text-foreground`          | Nền trang & text mặc định                 |
-| `bg-card` / `text-card-foreground`           | Nền Card, Dialog                          |
-| `bg-popover` / `text-popover-foreground`     | Dropdown, Tooltip, Popover                |
-| `bg-primary` / `text-primary-foreground`     | Nút chính, badge active, link             |
-| `text-primary`                               | Text nhấn mạnh, icon active               |
-| `bg-secondary` / `text-secondary-foreground` | Nút phụ, tag, chip                        |
-| `bg-muted` / `text-muted-foreground`         | Placeholder, hint, label phụ, nền section |
-| `bg-accent` / `text-accent-foreground`       | Hover state của item list                 |
-| `bg-destructive` / `text-destructive`        | Xóa, hành động hủy, lỗi nghiêm trọng      |
-| `border-border`                              | Đường kẻ, viền                            |
-| `border-input`                               | Viền input, textarea                      |
-| `ring-ring`                                  | Focus ring                                |
+## 2) Semantic token đang dùng
 
----
+| Token                | Light     | Dark                        | Class tương ứng                             |
+| -------------------- | --------- | --------------------------- | ------------------------------------------- |
+| `background`         | `#f6f3ee` | `#0a0a0a`                   | `bg-background`                             |
+| `foreground`         | `#212121` | `oklch(0.985 0 0)`          | `text-foreground`                           |
+| `card`               | `#ffffff` | `oklch(0.205 0 0)`          | `bg-card`                                   |
+| `card-foreground`    | `#202020` | `oklch(0.985 0 0)`          | `text-card-foreground`                      |
+| `popover`            | `#ffffff` | `oklch(0.205 0 0)`          | `bg-popover`                                |
+| `popover-foreground` | `#0a0a0a` | `oklch(0.985 0 0)`          | `text-popover-foreground`                   |
+| `primary`            | `#7a9b86` | `oklch(0.922 0 0)`          | `bg-primary`, `text-primary`                |
+| `primary-foreground` | `#fafafa` | `oklch(0.205 0 0)`          | `text-primary-foreground`                   |
+| `secondary`          | `#bfd4c3` | `oklch(0.269 0 0)`          | `bg-secondary`, `text-secondary-foreground` |
+| `muted`              | `#f5f5f5` | `oklch(0.269 0 0)`          | `bg-muted`, `text-muted-foreground`         |
+| `muted-foreground`   | `#737373` | `oklch(0.708 0 0)`          | `text-muted-foreground`                     |
+| `accent`             | `#e6c77a` | `oklch(0.269 0 0)`          | `bg-accent`, `text-accent-foreground`       |
+| `destructive`        | `#e57373` | `oklch(0.704 0.191 22.216)` | `bg-destructive`, `text-destructive`        |
+| `border`             | `#e5e5e5` | `oklch(1 0 0 / 10%)`        | `border-border`                             |
+| `input`              | `#e5e5e5` | `oklch(1 0 0 / 15%)`        | `border-input`, `bg-input/*`                |
+| `ring`               | `#799a85` | `oklch(0.556 0 0)`          | `ring-ring`, `focus-visible:ring-ring/*`    |
 
-## Status Colors
+## 3) Domain colors (Body / Speech / Mind)
 
-Mỗi status có 3 bậc: **base** · **subtle** (nền nhạt) · **muted** (viền/text phụ)
+Các màu domain có token riêng và đã được map sang class Tailwind:
 
-| Token       | Class                         | Màu (light)          | Dùng khi                         |
-| ----------- | ----------------------------- | -------------------- | -------------------------------- |
-| **Danger**  | `text-danger` / `bg-danger`   | đỏ `#f5222d`         | Lỗi, validation fail, xóa        |
-|             | `bg-danger-subtle`            | nền hồng nhạt        | Nền badge lỗi                    |
-|             | `text-danger-muted`           | hồng vừa             | Text phụ trong vùng lỗi          |
-| **Warning** | `text-warning` / `bg-warning` | cam `#fa8c16`        | Cảnh báo, chờ xử lý, pending     |
-|             | `bg-warning-subtle`           | nền vàng nhạt        | Nền badge warning                |
-|             | `text-warning-muted`          | vàng vừa             | Text phụ trong vùng warning      |
-| **Success** | `text-success` / `bg-success` | xanh lá `#2eb553`    | Thành công, hoàn thành           |
-|             | `bg-success-subtle`           | nền xanh lá nhạt     | Nền badge success                |
-|             | `text-success-muted`          | xanh lá vừa          | Text phụ trong vùng success      |
-| **Info**    | `text-info` / `bg-info`       | xanh dương `#1890ff` | Thông tin, đang chạy, in-service |
-|             | `bg-info-subtle`              | nền xanh nhạt        | Nền badge info                   |
-|             | `text-info-muted`             | xanh vừa             | Text phụ trong vùng info         |
+| Token    | Value     | Class                      |
+| -------- | --------- | -------------------------- |
+| `body`   | `#f2b36f` | `bg-body`, `text-body`     |
+| `speech` | `#8fbad9` | `bg-speech`, `text-speech` |
+| `mind`   | `#b9a7e3` | `bg-mind`, `text-mind`     |
 
----
+Pattern dùng thực tế:
 
-## Surface Colors
+- `bg-body/20 hover:bg-body/40`
+- `bg-speech/20 hover:bg-speech/40`
+- `bg-mind/20 hover:bg-mind/40`
 
-| Class               | Dùng khi                        |
-| ------------------- | ------------------------------- |
-| `bg-surface`        | Nền layer nổi (khác background) |
-| `bg-surface-subtle` | Nền section, panel, table row   |
-| `bg-surface-muted`  | Skeleton loader, nền disabled   |
+## 4) Chart & sidebar tokens
 
----
+- Có sẵn token `chart-1..5` và `sidebar-*` trong `index.css`.
+- Chỉ dùng khi component chart/sidebar cần semantic token đó.
+- Tránh hardcode màu chart trực tiếp trong component.
 
-## Divider Colors
+## 5) Class nên ưu tiên
 
-| Class                   | Dùng khi             |
-| ----------------------- | -------------------- |
-| `border-divider-subtle` | Đường phân cách nhẹ  |
-| `border-divider`        | Divider mặc định     |
-| `border-divider-strong` | Divider đậm, nổi bật |
+- Surface/text/border: `bg-background`, `bg-card`, `text-foreground`, `text-muted-foreground`, `border-border`.
+- Form controls: `border-input`, `focus-visible:border-ring`, `focus-visible:ring-ring/50`.
+- Trạng thái lỗi form: `aria-invalid:border-destructive`, `aria-invalid:ring-destructive/20`.
 
----
+## 6) Không dùng trong project này
 
-## Misc
+Các class dưới đây không có token trong theme hiện tại (được copy từ project khác), không dùng:
 
-| Class                      | Dùng khi                     |
-| -------------------------- | ---------------------------- |
-| `text-disabled-foreground` | Text của element bị disabled |
-| `bg-inverse-surface`       | Tooltip dark, Snackbar       |
-| `text-inverse-foreground`  | Text trên nền inverse        |
+- `text-danger`, `bg-danger`, `bg-danger-subtle`
+- `text-warning`, `bg-warning`, `bg-warning-subtle`
+- `text-success`, `bg-success`, `bg-success-subtle`
+- `text-info`, `bg-info`, `bg-info-subtle`
+- `bg-surface*`, `border-divider*`, `text-disabled-foreground`, `bg-inverse-surface`, `text-inverse-foreground`
 
----
+Nếu cần các semantic này, phải thêm token thật vào `index.css` trước.
 
-## Typography (Font Size)
-
-Dự án định nghĩa thêm size `text-xss` ngoài scale mặc định của Tailwind.
-
-| Class       | Size            | Dùng khi                                        |
-| ----------- | --------------- | ----------------------------------------------- |
-| `text-xss`  | 0.625rem (10px) | Label siêu nhỏ: tick header, badge code, ID phụ |
-| `text-xs`   | 0.75rem (12px)  | Label phụ, placeholder, timestamp               |
-| `text-sm`   | 0.875rem (14px) | Text body thông thường                          |
-| `text-base` | 1rem (16px)     | Text mặc định                                   |
-
-> **Không dùng arbitrary value** như `text-[10px]` — luôn dùng class từ scale trên.
-
----
-
-## Icon convention
-
-- Sử dụng **Lucide icon** (`lucide-react`) — format `{Name}Icon`.
-- **Không trộn** emoji hoặc ký tự Unicode với Lucide trong cùng một view/component.
+## 7) Quick examples
 
 ```tsx
-// ✅ Đúng
-<SearchIcon className='h-4 w-4' />
-<DownloadIcon className='h-4 w-4' />
+<div className='bg-card text-card-foreground border-border rounded-2xl border p-4'>
+	<p className='text-foreground'>Heading</p>
+	<p className='text-muted-foreground text-sm'>Supporting text</p>
+</div>
 
-// ❌ Sai — trộn emoji với Lucide
-<span>🔍</span>
-<SearchIcon className='h-4 w-4' />
-```
+<button className='bg-primary text-primary-foreground hover:bg-primary/90'>Primary</button>
+<button className='bg-secondary text-secondary-foreground hover:bg-secondary/80'>Secondary</button>
 
----
-
-## Ví dụ nhanh
-
-```tsx
-// Badge trạng thái
-<span className="bg-warning-subtle text-warning rounded-full px-2 py-0.5 text-xs">Waiting</span>
-<span className="bg-info-subtle text-info rounded-full px-2 py-0.5 text-xs">In Service</span>
-<span className="bg-danger-subtle text-danger rounded-full px-2 py-0.5 text-xs">Error</span>
-
-// Card
-<div className="bg-card border-border text-card-foreground rounded-lg border p-4">...</div>
-
-// Text phụ
-<p className="text-muted-foreground text-sm">Cập nhật lần cuối: 2m ago</p>
-
-// Nút chính / phụ
-<Button className="bg-primary text-primary-foreground">Xác nhận</Button>
-<Button className="bg-secondary text-secondary-foreground">Hủy</Button>
+<span className='bg-body/20 text-foreground rounded-full px-2 py-1 text-xs'>Body</span>
+<span className='bg-speech/20 text-foreground rounded-full px-2 py-1 text-xs'>Speech</span>
+<span className='bg-mind/20 text-foreground rounded-full px-2 py-1 text-xs'>Mind</span>
 ```

@@ -23,7 +23,7 @@ export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps
         <div>
           <div className='flex items-center gap-2 text-xs font-semibold tracking-widest uppercase'>
             {user?.reminderEnabled ? (
-              <span className='flex items-center text-emerald-600'>
+              <span className='text-primary flex items-center'>
                 <CheckCircle2Icon className='inline h-4 w-4' />
                 <span className='ml-1'>{t('settings.notifications.status.enabled')}</span>
               </span>
@@ -51,7 +51,7 @@ export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps
               {t('settings.notifications.unsupportedHint')}
             </p>
           )}
-          {ui.pushError && <p className='mt-1 text-sm text-red-600'>{ui.pushError}</p>}
+          {ui.pushError && <p className='text-destructive mt-1 text-sm'>{ui.pushError}</p>}
         </div>
         <Button
           disabled={status.isToggleLoading || (!ui.pushSupported && !user?.reminderEnabled)}
@@ -70,7 +70,7 @@ export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps
               {t('settings.notifications.reminderTimeLabel')}
             </Label>
             <Input
-              className='w-36 rounded-2xl border border-black/5 bg-white px-4 py-2 text-sm'
+              className='border-border bg-card w-36 rounded-2xl border px-4 py-2 text-sm'
               type='time'
               value={ui.reminderTime}
               onBlur={actions.handleReminderTimeBlur}
