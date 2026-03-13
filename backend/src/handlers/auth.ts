@@ -1,12 +1,6 @@
 import { SignJWT } from 'jose'
 
-import type {
-  AuthResponse,
-  GoogleAuthRequest,
-  GoogleTokenResponse,
-  GoogleUserInfo,
-  SessionResponse,
-} from '../types'
+import type { AuthResponse, GoogleAuthRequest, GoogleTokenResponse, GoogleUserInfo } from '../types'
 import { generateId, getCurrentTimestamp } from '../utils'
 import { getUser } from './users'
 
@@ -181,27 +175,32 @@ export async function refreshAccessToken(
   db: D1Database,
   env: Env,
   refreshToken: string,
-): Promise<{ accessToken: string }> {
+): Promise<{ accessToken: string; refreshToken: string }> {
   const storedToken = await getValidRefreshToken(db, refreshToken)
+  const now = getCurrentTimestamp()
+  const nextRefreshToken = generateRefreshToken()
+  const refreshTokenExpiry = now + REFRESH_TOKEN_EXPIRY_DAYS * 86400 * 1000
+
+  await db
+    .prepare('UPDATE refresh_tokens SET revoked_at = ? WHERE token_hash = ?')
+    .bind(now, refreshToken)
+    .run()
+
+  await db
+    .prepare(
+      `
+    INSERT INTO refresh_tokens (id, user_id, token_hash, expires_at, created_at)
+    VALUES (?, ?, ?, ?, ?)
+  `,
+    )
+    .bind(generateId(), storedToken.user_id, nextRefreshToken, refreshTokenExpiry, now)
+    .run()
 
   const accessToken = await generateAccessToken(storedToken.user_id, env.JWT_SECRET || JWT_SECRET)
-
-  return { accessToken }
-}
-
-export async function restoreSession(
-  db: D1Database,
-  env: Env,
-  refreshToken: string,
-): Promise<SessionResponse> {
-  const storedToken = await getValidRefreshToken(db, refreshToken)
-  const accessToken = await generateAccessToken(storedToken.user_id, env.JWT_SECRET || JWT_SECRET)
-  const user = await getUser(db, storedToken.user_id)
 
   return {
     accessToken,
-    user,
-    expiresIn: 3600,
+    refreshToken: nextRefreshToken,
   }
 }
 
