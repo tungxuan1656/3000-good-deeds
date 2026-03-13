@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { APP_VERSION, PATHS, SUPPORT_EMAIL } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 type LegalFooterProps = {
@@ -17,9 +18,9 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
 
     try {
       await navigator.clipboard.writeText(email)
-      toast.success('Đã sao chép email hỗ trợ')
+      toast.success(t('legal.messages.copySuccess'))
     } catch {
-      toast.error('Không thể sao chép email')
+      toast.error(t('legal.messages.copyFailed'))
     }
   }
 
@@ -27,8 +28,7 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
     <div className={cn('px-4', className)}>
       <div className='flex flex-col gap-2'>
         <p className='text-muted-foreground/80 text-xs leading-relaxed'>
-          Nội dung có thể có sai sót trong quá trình biên tập. Để góp ý và báo lỗi nội dung, vui
-          lòng gửi về email:{' '}
+          {t('legal.contentPrefix')}{' '}
           {email ? (
             <>
               <button
@@ -42,25 +42,25 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
               </button>
             </>
           ) : (
-            <span className='font-medium'>chưa cấu hình</span>
+            <span className='font-medium'>{t('legal.emailNotConfigured')}</span>
           )}
           .
         </p>
 
         <p className='text-muted-foreground text-xs leading-relaxed'>
-          Bạn có thể đọc thêm về{' '}
+          {t('legal.readMorePrefix')}{' '}
           <Link className='hover:text-foreground underline underline-offset-2' to={PATHS.TERMS}>
-            Điều khoản sử dụng
+            {t('legal.terms')}
           </Link>{' '}
-          và{' '}
+          {t('legal.and')}{' '}
           <Link className='hover:text-foreground underline underline-offset-2' to={PATHS.PRIVACY}>
-            Chính sách riêng tư
+            {t('legal.privacy')}
           </Link>
           .
         </p>
 
         <p className='text-muted-foreground/70 text-center text-xs leading-relaxed'>
-          Phiên bản: {APP_VERSION}
+          {t('legal.version', { version: APP_VERSION })}
         </p>
       </div>
     </div>

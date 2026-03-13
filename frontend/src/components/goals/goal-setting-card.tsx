@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { useGoals, useUpsertGoals } from '@/hooks/api/use-goals'
 import { GOAL_LABELS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 
 import { Button } from '../ui/button'
 
@@ -77,17 +78,17 @@ const GoalSettingCard = () => {
       (goal) => !Number.isFinite(goal.targetCount) || goal.targetCount <= 0,
     )
     if (invalid) {
-      toast.error('Số lượng mục tiêu không hợp lệ')
+      toast.error(t('goals.messages.invalidTargetCount'))
 
       return
     }
 
     try {
       await upsertGoalsMutation.mutateAsync({ goals: payload })
-      toast.success('Đã lưu mục tiêu thành công')
+      toast.success(t('goals.messages.saved'))
     } catch (error) {
       console.error(error)
-      toast.error('Không thể cập nhật mục tiêu')
+      toast.error(t('goals.messages.saveFailed'))
     }
   }
 
@@ -95,18 +96,18 @@ const GoalSettingCard = () => {
     <div className='flex flex-col gap-4'>
       <div className='flex items-start justify-between'>
         <div>
-          <p className='text-foreground text-base font-semibold'>Thiết lập mục tiêu mới</p>
-          <p className='text-muted-foreground mt-1 text-sm'>Chọn mục tiêu phù hợp với bạn.</p>
-          <p className='text-muted-foreground mt-1 text-sm'>
-            Bạn có thể bắt đầu nhỏ và chỉnh lại khi cần.
-          </p>
+          <p className='text-foreground text-base font-semibold'>{t('goals.setting.title')}</p>
+          <p className='text-muted-foreground mt-1 text-sm'>{t('goals.setting.subtitle')}</p>
+          <p className='text-muted-foreground mt-1 text-sm'>{t('goals.setting.helper')}</p>
         </div>
         <Button
           disabled={isLoading || upsertGoalsMutation.isPending}
           size={'xs'}
           onClick={() => void handleSave()}>
           <CheckIcon className='mr-1' />
-          {upsertGoalsMutation.isPending ? 'Đang lưu...' : 'Lưu mục tiêu'}
+          {upsertGoalsMutation.isPending
+            ? t('common.actions.saving')
+            : t('goals.setting.saveAction')}
         </Button>
       </div>
       <div className='grid gap-2'>

@@ -11,6 +11,7 @@ import {
 } from '@/components/shared'
 import { TourGuideButton } from '@/components/shared'
 import { ONBOARDING_CONTENT, PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const InnerPage = () => {
@@ -30,14 +31,16 @@ const InnerPage = () => {
               />
             </div>
           }
-          description='Sổ tay quán chiếu — một bước nhỏ để quay về với mình.'
-          note='Viết xuống để nhìn rõ và buông nhẹ.'
-          subtitle='Tu tập'
-          title='Không gian tu tập'
+          description={t('pages.inner.header.description')}
+          note={t('pages.inner.header.note')}
+          subtitle={t('pages.inner.header.subtitle')}
+          title={t('pages.inner.header.title')}
         />
 
         <CardSection className='gap-4'>
-          <p className='text-foreground text-base font-semibold'>Sổ tay quán chiếu</p>
+          <p className='text-foreground text-base font-semibold'>
+            {t('pages.inner.journalCard.title')}
+          </p>
           <div className='flex flex-col gap-3'>
             <Link
               className='flex items-center gap-4 rounded-2xl border border-black/5 bg-white/80 px-4 py-4 transition-colors hover:bg-white'
@@ -46,9 +49,11 @@ const InnerPage = () => {
                 <BookOpenIcon className='text-primary h-5 w-5' />
               </div>
               <div className='flex-1'>
-                <p className='text-foreground text-base font-semibold'>Sổ tay quán chiếu</p>
+                <p className='text-foreground text-base font-semibold'>
+                  {t('pages.inner.journalCard.title')}
+                </p>
                 <p className='text-muted-foreground mt-1 text-sm'>
-                  Viết xuống để nhìn rõ và buông nhẹ.
+                  {t('pages.inner.journalCard.description')}
                 </p>
               </div>
             </Link>

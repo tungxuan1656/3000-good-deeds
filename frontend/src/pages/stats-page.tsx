@@ -9,6 +9,7 @@ import {
 import { CalendarStats } from '@/components/stats/calendar-stats'
 import { StatsCard } from '@/components/stats/stats-card'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { INFO_COPY } from '@/lib/info-copy'
 
 const StatsPage = () => {
@@ -27,10 +28,10 @@ const StatsPage = () => {
               />
             </div>
           }
-          description='Nhìn lại để hiểu tâm của mình, không phải để so sánh.'
-          note='Các con số chỉ là tấm gương để soi chiếu.'
-          subtitle='Thống kê'
-          title='Nhìn lại hành trình'
+          description={t('pages.stats.header.description')}
+          note={t('pages.stats.header.note')}
+          subtitle={t('pages.stats.header.subtitle')}
+          title={t('pages.stats.header.title')}
         />
 
         <StatsCard />

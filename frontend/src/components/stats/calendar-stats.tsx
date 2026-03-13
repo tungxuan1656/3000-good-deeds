@@ -19,12 +19,21 @@ import { Link } from 'react-router-dom'
 
 import { useCalendar } from '@/hooks/api/use-activities'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 import { CardSection } from '../shared'
 import { Button } from '../ui/button'
 
-const weekdayLabels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
+const weekdayLabels = [
+  t('stats.calendar.weekdays.mon'),
+  t('stats.calendar.weekdays.tue'),
+  t('stats.calendar.weekdays.wed'),
+  t('stats.calendar.weekdays.thu'),
+  t('stats.calendar.weekdays.fri'),
+  t('stats.calendar.weekdays.sat'),
+  t('stats.calendar.weekdays.sun'),
+]
 
 export const CalendarStats = () => {
   const [currentMonth, setCurrentMonth] = useState(() => startOfMonth(new Date()))
@@ -81,11 +90,11 @@ export const CalendarStats = () => {
 
       <CardSection>
         <div className='mb-5 flex items-center justify-between gap-2'>
-          <p className='text-foreground font-semibold'>Tổng quan tháng</p>
+          <p className='text-foreground font-semibold'>{t('stats.calendar.monthOverview')}</p>
           <Link
             className='text-foreground/80 hover:text-foreground -mr-2 px-2 text-xs'
             to={PATHS.TIMELINE}>
-            Xem timeline
+            {t('stats.calendar.viewTimeline')}
           </Link>
         </div>
 

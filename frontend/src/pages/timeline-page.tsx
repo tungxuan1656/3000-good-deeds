@@ -18,6 +18,7 @@ import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
 const TimelinePage = () => {
@@ -43,11 +44,11 @@ const TimelinePage = () => {
 
       let dateLabel = format(date, 'dd/MM', { locale: vi })
       if (isToday(date)) {
-        dateLabel = `Hôm nay · ${dateLabel}`
+        dateLabel = t('pages.timeline.dateLabel.today', { date: dateLabel })
       } else if (isYesterday(date)) {
-        dateLabel = `Hôm qua · ${dateLabel}`
+        dateLabel = t('pages.timeline.dateLabel.yesterday', { date: dateLabel })
       } else {
-        dateLabel = `Ngày ${dateLabel}`
+        dateLabel = t('pages.timeline.dateLabel.day', { date: dateLabel })
       }
 
       const existingGroup = groups.find((group) => group.dateKey === dateKey)
@@ -85,18 +86,18 @@ const TimelinePage = () => {
               storageKey={ONBOARDING_KEYS.journey}
             />
           }
-          description='Nhật ký việc thiện của riêng bạn — để nhìn lại, không phải để so sánh.'
-          note='Mỗi việc thiện, dù rất nhỏ, đều đáng trân trọng.'
-          subtitle='Hành trình'
-          title='Nhật ký việc thiện'
+          description={t('pages.timeline.header.description')}
+          note={t('pages.timeline.header.note')}
+          subtitle={t('pages.timeline.header.subtitle')}
+          title={t('pages.timeline.header.title')}
         />
 
         {showLoading && <SkeletonList />}
         {isEmpty && (
           <EmptyDataView
             Icon={<LeafyGreenIcon />}
-            description='Khi sẵn sàng, bạn có thể ghi nhận một việc thiện nhỏ.'
-            title='Bạn chưa ghi nhận việc thiện nào'
+            description={t('pages.timeline.empty.description')}
+            title={t('pages.timeline.empty.title')}
           />
         )}
 
@@ -109,7 +110,7 @@ const TimelinePage = () => {
                     {group.dateLabel}
                   </p>
                   <span className='text-muted-foreground text-sm sm:text-xs'>
-                    {group.items.length} việc thiện
+                    {t('pages.timeline.groupCount', { count: group.items.length })}
                   </span>
                 </div>
                 <div className='flex flex-col gap-3'>
@@ -129,10 +130,10 @@ const TimelinePage = () => {
                   {isFetchingNextPage ? (
                     <>
                       <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                      Đang tải...
+                      {t('pages.timeline.loadingMore')}
                     </>
                   ) : (
-                    'Tải thêm'
+                    t('pages.timeline.loadMore')
                   )}
                 </Button>
               </div>

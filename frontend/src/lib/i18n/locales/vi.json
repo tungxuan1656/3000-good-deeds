@@ -4,9 +4,17 @@
       "save": "Lưu",
       "saving": "Đang lưu...",
       "viewHistory": "Xem lại những ngày cũ",
+      "viewAll": "Xem tất cả",
+      "cancel": "Hủy",
       "delete": "Xóa",
       "deletePost": "Xóa bài viết",
-      "later": "Để sau"
+      "later": "Để sau",
+      "close": "Đóng",
+      "confirm": "Xác nhận",
+      "processing": "Đang xử lý..."
+    },
+    "labels": {
+      "info": "Thông tin"
     },
     "status": {
       "today": "Hôm nay",
@@ -21,6 +29,65 @@
     "success": {
       "saved": "Đã lưu",
       "deleted": "Đã xóa"
+    }
+  },
+  "dates": {
+    "formats": {
+      "homeHeaderSubtitle": "EEEE', ngày' dd'/'MM",
+      "dayMonth": "EEEE, 'ngày' dd 'tháng' MM",
+      "fullDate": "EEEE, 'ngày' dd 'tháng' MM 'năm' yyyy"
+    }
+  },
+  "auth": {
+    "login": {
+      "brandName": "3000 Việc Thiện",
+      "logoAlt": "Mầm từ bi",
+      "heroTitle": "Nuôi dưỡng tâm từ bi",
+      "heroDescription": "Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.",
+      "privacyNote": "Dữ liệu của bạn mặc định riêng tư và có thể xóa hoặc xuất bất cứ lúc nào.",
+      "googleAction": "Đăng nhập với Google",
+      "loading": "Đang đăng nhập...",
+      "termsPrefix": "Bằng cách tiếp tục, bạn đồng ý với",
+      "termsLabel": "Điều khoản sử dụng",
+      "termsConnector": "và",
+      "privacyLabel": "Chính sách riêng tư",
+      "version": "Phiên bản {{version}}",
+      "sideTitle": "Hành trình nhẹ nhàng",
+      "sideQuote": "Mỗi việc thiện nhỏ đều nuôi dưỡng tâm.",
+      "sideDescription": "Giữ lại những điều tốt đẹp, để bạn thấy sự thay đổi của mình mỗi ngày.",
+      "errors": {
+        "failed": "Đăng nhập thất bại",
+        "unexpected": "Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại.",
+        "googleConnection": "Không thể kết nối với Google. Vui lòng thử lại."
+      }
+    }
+  },
+  "push": {
+    "errors": {
+      "unauthenticated": "Chưa đăng nhập.",
+      "reminderDisabled": "Bạn đang tắt nhắc nhở.",
+      "unsupported": "Thiết bị chưa hỗ trợ Web Push.",
+      "permissionDefault": "Thiết bị này chưa cấp quyền thông báo.",
+      "permissionDenied": "Bạn cần cấp quyền thông báo để bật nhắc nhở.",
+      "missingPublicKey": "Không lấy được khóa thông báo từ máy chủ.",
+      "invalidEndpoint": "Subscription endpoint không hợp lệ.",
+      "invalidKeys": "Không thể tạo khóa Web Push hợp lệ."
+    }
+  },
+  "pwa": {
+    "installGuide": {
+      "android": {
+        "step1": "Bước 1: Mở trang web trên trình duyệt Chrome trên điện thoại Android.",
+        "step2": "Bước 2: Nhấn vào biểu tượng menu 3 chấm (⋮) ở góc trên bên phải.",
+        "step3": "Bước 3: Chọn Cài đặt ứng dụng (Install app) hoặc Thêm vào màn hình chính (Add to Home Screen).",
+        "step4": "Bước 4: Xác nhận cài đặt. Biểu tượng ứng dụng sẽ xuất hiện trên màn hình chính và trong ngăn ứng dụng."
+      },
+      "ios": {
+        "step1": "Bước 1: Mở trang web trên trình duyệt Safari (không sử dụng trình duyệt khác) trên iPhone/iPad.",
+        "step2": "Bước 2: Nhấn vào nút Chia sẻ (hình vuông có mũi tên hướng lên) ở thanh công cụ.",
+        "step3": "Bước 3: Chọn Thêm vào Màn hình chính (Add to Home Screen).",
+        "step4": "Bước 4: Nhấn Thêm để xác nhận. Biểu tượng ứng dụng sẽ xuất hiện trên màn hình chính."
+      }
     }
   },
   "layout": {
@@ -62,21 +129,82 @@
       "hopeful": "Hy vọng"
     }
   },
+  "categories": {
+    "fallback": {
+      "body": {
+        "name": "Thân thiện",
+        "description": "Hành động cụ thể bằng thân"
+      },
+      "speech": {
+        "name": "Khẩu thiện",
+        "description": "Lời nói ái ngữ, chân thật"
+      },
+      "mind": {
+        "name": "Ý thiện",
+        "description": "Suy nghĩ lành, buông xả"
+      }
+    }
+  },
   "goals": {
+    "messages": {
+      "invalidTargetCount": "Số lượng mục tiêu không hợp lệ",
+      "saved": "Đã lưu mục tiêu thành công",
+      "saveFailed": "Không thể cập nhật mục tiêu"
+    },
+    "setting": {
+      "title": "Thiết lập mục tiêu mới",
+      "subtitle": "Chọn mục tiêu phù hợp với bạn.",
+      "helper": "Bạn có thể bắt đầu nhỏ và chỉnh lại khi cần.",
+      "saveAction": "Lưu mục tiêu"
+    },
+    "history": {
+      "title": "Lịch sử mục tiêu",
+      "emptyTitle": "Chưa có mục tiêu nào được đặt ra",
+      "emptyDescription": "Bạn chưa đặt mục tiêu nào, nên chưa có gì để hiển thị ở đây. Hãy đặt ra một mục tiêu nhỏ phù hợp với bạn để bắt đầu nhé!",
+      "completed": "Đã hoàn thành",
+      "progress": "Hoàn thành {{actualCount}}/{{targetCount}}"
+    },
     "labels": {
       "weekly": "Mục tiêu tuần",
       "monthly": "Mục tiêu tháng",
       "yearly": "Mục tiêu năm"
     }
   },
-  "deeds": {
-    "moodTags": {
-      "peaceful": "An vui",
-      "grateful": "Biết ơn",
-      "lightHearted": "Nhẹ lòng",
-      "warm": "Ấm áp",
-      "calm": "Bình an",
-      "hopeful": "Hy vọng"
+  "home": {
+    "header": {
+      "title": "Hôm nay của bạn",
+      "description": "Ghi nhận một việc thiện nhỏ và dành một phút nhìn lại tâm mình.",
+      "note": "Mọi ghi nhận đều riêng tư và không dùng để so sánh."
+    },
+    "todaySection": {
+      "title": "Hôm nay",
+      "subtitle": "Một việc thiện nhỏ cũng đủ làm tâm bạn an nhiên hơn rất nhiều.",
+      "emptyTitle": "Hôm nay chưa có việc thiện nào",
+      "emptyDescription": "Khi sẵn sàng, bạn có thể ghi nhận một việc thiện nhỏ.",
+      "suggestAction": "Gợi ý điều nhỏ để bắt đầu"
+    }
+  },
+  "checkIn": {
+    "card": {
+      "title": "Việc thiện hôm nay",
+      "description": "Bạn đã làm được điều gì hôm nay?",
+      "addAction": "Ghi nhận việc thiện"
+    },
+    "sheet": {
+      "title": "Ghi lại một việc thiện",
+      "stepDescription": {
+        "1": "Bạn muốn ghi nhận việc thiện nào?",
+        "2": "Một dòng ngắn để bạn nhớ lại điều đã làm.",
+        "3": "Chọn cảm xúc để tự nhận diện, không cần đúng hay sai."
+      },
+      "notePlaceholder": "Ví dụ: Nhường đường cho người lớn tuổi...",
+      "privateNote": "Ghi nhận này chỉ mình bạn thấy.",
+      "saveAction": "Lưu lại",
+      "footerTitle": "Gieo một việc thiện",
+      "footerDescription": "Bước nhỏ hôm nay vẫn rất đáng trân trọng.",
+      "validation": {
+        "minNote": "Vui lòng nhập ghi chú với tối thiểu 5 ký tự."
+      }
     }
   },
   "journal": {
@@ -103,7 +231,291 @@
       "emptyContent": "Bạn có thể viết ngắn thôi, nhưng đừng để trống."
     }
   },
+  "breadcrumbs": {
+    "home": "Trang chủ",
+    "timeline": "Hành trình",
+    "deeds": "Việc thiện",
+    "stats": "Thống kê",
+    "goals": "Mục tiêu",
+    "inner": "Tu tập",
+    "more": "Thêm",
+    "quote": "Trích dẫn",
+    "randomActs": "Gợi ý việc thiện",
+    "journal": "Sổ tay quán chiếu",
+    "settings": "Cài đặt",
+    "history": "Lịch sử"
+  },
+  "settings": {
+    "header": {
+      "title": "Tùy chỉnh trải nghiệm",
+      "subtitle": "Cài đặt",
+      "description": "Điều chỉnh nhắc nhở và tài khoản để giữ nếp sống chánh niệm.",
+      "note": "Bạn có thể xuất hoặc xóa dữ liệu của mình bất cứ lúc nào."
+    },
+    "account": {
+      "heading": "Hồ sơ",
+      "title": "Tài khoản của bạn",
+      "helper": "Thông tin này được lấy từ tài khoản đăng nhập."
+    },
+    "session": {
+      "title": "Phiên đăng nhập",
+      "description": "Quản lý đăng nhập của bạn.",
+      "helper": "Đăng xuất không xóa dữ liệu.",
+      "logoutAction": "Đăng xuất",
+      "logoutTitle": "Đăng xuất khỏi tài khoản?",
+      "logoutDescription": "Bạn có thể đăng nhập lại bất cứ lúc nào."
+    },
+    "deleteAccount": {
+      "title": "Xóa tài khoản",
+      "description": "Tất cả dữ liệu của bạn sẽ bị xóa và không thể khôi phục lại được. Xin hãy cân nhắc kỹ lựa chọn này!",
+      "action": "Xóa tài khoản",
+      "confirmTitle": "Xác nhận xóa tài khoản",
+      "confirmDescription": "Nhập chữ “DELETE” để xác nhận. Bạn có thể quay lại bắt đầu lại bất cứ lúc nào."
+    }
+  },
+  "info": {
+    "home": {
+      "title": "Hôm nay của bạn",
+      "description": "Trang này là điểm khởi đầu mỗi ngày. Ghi nhận một việc thiện nhỏ, quán chiếu lại tâm mình, không áp lực, không so sánh. Mọi dữ liệu đều riêng tư và bạn có thể điều chỉnh nhịp của mình bất cứ lúc nào."
+    },
+    "deeds": {
+      "title": "Ghi nhận việc thiện",
+      "description": "Ghi nhận là để nhớ và quán chiếu, không phải để đạt chỉ tiêu. Bạn có thể chọn Thân Thiện/Khẩu Thiện/Ý Thiện để nhìn rõ cách mình thực hành. Mọi ghi nhận đều riêng tư.\n\t• Thân: Những hành động bạn làm bằng thân thể - giúp đỡ, nâng đỡ, bảo vệ.\n\t• Khẩu: Những lời nói bạn buông ra - lắng nghe, an ủi, nói lời chân thật.\n\t• Ý: Những suy nghĩ bạn nuôi dưỡng - hiểu, thương, không ganh ghét, không tham lam, sân hận, ác ý, không theo tà kiến."
+    },
+    "goals": {
+      "title": "Mục tiêu tu tập",
+      "description": "Mục tiêu giúp giữ nhịp đều đặn, không phải để tự ép. Hãy chọn mức vừa sức và có thể điều chỉnh bất cứ khi nào thấy cần."
+    },
+    "stats": {
+      "title": "Thống kê để soi chiếu",
+      "description": "Các con số chỉ là tấm gương để nhìn lại thói quen của mình. Chuỗi ngày là nhịp tham khảo. Đừng dùng để so sánh hay đánh giá, mà để hiểu rõ hơn về hành trình của mình."
+    },
+    "cultivation": {
+      "title": "Không gian tu tập",
+      "description": "Tu tập là quay vào bên trong. Sổ tay quán chiếu là nơi bạn viết xuống điều mình thấy rõ, để nhìn lại và buông nhẹ."
+    },
+    "journal": {
+      "title": "Sổ tay quán chiếu",
+      "description": "Đây là không gian riêng tư để viết xuống điều mình thấy rõ. Viết xong là đặt xuống, không để tự phán xét. Không có chấm điểm hay xếp hạng."
+    },
+    "randomActs": {
+      "title": "Gợi ý việc thiện",
+      "description": "Các gợi ý chỉ để khởi tâm. Nếu thấy phù hợp thì thử, không phù hợp có thể bỏ qua. Mọi lựa chọn đều đáng trân trọng."
+    },
+    "reminders": {
+      "title": "Nhắc nhở dịu nhẹ",
+      "description": "Nhắc nhở chỉ nhằm giúp bạn nhớ quay về với mình. Bạn có thể tắt bất cứ lúc nào, và hệ thống sẽ bỏ qua khi bạn đã ghi nhận trong ngày."
+    },
+    "quote": {
+      "title": "Pháp ngữ cho phiên này",
+      "description": "Mỗi lần mở app sẽ có một câu pháp ngữ để bạn đọc chậm và lắng lại. Bạn có thể đổi câu khác nếu muốn, nhưng không cần tìm câu hay nhất. Mọi thứ đến đều là duyên, hãy để tâm mình đón nhận một cách nhẹ nhàng."
+    },
+    "breathing": {
+      "title": "Thiền và thở",
+      "description": "Bài thở này giúp mình chậm lại. Hãy theo nhịp hít - giữ - thở ra thật nhẹ, và điều chỉnh cho phù hợp với cơ thể."
+    }
+  },
+  "labels": {
+    "emptyGoalHistory": {
+      "title": "Chưa có mục tiêu nào được đặt ra",
+      "description": "Bạn chưa đặt mục tiêu nào, nên chưa có gì để hiển thị ở đây. Hãy quay lại trang Mục tiêu tu tập để đặt ra một mục tiêu nhỏ phù hợp với bạn nhé!"
+    }
+  },
+  "pages": {
+    "stats": {
+      "header": {
+        "title": "Nhìn lại hành trình",
+        "subtitle": "Thống kê",
+        "description": "Nhìn lại để hiểu tâm của mình, không phải để so sánh.",
+        "note": "Các con số chỉ là tấm gương để soi chiếu."
+      }
+    },
+    "goals": {
+      "header": {
+        "title": "Giữ nhịp đều đặn",
+        "subtitle": "Mục tiêu",
+        "description": "Đặt mục tiêu vừa sức và điều kiện của bạn nhé!.",
+        "note": "Bạn có thể điều chỉnh mục tiêu bất cứ lúc nào."
+      }
+    },
+    "timeline": {
+      "header": {
+        "title": "Nhật ký việc thiện",
+        "subtitle": "Hành trình",
+        "description": "Nhật ký việc thiện của riêng bạn - để nhìn lại, không phải để so sánh.",
+        "note": "Mỗi việc thiện, dù rất nhỏ, đều đáng trân trọng."
+      },
+      "dateLabel": {
+        "today": "Hôm nay · {{date}}",
+        "yesterday": "Hôm qua · {{date}}",
+        "day": "Ngày {{date}}"
+      },
+      "empty": {
+        "title": "Bạn chưa ghi nhận việc thiện nào",
+        "description": "Khi sẵn sàng, bạn có thể ghi nhận một việc thiện nhỏ."
+      },
+      "groupCount": "{{count}} việc thiện",
+      "loadingMore": "Đang tải...",
+      "loadMore": "Tải thêm"
+    },
+    "inner": {
+      "header": {
+        "title": "Không gian tu tập",
+        "subtitle": "Tu tập",
+        "description": "Sổ tay quán chiếu - một bước nhỏ để quay về với mình.",
+        "note": "Viết xuống để nhìn rõ và buông nhẹ."
+      },
+      "journalCard": {
+        "title": "Sổ tay quán chiếu",
+        "description": "Viết xuống để nhìn rõ và buông nhẹ."
+      }
+    },
+    "innerJournalHistory": {
+      "header": {
+        "title": "Những ngày cũ",
+        "subtitle": "Sổ tay",
+        "description": "Xem lại những dòng đã viết. Mỗi bài là một khoảnh khắc đã được giữ nguyên.",
+        "note": "Đọc lại khi cần soi chiếu. Bạn có thể xóa bài viết trong 15 phút đầu sau khi lưu."
+      },
+      "empty": {
+        "title": "Chưa có bài viết nào",
+        "description": "Khi bạn viết một dòng, nơi này sẽ xuất hiện bài viết của bạn."
+      },
+      "loadingMore": "Đang tải...",
+      "loadMore": "Tải thêm",
+      "writeNew": "Viết một dòng mới"
+    },
+    "innerJournalEditor": {
+      "header": {
+        "title": "Một trang chánh niệm",
+        "subtitle": "Viết nhật ký",
+        "description": "Chọn cách quán chiếu và viết điều cần nhìn rõ.",
+        "note": "Mọi ghi nhận đều riêng tư."
+      },
+      "form": {
+        "titlePlaceholder": "Tiêu đề",
+        "contentPlaceholder": "Hôm nay mình...",
+        "privateNote": "Chỉ mình bạn thấy nội dung này.",
+        "save": "Lưu lại"
+      }
+    },
+    "more": {
+      "header": {
+        "title": "Quản lý và tùy chỉnh",
+        "subtitle": "Thêm",
+        "description": "Mục tiêu, gợi ý việc thiện, nhắc nhở và tài khoản của bạn.",
+        "note": "Bạn có thể tùy chỉnh theo thói quen của mình."
+      },
+      "rows": {
+        "account": {
+          "title": "Quản lý tài khoản",
+          "description": "Cập nhật hồ sơ, đăng xuất và xóa dữ liệu."
+        },
+        "notifications": {
+          "title": "Quản lý thông báo",
+          "description": "Bật/tắt nhắc nhở và chỉnh giờ gửi thông báo."
+        },
+        "goals": {
+          "title": "Mục tiêu",
+          "description": "Giữ thói quen theo tuần, tháng, năm."
+        },
+        "randomActs": {
+          "title": "Gợi ý việc thiện",
+          "description": "Một gợi ý nhỏ để khởi tâm từ bi."
+        }
+      }
+    },
+    "innerMeditation": {
+      "header": {
+        "title": "Trở về với hơi thở",
+        "subtitle": "Thiền và thở",
+        "description": "Thở chậm để trở về chánh niệm và an trú nơi tâm.",
+        "note": "Bạn có thể điều chỉnh nhịp thở cho phù hợp với cơ thể."
+      },
+      "phases": {
+        "inhale": "Hít vào",
+        "hold": "Giữ",
+        "exhale": "Thở ra"
+      },
+      "durations": {
+        "3m": "3 phút",
+        "5m": "5 phút",
+        "10m": "10 phút"
+      },
+      "cycle": "Chu kỳ 4-4-4",
+      "actions": {
+        "start": "Bắt đầu",
+        "pause": "Tạm dừng",
+        "reset": "Đặt lại"
+      },
+      "finishedPrompt": "Bạn cảm thấy thế nào lúc này?"
+    },
+    "randomActs": {
+      "header": {
+        "title": "Một gợi ý trong ngày",
+        "subtitle": "Gợi ý việc thiện",
+        "description": "Chọn một việc thiện nhỏ phù hợp với mình lúc này.",
+        "note": "Bạn có thể bỏ qua hoặc đổi gợi ý bất cứ lúc nào."
+      },
+      "randomLabel": "Gợi ý ngẫu nhiên",
+      "fallbackNote": "Gợi ý để bạn tham khảo",
+      "empty": "Chưa có gợi ý lúc này. Bạn có thể thử lại sau.",
+      "actions": {
+        "refresh": "Gợi ý khác"
+      }
+    }
+  },
+  "suggestActs": {
+    "title": "Gợi ý việc thiện",
+    "description": "Chọn một điều nhỏ để bắt đầu ngay hôm nay.",
+    "randomCount": "{{count}} gợi ý ngẫu nhiên",
+    "refresh": "Đổi gợi ý",
+    "categories": {
+      "body": "Thân",
+      "speech": "Khẩu",
+      "mind": "Ý"
+    }
+  },
+  "reminder": {
+    "card": {
+      "title": "Nhắc nhở dịu nhẹ",
+      "quote": "Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút.",
+      "action": "Thiết lập nhắc nhở"
+    }
+  },
+  "stats": {
+    "card": {
+      "recordedTitle": "Đã ghi nhận",
+      "totalValue": "{{count}} việc thiện",
+      "totalValueFallback": "-- việc thiện",
+      "emptyTitle": "Chưa có dữ liệu thống kê",
+      "emptyDescription": "Hãy ghi nhận những việc thiện bạn đã làm nhé!"
+    },
+    "weekly": {
+      "title": "Nhịp điệu trong tuần",
+      "description": "{{activeCount}}/7 ngày đã ghi nhận. Hãy giữ tâm nhẹ nhàng nhé.",
+      "rangePrefix": "Tuần này"
+    },
+    "calendar": {
+      "monthOverview": "Tổng quan tháng",
+      "viewTimeline": "Xem timeline",
+      "weekdays": {
+        "mon": "T2",
+        "tue": "T3",
+        "wed": "T4",
+        "thu": "T5",
+        "fri": "T6",
+        "sat": "T7",
+        "sun": "CN"
+      }
+    }
+  },
   "onboarding": {
+    "dialog": {
+      "back": "Quay lại",
+      "continue": "Tiếp tục",
+      "start": "Bắt đầu"
+    },
     "general": {
       "title": "Chào mừng",
       "steps": [
@@ -201,6 +613,50 @@
           "description": "Hai chế độ giúp bạn quán chiếu theo cách phù hợp với mình."
         }
       ]
+    }
+  },
+  "deeds": {
+    "card": {
+      "actions": {
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa"
+      },
+      "messages": {
+        "deleted": "Đã xóa việc thiện",
+        "deleteFailed": "Không thể xóa việc thiện"
+      },
+      "deleteDialog": {
+        "title": "Xóa ghi nhận này?",
+        "description": "Nếu xóa, bạn sẽ không xem lại được ghi nhận này nữa.",
+        "cancel": "Giữ lại",
+        "confirm": "Xóa việc này"
+      }
+    },
+    "edit": {
+      "title": "Chỉnh sửa việc thiện",
+      "description": "Cập nhật thông tin việc thiện của bạn.",
+      "privateNote": "Ghi nhận này chỉ mình bạn thấy.",
+      "saveChanges": "Lưu thay đổi",
+      "messages": {
+        "updated": "Đã cập nhật việc thiện",
+        "updateFailed": "Không thể cập nhật việc thiện"
+      },
+      "fields": {
+        "date": "Ngày thực hiện",
+        "note": "Ghi chú",
+        "notePlaceholder": "Viết ghi chú về việc thiện này...",
+        "noteHint": "Có thể để trống nếu bạn muốn.",
+        "moodTags": "Nhãn cảm xúc",
+        "moodTagsHint": "Nhãn chỉ để tự nhận diện, không cần đúng hay sai."
+      }
+    },
+    "moodTags": {
+      "peaceful": "An vui",
+      "grateful": "Biết ơn",
+      "lightHearted": "Nhẹ lòng",
+      "warm": "Ấm áp",
+      "calm": "Bình an",
+      "hopeful": "Hy vọng"
     }
   }
 }

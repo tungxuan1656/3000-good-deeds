@@ -13,6 +13,7 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { useUser } from '@/hooks/api/use-user'
+import { t } from '@/lib/i18n'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const SettingsPage = () => {
@@ -31,10 +32,10 @@ const SettingsPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Điều chỉnh nhắc nhở và tài khoản để giữ nếp sống chánh niệm.'
-          note='Bạn có thể xuất hoặc xoá dữ liệu của mình bất cứ lúc nào.'
-          subtitle='Cài đặt'
-          title='Tuỳ chỉnh trải nghiệm'
+          description={t('settings.header.description')}
+          note={t('settings.header.note')}
+          subtitle={t('settings.header.subtitle')}
+          title={t('settings.header.title')}
         />
 
         <AccountProfileCard user={user} />

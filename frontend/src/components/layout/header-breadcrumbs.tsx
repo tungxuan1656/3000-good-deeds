@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+import { t } from '@/lib/i18n'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,24 +13,24 @@ import {
 } from '../ui/breadcrumb'
 
 const breadcrumbLabels: Record<string, string> = {
-  timeline: 'Hành trình',
-  deeds: 'Việc thiện',
-  stats: 'Thống kê',
-  goals: 'Mục tiêu',
-  inner: 'Tu tập',
-  more: 'Thêm',
-  quote: 'Trích dẫn',
-  'random-acts': 'Gợi ý việc thiện',
-  journal: 'Sổ tay quán chiếu',
-  settings: 'Cài đặt',
-  history: 'Lịch sử',
+  timeline: t('breadcrumbs.timeline'),
+  deeds: t('breadcrumbs.deeds'),
+  stats: t('breadcrumbs.stats'),
+  goals: t('breadcrumbs.goals'),
+  inner: t('breadcrumbs.inner'),
+  more: t('breadcrumbs.more'),
+  quote: t('breadcrumbs.quote'),
+  'random-acts': t('breadcrumbs.randomActs'),
+  journal: t('breadcrumbs.journal'),
+  settings: t('breadcrumbs.settings'),
+  history: t('breadcrumbs.history'),
 }
 
 export const HeaderBreadcrumbs = () => {
   const location = useLocation()
   const segments = location.pathname.split('/').filter(Boolean)
 
-  const breadcrumbs = [{ label: 'Trang chủ', path: '/' }]
+  const breadcrumbs = [{ label: t('breadcrumbs.home'), path: '/' }]
   let currentPath = ''
 
   for (const segment of segments) {

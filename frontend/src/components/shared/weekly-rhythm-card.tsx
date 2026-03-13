@@ -7,9 +7,18 @@ import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
 import { useCalendar } from '@/hooks/api/use-activities'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
-const defaultDays = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
+const defaultDays = [
+  t('stats.calendar.weekdays.mon'),
+  t('stats.calendar.weekdays.tue'),
+  t('stats.calendar.weekdays.wed'),
+  t('stats.calendar.weekdays.thu'),
+  t('stats.calendar.weekdays.fri'),
+  t('stats.calendar.weekdays.sat'),
+  t('stats.calendar.weekdays.sun'),
+]
 
 export const WeeklyRhythmCard = () => {
   const navigate = useNavigate()
@@ -44,9 +53,9 @@ export const WeeklyRhythmCard = () => {
     <CardSection padding='md'>
       <div className='flex items-start justify-between gap-3'>
         <div>
-          <h3 className='text-foreground text-base font-semibold'>Nhịp điệu trong tuần</h3>
+          <h3 className='text-foreground text-base font-semibold'>{t('stats.weekly.title')}</h3>
           <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
-            {activeCount}/7 ngày đã ghi nhận. Hãy giữ tâm nhẹ nhàng nhé.
+            {t('stats.weekly.description', { activeCount })}
           </p>
         </div>
         <Button
@@ -54,7 +63,7 @@ export const WeeklyRhythmCard = () => {
           size='sm'
           variant='ghost'
           onClick={() => navigate(PATHS.STATS)}>
-          Xem tất cả
+          {t('common.actions.viewAll')}
         </Button>
       </div>
       <div className='mt-4 flex gap-2'>
@@ -79,7 +88,7 @@ export const WeeklyRhythmCard = () => {
         })}
       </div>
       <p className='text-muted-foreground/70 mt-3 text-[11px]'>
-        Tuần này · {format(startOfCurrentWeek, 'dd/MM', { locale: vi })} -{' '}
+        {t('stats.weekly.rangePrefix')} · {format(startOfCurrentWeek, 'dd/MM', { locale: vi })} -{' '}
         {format(addDays(startOfCurrentWeek, 6), 'dd/MM', { locale: vi })}
       </p>
     </CardSection>

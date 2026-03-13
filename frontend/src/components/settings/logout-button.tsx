@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { unsubscribeFromPushNotifications } from '@/lib/push-notifications'
 import { authActions } from '@/stores/auth-store'
 
@@ -31,14 +32,14 @@ export const LogoutButton = (props: React.ComponentProps<typeof Button>) => {
     <>
       <Button {...props} onClick={() => logoutDialogRef.current?.open()}>
         <LogOutIcon className='h-4 w-4' />
-        Đăng xuất
+        {t('settings.session.logoutAction')}
       </Button>
       <ConfirmDialog
         ref={logoutDialogRef}
-        cancelLabel='Để sau'
-        confirmLabel='Đăng xuất'
-        description='Bạn có thể đăng nhập lại bất cứ lúc nào.'
-        title='Đăng xuất khỏi tài khoản?'
+        cancelLabel={t('common.actions.later')}
+        confirmLabel={t('settings.session.logoutAction')}
+        description={t('settings.session.logoutDescription')}
+        title={t('settings.session.logoutTitle')}
         onConfirm={() => {
           logoutDialogRef.current?.close()
           handleLogout()

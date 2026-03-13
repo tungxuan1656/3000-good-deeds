@@ -10,6 +10,7 @@ import { TourGuideButton } from '@/components/shared/tour-guide-button'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { authActions, useAuthStore } from '@/stores/auth-store'
 
 const isIosStandalonePwa = () => {
@@ -50,11 +51,11 @@ const LoginPage = () => {
         authActions.login(response.data)
         navigate(PATHS.HOME, { replace: true })
       } else {
-        setError(response.error || 'Đăng nhập thất bại')
+        setError(response.error || t('auth.login.errors.failed'))
       }
     } catch (err) {
       console.error('Login error:', err)
-      setError('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại.')
+      setError(t('auth.login.errors.unexpected'))
     } finally {
       setIsLoading(false)
     }
@@ -95,7 +96,7 @@ const LoginPage = () => {
     },
     onError: (oauthError) => {
       console.error('Google OAuth redirect error:', oauthError)
-      setError('Không thể kết nối với Google. Vui lòng thử lại.')
+      setError(t('auth.login.errors.googleConnection'))
     },
     flow: 'auth-code',
     ux_mode: 'redirect',
@@ -118,7 +119,7 @@ const LoginPage = () => {
       }
 
       console.error('Google OAuth popup error:', oauthError)
-      setError('Không thể kết nối với Google. Vui lòng thử lại.')
+      setError(t('auth.login.errors.googleConnection'))
     },
     flow: 'auth-code',
     ux_mode: 'popup',
@@ -159,14 +160,18 @@ const LoginPage = () => {
               <div className='flex items-start justify-between gap-4'>
                 <div className='flex items-center gap-4'>
                   <div className='flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white/80 shadow-sm'>
-                    <img alt='Mầm từ bi' className='h-10 w-10' src='/icons/icon_sprout.png' />
+                    <img
+                      alt={t('auth.login.logoAlt')}
+                      className='h-10 w-10'
+                      src='/icons/icon_sprout.png'
+                    />
                   </div>
                   <div>
                     <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
-                      3000 Việc Thiện
+                      {t('auth.login.brandName')}
                     </p>
                     <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
-                      Nuôi dưỡng tâm từ bi
+                      {t('auth.login.heroTitle')}
                     </h1>
                   </div>
                 </div>
@@ -178,11 +183,9 @@ const LoginPage = () => {
                 />
               </div>
               <p className='text-muted-foreground/90 text-base leading-relaxed'>
-                Mỗi ngày một việc thiện nhỏ, ta trở về với sự tử tế và bình an.
+                {t('auth.login.heroDescription')}
               </p>
-              <p className='text-muted-foreground text-sm'>
-                Dữ liệu của bạn mặc định riêng tư và có thể xoá hoặc xuất bất cứ lúc nào.
-              </p>
+              <p className='text-muted-foreground text-sm'>{t('auth.login.privacyNote')}</p>
 
               {error && (
                 <div className='rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>
@@ -195,24 +198,24 @@ const LoginPage = () => {
                 disabled={isLoading}
                 onClick={handleGoogleLogin}>
                 {isLoading ? <Spinner /> : null}
-                {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập với Google'}
+                {isLoading ? t('auth.login.loading') : t('auth.login.googleAction')}
               </Button>
               <PWAGuideDialog showIcon />
             </CardSection>
 
             <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
-              Bằng cách tiếp tục, bạn đồng ý với{' '}
+              {t('auth.login.termsPrefix')}{' '}
               <Link className='underline decoration-dashed underline-offset-2' to={PATHS.TERMS}>
-                Điều khoản sử dụng
+                {t('auth.login.termsLabel')}
               </Link>{' '}
-              và{' '}
+              {t('auth.login.termsConnector')}{' '}
               <Link className='underline decoration-dashed underline-offset-2' to={PATHS.PRIVACY}>
-                Chính sách riêng tư
+                {t('auth.login.privacyLabel')}
               </Link>
               .
             </p>
             <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
-              Phiên bản {APP_VERSION}
+              {t('auth.login.version', { version: APP_VERSION })}
             </p>
           </div>
 
@@ -220,13 +223,13 @@ const LoginPage = () => {
             <CardSection className='flex w-full max-w-sm flex-col gap-4'>
               <Leaf className='opacity-25' position='bottom-left' variant={3} />
               <div className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
-                Hành trình nhẹ nhàng
+                {t('auth.login.sideTitle')}
               </div>
               <p className='text-foreground text-lg leading-relaxed font-semibold'>
-                “Mỗi việc thiện nhỏ đều nuôi dưỡng tâm.”
+                {t('auth.login.sideQuote')}
               </p>
               <div className='text-muted-foreground/80 text-sm leading-relaxed'>
-                Giữ lại những điều tốt đẹp, để bạn thấy sự thay đổi của mình mỗi ngày.
+                {t('auth.login.sideDescription')}
               </div>
             </CardSection>
           </div>

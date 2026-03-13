@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 export type ConfirmDialogHandle = {
@@ -41,7 +42,7 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
       onOpenChange,
       title,
       description,
-      confirmLabel = 'Xác nhận',
+      confirmLabel = t('common.actions.confirm'),
       cancelLabel,
       variant = 'default',
       confirmDisabled,
@@ -108,7 +109,7 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
               disabled={confirmDisabled || confirmLoading}
               variant={variant === 'destructive' ? 'destructive' : 'default'}
               onClick={handleConfirm}>
-              {confirmLoading ? 'Đang xử lý...' : confirmLabel}
+              {confirmLoading ? t('common.actions.processing') : confirmLabel}
             </Button>
             {cancelLabel ? (
               <Button className='h-10 rounded-full px-4' variant='outline' onClick={handleCancel}>

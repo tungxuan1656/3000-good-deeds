@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 
 import { useIsMobile } from '@/hooks/use-mobile'
+import { t } from '@/lib/i18n'
 import { getMobileOs, getPwaInstallGuideSteps, shouldShowPwaInstallGuide } from '@/lib/pwa-install'
 
 import { ConfirmDialog, type ConfirmDialogHandle } from '../shared'
@@ -26,14 +27,14 @@ export const PWAGuideDialog = ({ showIcon }: { showIcon?: boolean }) => {
           size={'sm'}
           variant={'link'}
           onClick={() => installDialogRef.current?.open()}>
-          {'Hướng dẫn cài đặt ứng dụng'}
+          {t('pwa.guide.openAction')}
         </Button>
       ) : null}
       <ConfirmDialog
         ref={installDialogRef}
-        confirmLabel='Đã hiểu'
-        description='Cài ứng dụng để mở nhanh hơn và dùng trải nghiệm giống app trên điện thoại.'
-        title='Hướng dẫn cài ứng dụng Web App'
+        confirmLabel={t('pwa.guide.confirm')}
+        description={t('pwa.guide.description')}
+        title={t('pwa.guide.title')}
         onCancel={() => installDialogRef.current?.close()}
         onConfirm={() => installDialogRef.current?.close()}>
         <div className='space-y-1 text-sm leading-relaxed'>

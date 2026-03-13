@@ -18,36 +18,37 @@ import {
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 const ROWS = [
   {
-    title: 'Quản lý tài khoản',
-    description: 'Cập nhật hồ sơ, đăng xuất và xóa dữ liệu.',
+    title: t('pages.more.rows.account.title'),
+    description: t('pages.more.rows.account.description'),
     icon: UserCogIcon,
     to: PATHS.SETTINGS,
     bgIcon: 'bg-blue-100',
     color: 'text-blue-500',
   },
   {
-    title: 'Quản lý thông báo',
-    description: 'Bật/tắt nhắc nhở và chỉnh giờ gửi thông báo.',
+    title: t('pages.more.rows.notifications.title'),
+    description: t('pages.more.rows.notifications.description'),
     icon: BellDotIcon,
     to: PATHS.SETTINGS,
     bgIcon: 'bg-orange-100',
     color: 'text-amber-500',
   },
   {
-    title: 'Mục tiêu',
-    description: 'Giữ thói quen theo tuần, tháng, năm.',
+    title: t('pages.more.rows.goals.title'),
+    description: t('pages.more.rows.goals.description'),
     icon: TargetIcon,
     to: PATHS.GOALS,
     bgIcon: 'bg-secondary/40',
     color: 'text-primary',
   },
   {
-    title: 'Gợi ý việc thiện',
-    description: 'Một gợi ý nhỏ để khởi tâm từ bi.',
+    title: t('pages.more.rows.randomActs.title'),
+    description: t('pages.more.rows.randomActs.description'),
     icon: HeartHandshakeIcon,
     to: PATHS.INNER_RANDOM_ACTS,
     bgIcon: 'bg-purple-100',
@@ -60,10 +61,10 @@ const MorePage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Mục tiêu, gợi ý việc thiện, nhắc nhở và tài khoản của bạn.'
-          note='Bạn có thể tuỳ chỉnh theo thói quen của mình.'
-          subtitle='Thêm'
-          title='Quản lý & tuỳ chỉnh'
+          description={t('pages.more.header.description')}
+          note={t('pages.more.header.note')}
+          subtitle={t('pages.more.header.subtitle')}
+          title={t('pages.more.header.title')}
         />
 
         <CardSection className='gap-5'>

@@ -15,6 +15,7 @@ import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useInnerJournalEntries } from '@/hooks/api/use-inner-journal'
 import { PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 
 const InnerJournalHistoryPage = () => {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
@@ -33,18 +34,18 @@ const InnerJournalHistoryPage = () => {
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          description='Xem lại những dòng đã viết. Mỗi bài là một khoảnh khắc đã được giữ nguyên.'
-          note='Đọc lại khi cần soi chiếu. Bạn có thể xoá bài viết trong 15 phút đầu sau khi lưu.'
-          subtitle='Sổ tay'
-          title='Những ngày cũ'
+          description={t('pages.innerJournalHistory.header.description')}
+          note={t('pages.innerJournalHistory.header.note')}
+          subtitle={t('pages.innerJournalHistory.header.subtitle')}
+          title={t('pages.innerJournalHistory.header.title')}
         />
 
         {showLoading && <SkeletonList />}
         {isEmpty && (
           <EmptyDataView
             Icon={<BookOpenIcon />}
-            description='Khi bạn viết một dòng, nơi này sẽ xuất hiện bài viết của bạn.'
-            title='Chưa có bài viết nào'
+            description={t('pages.innerJournalHistory.empty.description')}
+            title={t('pages.innerJournalHistory.empty.title')}
           />
         )}
 
@@ -60,13 +61,15 @@ const InnerJournalHistoryPage = () => {
                   disabled={isFetchingNextPage}
                   variant='outline'
                   onClick={() => void fetchNextPage()}>
-                  {isFetchingNextPage ? 'Đang tải…' : 'Tải thêm'}
+                  {isFetchingNextPage
+                    ? t('pages.innerJournalHistory.loadingMore')
+                    : t('pages.innerJournalHistory.loadMore')}
                 </Button>
               </div>
             )}
 
             <Button asChild className='w-full rounded-full'>
-              <Link to={PATHS.INNER_JOURNAL}>Viết một dòng mới</Link>
+              <Link to={PATHS.INNER_JOURNAL}>{t('pages.innerJournalHistory.writeNew')}</Link>
             </Button>
           </div>
         )}

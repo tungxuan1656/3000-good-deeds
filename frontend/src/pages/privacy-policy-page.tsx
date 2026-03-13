@@ -1,3 +1,5 @@
+// NOTE: Legal copy in this file is intentionally kept in Vietnamese.
+// Do not migrate these strings to i18n unless product/legal requirements change.
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
