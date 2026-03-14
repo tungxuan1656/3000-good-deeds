@@ -25,13 +25,13 @@ Deliver backend changes that are correct, secure, testable, and aligned with pro
 
 ## Mandatory Standards
 
-- `backend/docs/standards/01-architecture-and-boundaries.md`
-- `backend/docs/standards/02-api-contract-and-validation.md`
-- `backend/docs/standards/03-database-pattern.md`
-- `backend/docs/standards/04-error-handling-pattern.md`
-- `backend/docs/standards/05-security-and-auth-pattern.md`
-- `backend/docs/standards/06-testing-pattern.md`
-- `backend/docs/standards/07-code-review-guide.md`
+- `backend/docs/standards/architecture-and-boundaries.md`
+- `backend/docs/standards/api-contract-and-validation.md`
+- `backend/docs/standards/database-pattern.md`
+- `backend/docs/standards/error-handling-pattern.md`
+- `backend/docs/standards/security-and-auth-pattern.md`
+- `backend/docs/standards/testing-pattern.md`
+- `backend/docs/standards/code-review-guide.md`
 
 ## Implementation Rules
 

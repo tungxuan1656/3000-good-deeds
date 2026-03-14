@@ -45,7 +45,7 @@ When UX changes significantly:
 - Cover critical error branches.
 
 ### F7. Review
-- Backend review: `backend/docs/standards/07-code-review-guide.md`
+- Backend review: `backend/docs/standards/code-review-guide.md`
 - Frontend review: `frontend/docs/standards/code-review-guide.md`
 
 ### F8. Release Readiness
