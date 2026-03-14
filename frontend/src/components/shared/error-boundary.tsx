@@ -1,6 +1,8 @@
 import type { ErrorInfo, ReactNode } from 'react'
 import { Component } from 'react'
 
+import { t } from '@/lib/i18n'
+
 interface Props {
   children: ReactNode
   fallback?: ReactNode
@@ -26,11 +28,13 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         this.props.fallback ?? (
           <div className='flex h-screen flex-col items-center justify-center gap-4 p-8 text-center'>
-            <p className='text-foreground text-base font-semibold'>Đã có lỗi xảy ra</p>
+            <p className='text-foreground text-base font-semibold'>
+              {t('common.errors.errorOccurred')}
+            </p>
             <button
               className='text-primary text-sm underline'
               onClick={() => window.location.reload()}>
-              Tải lại trang
+              {t('common.errors.reloadPage')}
             </button>
           </div>
         )

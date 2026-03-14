@@ -24,7 +24,9 @@
     "errors": {
       "invalidContent": "Nội dung chưa hợp lệ",
       "saveFailed": "Lưu thất bại",
-      "deleteFailed": "Không thể xóa"
+      "deleteFailed": "Không thể xóa",
+      "errorOccurred": "Đã có lỗi xảy ra",
+      "reloadPage": "Tải lại trang"
     },
     "success": {
       "saved": "Đã lưu",
@@ -85,6 +87,27 @@
       },
       "validation": {
         "passwordMismatch": "Mật khẩu xác nhận chưa khớp."
+      },
+      "errors": {
+        "emailAlreadyInUse": "Email này đã được đăng ký. Vui lòng sử dụng email khác hoặc đăng nhập.",
+        "weakPassword": "Mật khẩu quá yếu. Vui lòng chọn mật khẩu có ít nhất 6 ký tự.",
+        "invalidEmail": "Địa chỉ email không hợp lệ. Vui lòng nhập email đúng định dạng.",
+        "userDisabled": "Tài khoản này đã bị vô hiệu hóa. Vui lòng liên hệ hỗ trợ.",
+        "userNotFound": "Tài khoản không tồn tại. Vui lòng kiểm tra email hoặc đăng ký tài khoản mới.",
+        "wrongPassword": "Mật khẩu không chính xác. Vui lòng thử lại.",
+        "invalidCredential": "Email hoặc mật khẩu không chính xác. Vui lòng thử lại.",
+        "tooManyRequests": "Quá nhiều lần đăng nhập thất bại. Vui lòng thử lại sau.",
+        "operationNotAllowed": "Phương pháp đăng nhập này không được hỗ trợ.",
+        "accountExistsWithDifferentCredential": "Tài khoản đã tồn tại với phương pháp đăng nhập khác.",
+        "networkRequestFailed": "Lỗi kết nối mạng. Vui lòng kiểm tra kết nối Internet.",
+        "popupBlocked": "Cửa sổ đăng nhập bị chặn. Vui lòng cho phép pop-up và thử lại.",
+        "popupClosedByUser": "Bạn đã đóng cửa sổ đăng nhập. Vui lòng thử lại.",
+        "cancelledPopupRequest": "Yêu cầu đăng nhập đã bị hủy. Vui lòng thử lại.",
+        "invalidActionCode": "Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.",
+        "userTokenExpired": "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.",
+        "expiredActionCode": "Liên kết đặt lại mật khẩu đã hết hạn. Vui lòng yêu cầu liên kết mới.",
+        "invalidPassword": "Mật khẩu không hợp lệ. Vui lòng thử lại.",
+        "tooManyAttemptsLoginFailure": "Quá nhiều lần đăng nhập thất bại. Vui lòng thử lại sau."
       }
     }
   },
@@ -439,6 +462,10 @@
     "breathing": {
       "title": "Thiền và thở",
       "description": "Bài thở này giúp mình chậm lại. Hãy theo nhịp hít - giữ - thở ra thật nhẹ, và điều chỉnh cho phù hợp với cơ thể."
+    },
+    "timeline": {
+      "title": "Nhật ký hành trình",
+      "description": "Đây là nơi bạn xem lại các việc thiện đã ghi nhận theo thời gian để soi chiếu và nuôi dưỡng sự đều đặn."
     }
   },
   "labels": {
@@ -682,73 +709,6 @@
       "step4": {
         "title": "Dữ liệu thuộc về bạn",
         "description": "Mọi ghi nhận đều riêng tư. Bạn có thể xuất hoặc xóa dữ liệu bất cứ lúc nào."
-      }
-    },
-    "deeds": {
-      "title": "Ghi nhận việc thiện",
-      "step1": {
-        "title": "Thân - Khẩu - Ý",
-        "description": "Bạn có thể ghi nhận theo ba nhóm để nhìn rõ cách mình thực hành mỗi ngày."
-      },
-      "step2": {
-        "title": "Ghi nhận để nhìn lại",
-        "description": "Chỉ cần vài dòng ngắn để nhớ lại điều đã làm, không cần dài."
-      },
-      "step3": {
-        "title": "Riêng tư tuyệt đối",
-        "description": "Ghi nhận này chỉ mình bạn thấy. Không công khai, không chia sẻ."
-      },
-      "step4": {
-        "title": "Sau khi lưu",
-        "description": "Bạn có thể xem lại trong hành trình để soi chiếu khi cần."
-      }
-    },
-    "quoteRandomActs": {
-      "title": "Pháp ngữ & Gieo duyên",
-      "step1": {
-        "title": "Pháp ngữ theo phiên",
-        "description": "Mỗi lần mở app, một câu pháp ngữ sẽ đồng hành với bạn trong phiên đó."
-      },
-      "step2": {
-        "title": "Gợi ý việc thiện nhỏ",
-        "description": "Gợi ý chỉ để khởi tâm. Nếu phù hợp thì thử, không phù hợp có thể bỏ qua."
-      }
-    },
-    "journey": {
-      "title": "Hành trình",
-      "step1": {
-        "title": "Đường dài - không vội",
-        "description": "Hành trình là tiến trình dài hạn, không phải cuộc đua."
-      },
-      "step2": {
-        "title": "Giữ nhịp nhẹ nhàng",
-        "description": "Mỗi bước nhỏ đều đáng trân trọng. Hãy đi theo nhịp của mình."
-      }
-    },
-    "stats": {
-      "title": "Thống kê",
-      "step1": {
-        "title": "Soi chiếu, không phán xét",
-        "description": "Các con số chỉ để nhìn lại thói quen của mình, không phải để đánh giá."
-      },
-      "step2": {
-        "title": "Chuỗi ngày chỉ là nhịp",
-        "description": "Đứt quãng cũng không sao. Hãy bắt đầu lại khi bạn sẵn sàng."
-      }
-    },
-    "journal": {
-      "title": "Sổ tay quán chiếu",
-      "step1": {
-        "title": "Không gian riêng tư",
-        "description": "Một nơi an toàn để bạn nhìn lại thân - khẩu - ý của mình."
-      },
-      "step2": {
-        "title": "Viết xong là đặt xuống",
-        "description": "Viết để nhìn rõ rồi buông nhẹ. Không cần giữ lại cảm xúc nặng nề."
-      },
-      "step3": {
-        "title": "Sám hối / Biết ơn",
-        "description": "Hai chế độ giúp bạn quán chiếu theo cách phù hợp với mình."
       }
     }
   },

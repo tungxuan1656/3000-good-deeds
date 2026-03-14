@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { AuthProviderError } from '@/hooks/auth/auth-provider-errors'
+import { t } from '@/lib/i18n'
 import type { ApiResponse } from '@/types/api'
 
 import { executeDeleteAccountFlow } from './settings-page-account-deletion'
@@ -34,7 +35,7 @@ describe('executeDeleteAccountFlow', () => {
     expect(deleteMe).toHaveBeenCalledTimes(1)
     expect(logout).toHaveBeenCalledTimes(1)
     expect(navigateToLogin).toHaveBeenCalledTimes(1)
-    expect(toastSuccess).toHaveBeenCalledWith('deleted')
+    expect(toastSuccess).toHaveBeenCalledWith(t('settings.deleteAccount.messages.deleted'))
     expect(toastError).not.toHaveBeenCalled()
   })
 
@@ -65,7 +66,7 @@ describe('executeDeleteAccountFlow', () => {
     expect(deleteMe).not.toHaveBeenCalled()
     expect(logout).not.toHaveBeenCalled()
     expect(navigateToLogin).not.toHaveBeenCalled()
-    expect(toastError).toHaveBeenCalledWith('requires-recent-login')
+    expect(toastError).toHaveBeenCalledWith(t('settings.deleteAccount.errors.requiresRecentLogin'))
   })
 
   it('continues backend deletion when Firebase session is already missing', async () => {
@@ -147,7 +148,7 @@ describe('executeDeleteAccountFlow', () => {
     expect(deleteMe).toHaveBeenCalledTimes(2)
     expect(logout).toHaveBeenCalledTimes(1)
     expect(navigateToLogin).toHaveBeenCalledTimes(1)
-    expect(toastError).toHaveBeenCalledWith('backend-delete-failed')
-    expect(toastSuccess).toHaveBeenCalledWith('deleted')
+    expect(toastError).toHaveBeenCalledWith(t('settings.deleteAccount.errors.backendDeleteFailed'))
+    expect(toastSuccess).toHaveBeenCalledWith(t('settings.deleteAccount.messages.deleted'))
   })
 })

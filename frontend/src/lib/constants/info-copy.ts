@@ -30,6 +30,10 @@ export const INFO_COPY = {
     title: t('info.randomActs.title'),
     description: t('info.randomActs.description'),
   },
+  timeline: {
+    title: t('info.timeline.title'),
+    description: t('info.timeline.description'),
+  },
   reminders: {
     title: t('info.reminders.title'),
     description: t('info.reminders.description'),

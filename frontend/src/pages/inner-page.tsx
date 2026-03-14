@@ -9,8 +9,7 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { TourGuideButton } from '@/components/shared'
-import { ONBOARDING_CONTENT, PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
@@ -20,16 +19,10 @@ const InnerPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <div className='flex items-center gap-1'>
-              <InfoButton
-                description={INFO_COPY.cultivation.description}
-                title={INFO_COPY.cultivation.title}
-              />
-              <TourGuideButton
-                flowTitle={ONBOARDING_CONTENT.journal.title}
-                steps={ONBOARDING_CONTENT.journal.steps}
-              />
-            </div>
+            <InfoButton
+              description={INFO_COPY.cultivation.description}
+              title={INFO_COPY.cultivation.title}
+            />
           }
           description={t('pages.inner.header.description')}
           note={t('pages.inner.header.note')}
