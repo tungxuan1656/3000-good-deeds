@@ -41,7 +41,7 @@ export async function upsertGoal(
 ): Promise<Goal> {
   const { type, targetCount, isEnabled } = payload
 
-  if (!allowedTypes.has(type as Goal['type']) || !targetCount || isEnabled === undefined) {
+  if (!allowedTypes.has(type as Goal['type']) || targetCount <= 0 || isEnabled === undefined) {
     throw new Error('Thông tin mục tiêu không hợp lệ')
   }
 

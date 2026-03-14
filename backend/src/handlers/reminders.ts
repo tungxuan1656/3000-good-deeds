@@ -24,12 +24,6 @@ type SubscriptionRow = {
   auth: string
 }
 
-function toBoolean(value: number | boolean | null | undefined) {
-  if (typeof value === 'boolean') return value
-
-  return Boolean(value)
-}
-
 function parseReminderTime(reminderTime: string) {
   const [hourRaw, minuteRaw] = reminderTime.split(':')
 
@@ -158,7 +152,6 @@ export async function sendReminderNotifications(env: Env, timestamp: number = Da
   ).all<ReminderUser>()
 
   for (const user of results) {
-    if (!toBoolean(user.reminderEnabled)) continue
     if (!user.reminderTime) continue
 
     const timezone = user.timezone || 'Asia/Ho_Chi_Minh'

@@ -14,6 +14,12 @@ vi.mock('../handlers/cultivation', async () => {
   }
 })
 
+vi.mock('../middlewares/auth', () => ({
+  authMiddleware: async (_c: unknown, next: () => Promise<void>) => {
+    await next()
+  },
+}))
+
 const mockedGetRandomQuote = vi.mocked(getRandomQuote)
 
 describe('cultivation routes', () => {

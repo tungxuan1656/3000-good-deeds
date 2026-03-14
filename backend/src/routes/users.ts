@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { getUser, updateUser } from '../handlers/users'
 import { authMiddleware } from '../middlewares/auth'
 import type { UpdateUserRequest } from '../types'
-import { ErrorCodes, errorResponse, parseJsonBody, successResponse } from '../utils'
+import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const users = new Hono<{ Bindings: Env; Variables: { user: any } }>()
 
@@ -21,7 +21,12 @@ users.get('/me', async (c) => {
 
 users.patch('/me', async (c) => {
   const currentUser = c.get('user')
-  const body = await parseJsonBody<UpdateUserRequest>(c.req.raw)
+  let body: UpdateUserRequest
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
+  }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
   }

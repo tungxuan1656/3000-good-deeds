@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { createDeed, DeedHandlerError, deleteDeed, getDeeds, updateDeed } from '../handlers/deeds'
 import { authMiddleware } from '../middlewares/auth'
 import type { CreateDeedRequest, UpdateDeedRequest, User } from '../types'
-import { ErrorCodes, errorResponse, parseJsonBody, successResponse } from '../utils'
+import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const deeds = new Hono<{ Bindings: Env; Variables: { user: User } }>()
 
@@ -37,14 +37,19 @@ deeds.get('/', async (c) => {
 
 deeds.post('/', async (c) => {
   const currentUser = c.get('user')
-  const body = await parseJsonBody<CreateDeedRequest>(c.req.raw)
+  let body: CreateDeedRequest
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
+  }
 
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
   }
 
   if (!body.categoryCode) {
-    body.categoryCode = 'body'
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'categoryCode là bắt buộc'), 400)
   }
 
   if (body.performedAt !== undefined && !Number.isFinite(body.performedAt)) {
@@ -69,7 +74,12 @@ deeds.post('/', async (c) => {
 deeds.put('/:id', async (c) => {
   const currentUser = c.get('user')
   const deedId = c.req.param('id')
-  const body = await parseJsonBody<UpdateDeedRequest>(c.req.raw)
+  let body: UpdateDeedRequest
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
+  }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
   }

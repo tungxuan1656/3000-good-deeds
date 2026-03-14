@@ -1,9 +1,12 @@
 import { Hono } from 'hono'
 
 import { getRandomAct, getRandomActs, getRandomQuote } from '../handlers/cultivation'
+import { authMiddleware } from '../middlewares/auth'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const app = new Hono<{ Bindings: Env }>()
+
+app.use('/*', authMiddleware)
 
 // GET /api/v1/cultivation/quotes/random
 app.get('/quotes/random', async (c) => {

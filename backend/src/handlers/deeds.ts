@@ -98,33 +98,43 @@ export async function createDeed(
     performedAt,
   )
 
-  await db
-    .prepare(
-      `INSERT INTO good_deeds (
-         id, user_id, category_code, description, labels,
-         local_date, local_week, local_month, local_year,
-         is_private, performed_at, created_at, updated_at
-       )
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    )
-    .bind(
-      newId,
-      user.id,
-      body.categoryCode,
-      body.description || null,
-      body.labels || null,
-      localDate,
-      localWeek,
-      localMonth,
-      localYear,
-      1,
-      performedAt,
-      now,
-      now,
-    )
-    .run()
+  await db.exec('BEGIN')
+  try {
+    await db
+      .prepare(
+        `INSERT INTO good_deeds (
+           id, user_id, category_code, description, labels,
+           local_date, local_week, local_month, local_year,
+           is_private, performed_at, created_at, updated_at
+         )
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      )
+      .bind(
+        newId,
+        user.id,
+        body.categoryCode,
+        body.description || null,
+        body.labels || null,
+        localDate,
+        localWeek,
+        localMonth,
+        localYear,
+        1,
+        performedAt,
+        now,
+        now,
+      )
+      .run()
 
-  await handleDeedCreate(db, user, { localWeek, localMonth, localYear })
+    await handleDeedCreate(db, user, { localWeek, localMonth, localYear })
+
+    await db.exec('COMMIT')
+  } catch (e) {
+    try {
+      await db.exec('ROLLBACK')
+    } catch {}
+    throw e
+  }
 
   return await getDeedById(db, newId)
 }
@@ -216,40 +226,50 @@ export async function updateDeed(
     values.push(localYear)
   }
 
-  if (updates.length > 0) {
-    updates.push('updated_at = ?')
-    values.push(now)
-    values.push(deedId)
+  await db.exec('BEGIN')
+  try {
+    if (updates.length > 0) {
+      updates.push('updated_at = ?')
+      values.push(now)
+      values.push(deedId)
 
-    await db
-      .prepare(`UPDATE good_deeds SET ${updates.join(', ')} WHERE id = ?`)
-      .bind(...values)
-      .run()
-  }
-
-  if (body.performedAt !== undefined) {
-    const previousPeriods = {
-      localWeek: existing.local_week,
-      localMonth: existing.local_month,
-      localYear: existing.local_year,
+      await db
+        .prepare(`UPDATE good_deeds SET ${updates.join(', ')} WHERE id = ?`)
+        .bind(...values)
+        .run()
     }
 
-    const newPeriods = computeLocalPeriods(user.timezone, body.performedAt)
-    const newPeriodValues = {
-      localWeek: newPeriods.localWeek,
-      localMonth: newPeriods.localMonth,
-      localYear: newPeriods.localYear,
+    if (body.performedAt !== undefined) {
+      const previousPeriods = {
+        localWeek: existing.local_week,
+        localMonth: existing.local_month,
+        localYear: existing.local_year,
+      }
+
+      const newPeriods = computeLocalPeriods(user.timezone, body.performedAt)
+      const newPeriodValues = {
+        localWeek: newPeriods.localWeek,
+        localMonth: newPeriods.localMonth,
+        localYear: newPeriods.localYear,
+      }
+
+      const isSamePeriod =
+        previousPeriods.localWeek === newPeriodValues.localWeek &&
+        previousPeriods.localMonth === newPeriodValues.localMonth &&
+        previousPeriods.localYear === newPeriodValues.localYear
+
+      if (!isSamePeriod) {
+        await handleDeedDelete(db, user, previousPeriods)
+        await handleDeedCreate(db, user, newPeriodValues)
+      }
     }
 
-    const isSamePeriod =
-      previousPeriods.localWeek === newPeriodValues.localWeek &&
-      previousPeriods.localMonth === newPeriodValues.localMonth &&
-      previousPeriods.localYear === newPeriodValues.localYear
-
-    if (!isSamePeriod) {
-      await handleDeedDelete(db, user, previousPeriods)
-      await handleDeedCreate(db, user, newPeriodValues)
-    }
+    await db.exec('COMMIT')
+  } catch (e) {
+    try {
+      await db.exec('ROLLBACK')
+    } catch {}
+    throw e
   }
 
   return await getDeedById(db, deedId)
@@ -268,13 +288,23 @@ export async function deleteDeed(db: D1Database, user: User, deedId: string): Pr
     throw new DeedHandlerError('Không tìm thấy việc thiện hoặc không có quyền truy cập', 404)
   }
 
-  await db.prepare('DELETE FROM good_deeds WHERE id = ?').bind(deedId).run()
+  await db.exec('BEGIN')
+  try {
+    await db.prepare('DELETE FROM good_deeds WHERE id = ?').bind(deedId).run()
 
-  await handleDeedDelete(db, user, {
-    localWeek: existing.local_week,
-    localMonth: existing.local_month,
-    localYear: existing.local_year,
-  })
+    await handleDeedDelete(db, user, {
+      localWeek: existing.local_week,
+      localMonth: existing.local_month,
+      localYear: existing.local_year,
+    })
+
+    await db.exec('COMMIT')
+  } catch (e) {
+    try {
+      await db.exec('ROLLBACK')
+    } catch {}
+    throw e
+  }
 
   return true
 }
