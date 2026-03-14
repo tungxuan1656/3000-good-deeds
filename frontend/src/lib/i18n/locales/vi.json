@@ -102,7 +102,14 @@
   },
   "legal": {
     "backToLogin": "Quay về đăng nhập",
-    "subtitle": "Pháp lý"
+    "subtitle": "Pháp lý",
+    "contentPrefix": "Nếu bạn có thắc mắc về Điều khoản sử dụng hoặc Chính sách riêng tư, vui lòng liên hệ",
+    "email": "tungxuan.work10@gmail.com",
+    "readMorePrefix": "Tìm hiểu thêm về",
+    "terms": "Điều khoản sử dụng",
+    "and": "và",
+    "privacy": "Chính sách riêng tư",
+    "version": "Phiên bản"
   },
   "pwa": {
     "notifications": {
@@ -314,6 +321,16 @@
       "logoutAction": "Đăng xuất",
       "logoutTitle": "Đăng xuất khỏi tài khoản?",
       "logoutDescription": "Bạn có thể đăng nhập lại bất cứ lúc nào."
+    },
+    "notifications": {
+      "title": "Thông báo",
+      "status": {
+        "disabled": "Bạn đang tắt nhắc nhở"
+      },
+      "subtitle": "Quản lý nhắc nhở hàng ngày",
+      "actions": {
+        "enable": "Bật nhắc nhở"
+      }
     },
     "security": {
       "title": "Bảo mật tài khoản",
@@ -570,6 +587,12 @@
       "title": "Nhắc nhở dịu nhẹ",
       "quote": "Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút.",
       "action": "Thiết lập nhắc nhở"
+    }
+  },
+  "quote": {
+    "card": {
+      "label": "Pháp ngữ cho phiên này",
+      "defaultQuote": "Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút."
     }
   },
   "stats": {

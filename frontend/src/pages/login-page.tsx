@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { APP_VERSION, PATHS } from '@/lib/constants'
+import { getFirebaseErrorMessage } from '@/lib/firebase-errors'
 import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
 
@@ -52,8 +53,8 @@ const LoginPage = () => {
     try {
       await loginWithGoogle()
       navigate(PATHS.HOME, { replace: true })
-    } catch {
-      setError(t('auth.login.errors.googleConnection'))
+    } catch (error) {
+      setError(getFirebaseErrorMessage(error, t('auth.login.errors.googleConnection')))
     } finally {
       setIsLoading(false)
     }
@@ -87,8 +88,8 @@ const LoginPage = () => {
 
       await loginWithEmailPassword(email.trim(), password)
       navigate(PATHS.HOME, { replace: true })
-    } catch {
-      setError(t('auth.login.errors.failed'))
+    } catch (error) {
+      setError(getFirebaseErrorMessage(error, t('auth.login.errors.failed')))
     } finally {
       setIsLoading(false)
     }
@@ -125,25 +126,27 @@ const LoginPage = () => {
 
               <p className='text-muted-foreground/90 text-sm'>{t('auth.login.heroDescription')}</p>
 
-              <div className='grid grid-cols-3 gap-2'>
+              <div className='grid grid-cols-2 gap-2'>
                 <Button
-                  size='sm'
-                  variant={mode === 'login' ? 'default' : 'secondary'}
+                  variant={mode === 'login' ? 'default' : 'outline'}
                   onClick={() => handleModeChange('login')}>
                   {t('auth.form.modes.login')}
                 </Button>
                 <Button
-                  size='sm'
-                  variant={mode === 'register' ? 'default' : 'secondary'}
+                  variant={mode === 'register' ? 'default' : 'outline'}
                   onClick={() => handleModeChange('register')}>
                   {t('auth.form.modes.register')}
                 </Button>
-                <Button
-                  size='sm'
-                  variant={mode === 'forgot' ? 'default' : 'secondary'}
-                  onClick={() => handleModeChange('forgot')}>
-                  {t('auth.form.modes.forgot')}
-                </Button>
+              </div>
+              <div>
+                {mode === 'login' || mode === 'forgot' ? (
+                  <Button
+                    size='xs'
+                    variant={mode === 'forgot' ? 'default' : 'link'}
+                    onClick={() => handleModeChange('forgot')}>
+                    {t('auth.form.modes.forgot')}
+                  </Button>
+                ) : null}
               </div>
 
               {error && (
@@ -157,15 +160,17 @@ const LoginPage = () => {
                 </div>
               )}
 
-              <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
+              <form className='mt-3 flex flex-col gap-3' onSubmit={handleSubmit}>
                 {mode === 'register' ? (
                   <Input
+                    className='h-10'
                     placeholder={t('auth.form.fields.displayName')}
                     value={displayName}
                     onChange={(event) => setDisplayName(event.target.value)}
                   />
                 ) : null}
                 <Input
+                  className='h-10'
                   placeholder={t('auth.form.fields.email')}
                   type='email'
                   value={email}
@@ -174,6 +179,7 @@ const LoginPage = () => {
 
                 {mode !== 'forgot' ? (
                   <Input
+                    className='h-10'
                     placeholder={t('auth.form.fields.password')}
                     type='password'
                     value={password}
@@ -183,6 +189,7 @@ const LoginPage = () => {
 
                 {mode === 'register' ? (
                   <Input
+                    className='h-10'
                     placeholder={t('auth.form.fields.confirmPassword')}
                     type='password'
                     value={confirmPassword}
