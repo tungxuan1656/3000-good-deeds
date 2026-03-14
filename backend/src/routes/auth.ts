@@ -1,6 +1,11 @@
 import { Hono } from 'hono'
 
-import { exchangeProviderToken, logout, refreshAccessToken } from '../handlers/auth'
+import {
+  AuthHandlerError,
+  exchangeProviderToken,
+  logout,
+  refreshAccessToken,
+} from '../handlers/auth'
 import type { LogoutRequest, ProviderExchangeRequest, RefreshTokenRequest } from '../types'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
@@ -19,7 +24,18 @@ auth.post('/provider/exchange', async (c) => {
   } catch (e: any) {
     console.error('Provider exchange error', e)
 
-    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, e.message || 'Đăng nhập thất bại'), 500)
+    if (e instanceof AuthHandlerError) {
+      const errorCode =
+        e.status === 400
+          ? ErrorCodes.BAD_REQUEST
+          : e.status === 401
+            ? ErrorCodes.UNAUTHORIZED
+            : ErrorCodes.INTERNAL_ERROR
+
+      return c.json(errorResponse(errorCode, e.message), e.status)
+    }
+
+    return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Đăng nhập thất bại'), 500)
   }
 })
 

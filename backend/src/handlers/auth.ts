@@ -42,6 +42,16 @@ type NormalizedIdentity = {
   emailVerified: boolean
 }
 
+export class AuthHandlerError extends Error {
+  status: 400 | 401 | 500
+
+  constructor(message: string, status: 400 | 401 | 500) {
+    super(message)
+    this.name = 'AuthHandlerError'
+    this.status = status
+  }
+}
+
 async function hashToken(rawToken: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(rawToken))
 
@@ -52,7 +62,7 @@ async function hashToken(rawToken: string): Promise<string> {
 
 function requireEnvValue(value: string | undefined, key: string): string {
   if (!value) {
-    throw new Error(`Thiếu cấu hình môi trường: ${key}`)
+    throw new AuthHandlerError(`Thiếu cấu hình môi trường: ${key}`, 500)
   }
 
   return value
@@ -102,17 +112,23 @@ async function verifyFirebaseIdentityToken(
   projectId: string,
 ): Promise<NormalizedIdentity> {
   const issuer = `https://securetoken.google.com/${projectId}`
-  const { payload } = await jwtVerify(idToken, firebaseJwks, {
-    audience: projectId,
-    issuer,
-  })
+  let payload: Awaited<ReturnType<typeof jwtVerify>>['payload']
+  try {
+    const verifiedToken = await jwtVerify(idToken, firebaseJwks, {
+      audience: projectId,
+      issuer,
+    })
+    payload = verifiedToken.payload
+  } catch {
+    throw new AuthHandlerError('Firebase token không hợp lệ hoặc đã hết hạn', 401)
+  }
 
   if (!payload.sub || typeof payload.sub !== 'string') {
-    throw new Error('Thiếu định danh người dùng trong Firebase token')
+    throw new AuthHandlerError('Thiếu định danh người dùng trong Firebase token', 401)
   }
 
   if (!payload.email || typeof payload.email !== 'string') {
-    throw new Error('Firebase token không chứa email hợp lệ')
+    throw new AuthHandlerError('Firebase token không chứa email hợp lệ', 401)
   }
 
   return {
@@ -129,7 +145,7 @@ async function resolveIdentity(
   projectId: string,
 ): Promise<NormalizedIdentity> {
   if (body.provider !== 'firebase') {
-    throw new Error('Provider chưa được hỗ trợ')
+    throw new AuthHandlerError('Provider chưa được hỗ trợ', 400)
   }
 
   return await verifyFirebaseIdentityToken(body.idToken, projectId)
@@ -160,17 +176,18 @@ async function findOrCreateUser(db: D1Database, identity: NormalizedIdentity): P
     if (existingUser) {
       userId = existingUser.id
     } else {
-      userId = generateId()
+      const candidateUserId = generateId()
 
       await db
         .prepare(
           `
           INSERT INTO users (id, email, display_name, email_verified_at, created_at, updated_at)
           VALUES (?, ?, ?, ?, ?, ?)
+          ON CONFLICT(email) DO NOTHING
         `,
         )
         .bind(
-          userId,
+          candidateUserId,
           identity.email,
           identity.displayName ?? identity.email.split('@')[0],
           identity.emailVerified ? now : null,
@@ -178,6 +195,17 @@ async function findOrCreateUser(db: D1Database, identity: NormalizedIdentity): P
           now,
         )
         .run()
+
+      const resolvedUser = await db
+        .prepare('SELECT id FROM users WHERE email = ?')
+        .bind(identity.email)
+        .first<UserLookupRecord>()
+
+      if (!resolvedUser?.id) {
+        throw new Error('Không thể tạo hoặc truy xuất người dùng từ email')
+      }
+
+      userId = resolvedUser.id
     }
 
     await db
@@ -186,6 +214,9 @@ async function findOrCreateUser(db: D1Database, identity: NormalizedIdentity): P
         INSERT INTO identity_accounts
           (id, user_id, provider, provider_user_id, provider_email, created_at, updated_at)
         VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(provider, provider_user_id) DO UPDATE SET
+          provider_email = excluded.provider_email,
+          updated_at = excluded.updated_at
       `,
       )
       .bind(
@@ -198,6 +229,23 @@ async function findOrCreateUser(db: D1Database, identity: NormalizedIdentity): P
         now,
       )
       .run()
+
+    const resolvedAccount = await db
+      .prepare(
+        `
+        SELECT user_id
+        FROM identity_accounts
+        WHERE provider = ? AND provider_user_id = ?
+      `,
+      )
+      .bind(identity.provider, identity.providerUserId)
+      .first<IdentityAccountRecord>()
+
+    if (!resolvedAccount?.user_id) {
+      throw new Error('Không thể liên kết tài khoản định danh')
+    }
+
+    userId = resolvedAccount.user_id
   }
 
   await db

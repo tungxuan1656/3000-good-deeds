@@ -18,6 +18,24 @@ import { authActions } from '@/stores/auth.store'
 
 const googleProvider = new GoogleAuthProvider()
 
+const getApiErrorMessage = (error: unknown, fallback: string): string => {
+  if (typeof error === 'string' && error.trim()) {
+    return error
+  }
+
+  if (
+    error &&
+    typeof error === 'object' &&
+    'message' in error &&
+    typeof error.message === 'string' &&
+    error.message.trim()
+  ) {
+    return error.message
+  }
+
+  return fallback
+}
+
 const completeBackendSession = async () => {
   const currentUser = firebaseAuth.currentUser
   if (!currentUser) {
@@ -32,7 +50,7 @@ const completeBackendSession = async () => {
 
   if (!response.success || !response.data) {
     throw new Error(
-      typeof response.error === 'string' ? response.error : 'Failed to create backend session',
+      getApiErrorMessage(response.error as unknown, 'Failed to create backend session'),
     )
   }
 
