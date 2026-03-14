@@ -7,12 +7,17 @@ import {
   refreshAccessToken,
 } from '../handlers/auth'
 import type { LogoutRequest, ProviderExchangeRequest, RefreshTokenRequest } from '../types'
-import { ErrorCodes, errorResponse, parseJsonBody, successResponse } from '../utils'
+import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const auth = new Hono<{ Bindings: Env }>()
 
 auth.post('/provider/exchange', async (c) => {
-  const body = await parseJsonBody<ProviderExchangeRequest>(c.req.raw)
+  let body: ProviderExchangeRequest
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Provider và idToken là bắt buộc'), 400)
+  }
   if (!body?.provider || !body.idToken) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Provider và idToken là bắt buộc'), 400)
   }
@@ -41,8 +46,13 @@ auth.post('/provider/exchange', async (c) => {
 })
 
 auth.post('/refresh', async (c) => {
-  const body = await parseJsonBody<RefreshTokenRequest>(c.req.raw)
-  const refreshToken = body?.refreshToken
+  let refreshToken: string | undefined
+  try {
+    const body = await c.req.json<RefreshTokenRequest>()
+    refreshToken = body?.refreshToken
+  } catch {
+    // refreshToken stays undefined
+  }
 
   if (!refreshToken) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Refresh token là bắt buộc'), 400)
@@ -76,8 +86,13 @@ auth.post('/refresh', async (c) => {
 })
 
 auth.post('/logout', async (c) => {
-  const body = (await parseJsonBody<LogoutRequest>(c.req.raw)) ?? ({} as LogoutRequest)
-  const refreshToken = body.refreshToken
+  let refreshToken: string | undefined
+  try {
+    const body = await c.req.json<LogoutRequest>()
+    refreshToken = body?.refreshToken
+  } catch {
+    // logout is OK with no body
+  }
 
   if (refreshToken) {
     await logout(c.env.DB, refreshToken)

@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import type { Context } from 'hono'
 
 import {
   createJournalEntry,
@@ -62,7 +63,7 @@ app.get('/entries/:id', async (c) => {
 })
 
 // POST /api/v1/journal/entries
-app.post('/entries', async (c) => {
+async function handleCreateEntry(c: Context<{ Bindings: Env; Variables: { user: User } }>) {
   const user = c.get('user')
 
   let body: CreateJournalRequest
@@ -83,7 +84,9 @@ app.post('/entries', async (c) => {
   const newEntry = await createJournalEntry(c.env.DB, user.id, body)
 
   return c.json(successResponse(newEntry), 201)
-})
+}
+
+app.post('/entries', handleCreateEntry)
 
 // DELETE /api/v1/journal/entries/:id (only within 15 minutes)
 app.delete('/entries/:id', async (c) => {
@@ -112,28 +115,7 @@ app.delete('/entries/:id', async (c) => {
   return c.json(successResponse({ deleted: true }))
 })
 
-// POST /api/v1/journal
-app.post('/', async (c) => {
-  const user = c.get('user')
-
-  let body: CreateJournalRequest
-  try {
-    body = await c.req.json()
-  } catch (_e) {
-    return c.json(errorResponse(ErrorCodes.INVALID_REQUEST, 'Invalid JSON body'), 400)
-  }
-
-  if (!body.content || !body.type) {
-    return c.json(errorResponse(ErrorCodes.VALIDATION_ERROR, 'Content and type are required'), 400)
-  }
-
-  if (!['repentance', 'gratitude'].includes(body.type)) {
-    return c.json(errorResponse(ErrorCodes.VALIDATION_ERROR, 'Invalid journal type'), 400)
-  }
-
-  const newEntry = await createJournalEntry(c.env.DB, user.id, body)
-
-  return c.json(successResponse(newEntry), 201)
-})
+// POST /api/v1/journal (legacy alias)
+app.post('/', handleCreateEntry)
 
 export default app

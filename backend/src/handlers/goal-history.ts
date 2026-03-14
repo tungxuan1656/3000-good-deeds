@@ -78,10 +78,10 @@ export const createGoalHistoryForPeriod = async (
   goal: Goal,
   periodTime: string,
   timezone: string,
-): Promise<void> => {
+): Promise<boolean> => {
   const existing = await getGoalHistoryByPeriod(db, goal.userId, goal.type, periodTime)
   if (existing) {
-    return
+    return false
   }
 
   const now = getCurrentTimestamp()
@@ -110,6 +110,8 @@ export const createGoalHistoryForPeriod = async (
       now,
     )
     .run()
+
+  return true
 }
 
 export const updateGoalHistoryForPeriod = async (
@@ -195,20 +197,25 @@ export const handleDeedCreate = async (
   }
 
   const types: GoalType[] = ['weekly', 'monthly', 'yearly']
+  const justCreated = new Set<string>()
+
   for (const type of types) {
     const deedPeriod = getDeedPeriodForGoal(type, deedPeriods)
     const currentPeriod = getCurrentPeriod(type, user.timezone)
     const goal = enabledByType.get(type)
 
     if (goal && deedPeriod === currentPeriod) {
-      await createGoalHistoryForPeriod(db, goal, deedPeriod, user.timezone)
+      const created = await createGoalHistoryForPeriod(db, goal, deedPeriod, user.timezone)
+      if (created) justCreated.add(`${type}:${deedPeriod}`)
     }
   }
 
   await Promise.all(
     types.map(async (type) => {
       const deedPeriod = getDeedPeriodForGoal(type, deedPeriods)
-      await updateGoalHistoryIfExists(db, user.id, type, deedPeriod)
+      if (!justCreated.has(`${type}:${deedPeriod}`)) {
+        await updateGoalHistoryIfExists(db, user.id, type, deedPeriod)
+      }
     }),
   )
 }

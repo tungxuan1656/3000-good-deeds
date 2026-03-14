@@ -4,7 +4,7 @@ import { getGoalHistoryPage } from '../handlers/goal-history'
 import { getGoals, upsertGoal, upsertGoals } from '../handlers/goals'
 import { authMiddleware } from '../middlewares/auth'
 import type { User } from '../types'
-import { ErrorCodes, errorResponse, parseJsonBody, successResponse } from '../utils'
+import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const goals = new Hono<{ Bindings: Env; Variables: { user: User } }>()
 
@@ -19,10 +19,17 @@ goals.get('/', async (c) => {
 
 goals.post('/', async (c) => {
   const currentUser = c.get('user')
-  const body = await parseJsonBody<
-    | { type: string; targetCount: number; isEnabled: boolean }
-    | { goals: Array<{ type: string; targetCount: number; isEnabled: boolean }> }
-  >(c.req.raw)
+  let body: {
+    type?: string
+    targetCount?: number
+    isEnabled?: boolean
+    goals?: Array<{ type: string; targetCount: number; isEnabled: boolean }>
+  }
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
+  }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
   }
@@ -39,8 +46,12 @@ goals.post('/', async (c) => {
 
   try {
     const result = isBatch
-      ? await upsertGoals(c.env.DB, currentUser, body.goals)
-      : await upsertGoal(c.env.DB, currentUser, body)
+      ? await upsertGoals(c.env.DB, currentUser, body.goals!)
+      : await upsertGoal(
+          c.env.DB,
+          currentUser,
+          body as { type: string; targetCount: number; isEnabled: boolean },
+        )
 
     return c.json(successResponse(result))
   } catch (e) {

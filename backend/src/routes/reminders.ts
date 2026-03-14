@@ -9,7 +9,6 @@ import {
   errorResponse,
   generateId,
   getCurrentTimestamp,
-  parseJsonBody,
   successResponse,
 } from '../utils'
 
@@ -32,7 +31,12 @@ reminders.get('/settings', async (c) => {
 
 reminders.put('/settings', async (c) => {
   const currentUser = c.get('user')
-  const body = await parseJsonBody<{ reminderEnabled?: boolean; reminderTime?: string }>(c.req.raw)
+  let body: { reminderEnabled?: boolean; reminderTime?: string }
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
+  }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
   }
@@ -72,7 +76,12 @@ reminders.get('/push-key', async (c) => {
 
 reminders.post('/subscriptions', async (c) => {
   const currentUser = c.get('user')
-  const body = await parseJsonBody<PushSubscriptionPayload>(c.req.raw)
+  let body: PushSubscriptionPayload
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Subscription payload không hợp lệ'), 400)
+  }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Subscription payload không hợp lệ'), 400)
   }
@@ -131,7 +140,12 @@ reminders.post('/subscriptions', async (c) => {
 
 reminders.delete('/subscriptions', async (c) => {
   const currentUser = c.get('user')
-  const body = await parseJsonBody<{ endpoint?: string }>(c.req.raw)
+  let body: { endpoint?: string }
+  try {
+    body = await c.req.json()
+  } catch {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu endpoint subscription'), 400)
+  }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu endpoint subscription'), 400)
   }
