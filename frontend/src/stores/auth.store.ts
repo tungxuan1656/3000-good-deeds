@@ -51,18 +51,31 @@ const _useAuthStore = create<AuthState>()(
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
       }),
-      onRehydrateStorage: () => (state) => {
-        if (state?.accessToken && state?.refreshToken) {
-          authTokenStorage.setTokens({
-            accessToken: state.accessToken,
-            refreshToken: state.refreshToken,
-          })
-        }
-        _useAuthStore.setState({ _hasHydrated: true })
-      },
     }),
   ),
 )
+
+const syncTokenStorageFromStore = () => {
+  const { accessToken, refreshToken } = _useAuthStore.getState()
+
+  if (accessToken && refreshToken) {
+    authTokenStorage.setTokens({ accessToken, refreshToken })
+
+    return
+  }
+
+  authTokenStorage.clear()
+}
+
+if (_useAuthStore.persist.hasHydrated()) {
+  syncTokenStorageFromStore()
+  _useAuthStore.setState({ _hasHydrated: true })
+}
+
+_useAuthStore.persist.onFinishHydration(() => {
+  syncTokenStorageFromStore()
+  _useAuthStore.setState({ _hasHydrated: true })
+})
 
 export const authActions = {
   login: (authResponse: AuthResponse) => {
@@ -90,7 +103,11 @@ export const authActions = {
   },
   reset: () => {
     authTokenStorage.clear()
-    _useAuthStore.setState(initialState)
+
+    _useAuthStore.setState({
+      ...initialState,
+      _hasHydrated: true,
+    })
   },
 }
 
