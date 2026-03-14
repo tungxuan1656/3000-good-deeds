@@ -1,20 +1,20 @@
 # Form Pattern (shadcn + react-hook-form + zod)
 
-Pattern chuẩn để viết form trong dự án React + TypeScript theo hướng dẫn của shadcn.
+Standard pattern for writing forms in a React + TypeScript project following shadcn guidelines.
 
-## 1) Nguyên tắc
+## 1) Principles
 
-- Dùng `zod` để định nghĩa schema duy nhất cho validate.
-- Dùng `useForm` + `zodResolver` để bind schema vào form.
-- Dùng `Controller` cho field dạng controlled (`Select`, `Switch`, `Checkbox`, `RadioGroup`, ...).
-- Luôn gắn:
-  - `data-invalid={fieldState.invalid}` trên `Field`
-  - `aria-invalid={fieldState.invalid}` trên input control
-  - `FieldError` để hiển thị lỗi
-- `defaultValues` phải đầy đủ theo schema.
-- Đặt `id` rõ ràng cho control và map với `FieldLabel htmlFor`.
+- Use `zod` to define a single schema for validation.
+- Use `useForm` + `zodResolver` to bind the schema to the form.
+- Use `Controller` for controlled field types (`Select`, `Switch`, `Checkbox`, `RadioGroup`, ...).
+- Always include:
+  - `data-invalid={fieldState.invalid}` on `Field`
+  - `aria-invalid={fieldState.invalid}` on input control
+  - `FieldError` to display errors
+- `defaultValues` must be complete according to the schema.
+- Set explicit `id` for controls and map with `FieldLabel htmlFor`.
 
-## 2) Skeleton chuẩn
+## 2) Standard Skeleton
 
 ```tsx
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,8 +32,8 @@ import {
 import { Input } from '@/components/ui/input'
 
 const formSchema = z.object({
-  title: z.string().min(3, 'Tối thiểu 3 ký tự').max(50, 'Tối đa 50 ký tự'),
-  description: z.string().min(10, 'Tối thiểu 10 ký tự'),
+  title: z.string().min(3, 'Minimum 3 characters').max(50, 'Maximum 50 characters'),
+  description: z.string().min(10, 'Minimum 10 characters'),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -45,7 +45,7 @@ export function ExampleForm(): React.JSX.Element {
       title: '',
       description: '',
     },
-    mode: 'onSubmit', // có thể đổi onChange/onBlur tùy UX
+    mode: 'onSubmit', // can change to onChange/onBlur depending on UX
   })
 
   const onSubmit = (values: FormValues): void => {
@@ -61,12 +61,12 @@ export function ExampleForm(): React.JSX.Element {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='form-title'>Tiêu đề</FieldLabel>
+              <FieldLabel htmlFor='form-title'>Title</FieldLabel>
               <Input
                 {...field}
                 id='form-title'
                 aria-invalid={fieldState.invalid}
-                placeholder='Nhập tiêu đề'
+                placeholder='Enter title'
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -78,14 +78,14 @@ export function ExampleForm(): React.JSX.Element {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='form-description'>Mô tả</FieldLabel>
+              <FieldLabel htmlFor='form-description'>Description</FieldLabel>
               <Input
                 {...field}
                 id='form-description'
                 aria-invalid={fieldState.invalid}
-                placeholder='Nhập mô tả'
+                placeholder='Enter description'
               />
-              <FieldDescription>Thông tin này sẽ hiển thị cho người dùng.</FieldDescription>
+              <FieldDescription>This information will be displayed to users.</FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -96,46 +96,46 @@ export function ExampleForm(): React.JSX.Element {
         <Button type='button' variant='outline' onClick={() => form.reset()}>
           Reset
         </Button>
-        <Button type='submit'>Lưu</Button>
+        <Button type='submit'>Save</Button>
       </div>
     </form>
   )
 }
 ```
 
-## 3) Pattern theo loại field
+## 3) Patterns by Field Type
 
 ### Input / Textarea
 
-- Spread trực tiếp `...field` vào control.
-- Gắn `aria-invalid` + `FieldError`.
+- Spread `...field` directly onto the control.
+- Include `aria-invalid` + `FieldError`.
 
 ### Select
 
-- Bind thủ công `value` + `onValueChange={field.onChange}`.
-- Không spread toàn bộ `field` cho `Select`.
+- Manually bind `value` + `onValueChange={field.onChange}`.
+- Do not spread the entire `field` onto `Select`.
 
 ### Checkbox / Switch
 
-- Dùng `checked` + `onCheckedChange`.
-- Với checkbox array: thao tác mảng bằng `includes`, `filter`, `push` theo `field.value`.
+- Use `checked` + `onCheckedChange`.
+- For checkbox arrays: manipulate the array using `includes`, `filter`, `push` on `field.value`.
 
 ### RadioGroup
 
 - Bind `value` + `onValueChange`.
 
-## 4) Rule triển khai trong dự án
+## 4) Implementation Rules in the Project
 
-- Schema đặt gần form hoặc tách `*.schema.ts` nếu form lớn.
-- Type submit dùng `z.infer<typeof formSchema>` để đồng bộ 100% với schema.
-- Lỗi API trả về map về `form.setError` khi cần.
-- Form có nhiều khối nên chia nhỏ component theo section, nhưng giữ 1 `useForm` ở root form.
+- Schema placed near the form or separated into `*.schema.ts` if the form is large.
+- Submit type uses `z.infer<typeof formSchema>` to be 100% in sync with the schema.
+- API error responses map to `form.setError` when needed.
+- Forms with multiple sections should split into smaller components by section, but keep 1 `useForm` at the root form.
 
-## 5) Checklist PR cho form
+## 5) PR Checklist for Forms
 
-- [ ] Có `zodResolver` và schema rõ ràng
-- [ ] Có `defaultValues` đầy đủ
-- [ ] Có `data-invalid`, `aria-invalid`, `FieldError`
-- [ ] Có nút `Reset` (nếu phù hợp)
-- [ ] Có xử lý submit/loading/disabled rõ ràng
-- [ ] Type-safe bằng `z.infer`
+- [ ] Has `zodResolver` and clear schema
+- [ ] Has complete `defaultValues`
+- [ ] Has `data-invalid`, `aria-invalid`, `FieldError`
+- [ ] Has `Reset` button (if appropriate)
+- [ ] Has clear submit/loading/disabled handling
+- [ ] Type-safe with `z.infer`

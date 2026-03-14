@@ -1,6 +1,6 @@
-# Large project folder structure (bản chốt theo đề xuất mới)
+# Large Project Folder Structure (finalized per new proposal)
 
-## 1) Cấu trúc chuẩn
+## 1) Standard Structure
 
 ```text
 src/
@@ -27,7 +27,7 @@ src/
     ...
 
   stores/
-    auth.store.ts       # feature*.store.ts (đặt trực tiếp, không dùng folder con)
+    auth.store.ts       # feature*.store.ts (placed directly, no subfolders)
     control.store.ts
     types.ts
     ...
@@ -47,52 +47,52 @@ src/
   types/
 ```
 
-> `feature*` (đổi theo tên feature thực tế).
+> `feature*` (replace with actual feature name).
 
-## 2) Ranh giới chặt cho `lib`
+## 2) Strict Boundaries for `lib`
 
-`lib` chỉ chứa **cross-feature reusable code** (dùng được cho từ 2 feature trở lên).
+`lib` only contains **cross-feature reusable code** (usable by 2 or more features).
 
 - `lib/constants`: app constants, config constants.
-- `lib/forms/form-schemas.ts`: single source of truth cho toàn bộ Zod form schema của app.
-- `lib/i18n`: setup đa ngôn ngữ.
-- `lib/storages`: wrapper localStorage/sessionStorage/indexedDB.
-- `lib/utils`: hàm thuần dùng chung toàn app.
+- `lib/forms/form-schemas.ts`: single source of truth for all Zod form schemas in the app.
+- `lib/i18n`: internationalization setup.
+- `lib/storages`: localStorage/sessionStorage/indexedDB wrappers.
+- `lib/utils`: pure utility functions shared across the entire app.
 
-Không đặt trong `lib`:
-- `hooks` (đặt ở `src/hooks/shared` hoặc `src/hooks/feature*`),
-- `stores` (đặt ở `src/stores/feature*.store.ts`),
-- logic riêng 1 feature.
+Do not place in `lib`:
+- `hooks` (place in `src/hooks/shared` or `src/hooks/feature*`),
+- `stores` (place in `src/stores/feature*.store.ts`),
+- logic specific to 1 feature.
 
-Không để trong `lib`:
-- component UI của 1 feature,
-- API handler riêng 1 feature.
+Do not put in `lib`:
+- UI components for 1 feature,
+- API handlers for 1 feature.
 
-## 3) Quy tắc đặt file theo tầng
+## 3) File Placement Rules by Layer
 
-- `api/<feature>`: chỉ HTTP calls + mapping endpoint.
-- `hooks/shared`: hook dùng chung đa feature.
-- `hooks/<feature>`: hook đặc thù feature (bao gồm hook react-query của feature).
-- `stores/<feature>.store.ts`: zustand store theo feature, đặt **trực tiếp** trong `stores/`, không dùng folder con.
-- `lib/forms/form-schemas.ts`: **mọi form schema phải nằm tại đây** (không tạo `*.schema.ts` trong feature folder).
-- `components/<feature>`: component thuộc feature đó.
-- `pages/<feature>`: page của feature.
-- `types`: type dùng chung hoặc API contracts.
+- `api/<feature>`: HTTP calls only + endpoint mapping.
+- `hooks/shared`: hooks shared across multiple features.
+- `hooks/<feature>`: feature-specific hooks (including react-query hooks for the feature).
+- `stores/<feature>.store.ts`: zustand store per feature, placed **directly** in `stores/`, no subfolders.
+- `lib/forms/form-schemas.ts`: **all form schemas must be here** (do not create `*.schema.ts` in feature folders).
+- `components/<feature>`: components belonging to that feature.
+- `pages/<feature>`: pages for the feature.
+- `types`: shared types or API contracts.
 
-## 4) Rule import
+## 4) Import Rules
 
-- Feature code ưu tiên import trong chính feature trước.
-- Chỉ đẩy lên `lib` khi đã chứng minh reusable.
-- Hook dùng chung import từ `hooks/shared`; hook riêng import từ `hooks/<feature>`.
-- Component con export qua `index.ts` trong từng folder để import gọn.
+- Feature code should prioritize importing from within the same feature first.
+- Only promote to `lib` when proven reusable.
+- Shared hooks import from `hooks/shared`; feature-specific hooks import from `hooks/<feature>`.
+- Child components export via `index.ts` in each folder for clean imports.
 
-## 5) Checklist áp dụng
+## 5) Application Checklist
 
-- [ ] Có `api/client.ts`, `api/endpoints.ts` dùng chung
-- [ ] Mỗi feature có nhánh riêng trong `api/hooks/components/stores/pages`
-- [ ] `hooks` tách `shared` và `feature*/`
-- [ ] `stores` đặt ngoài `lib`, file phẳng theo `stores/feature*.store.ts`
-- [ ] `lib` chỉ giữ `constants`, `forms`, `i18n`, `storages`, `utils`
-- [ ] Tất cả schema nằm trong `lib/forms/form-schemas.ts`; feature không tạo file `*.schema.ts` riêng
-- [ ] Không biến `lib` thành nơi chứa mọi thứ
-- [ ] Dùng alias import thống nhất (`@/...`)
+- [ ] Has `api/client.ts`, `api/endpoints.ts` as shared resources
+- [ ] Each feature has its own branch in `api/hooks/components/stores/pages`
+- [ ] `hooks` separates `shared/` and `feature*/`
+- [ ] `stores` placed outside `lib`, flat files as `stores/feature*.store.ts`
+- [ ] `lib` only contains `constants`, `forms`, `i18n`, `storages`, `utils`
+- [ ] All schemas located in `lib/forms/form-schemas.ts`; features do not create separate `*.schema.ts` files
+- [ ] `lib` is not used as a dumping ground for everything
+- [ ] Uses consistent import alias (`@/...`)

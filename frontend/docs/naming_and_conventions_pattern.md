@@ -1,66 +1,66 @@
-# Naming & conventions pattern
+# Naming & Conventions Pattern
 
-## 1) File naming
+## 1) File Naming
 
-- File dùng `kebab-case`.
+- Files use `kebab-case`.
 - Page: `<feature>-page.tsx`.
-- Hook API: `use-<feature>.ts`.
+- API Hook: `use-<feature>.ts`.
 - Store: `<feature>.store.ts`.
-- API: `<feature>.ts`, registry endpoint ở `endpoints.ts`.
-- Mock: `<feature>.mock.ts` — đặt cùng folder với `api/<feature>.ts`, **không** đặt trong component.
-- Barrel export: `index.ts` trong folder component/hook lớn.
+- API: `<feature>.ts`, endpoint registry at `endpoints.ts`.
+- Mock: `<feature>.mock.ts` — placed in the same folder as `api/<feature>.ts`, **not** in components.
+- Barrel export: `index.ts` in large component/hook folders.
 
-## 2) Export convention
+## 2) Export Convention
 
 - Page: `const XPage = () => {}` + `export default XPage`.
-- Component con: `export const X = () => {}`.
+- Child component: `export const X = () => {}`.
 - Hook/store helpers: named export.
 
-## 3) Type naming
+## 3) Type Naming
 
-- DTO: hậu tố `DTO` (`UserDTO`, `GoalDTO`).
-- API input: hậu tố `Request`.
-- API output nghiệp vụ: hậu tố `Response`.
-- Wrapper thống nhất: `ApiResponse<T>`.
+- DTO: suffix `DTO` (`UserDTO`, `GoalDTO`).
+- API input: suffix `Request`.
+- API business output: suffix `Response`.
+- Unified wrapper: `ApiResponse<T>`.
 
-## 4) React Query naming
+## 4) React Query Naming
 
 - Query key constant: `*_KEYS` (`DEED_KEYS`, `GOAL_KEYS`).
-- Cấu trúc key chuẩn: `all`, `list`, `detail`.
-- Mutation success phải invalidate theo key scope.
+- Standard key structure: `all`, `list`, `detail`.
+- Successful mutations must invalidate by key scope.
 
-## 5) Constant naming
+## 5) Constant Naming
 
-- Route path dùng object `PATHS`.
-- Text/copy dùng object theo domain (`INFO_COPY`, `LABEL_COPY`, `ONBOARDING_CONTENT`).
-- Constant chung dùng `UPPER_SNAKE_CASE` cho biến đơn, `PascalCase` cho type.
+- Route paths use object `PATHS`.
+- Text/copy uses domain-specific objects (`INFO_COPY`, `LABEL_COPY`, `ONBOARDING_CONTENT`).
+- General constants use `UPPER_SNAKE_CASE` for single variables, `PascalCase` for types.
 
-## 6) Import convention
+## 6) Import Convention
 
-- Ưu tiên alias tuyệt đối: `@/...`.
-- Không dùng relative path dài nhiều cấp khi đã có alias.
-- Import component con qua barrel `index.ts` nếu folder đã có.
-- **Thứ tự import bắt buộc**: third-party trước → dòng trắng → internal `@/` alias. Không trộn lẫn hai nhóm.
-- **Không duplicate import từ cùng một path** — gộp thành một dòng `import` duy nhất:
+- Prefer absolute alias: `@/...`.
+- Do not use long relative paths when alias is available.
+- Import child components via barrel `index.ts` if the folder has one.
+- **Required import order**: third-party first → blank line → internal `@/` alias. Do not mix the two groups.
+- **No duplicate imports from the same path** — merge into a single `import` statement:
 
 ```ts
-// ❌ Sai
+// ❌ Wrong
 import { A } from '@/stores/foo'
 import { B } from '@/stores/foo'
 
-// ✅ Đúng
+// ✅ Correct
 import { A, B } from '@/stores/foo'
 ```
 
-## 7) Comment convention (bắt buộc)
+## 7) Comment Convention (required)
 
-- **Mọi comment trong code phải viết bằng tiếng Anh**.
-- Khai báo trước để dùng cho tính năng sau: `// planned: <feature description>`.
-- Placeholder/mock chờ API: `// TODO: connect to <API_ENDPOINTS.x.y> once available`.
-- Hardcode tạm thời: `// TODO: replace with real data from <source> once <condition>`.
-- Stale comment phải cập nhật ngay khi thay đổi giá trị/hành vi liên quan (interval, threshold, field name).
+- **All code comments must be written in English**.
+- Declarations for future features: `// planned: <feature description>`.
+- Placeholder/mock awaiting API: `// TODO: connect to <API_ENDPOINTS.x.y> once available`.
+- Temporary hardcoded values: `// TODO: replace with real data from <source> once <condition>`.
+- Stale comments must be updated immediately when related values/behavior change (interval, threshold, field name).
 
-## 8) Tham chiếu trong project
+## 8) Project References
 
 - Page default export: [src/pages/goals-page.tsx](src/pages/goals-page.tsx)
 - Component named export: [src/components/stats/stats-card.tsx](src/components/stats/stats-card.tsx)
