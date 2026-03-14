@@ -7,7 +7,6 @@ Root `docs/` contains only documentation shared across the monorepo.
 - `docs/product/`: shared product vision, roadmap, and principles.
 - `docs/monorepo/`: architecture, setup, and deployment guides.
 - `docs/governance/`: documentation standards, process, templates, and audits.
-- `docs/archive/`: historical documents kept for reference.
 
 ## What should not live in root `docs/`
 
