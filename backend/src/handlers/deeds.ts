@@ -3,6 +3,16 @@ import { generateId, getCurrentTimestamp } from '../utils'
 import { computeLocalPeriods } from '../utils'
 import { handleDeedCreate, handleDeedDelete } from './goal-history'
 
+export class DeedHandlerError extends Error {
+  status: 400 | 404 | 500
+
+  constructor(message: string, status: 400 | 404 | 500) {
+    super(message)
+    this.name = 'DeedHandlerError'
+    this.status = status
+  }
+}
+
 // Get deeds list (with filters)
 export async function getDeeds(
   db: D1Database,
@@ -132,7 +142,7 @@ export async function getDeedById(db: D1Database, deedId: string): Promise<GoodD
     .first<any>()
 
   if (!row) {
-    throw new Error('Không tìm thấy việc thiện')
+    throw new DeedHandlerError('Không tìm thấy việc thiện', 404)
   }
 
   return {
@@ -166,7 +176,7 @@ export async function updateDeed(
     .first<any>()
 
   if (!existing) {
-    throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
+    throw new DeedHandlerError('Không tìm thấy việc thiện hoặc không có quyền truy cập', 404)
   }
 
   if (body.categoryCode !== undefined) {
@@ -255,7 +265,7 @@ export async function deleteDeed(db: D1Database, user: User, deedId: string): Pr
     .first<any>()
 
   if (!existing) {
-    throw new Error('Không tìm thấy việc thiện hoặc không có quyền truy cập')
+    throw new DeedHandlerError('Không tìm thấy việc thiện hoặc không có quyền truy cập', 404)
   }
 
   await db.prepare('DELETE FROM good_deeds WHERE id = ?').bind(deedId).run()

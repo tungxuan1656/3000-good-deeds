@@ -44,7 +44,12 @@ const getGoalHistoryByPeriod = async (
   periodTime: string,
 ): Promise<GoalHistory | null> => {
   const row = await db
-    .prepare('SELECT * FROM goal_history WHERE user_id = ? AND type = ? AND period_time = ?')
+    .prepare(
+      `SELECT id, goal_id, user_id, type, period_time, target_count, actual_count,
+              start_date, end_date, completed, created_at, updated_at
+       FROM goal_history
+       WHERE user_id = ? AND type = ? AND period_time = ?`,
+    )
     .bind(userId, type, periodTime)
     .first<any>()
 
@@ -168,7 +173,11 @@ export const handleDeedCreate = async (
   deedPeriods: DeedPeriods,
 ): Promise<void> => {
   const { results } = await db
-    .prepare('SELECT * FROM goals WHERE user_id = ? AND is_enabled = 1')
+    .prepare(
+      `SELECT id, user_id, type, target_count, is_enabled, created_at, updated_at
+       FROM goals
+       WHERE user_id = ? AND is_enabled = 1`,
+    )
     .bind(user.id)
     .all<any>()
 
@@ -261,7 +270,9 @@ export const getGoalHistoryPage = async (
 
   const { results } = await db
     .prepare(
-      `SELECT * FROM goal_history
+      `SELECT id, goal_id, user_id, type, period_time, target_count, actual_count,
+              start_date, end_date, completed, created_at, updated_at
+       FROM goal_history
        WHERE ${conditions.join(' AND ')}
        ORDER BY start_date DESC, id DESC
        LIMIT ?`,

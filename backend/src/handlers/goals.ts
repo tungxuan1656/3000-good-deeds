@@ -22,7 +22,12 @@ const mapGoal = (row: any): Goal => {
 
 export async function getGoals(db: D1Database, user: User): Promise<Array<Goal>> {
   const results = await db
-    .prepare(`SELECT * FROM goals WHERE user_id = ? ORDER BY created_at DESC`)
+    .prepare(
+      `SELECT id, user_id, type, target_count, is_enabled, created_at, updated_at
+       FROM goals
+       WHERE user_id = ?
+       ORDER BY created_at DESC`,
+    )
     .bind(user.id)
     .all<any>()
 
@@ -42,7 +47,11 @@ export async function upsertGoal(
 
   const now = getCurrentTimestamp()
   const existing = await db
-    .prepare('SELECT * FROM goals WHERE user_id = ? AND type = ?')
+    .prepare(
+      `SELECT id, user_id, type, target_count, is_enabled, created_at, updated_at
+       FROM goals
+       WHERE user_id = ? AND type = ?`,
+    )
     .bind(user.id, type)
     .first<any>()
 
@@ -65,7 +74,14 @@ export async function upsertGoal(
       .run()
   }
 
-  const updated = await db.prepare('SELECT * FROM goals WHERE id = ?').bind(goalId).first<any>()
+  const updated = await db
+    .prepare(
+      `SELECT id, user_id, type, target_count, is_enabled, created_at, updated_at
+       FROM goals
+       WHERE id = ?`,
+    )
+    .bind(goalId)
+    .first<any>()
   if (!updated) throw new Error('Không tìm thấy mục tiêu')
 
   const mapped = mapGoal(updated)
@@ -106,9 +122,23 @@ export async function upsertGoals(
 ): Promise<Goal[]> {
   const results: Goal[] = []
 
-  for (const goal of goals) {
-    results.push(await upsertGoal(db, user, goal))
-  }
+  await db.exec('BEGIN')
 
-  return results
+  try {
+    for (const goal of goals) {
+      results.push(await upsertGoal(db, user, goal))
+    }
+
+    await db.exec('COMMIT')
+
+    return results
+  } catch (error) {
+    try {
+      await db.exec('ROLLBACK')
+    } catch (rollbackError) {
+      console.error('Rollback goals transaction failed', rollbackError)
+    }
+
+    throw error
+  }
 }

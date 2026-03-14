@@ -9,6 +9,7 @@ import {
   errorResponse,
   generateId,
   getCurrentTimestamp,
+  parseJsonBody,
   successResponse,
 } from '../utils'
 
@@ -31,7 +32,10 @@ reminders.get('/settings', async (c) => {
 
 reminders.put('/settings', async (c) => {
   const currentUser = c.get('user')
-  const body = await c.req.json<{ reminderEnabled?: boolean; reminderTime?: string }>()
+  const body = await parseJsonBody<{ reminderEnabled?: boolean; reminderTime?: string }>(c.req.raw)
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
+  }
 
   if (body.reminderEnabled === undefined && body.reminderTime === undefined) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Không có cấu hình nào được cung cấp'), 400)
@@ -42,7 +46,18 @@ reminders.put('/settings', async (c) => {
     reminderTime: body.reminderTime,
   }
 
-  await updateUser(c.env.DB, currentUser.id, updateBody)
+  try {
+    await updateUser(c.env.DB, currentUser.id, updateBody)
+  } catch (e) {
+    if (e instanceof Error) {
+      return c.json(errorResponse(ErrorCodes.BAD_REQUEST, e.message), 400)
+    }
+
+    return c.json(
+      errorResponse(ErrorCodes.INTERNAL_ERROR, 'Không thể cập nhật cấu hình nhắc nhở'),
+      500,
+    )
+  }
 
   return c.json(successResponse({ success: true }))
 })
@@ -57,7 +72,10 @@ reminders.get('/push-key', async (c) => {
 
 reminders.post('/subscriptions', async (c) => {
   const currentUser = c.get('user')
-  const body = await c.req.json<PushSubscriptionPayload>()
+  const body = await parseJsonBody<PushSubscriptionPayload>(c.req.raw)
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Subscription payload không hợp lệ'), 400)
+  }
 
   if (!body?.endpoint || !body?.keys?.p256dh || !body?.keys?.auth) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Subscription payload không hợp lệ'), 400)
@@ -113,7 +131,10 @@ reminders.post('/subscriptions', async (c) => {
 
 reminders.delete('/subscriptions', async (c) => {
   const currentUser = c.get('user')
-  const body = await c.req.json<{ endpoint?: string }>()
+  const body = await parseJsonBody<{ endpoint?: string }>(c.req.raw)
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu endpoint subscription'), 400)
+  }
 
   if (!body?.endpoint) {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu endpoint subscription'), 400)

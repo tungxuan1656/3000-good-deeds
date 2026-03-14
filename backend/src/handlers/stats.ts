@@ -1,4 +1,5 @@
 import type { User, UserStats } from '../types'
+import { getStreak } from './activities'
 
 export async function getStatsSummary(db: D1Database, user: User): Promise<UserStats> {
   // 1. Total Deeds
@@ -8,11 +9,11 @@ export async function getStatsSummary(db: D1Database, user: User): Promise<UserS
     .first<{ count: number }>()
   const totalDeeds = totalResult?.count || 0
 
-  // 2. Streak (reuse logic)
-  // const streak = await getStreak(db, user)
+  // 2. Streak
+  const streak = await getStreak(db, user)
 
   return {
     totalDeeds,
-    streakDays: -1,
+    streakDays: streak.currentStreak,
   }
 }
