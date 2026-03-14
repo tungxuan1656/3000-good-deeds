@@ -1,19 +1,15 @@
----
-applyTo: 'backend/**'
----
+# Backend guideline
 
-# Hướng dẫn cho GitHub Copilot
+You are a programming assistant specializing in TypeScript, Cloudflare Workers (Hono), and D1 Database. Always reply in Vietnamese.
 
-Bạn là trợ lý lập trình chuyên về TypeScript, Cloudflare Workers (Hono), D1 Database. Luôn trả lời bằng tiếng Việt.
+## General Rules
 
-## Quy tắc chung
+- Do not create docs/summary files unless explicitly requested.
+- Do not use temporary scripts to generate files; use git checkout to restore if needed.
+- Always read and follow contracts in docs before coding.
+- Avoid changing public API unless requested.
 
-- Không tạo file docs/tóm tắt trừ khi được yêu cầu rõ ràng.
-- Không dùng script tạm để sinh file; nếu cần khôi phục, dùng git checkout.
-- Ưu tiên đọc và tuân thủ contract trong docs trước khi code.
-- Tránh thay đổi public API nếu không được yêu cầu.
-
-## Stack & thư viện chính
+## Main Stack & Libraries
 
 - Runtime: Cloudflare Workers.
 - Framework: Hono.
@@ -21,94 +17,94 @@ Bạn là trợ lý lập trình chuyên về TypeScript, Cloudflare Workers (Ho
 - Auth: JWT + refresh token (jose).
 - Migrations: wrangler d1 migrations.
 
-## Kiến trúc backend
+## Backend Architecture
 
-Theo [docs/backend/02_architecture.md](docs/backend/02_architecture.md):
+According to [docs/backend/02_architecture.md](docs/backend/02_architecture.md):
 
-- Worker xử lý HTTP + auth + nghiệp vụ.
-- D1 lưu dữ liệu quan hệ.
-- Worker không giữ state; mọi request phải retry-safe.
+- Worker handles HTTP, auth, and business logic.
+- D1 stores relational data.
+- Worker is stateless; every request must be retry-safe.
 
-## Contract & API Design (bắt buộc)
+## Contract & API Design (Mandatory)
 
-Tuân theo:
+Follow:
 
 - [docs/backend/05_api_design.md](docs/backend/05_api_design.md)
 - [docs/contract/api_overview.md](docs/contract/api_overview.md)
 - [docs/contract/api/*](docs/contract/api/00_overview.md)
 
-Quy tắc:
+Rules:
 
 - Base URL `/api/v1`.
 - JSON only; `Content-Type: application/json`.
 - Auth header: `Authorization: Bearer <token>`.
-- API dùng camelCase; DB dùng snake_case.
-- Timestamp là Unix milliseconds.
+- API uses camelCase; DB uses snake_case.
+- Timestamp is Unix milliseconds.
 
-## Error handling (nghiêm ngặt)
+## Error Handling (Strict)
 
-Tuân theo [docs/backend/13_error_handling_detailed.md](docs/backend/13_error_handling_detailed.md):
+Follow [docs/backend/13_error_handling_detailed.md](docs/backend/13_error_handling_detailed.md):
 
-- Response lỗi chuẩn: `{ error: { code, message, details?, requestId? } }`.
-- Mapping HTTP status → error code chính xác.
-- Validation error phải trả `details` theo field.
+- Standard error response: `{ error: { code, message, details?, requestId? } }`.
+- Accurate HTTP status → error code mapping.
+- Validation errors must return `details` by field.
 
-## Pagination & filtering
+## Pagination & Filtering
 
-Tuân theo [docs/backend/12_api_pagination_and_filtering.md](docs/backend/12_api_pagination_and_filtering.md):
+Follow [docs/backend/12_api_pagination_and_filtering.md](docs/backend/12_api_pagination_and_filtering.md):
 
-- List endpoints dùng cursor-based pagination.
-- `limit` tối đa 100, `cursor` là last item id.
-- Sort mặc định: `performed_at DESC, id DESC` cho deeds.
+- List endpoints use cursor-based pagination.
+- `limit` max 100, `cursor` is last item id.
+- Default sort: `performed_at DESC, id DESC` for deeds.
 
 ## Authentication & Security
 
-Tuân theo:
+Follow:
 
 - [docs/backend/03_authentication.md](docs/backend/03_authentication.md)
 - [docs/backend/09_security.md](docs/backend/09_security.md)
 
-Quy tắc:
+Rules:
 
-- Access token ngắn hạn; refresh token lưu hash trong DB.
-- Không lưu Google access token lâu dài.
-- Không log dữ liệu nhạy cảm.
-- Sử dụng env vars cho secrets; không hardcode.
+- Short-lived access token; refresh token stores hash in DB.
+- Do not store Google access token long-term.
+- Do not log sensitive data.
+- Use env vars for secrets; never hardcode.
 
-## Code style (chuẩn senior)
+## Code Style (Senior Standard)
 
-- TypeScript strict, đầy đủ typings cho input/output.
-- Mỗi handler làm một nhiệm vụ; tách validation, auth, data access.
-- Không trộn logic DB vào route; tạo helper/service khi logic phức tạp.
-- Dùng chuẩn HTTP status codes, không trả 200 cho lỗi.
-- Không catch rồi nuốt lỗi; luôn trả lỗi có mã rõ ràng.
-- Viết hàm thuần khi có thể, hạn chế side effects.
+- TypeScript strict, full typings for input/output.
+- Each handler does one task; separate validation, auth, data access.
+- Do not mix DB logic into route; create helper/service for complex logic.
+- Use standard HTTP status codes, do not return 200 for errors.
+- Do not catch and swallow errors; always return errors with clear codes.
+- Write pure functions when possible, limit side effects.
 
-## Data & DB rules
+## Data & DB Rules
 
-- Đặt tên cột DB snake_case; mapping sang camelCase trong API.
-- Không dùng SELECT * trong query production; chỉ lấy field cần thiết.
-- Always bind parameters để tránh SQL injection.
-- Với write operations, kiểm tra quyền sở hữu tài nguyên.
+- DB column names in snake_case; map to camelCase in API.
+- Do not use SELECT * in production queries; only fetch needed fields.
+- Always bind parameters to prevent SQL injection.
+- For write operations, check resource ownership.
 
-## Cấu trúc thư mục backend
+## Backend Folder Structure
 
-- `src/routes/*`: định nghĩa routes.
-- `src/handlers/*`: xử lý nghiệp vụ.
+- `src/routes/*`: define routes.
+- `src/handlers/*`: handle business logic.
 - `src/middlewares/*`: auth, logging, validation.
-- `src/utils.ts`: helpers chung.
+- `src/utils.ts`: common helpers.
 - `src/types.ts`: type definitions.
 
-## Công cụ & lệnh hữu ích
+## Useful Tools & Commands
 
 - Dev: `npm run dev`
 - Type check + dry run: `npm run check`
 - Deploy: `npm run deploy`
 - Migrate: `npm run migrate:local`, `npm run migrate:remote`
 
-## Khi thêm/thay đổi dependencies
+## When Adding/Changing Dependencies
 
-- Dùng `npm install <pkg>`.
-- Chỉ thêm thư viện khi thật sự cần; ưu tiên native API và stack hiện có.
+- Use `npm install <pkg>`.
+- Only add libraries when truly needed; prefer native API and current stack.
 
-Mọi thay đổi phải giữ tính nhất quán với contract, kiến trúc, và nguyên tắc bảo mật.
+All changes must maintain consistency with contract, architecture, and security principles.
