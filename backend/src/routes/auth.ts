@@ -1,23 +1,23 @@
 import { Hono } from 'hono'
 
-import { loginWithGoogle, logout, refreshAccessToken } from '../handlers/auth'
-import type { GoogleAuthRequest, LogoutRequest, RefreshTokenRequest } from '../types'
+import { exchangeProviderToken, logout, refreshAccessToken } from '../handlers/auth'
+import type { LogoutRequest, ProviderExchangeRequest, RefreshTokenRequest } from '../types'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const auth = new Hono<{ Bindings: Env }>()
 
-auth.post('/google', async (c) => {
-  const body = await c.req.json<GoogleAuthRequest>()
-  if (!body.code) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Mã xác thực là bắt buộc'), 400)
+auth.post('/provider/exchange', async (c) => {
+  const body = await c.req.json<ProviderExchangeRequest>().catch(() => null)
+  if (!body?.provider || !body.idToken) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Provider và idToken là bắt buộc'), 400)
   }
 
   try {
-    const result = await loginWithGoogle(c.env.DB, c.env, body)
+    const result = await exchangeProviderToken(c.env.DB, c.env, body)
 
     return c.json(successResponse(result))
   } catch (e: any) {
-    console.error('Login error', e)
+    console.error('Provider exchange error', e)
 
     return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, e.message || 'Đăng nhập thất bại'), 500)
   }
