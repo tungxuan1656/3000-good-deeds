@@ -1,6 +1,6 @@
-# API + React Query pattern (triển khai nhanh)
+# API + React Query Pattern (Quick Implementation)
 
-## 1) Cấu trúc chuẩn
+## 1) Standard Structure
 
 ```text
 src/
@@ -8,27 +8,27 @@ src/
     client.ts
     endpoints.ts
     <domain>.ts
-    <domain>.mock.ts   ← mock fixtures (chỉ dùng khi backend chưa sẵn sàng)
+    <domain>.mock.ts   ← mock fixtures (only used when backend is not ready)
   hooks/api/
     use-<domain>.ts
 ```
 
-- API layer: chỉ gọi HTTP, typed đầy đủ.
-- Hook layer: quản lý cache, key, invalidate, transform data.
-- Mock layer: fixtures tách riêng vào `<domain>.mock.ts`, **không nhúng trực tiếp** vào component hoặc hook.
+- API layer: HTTP calls only, fully typed.
+- Hook layer: manages cache, keys, invalidation, data transformation.
+- Mock layer: fixtures separated into `<domain>.mock.ts`, **not embedded directly** in components or hooks.
 
-## 2) Rule cứng
+## 2) Hard Rules
 
-- Mọi endpoint khai báo ở `API_ENDPOINTS`.
-- Hook query luôn có `queryKey` từ `*_KEYS`.
-- Mutation thành công phải `invalidateQueries` đúng scope.
-- UI chỉ gọi hook, không gọi trực tiếp file `api/*`.
-- **Không dùng `select: (data) => data`** — identity callback không transform gì phải bị xóa hoàn toàn.
-- **Trước khi thêm query/hook mới**, kiểm tra xem data có thể derive từ store hoặc query đang có sẵn không — tránh gọi API song song cho dữ liệu đã được fetch.
+- All endpoints must be declared in `API_ENDPOINTS`.
+- Hook queries must always have `queryKey` from `*_KEYS`.
+- Successful mutations must `invalidateQueries` with the correct scope.
+- UI should only call hooks, not directly call `api/*` files.
+- **Do not use `select: (data) => data`** — identity callbacks that don't transform anything must be removed entirely.
+- **Before adding a new query/hook**, check if the data can be derived from an existing store or query — avoid parallel API calls for data that has already been fetched.
 
-## 2a) Mock data pattern
+## 2a) Mock Data Pattern
 
-Khi backend chưa sẵn sàng, mock phải đặt trong `api/<domain>.mock.ts`, **không nhúng inline** vào component:
+When backend is not ready, mocks must be placed in `api/<domain>.mock.ts`, **not embedded inline** in components:
 
 ```ts
 // api/shifts.mock.ts
@@ -38,7 +38,7 @@ import type { ShiftSlot } from '@/types/shift'
 export const MOCK_SHIFTS: ShiftSlot[] = [...]
 ```
 
-API module import và re-export mock kèm TODO rõ ràng:
+API module imports and re-exports mock with a clear TODO:
 
 ```ts
 // api/shifts.ts
@@ -51,7 +51,7 @@ export const getShiftSlots = async (): Promise<ShiftSlot[]> => {
 }
 ```
 
-## 3) Template API module
+## 3) API Module Template
 
 ```ts
 // api/example.ts
@@ -72,7 +72,7 @@ export const createExample = async (
 }
 ```
 
-## 4) Template Hook module
+## 4) Hook Module Template
 
 ```ts
 // hooks/api/use-example.ts
@@ -89,7 +89,7 @@ export const useExamples = () => {
   return useQuery({
     queryKey: EXAMPLE_KEYS.list(),
     queryFn: getExamples,
-    select: (res) => res.data, // UI nhận data thuần
+    select: (res) => res.data, // UI receives plain data
   })
 }
 
@@ -105,7 +105,7 @@ export const useCreateExample = () => {
 }
 ```
 
-## 5) Query key pattern
+## 5) Query Key Pattern
 
 ```ts
 export const DOMAIN_KEYS = {
@@ -115,7 +115,7 @@ export const DOMAIN_KEYS = {
 }
 ```
 
-## 6) Infinite query pattern
+## 6) Infinite Query Pattern
 
 ```ts
 useInfiniteQuery({
@@ -129,21 +129,21 @@ useInfiniteQuery({
 })
 ```
 
-## 7) Mapping với code hiện tại
+## 7) Mapping to Existing Code
 
 - HTTP client + refresh token: [src/api/client.ts](src/api/client.ts)
 - Endpoint registry: [src/api/endpoints.ts](src/api/endpoints.ts)
-- Hook domain mẫu (query + mutation + invalidate): [src/hooks/api/use-deeds.ts](src/hooks/api/use-deeds.ts)
-- Hook infinite query mẫu: [src/hooks/api/use-inner-journal.ts](src/hooks/api/use-inner-journal.ts)
-- QueryClient global + cache persist: [src/main.tsx](src/main.tsx)
+- Example hook domain (query + mutation + invalidate): [src/hooks/api/use-deeds.ts](src/hooks/api/use-deeds.ts)
+- Example infinite query hook: [src/hooks/api/use-inner-journal.ts](src/hooks/api/use-inner-journal.ts)
+- Global QueryClient + cache persist: [src/main.tsx](src/main.tsx)
 
-## 8) Checklist khi thêm API mới
+## 8) Checklist When Adding a New API
 
-- [ ] Thêm endpoint vào `API_ENDPOINTS`
-- [ ] Tạo function trong `api/<domain>.ts`
-- [ ] Tạo `*_KEYS` trong `hooks/api/use-<domain>.ts`
-- [ ] Viết `useQuery`/`useMutation` tương ứng
-- [ ] Add `invalidateQueries` cho mutation
-- [ ] Dùng `select` để trả data thuần cho UI — **xóa `select: (data) => data`** nếu không transform
-- [ ] Nếu dùng mock: tách riêng vào `api/<domain>.mock.ts` + có comment `// TODO: replace with real HTTP call`
-- [ ] Kiểm tra xem data đã có ở store/query khác chưa trước khi tạo hook mới
+- [ ] Add endpoint to `API_ENDPOINTS`
+- [ ] Create function in `api/<domain>.ts`
+- [ ] Create `*_KEYS` in `hooks/api/use-<domain>.ts`
+- [ ] Write corresponding `useQuery`/`useMutation`
+- [ ] Add `invalidateQueries` for mutations
+- [ ] Use `select` to return plain data for UI — **remove `select: (data) => data`** if not transforming
+- [ ] If using mock: separate into `api/<domain>.mock.ts` + add comment `// TODO: replace with real HTTP call`
+- [ ] Check if data already exists in another store/query before creating a new hook

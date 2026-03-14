@@ -1,19 +1,19 @@
-# Type naming pattern (DTO / Request / Response)
+# Type Naming Pattern (DTO / Request / Response)
 
-## 1) Rule bắt buộc
+## 1) Required Rules
 
-- Dữ liệu object trao đổi giữa FE/BE: hậu tố `DTO`.
-- Kiểu dữ liệu gửi lên API: hậu tố `Request`.
-- Kiểu dữ liệu nhận từ API (ngoài wrapper chung): hậu tố `Response`.
+- Data objects exchanged between FE/BE: suffix `DTO`.
+- Data types sent to API: suffix `Request`.
+- Data types received from API (beyond the common wrapper): suffix `Response`.
 
-## 2) Quy ước đặt tên
+## 2) Naming Conventions
 
 - Entity DTO: `UserDTO`, `GoalDTO`, `JournalEntryDTO`.
 - API input: `CreateDeedRequest`, `UpdateMeRequest`, `GetGoalHistoryRequest`.
-- API output theo nghiệp vụ: `AuthResponse`, `SessionResponse`, `GoalHistoryResponse`.
-- Wrapper chung giữ nguyên: `ApiResponse<T>`.
+- API business output: `AuthResponse`, `SessionResponse`, `GoalHistoryResponse`.
+- Common wrapper remains: `ApiResponse<T>`.
 
-## 3) Mẫu chuẩn
+## 3) Standard Template
 
 ```ts
 export type UserDTO = {
@@ -33,7 +33,7 @@ export type GoalHistoryResponse = {
 }
 ```
 
-## 4) Cách dùng trong API function
+## 4) Usage in API Functions
 
 ```ts
 export const updateMe = async (
@@ -44,14 +44,14 @@ export const updateMe = async (
 }
 ```
 
-## 5) Không dùng
+## 5) Do Not Use
 
-- `UserData`, `GoalModel`, `Payload`, `Result` (mơ hồ, không theo chuẩn).
-- Trộn lẫn DTO với Request/Response trong cùng tên type.
+- `UserData`, `GoalModel`, `Payload`, `Result` (ambiguous, non-standard).
+- Mixing DTO with Request/Response in the same type name.
 
-## 6) Checklist nhanh
+## 6) Quick Checklist
 
-- [ ] Type object trao đổi dữ liệu đã có hậu tố `DTO`
-- [ ] Type input API đã có hậu tố `Request`
-- [ ] Type output API theo nghiệp vụ đã có hậu tố `Response`
-- [ ] Function API trả `Promise<ApiResponse<...>>` typed rõ ràng
+- [ ] Data exchange type objects have `DTO` suffix
+- [ ] API input types have `Request` suffix
+- [ ] API business output types have `Response` suffix
+- [ ] API functions return explicitly typed `Promise<ApiResponse<...>>`

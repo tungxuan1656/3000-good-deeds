@@ -1,6 +1,6 @@
-# Zustand store pattern (ngắn gọn để triển khai ngay)
+# Zustand Store Pattern (Short and Ready to Apply)
 
-## 1) Template chuẩn
+## 1) Standard Template
 
 ```ts
 import { create } from 'zustand'
@@ -25,7 +25,7 @@ const _useExampleStore = create<ExampleState>()(
       {
         name: 'example-storage',
         storage: createJSONStorage(() => localStorage),
-        partialize: (s) => ({ data: s.data }), // chỉ persist field cần thiết
+        partialize: (s) => ({ data: s.data }), // persist only required fields
       },
     ),
   ),
@@ -40,22 +40,22 @@ export const exampleActions = {
 export const useExampleStore = createSelectors(_useExampleStore)
 ```
 
-## 2) Quy ước bắt buộc
+## 2) Required Conventions
 
-- Tên: `_useXStore`, `useXStore`, `xActions`.
-- Chỉ cập nhật state qua `actions`.
-- Dùng selector theo key: `useXStore.use.field()`.
-- Nếu có persist, luôn dùng `partialize`.
-- **Không persist** cờ tạm (`loading`, `error`, `isSessionChecked`, ...).
-- **`reset` action là bắt buộc** — cần cho việc khởi tạo lại state và test isolation.
+- Naming: `_useXStore`, `useXStore`, `xActions`.
+- Update state only through `actions`.
+- Use key-based selectors: `useXStore.use.field()`.
+- If persist is used, always use `partialize`.
+- **Do not persist** transient flags (`loading`, `error`, `isSessionChecked`, ...).
+- **`reset` action is required** for state re-initialization and test isolation.
 
-## 2a) Testing requirement (bắt buộc)
+## 2a) Testing Requirement (Required)
 
-Mỗi store mới **phải có file test tương ứng** trong cùng PR, bao gồm:
+Each new store **must include a matching test file** in the same PR, including:
 
-- Initial state: xác nhận giá trị mặc định đúng.
-- Mỗi action (`setX`, `reset`, ...): ít nhất 1 test case happy path + edge case.
-- Nếu store có derived selector: test bao phủ cả selector.
+- Initial state: verify default values are correct.
+- Each action (`setX`, `reset`, ...): at least 1 happy-path case and 1 edge case.
+- If the store has derived selectors: include selector coverage tests.
 
 ```ts
 // stores/shift.store.test.ts
@@ -72,9 +72,9 @@ describe('shiftActions.reset', () => {
 })
 ```
 
-Test pattern chuẩn: [src/stores/shift.store.test.ts](src/stores/shift.store.test.ts)
+Standard test pattern: [src/stores/shift.store.test.ts](src/stores/shift.store.test.ts)
 
-## 3) Cách dùng trong component
+## 3) Usage in Components
 
 ```ts
 const data = useExampleStore.use.data()
@@ -84,11 +84,11 @@ exampleActions.setData('abc')
 exampleActions.markReady()
 ```
 
-## 4) Checklist tạo store mới
+## 4) New Store Checklist
 
-- [ ] Có `State` + `initialState`
+- [ ] Has `State` + `initialState`
 - [ ] `create(...devtools(persist(...)))`
-- [ ] `actions` đầy đủ (`set`, `reset`) — `reset` **bắt buộc**
+- [ ] Complete `actions` (`set`, `reset`) with required `reset`
 - [ ] Export `useXStore = createSelectors(_useXStore)`
-- [ ] Chỉ persist field thật sự cần
-- [ ] Có file `<domain>.store.test.ts` với test cho initial state, mọi action, derived selector
+- [ ] Persist only truly necessary fields
+- [ ] Has `<domain>.store.test.ts` covering initial state, all actions, and derived selectors

@@ -1,14 +1,14 @@
 # I18n Label Pattern
 
-## Mục tiêu
+## Goal
 
-Trong project, toàn bộ label/text hiển thị cho người dùng **phải dùng i18n** để hỗ trợ đa ngôn ngữ.
+In this project, all labels/text displayed to users **must use i18n** to support multiple languages.
 
-- Không hardcode text trong component/page.
-- Chuỗi ngôn ngữ được quản lý bằng file `json`.
-- Key ngôn ngữ dùng cấu trúc lồng nhau để truy cập theo dạng `x.y.z`.
+- Do not hardcode text in components/pages.
+- Language strings are managed via `json` files.
+- Language keys use a nested structure accessed as `x.y.z`.
 
-## Cấu trúc thư mục
+## Directory Structure
 
 ```txt
 src/
@@ -19,29 +19,29 @@ src/
       en.json
 ```
 
-> `i18n.ts` và các file ngôn ngữ bắt buộc nằm trong `src/lib/i18n`.
+> `i18n.ts` and language files must be placed in `src/lib/i18n`.
 
-## Quy tắc đặt key
+## Key Naming Rules
 
-- Key phải semantic theo ngữ cảnh màn hình/chức năng.
-- Dùng key lồng nhau, ví dụ:
+- Keys must be semantic based on the screen/feature context.
+- Use nested keys, for example:
   - `common.actions.save`
   - `auth.login.title`
   - `auth.login.form.email.label`
 
-Ví dụ `vi.json`:
+Example `vi.json`:
 
 ```json
 {
   "common": {
     "actions": {
-      "save": "Lưu",
-      "cancel": "Hủy"
+      "save": "Save",
+      "cancel": "Cancel"
     }
   },
   "auth": {
     "login": {
-      "title": "Đăng nhập",
+      "title": "Login",
       "form": {
         "email": {
           "label": "Email"
@@ -52,13 +52,13 @@ Ví dụ `vi.json`:
 }
 ```
 
-## Quy tắc sử dụng trong code
+## Code Usage Rules
 
-- ✅ Đúng: dùng hàm dịch từ i18n, ví dụ `t('auth.login.title')`.
-- ❌ Sai: hardcode trực tiếp như `"Đăng nhập"`, `"Save"`, `"Email"` trong JSX.
-- ✅ Form validation/error message phải dùng i18n key — không gắn chuỗi trực tiếp trong schema Zod.
+- ✅ Correct: use the translation function from i18n, e.g. `t('auth.login.title')`.
+- ❌ Wrong: hardcode directly like `"Login"`, `"Save"`, `"Email"` in JSX.
+- ✅ Form validation/error messages must use i18n keys — do not embed strings directly in Zod schemas.
 
-Ví dụ:
+Example:
 
 ```tsx
 <h1>{t('auth.login.title')}</h1>
@@ -66,12 +66,12 @@ Ví dụ:
 <Button>{t('common.actions.save')}</Button>
 ```
 
-## Gọi `t()` ngoài render context (module scope)
+## Calling `t()` Outside Render Context (module scope)
 
-Nếu `t()` được gọi **ngoài** render function (ví dụ: default parameter, constant ở module scope), **bắt buộc phải có comment** giải thích lifecycle và tính an toàn:
+If `t()` is called **outside** the render function (e.g.: default parameter, module-scope constant), **a comment is required** explaining the lifecycle and safety:
 
 ```tsx
-// ✅ Có comment giải thích
+// ✅ Has explanatory comment
 // NOTE: t() is called in default parameter position — evaluated on each call,
 // NOT at module-load time. Safe because locale is resolved lazily inside t().
 export const MyComponent = ({
@@ -80,19 +80,19 @@ export const MyComponent = ({
 ```
 
 ```ts
-// ❌ Không được dùng t() ở module-level constant nếu locale có thể chưa load:
-const LABEL = t('common.actions.save') // Bad — stale nếu locale chưa init
+// ❌ Must not use t() at module-level constant if locale may not be loaded:
+const LABEL = t('common.actions.save') // Bad — stale if locale not initialized
 ```
 
-## Locale completeness (bắt buộc)
+## Locale Completeness (required)
 
-- Mọi key mới phải được thêm **đồng bộ** vào tất cả locale files (`en.json`, `kr.json`, v.v.).
-- Không merge key ở một locale mà bỏ trống locale kia — gây fallback âm thầm, khó debug.
-- Nếu bản dịch chưa có, dùng tạm giá trị tiếng Anh và thêm comment `// TODO: translate` trong file JSON.
+- All new keys must be added **simultaneously** to all locale files (`en.json`, `kr.json`, etc.).
+- Do not merge a key in one locale while leaving another locale empty — causes silent fallback, hard to debug.
+- If translation is not available, use English temporarily and add a `// TODO: translate` comment in the JSON file.
 
-## Interpolation cho số, đơn vị, thời gian
+## Interpolation for Numbers, Units, and Time
 
-Chuỗi có số lượng, đơn vị hoặc giá trị động phải dùng interpolation — không nối chuỗi thủ công:
+Strings with quantities, units, or dynamic values must use interpolation — do not concatenate strings manually:
 
 ```json
 // en.json
@@ -106,20 +106,20 @@ Chuỗi có số lượng, đơn vị hoặc giá trị động phải dùng int
 ```
 
 ```tsx
-// ✅ Đúng
+// ✅ Correct
 t('shifts.stats.totalDrivers', { count: totalDrivers })
 
-// ❌ Sai
+// ❌ Wrong
 `/ ${totalDrivers} Total`
 ```
 
-## Checklist khi review
+## Review Checklist
 
-- [ ] Không còn hardcoded user-facing text trong component/page.
-- [ ] Validation/error message của form dùng i18n key.
-- [ ] Mọi label đều có key i18n tương ứng.
-- [ ] Key có cấu trúc lồng nhau rõ ngữ cảnh (`x.y.z`).
-- [ ] Tất cả locale files (`en.json`, `kr.json`) đồng bộ key.
-- [ ] `t()` ở default param/module scope có comment giải thích lifecycle.
-- [ ] Chuỗi có giá trị động dùng interpolation, không nối chuỗi thủ công.
-- [ ] `i18n.ts` đặt đúng tại `src/lib/i18n/i18n.ts`.
+- [ ] No hardcoded user-facing text in components/pages.
+- [ ] Form validation/error messages use i18n keys.
+- [ ] All labels have corresponding i18n keys.
+- [ ] Keys have clear contextual nested structure (`x.y.z`).
+- [ ] All locale files (`en.json`, `kr.json`) have synchronized keys.
+- [ ] `t()` at default param/module scope has lifecycle comment.
+- [ ] Strings with dynamic values use interpolation, no manual concatenation.
+- [ ] `i18n.ts` placed at `src/lib/i18n/i18n.ts`.

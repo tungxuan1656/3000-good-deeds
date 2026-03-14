@@ -1,16 +1,17 @@
+
 # Color Guide (Project Accurate)
 
-Tài liệu này phản ánh đúng token màu đang khai báo trong `src/index.css` của project hiện tại.
+This document reflects the color tokens declared in `src/index.css` of the current project.
 
 ## 1) Source of truth
 
-- Theme token được khai báo ở `:root` và `.dark` trong `src/index.css`.
-- Tailwind semantic class map qua `@theme inline` (ví dụ `--color-background`, `--color-primary`, ...).
-- Khi cần thêm màu mới: thêm token ở `index.css` trước, sau đó mới dùng class trong component.
+- Theme tokens are declared in `:root` and `.dark` in `src/index.css`.
+- Tailwind semantic classes map via `@theme inline` (e.g., `--color-background`, `--color-primary`, ...).
+- When adding a new color: add the token in `index.css` first, then use the class in the component.
 
-## 2) Semantic token đang dùng
+## 2) Semantic tokens in use
 
-| Token                | Light     | Dark                        | Class tương ứng                             |
+| Token                | Light     | Dark                        | Corresponding Class                         |
 | -------------------- | --------- | --------------------------- | ------------------------------------------- |
 | `background`         | `#f6f3ee` | `#0a0a0a`                   | `bg-background`                             |
 | `foreground`         | `#212121` | `oklch(0.985 0 0)`          | `text-foreground`                           |
@@ -31,7 +32,7 @@ Tài liệu này phản ánh đúng token màu đang khai báo trong `src/index.
 
 ## 3) Domain colors (Body / Speech / Mind)
 
-Các màu domain có token riêng và đã được map sang class Tailwind:
+Domain colors have their own tokens and are mapped to Tailwind classes:
 
 | Token    | Value     | Class                      |
 | -------- | --------- | -------------------------- |
@@ -39,7 +40,7 @@ Các màu domain có token riêng và đã được map sang class Tailwind:
 | `speech` | `#8fbad9` | `bg-speech`, `text-speech` |
 | `mind`   | `#b9a7e3` | `bg-mind`, `text-mind`     |
 
-Pattern dùng thực tế:
+Practical usage pattern:
 
 - `bg-body/20 hover:bg-body/40`
 - `bg-speech/20 hover:bg-speech/40`
@@ -47,19 +48,19 @@ Pattern dùng thực tế:
 
 ## 4) Chart & sidebar tokens
 
-- Có sẵn token `chart-1..5` và `sidebar-*` trong `index.css`.
-- Chỉ dùng khi component chart/sidebar cần semantic token đó.
-- Tránh hardcode màu chart trực tiếp trong component.
+- Tokens `chart-1..5` and `sidebar-*` are available in `index.css`.
+- Use only when chart/sidebar components need those semantic tokens.
+- Avoid hardcoding chart colors directly in components.
 
-## 5) Class nên ưu tiên
+## 5) Preferred classes
 
 - Surface/text/border: `bg-background`, `bg-card`, `text-foreground`, `text-muted-foreground`, `border-border`.
 - Form controls: `border-input`, `focus-visible:border-ring`, `focus-visible:ring-ring/50`.
-- Trạng thái lỗi form: `aria-invalid:border-destructive`, `aria-invalid:ring-destructive/20`.
+- Form error state: `aria-invalid:border-destructive`, `aria-invalid:ring-destructive/20`.
 
-## 6) Không dùng trong project này
+## 6) Not used in this project
 
-Các class dưới đây không có token trong theme hiện tại (được copy từ project khác), không dùng:
+The following classes do not have tokens in the current theme (copied from another project), do not use:
 
 - `text-danger`, `bg-danger`, `bg-danger-subtle`
 - `text-warning`, `bg-warning`, `bg-warning-subtle`
@@ -67,7 +68,7 @@ Các class dưới đây không có token trong theme hiện tại (được cop
 - `text-info`, `bg-info`, `bg-info-subtle`
 - `bg-surface*`, `border-divider*`, `text-disabled-foreground`, `bg-inverse-surface`, `text-inverse-foreground`
 
-Nếu cần các semantic này, phải thêm token thật vào `index.css` trước.
+If you need these semantics, you must add real tokens to `index.css` first.
 
 ## 7) Quick examples
 

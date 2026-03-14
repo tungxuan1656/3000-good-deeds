@@ -1,17 +1,17 @@
 # Dialog & Form Field Pattern
 
-## Nguyên tắc chung
+## General Principles
 
-1. **Ưu tiên components có sẵn** — `Dialog`, `Field`, `FieldGroup`, `Button`, `Input`, `Textarea`, `Select`... Chỉ viết custom UI khi được yêu cầu rõ ràng.
-2. **Dialog dùng ref pattern** — modal tự quản lý state nội bộ (`open`, `dismiss`); caller chỉ cần `ref.current?.open(options)`.
-3. **`FieldLabel` là mặc định** — chỉ dùng `FieldLegend` khi field là nhóm nhiều controls ở nhiều dòng (một dòng thì vẫn dùng `FieldLabel`) hoặc được yêu cầu rõ ràng.
-4. **Không hardcode padding/spacing trên DialogContent nếu không cần thiết**
+1. **Prefer built-in components** — `Dialog`, `Field`, `FieldGroup`, `Button`, `Input`, `Textarea`, `Select`... Only write custom UI when explicitly requested.
+2. **Dialog uses ref pattern** — modal manages its own internal state (`open`, `dismiss`); caller only needs `ref.current?.open(options)`.
+3. **`FieldLabel` is the default** — only use `FieldLegend` when the field is a group of multiple controls on multiple lines (single line still uses `FieldLabel`) or when explicitly requested.
+4. **Do not hardcode padding/spacing on DialogContent unless necessary**
 
 ---
 
-## 1. Dialog đơn giản (ref pattern)
+## 1. Simple Dialog (ref pattern)
 
-Modal tự quản lý `open` state. Không nhận `open` / `onOpenChange` props từ ngoài.
+Modal manages its own `open` state. Does not receive `open` / `onOpenChange` props from outside.
 
 ```tsx
 // components/shared/confirm-delete-modal.tsx
@@ -70,26 +70,26 @@ export const ConfirmDeleteModal = ({ ref }: { ref?: Ref<ConfirmDeleteModalRef> }
 }
 ```
 
-**Cách dùng:**
+**Usage:**
 
 ```tsx
 const deleteRef = useRef<ConfirmDeleteModalRef>(null)
 
-// Mở modal
+// Open modal
 deleteRef.current?.open({
   itemName: driver.name,
   onConfirm: () => mutateDelete(driver.id),
 })
 
-// JSX — không có state nào liên quan đến modal
+// JSX — no state related to the modal
 <ConfirmDeleteModal ref={deleteRef} />
 ```
 
 ---
 
-## 2. Dialog + Form fields
+## 2. Dialog + Form Fields
 
-Dùng `FieldGroup` > `Field` > `FieldLabel` + control. `FieldError` hiển thị lỗi validation. `DialogClose asChild` cho nút Cancel.
+Use `FieldGroup` > `Field` > `FieldLabel` + control. `FieldError` displays validation errors. `DialogClose asChild` for Cancel button.
 
 ```tsx
 // components/shared/edit-profile-modal.tsx
@@ -140,9 +140,9 @@ export const EditProfileModal = ({ ref }: { ref?: Ref<EditProfileModalRef> }) =>
 
 ---
 
-## 3. Form fields độc lập (ngoài dialog)
+## 3. Standalone Form Fields (outside dialog)
 
-Dùng trực tiếp `FieldGroup` + `Field` trong page/section.
+Use `FieldGroup` + `Field` directly in page/section.
 
 ```tsx
 // pages/settings/profile-section.tsx
@@ -174,12 +174,12 @@ const ProfileSection = () => (
 
 ---
 
-## Khi nào dùng FieldLegend vs FieldLabel
+## When to Use FieldLegend vs FieldLabel
 
-| Component | HTML | Dùng khi |
+| Component | HTML | Use When |
 |---|---|---|
-| `FieldLabel` | `<label>` | Field có **1 control** rõ ràng (Input, Select, Textarea). Liên kết qua `htmlFor`. |
-| `FieldLegend` | `<legend>` | Field là **nhóm** gồm nhiều controls liên quan ở nhiều dòng (một dòng thì vẫn dùng `FieldLabel`) hoặc được yêu cầu rõ ràng. Không dùng `htmlFor`. |
+| `FieldLabel` | `<label>` | Field has **1 clear control** (Input, Select, Textarea). Linked via `htmlFor`. |
+| `FieldLegend` | `<legend>` | Field is a **group** of multiple related controls on multiple lines (single line still uses `FieldLabel`) or when explicitly requested. Does not use `htmlFor`. |
 
 ```tsx
 // ✅ FieldLabel — 1 input
@@ -188,7 +188,7 @@ const ProfileSection = () => (
   <Input id='email' type='email' />
 </Field>
 
-// ✅ FieldLegend — nhóm nhiều controls
+// ✅ FieldLegend — group of multiple controls
 <Field>
   <FieldLegend>Work Hours</FieldLegend>
   <div className='flex gap-2'>
@@ -197,7 +197,7 @@ const ProfileSection = () => (
   </div>
 </Field>
 
-// ❌ Sai — dùng FieldLegend cho 1 input đơn
+// ❌ Wrong — using FieldLegend for a single input
 <Field>
   <FieldLegend>Email</FieldLegend>
   <Input id='email' />
@@ -206,11 +206,11 @@ const ProfileSection = () => (
 
 ---
 
-## Checklist nhanh
+## Quick Checklist
 
-- [ ] Dialog dùng `ref` pattern — không nhận `open` props từ ngoài
-- [ ] Callback lưu trong `useRef`, không dùng state để lưu hàm
-- [ ] `DialogClose asChild` cho nút Cancel — không `onClick={() => setIsOpen(false)}` thủ công
-- [ ] Dùng `FieldGroup` > `Field` > `FieldLabel` / `FieldLegend` thay cho `div` + `h3` tự custom
-- [ ] `FieldError` cho validation message thay cho `<p className='text-danger'>` thủ công
-- [ ] Không hardcode padding/spacing trên DialogContent nếu không cần thiết
+- [ ] Dialog uses `ref` pattern — does not receive `open` props from outside
+- [ ] Callback stored in `useRef`, not using state to store functions
+- [ ] `DialogClose asChild` for Cancel button — no manual `onClick={() => setIsOpen(false)}`
+- [ ] Use `FieldGroup` > `Field` > `FieldLabel` / `FieldLegend` instead of custom `div` + `h3`
+- [ ] `FieldError` for validation messages instead of manual `<p className='text-danger'>`
+- [ ] Do not hardcode padding/spacing on DialogContent unless necessary

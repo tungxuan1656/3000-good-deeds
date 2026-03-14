@@ -1,12 +1,12 @@
-# Component structure pattern (page vs component con)
+# Component Structure Pattern (Page vs Child Component)
 
-## 1) Rule bắt buộc
+## 1) Required Rules
 
-- **Page**: khai báo `const ComponentName = () => {}` và `export default ComponentName` ngay trong file page.
-- **Component con**: dùng `export const ComponentName = () => {}`.
-- **Mỗi folder component con** phải có `index.ts` để gom và re-export toàn bộ component trong folder.
+- **Page**: declare as `const ComponentName = () => {}` and `export default ComponentName` in the page file.
+- **Child component**: use `export const ComponentName = () => {}`.
+- **Each child component folder** must have an `index.ts` to aggregate and re-export all components in the folder.
 
-## 2) Mẫu cho page
+## 2) Page Template
 
 ```tsx
 // pages/goals-page.tsx
@@ -17,7 +17,7 @@ const GoalsPage = () => {
 export default GoalsPage
 ```
 
-## 3) Mẫu cho component con
+## 3) Child Component Template
 
 ```tsx
 // components/goals/goal-card.tsx
@@ -30,38 +30,38 @@ export const GoalCard = ({ title }: GoalCardProps) => {
 }
 ```
 
-## 4) Mẫu `index.ts` trong folder component
+## 4) `index.ts` Template in Component Folder
 
 ```ts
-// components/goals/index.ts  — chỉ export PUBLIC components
+// components/goals/index.ts  — only export PUBLIC components
 export * from './goal-card'
 export * from './goal-progress'
 export * from './goal-form'
 
-// NOTE: goal-card-skeleton, goal-row-item là internal — intentionally NOT exported here.
+// NOTE: goal-card-skeleton, goal-row-item are internal — intentionally NOT exported here.
 ```
 
-**Phân biệt public vs internal:**
-- **Public**: component được dùng bên ngoài folder → đưa vào `index.ts`.
-- **Internal**: component chỉ dùng nội bộ trong folder (sub-component của một component lớn) → **không** đưa vào `index.ts`, giữ là module-private.
+**Distinguishing public vs internal:**
+- **Public**: components used outside the folder → include in `index.ts`.
+- **Internal**: components only used within the folder (sub-components of a larger component) → **not** included in `index.ts`, kept as module-private.
 
-## 5) Cách import khuyến nghị
+## 5) Recommended Import Style
 
 ```tsx
 import { GoalCard, GoalForm, GoalProgress } from '@/components/goals'
 ```
 
-## 6) Quy tắc kích thước file
+## 6) File Size Rules
 
-- File/component **trên 200 dòng** phải được tách theo từng concern rõ ràng (shell, list, mock data, utils, ...).
-- Mỗi component/hook chỉ chịu trách nhiệm **một việc** — không kết hợp quá nhiều concern trong cùng một file.
-- Mock data phải tách vào `<domain>.mock.ts` — không nhúng trực tiếp vào component.
+- Files/components **over 200 lines** must be split by clear concerns (shell, list, mock data, utils, ...).
+- Each component/hook should be responsible for **one thing** — do not combine too many concerns in the same file.
+- Mock data must be separated into `<domain>.mock.ts` — not embedded directly in components.
 
-## 7) Checklist nhanh khi tạo mới
+## 7) Quick Checklist for New Components
 
-- [ ] Page dùng `const XPage` + `export default XPage`
-- [ ] Component con dùng `export const`
-- [ ] Folder component có `index.ts` — chỉ export public components
-- [ ] Internal sub-components **không** có trong `index.ts`
-- [ ] File dưới 200 dòng; nếu vượt, tách file theo concern
-- [ ] Nơi sử dụng import từ folder (không import file lẻ nếu không cần)
+- [ ] Page uses `const XPage` + `export default XPage`
+- [ ] Child component uses `export const`
+- [ ] Component folder has `index.ts` — only exports public components
+- [ ] Internal sub-components are **not** in `index.ts`
+- [ ] File under 200 lines; if exceeded, split by concern
+- [ ] Consumer imports from folder (not individual files unless necessary)
