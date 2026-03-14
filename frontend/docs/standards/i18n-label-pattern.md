@@ -14,9 +14,9 @@ In this project, all labels/text displayed to users **must use i18n** to support
 src/
   lib/
     i18n/
-      i18n.ts
-      vi.json
-      en.json
+      index.ts
+      locales
+        vi.json
 ```
 
 > `i18n.ts` and language files must be placed in `src/lib/i18n`.
@@ -86,7 +86,7 @@ const LABEL = t('common.actions.save') // Bad — stale if locale not initialize
 
 ## Locale Completeness (required)
 
-- All new keys must be added **simultaneously** to all locale files (`en.json`, `kr.json`, etc.).
+- All new keys must be added **simultaneously** to all locale files (`en.json`, etc.).
 - Do not merge a key in one locale while leaving another locale empty — causes silent fallback, hard to debug.
 - If translation is not available, use English temporarily and add a `// TODO: translate` comment in the JSON file.
 
@@ -119,7 +119,7 @@ t('shifts.stats.totalDrivers', { count: totalDrivers })
 - [ ] Form validation/error messages use i18n keys.
 - [ ] All labels have corresponding i18n keys.
 - [ ] Keys have clear contextual nested structure (`x.y.z`).
-- [ ] All locale files (`en.json`, `kr.json`) have synchronized keys.
+- [ ] All locale files (`en.json`) have synchronized keys.
 - [ ] `t()` at default param/module scope has lifecycle comment.
 - [ ] Strings with dynamic values use interpolation, no manual concatenation.
-- [ ] `i18n.ts` placed at `src/lib/i18n/i18n.ts`.
+- [ ] `i18n.ts` placed at `src/lib/i18n/index.ts`.
