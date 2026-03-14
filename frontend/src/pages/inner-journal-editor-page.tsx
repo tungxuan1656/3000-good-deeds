@@ -74,7 +74,7 @@ const InnerJournalEditorPage = () => {
                 className={`rounded-full border px-4 py-2 text-sm font-medium ${
                   mode === 'grateful'
                     ? 'border-primary/40 bg-primary/15 text-primary'
-                    : 'text-muted-foreground border-black/5 bg-card'
+                    : 'text-muted-foreground bg-card border-black/5'
                 }`}
                 type='button'
                 onClick={() => setMode('grateful')}>
@@ -84,7 +84,7 @@ const InnerJournalEditorPage = () => {
                 className={`rounded-full border px-4 py-2 text-sm font-medium ${
                   mode === 'repent'
                     ? 'border-primary/40 bg-primary/15 text-primary'
-                    : 'text-muted-foreground border-black/5 bg-card'
+                    : 'text-muted-foreground bg-card border-black/5'
                 }`}
                 type='button'
                 onClick={() => setMode('repent')}>
@@ -92,7 +92,7 @@ const InnerJournalEditorPage = () => {
               </button>
             </div>
             <Input
-              className='rounded-2xl border border-black/5 bg-card px-4 py-2 text-sm'
+              className='bg-card rounded-2xl border border-black/5 px-4 py-2 text-sm'
               placeholder={t('pages.innerJournalEditor.form.titlePlaceholder')}
               value={title}
               onChange={(event) => setTitle(event.target.value)}
@@ -106,7 +106,10 @@ const InnerJournalEditorPage = () => {
             <p className='text-muted-foreground text-sm'>
               {t('pages.innerJournalEditor.form.privateNote')}
             </p>
-            <Button className='h-11 w-full rounded-full' disabled={createMutation.isPending} type='submit'>
+            <Button
+              className='h-11 w-full rounded-full'
+              disabled={createMutation.isPending}
+              type='submit'>
               {createMutation.isPending ? (
                 <>
                   <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />

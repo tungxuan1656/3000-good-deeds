@@ -38,7 +38,7 @@ const PrivacyPolicyPage = () => {
           action={
             <Link to={PATHS.LOGIN}>
               <Button
-                className='h-10 rounded-full border border-black/5 bg-card hover:bg-card/80'
+                className='bg-card hover:bg-card/80 h-10 rounded-full border border-black/5'
                 variant='secondary'>
                 {t('legal.backToLogin')}
               </Button>

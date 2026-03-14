@@ -1,8 +1,4 @@
-import type {
-  ApiResponse,
-  DailyQuoteDTO,
-  RandomActDTO,
-} from '../types/api'
+import type { ApiResponse, DailyQuoteDTO, RandomActDTO } from '../types/api'
 import { client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 

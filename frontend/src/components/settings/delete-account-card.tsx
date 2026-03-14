@@ -49,11 +49,11 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         description={t('settings.deleteAccount.confirmDescription')}
         title={t('settings.deleteAccount.confirmTitle')}
         variant='destructive'
+        onCancel={() => setDeleteText('')}
         onConfirm={() => {
           setDeleteText('')
           onConfirm?.()
-        }}
-        onCancel={() => setDeleteText('')}>
+        }}>
         <Input
           className='border-input bg-card rounded-2xl border px-4 py-2 text-sm'
           placeholder={deleteKeyword}

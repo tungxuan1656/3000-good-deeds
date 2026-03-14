@@ -1,40 +1,42 @@
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
+import { authTokenStorage } from '@/lib/auth-tokens'
 import type { AuthResponse, UserDTO } from '@/types/api'
 
 import { createSelectors } from './types'
 
 interface AuthState {
-  isSessionChecked: boolean
   isAuthenticated: boolean
   user: UserDTO | null
   accessToken: string | null
+  refreshToken: string | null
+  _hasHydrated: boolean
 }
 
 const initialState: AuthState = {
-  isSessionChecked: false,
   isAuthenticated: false,
   user: null,
   accessToken: null,
+  refreshToken: null,
+  _hasHydrated: false,
 }
 
-const setAccessTokenStorage = (accessToken: string) => {
-  localStorage.setItem('accessToken', accessToken)
-}
-
-const removeAccessTokenStorage = () => {
-  localStorage.removeItem('accessToken')
-}
-
-const applyAuthenticatedSession = (payload: { accessToken: string; user: UserDTO }) => {
-  setAccessTokenStorage(payload.accessToken)
+const applyAuthenticatedSession = (payload: {
+  accessToken: string
+  refreshToken: string
+  user: UserDTO
+}) => {
+  authTokenStorage.setTokens({
+    accessToken: payload.accessToken,
+    refreshToken: payload.refreshToken,
+  })
 
   _useAuthStore.setState({
     isAuthenticated: true,
-    isSessionChecked: true,
     user: payload.user,
     accessToken: payload.accessToken,
+    refreshToken: payload.refreshToken,
   })
 }
 
@@ -47,37 +49,65 @@ const _useAuthStore = create<AuthState>()(
         isAuthenticated: state.isAuthenticated,
         user: state.user,
         accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
       }),
     }),
   ),
 )
 
+const syncTokenStorageFromStore = () => {
+  const { accessToken, refreshToken } = _useAuthStore.getState()
+
+  if (accessToken && refreshToken) {
+    authTokenStorage.setTokens({ accessToken, refreshToken })
+
+    return
+  }
+
+  authTokenStorage.clear()
+}
+
+if (_useAuthStore.persist.hasHydrated()) {
+  syncTokenStorageFromStore()
+  _useAuthStore.setState({ _hasHydrated: true })
+}
+
+_useAuthStore.persist.onFinishHydration(() => {
+  syncTokenStorageFromStore()
+  _useAuthStore.setState({ _hasHydrated: true })
+})
+
 export const authActions = {
-  markSessionChecked: (checked = true) => _useAuthStore.setState({ isSessionChecked: checked }),
   login: (authResponse: AuthResponse) => {
     applyAuthenticatedSession(authResponse)
   },
-  restoreSession: (sessionResponse: AuthResponse) => {
-    applyAuthenticatedSession(sessionResponse)
-  },
   logout: () => {
-    removeAccessTokenStorage()
+    authTokenStorage.clear()
 
     _useAuthStore.setState({
       isAuthenticated: false,
-      isSessionChecked: true,
       user: null,
       accessToken: null,
+      refreshToken: null,
     })
   },
   setUser: (user: UserDTO) => _useAuthStore.setState({ user }),
-  updateAccessToken: (token: string) => {
-    setAccessTokenStorage(token)
-    _useAuthStore.setState({ accessToken: token })
+  updateTokens: (tokens: { accessToken: string; refreshToken: string }) => {
+    authTokenStorage.setTokens(tokens)
+
+    _useAuthStore.setState({
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      isAuthenticated: true,
+    })
   },
   reset: () => {
-    removeAccessTokenStorage()
-    _useAuthStore.setState(initialState)
+    authTokenStorage.clear()
+
+    _useAuthStore.setState({
+      ...initialState,
+      _hasHydrated: true,
+    })
   },
 }
 

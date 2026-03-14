@@ -2,7 +2,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import { AppBack, AppLayout, ScrollToTop } from '@/components/layout'
-import { useBootstrapSession } from '@/hooks/shared/use-bootstrap-session'
 import { PATHS } from '@/lib/constants'
 import GoalsPage from '@/pages/goals-page'
 import HomePage from '@/pages/home-page'
@@ -25,8 +24,6 @@ import { Toaster } from './components/ui/sonner'
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
 function App() {
-  useBootstrapSession()
-
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Router>

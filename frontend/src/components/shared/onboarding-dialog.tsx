@@ -1,5 +1,13 @@
 import { XIcon } from 'lucide-react'
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -145,9 +153,7 @@ export const OnboardingDialog = forwardRef<OnboardingDialogHandle, OnboardingDia
             <p className='text-muted-foreground text-xs font-medium tracking-widest uppercase'>
               {flowTitle}
             </p>
-            <DialogTitle className='text-base font-semibold'>
-              {step?.title ?? ''}
-            </DialogTitle>
+            <DialogTitle className='text-base font-semibold'>{step?.title ?? ''}</DialogTitle>
             <DialogClose asChild>
               <button
                 className='absolute top-4 right-4 rounded-full bg-gray-200 p-1'
