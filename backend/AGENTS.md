@@ -1,110 +1,70 @@
-# Backend guideline
+# Backend AGENTS Guide
 
-You are a programming assistant specializing in TypeScript, Cloudflare Workers (Hono), and D1 Database. Always reply in Vietnamese.
+You are a programming assistant specialized in TypeScript, Cloudflare Workers (Hono), and D1.
+Always respond in English for this repository.
 
-## General Rules
+## Mission
 
-- Do not create docs/summary files unless explicitly requested.
-- Do not use temporary scripts to generate files; use git checkout to restore if needed.
-- Always read and follow contracts in docs before coding.
-- Avoid changing public API unless requested.
+Deliver backend changes that are correct, secure, testable, and aligned with project contracts.
 
-## Main Stack & Libraries
+## Non-Negotiable Rules
 
-- Runtime: Cloudflare Workers.
-- Framework: Hono.
-- Database: D1 (SQLite).
-- Auth: JWT + refresh token (jose).
-- Migrations: wrangler d1 migrations.
+- Do not modify documents outside the requested scope.
+- Do not change public API contracts without explicit approval.
+- Do not use mock data in production backend runtime.
+- Do not hardcode secrets, tokens, or credentials.
+- Do not finalize code without basic checks (`lint`, `type-check`, or equivalent).
 
-## Backend Architecture
+## Required Reading Order
 
-According to [docs/backend/02_architecture.md](docs/backend/02_architecture.md):
+1. `backend/docs/standards/README.md`
+2. `backend/docs/technical/api-design.md`
+3. `backend/docs/technical/api-reference.md`
+4. `backend/docs/technical/database-schema.md`
+5. `docs/monorepo/architecture.md`
 
-- Worker handles HTTP, auth, and business logic.
-- D1 stores relational data.
-- Worker is stateless; every request must be retry-safe.
+## Mandatory Standards
 
-## Contract & API Design (Mandatory)
+- `backend/docs/standards/01-architecture-and-boundaries.md`
+- `backend/docs/standards/02-api-contract-and-validation.md`
+- `backend/docs/standards/03-database-pattern.md`
+- `backend/docs/standards/04-error-handling-pattern.md`
+- `backend/docs/standards/05-security-and-auth-pattern.md`
+- `backend/docs/standards/06-testing-pattern.md`
+- `backend/docs/standards/07-code-review-guide.md`
 
-Follow:
+## Implementation Rules
 
-- [docs/backend/05_api_design.md](docs/backend/05_api_design.md)
-- [docs/contract/api_overview.md](docs/contract/api_overview.md)
-- [docs/contract/api/*](docs/contract/api/00_overview.md)
+- Routes handle routing and middleware only.
+- Business logic belongs in handlers.
+- Validate inputs before executing business logic.
+- Return proper status codes for each outcome.
+- Bind SQL parameters and avoid `SELECT *` on production endpoints.
+- Enforce ownership checks for user-scoped data operations.
+- Keep error response format consistent and avoid leaking internal details.
 
-Rules:
+## Security Rules
 
-- Base URL `/api/v1`.
-- JSON only; `Content-Type: application/json`.
-- Auth header: `Authorization: Bearer <token>`.
-- API uses camelCase; DB uses snake_case.
-- Timestamp is Unix milliseconds.
+- Keep access/refresh token lifecycle consistent.
+- Store refresh tokens as hashes in DB.
+- Never log PII, tokens, or secrets.
+- Use environment variables for all secrets.
 
-## Error Handling (Strict)
+## Review Rules
 
-Follow [docs/backend/13_error_handling_detailed.md](docs/backend/13_error_handling_detailed.md):
+Before closing a task, verify:
+- API contract compatibility
+- coverage of unauthorized/forbidden/not-found/conflict branches
+- regression risk in auth/session/data ownership paths
+- required technical/product docs updates
 
-- Standard error response: `{ error: { code, message, details?, requestId? } }`.
-- Accurate HTTP status → error code mapping.
-- Validation errors must return `details` by field.
+## Useful Commands
 
-## Pagination & Filtering
-
-Follow [docs/backend/12_api_pagination_and_filtering.md](docs/backend/12_api_pagination_and_filtering.md):
-
-- List endpoints use cursor-based pagination.
-- `limit` max 100, `cursor` is last item id.
-- Default sort: `performed_at DESC, id DESC` for deeds.
-
-## Authentication & Security
-
-Follow:
-
-- [docs/backend/03_authentication.md](docs/backend/03_authentication.md)
-- [docs/backend/09_security.md](docs/backend/09_security.md)
-
-Rules:
-
-- Short-lived access token; refresh token stores hash in DB.
-- Do not store Google access token long-term.
-- Do not log sensitive data.
-- Use env vars for secrets; never hardcode.
-
-## Code Style (Senior Standard)
-
-- TypeScript strict, full typings for input/output.
-- Each handler does one task; separate validation, auth, data access.
-- Do not mix DB logic into route; create helper/service for complex logic.
-- Use standard HTTP status codes, do not return 200 for errors.
-- Do not catch and swallow errors; always return errors with clear codes.
-- Write pure functions when possible, limit side effects.
-
-## Data & DB Rules
-
-- DB column names in snake_case; map to camelCase in API.
-- Do not use SELECT * in production queries; only fetch needed fields.
-- Always bind parameters to prevent SQL injection.
-- For write operations, check resource ownership.
-
-## Backend Folder Structure
-
-- `src/routes/*`: define routes.
-- `src/handlers/*`: handle business logic.
-- `src/middlewares/*`: auth, logging, validation.
-- `src/utils.ts`: common helpers.
-- `src/types.ts`: type definitions.
-
-## Useful Tools & Commands
-
-- Dev: `npm run dev`
-- Type check + dry run: `npm run check`
-- Deploy: `npm run deploy`
-- Migrate: `npm run migrate:local`, `npm run migrate:remote`
-
-## When Adding/Changing Dependencies
-
-- Use `npm install <pkg>`.
-- Only add libraries when truly needed; prefer native API and current stack.
-
-All changes must maintain consistency with contract, architecture, and security principles.
+```bash
+pnpm --filter backend lint
+pnpm --filter backend type-check
+pnpm --filter backend check
+pnpm --filter backend migrate:local
+pnpm --filter backend migrate:remote
+pnpm --filter backend dev
+```
