@@ -19,8 +19,18 @@ export interface UserDTO {
 
 export interface AuthResponse {
   accessToken: string
+  refreshToken: string
   user: UserDTO
   expiresIn: number
+}
+
+export interface RefreshTokenRequest {
+  refreshToken: string
+}
+
+export interface RefreshTokenResponse {
+  accessToken: string
+  refreshToken: string
 }
 
 export interface LoginRequest {
@@ -191,4 +201,15 @@ export interface GetGoalHistoryRequest {
   type?: GoalType
 }
 
-export type UpdateUserRequest = Partial<Pick<UserDTO, 'displayName' | 'bio' | 'reminderTime' | 'reminderEnabled' | 'timezone' | 'themePreference' | 'privacyMode'>>
+export type UpdateUserRequest = Partial<
+  Pick<
+    UserDTO,
+    | 'displayName'
+    | 'bio'
+    | 'reminderTime'
+    | 'reminderEnabled'
+    | 'timezone'
+    | 'themePreference'
+    | 'privacyMode'
+  >
+>

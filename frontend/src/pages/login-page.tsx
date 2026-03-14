@@ -1,17 +1,8 @@
 import { LoginHeroCard, LoginSideCard } from '@/components/auth'
-import { Spinner } from '@/components/ui/spinner'
 import { useLoginFlow } from '@/hooks/auth/use-login-flow'
 
 const LoginPage = () => {
-  const { isSessionChecked, isLoading, error, handleGoogleLogin } = useLoginFlow()
-
-  if (!isSessionChecked) {
-    return (
-      <div className='flex h-screen items-center justify-center'>
-        <Spinner />
-      </div>
-    )
-  }
+  const { isLoading, error, handleGoogleLogin } = useLoginFlow()
 
   return (
     <div className='bg-background min-h-screen px-4 py-8 sm:px-6 lg:px-8'>

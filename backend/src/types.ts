@@ -105,22 +105,17 @@ export interface GoogleAuthRequest {
 
 export interface AuthResponse {
   accessToken: string
+  refreshToken: string
   user: User
   expiresIn: number
-}
-
-export interface MobileAuthResponse extends AuthResponse {
-  refreshToken: string
 }
 
 export interface RefreshTokenRequest {
-  refreshToken?: string
+  refreshToken: string
 }
 
-export interface SessionResponse {
-  accessToken: string
-  user: User
-  expiresIn: number
+export interface LogoutRequest {
+  refreshToken?: string
 }
 
 export interface GoogleTokenResponse {

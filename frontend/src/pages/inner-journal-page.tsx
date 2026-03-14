@@ -113,7 +113,7 @@ const InnerJournalPage = () => {
 
             <div className='flex flex-col gap-2'>
               <Textarea
-                className='min-h-44 w-full resize-none rounded-2xl border border-black/5 bg-card px-4 py-3 text-sm leading-relaxed'
+                className='bg-card min-h-44 w-full resize-none rounded-2xl border border-black/5 px-4 py-3 text-sm leading-relaxed'
                 placeholder={t('journal.page.placeholder')}
                 value={content}
                 onChange={(event) => setContent(event.target.value)}

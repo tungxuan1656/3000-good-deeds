@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
+import { authTokenStorage } from '@/lib/auth-tokens'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { unsubscribeFromPushNotifications } from '@/lib/utils/push-notifications'
@@ -19,7 +20,7 @@ export const LogoutButton = (props: React.ComponentProps<typeof Button>) => {
   const handleLogout = async () => {
     try {
       await unsubscribeFromPushNotifications()
-      await logout()
+      await logout(authTokenStorage.getRefreshToken() ?? undefined)
     } catch {
       // Ignore logout errors and still clear local state
     } finally {

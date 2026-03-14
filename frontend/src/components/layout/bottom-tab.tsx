@@ -33,7 +33,7 @@ export const BottomTab = () => {
 
   return createPortal(
     <div className='pointer-events-none fixed inset-x-0 bottom-0 z-80 md:hidden'>
-      <div className='pb-safe pointer-events-auto border-t border-black/10 bg-background backdrop-blur'>
+      <div className='pb-safe bg-background pointer-events-auto border-t border-black/10 backdrop-blur'>
         <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-0.5'>
           {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
             const active = isPathActive(location.pathname, path)

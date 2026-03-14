@@ -9,7 +9,6 @@ export const loginGoogle = async (data: LoginRequest): Promise<ApiResponse<AuthR
     `${API_URL}${API_ENDPOINTS.auth.google}`,
     data,
     {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -19,14 +18,10 @@ export const loginGoogle = async (data: LoginRequest): Promise<ApiResponse<AuthR
   return response.data
 }
 
-export const restoreSession = async (): Promise<ApiResponse<AuthResponse>> => {
-  const response = await client.get<ApiResponse<AuthResponse>>(API_ENDPOINTS.auth.session)
-
-  return response.data
-}
-
-export const logout = async (): Promise<ApiResponse<boolean>> => {
-  const response = await client.post<ApiResponse<boolean>>(API_ENDPOINTS.auth.logout)
+export const logout = async (refreshToken?: string): Promise<ApiResponse<boolean>> => {
+  const response = await client.post<ApiResponse<boolean>>(API_ENDPOINTS.auth.logout, {
+    refreshToken,
+  })
 
   return response.data
 }

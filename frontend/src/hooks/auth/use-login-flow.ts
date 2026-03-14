@@ -23,7 +23,6 @@ const isIosStandalonePwa = () => {
 
 export const useLoginFlow = () => {
   const navigate = useNavigate()
-  const isSessionChecked = useAuthStore.use.isSessionChecked()
   const isAuthenticated = useAuthStore.use.isAuthenticated()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -55,13 +54,13 @@ export const useLoginFlow = () => {
   }
 
   useEffect(() => {
-    if (isSessionChecked && isAuthenticated) {
+    if (isAuthenticated) {
       navigate(PATHS.HOME, { replace: true })
     }
-  }, [isSessionChecked, isAuthenticated, navigate])
+  }, [isAuthenticated, navigate])
 
   useEffect(() => {
-    if (!isSessionChecked || isAuthenticated) {
+    if (isAuthenticated) {
       return
     }
 
@@ -81,7 +80,7 @@ export const useLoginFlow = () => {
     }
 
     void loginWithCode()
-  }, [authRedirectUri, isAuthenticated, isSessionChecked])
+  }, [authRedirectUri, isAuthenticated])
 
   const redirectGoogleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
@@ -132,7 +131,6 @@ export const useLoginFlow = () => {
   }
 
   return {
-    isSessionChecked,
     isLoading,
     error,
     handleGoogleLogin,
