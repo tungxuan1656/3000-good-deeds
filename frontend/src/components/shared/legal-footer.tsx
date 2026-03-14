@@ -60,7 +60,8 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
         </p>
 
         <p className='text-muted-foreground/70 text-center text-xs leading-relaxed'>
-          {t('legal.version', { version: APP_VERSION })}
+          {t('legal.version')}
+          {`: ${APP_VERSION}`}
         </p>
       </div>
     </div>
