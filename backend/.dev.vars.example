@@ -1,5 +1,4 @@
-GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your-client-secret
+FIREBASE_PROJECT_ID=your-firebase-project-id
 JWT_SECRET=your-jwt-secret
 VAPID_PUBLIC_KEY=""
 VAPID_PRIVATE_KEY=""

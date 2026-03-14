@@ -5,6 +5,7 @@ import {
   AccountProfileCard,
   DeleteAccountCard,
   NotificationSettingsCard,
+  PasswordSecurityCard,
   SessionCard,
 } from '@/components/settings'
 import {
@@ -43,6 +44,7 @@ const SettingsPage = () => {
         <AccountProfileCard user={user} />
 
         <NotificationSettingsCard user={user} />
+        <PasswordSecurityCard />
         <SessionCard />
         <DeleteAccountCard />
 

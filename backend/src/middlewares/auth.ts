@@ -4,9 +4,11 @@ import { jwtVerify } from 'jose'
 import { getUser } from '../handlers/users'
 import { errorResponse } from '../utils'
 
-const JWT_SECRET = 'your-secret-key-change-me' // Fallback if env missing
-
 export const authMiddleware = async (c: Context, next: Next) => {
+  if (!c.env.JWT_SECRET) {
+    return c.json(errorResponse('INTERNAL_ERROR', 'Thiếu cấu hình JWT_SECRET'), 500)
+  }
+
   const authHeader = c.req.header('Authorization')
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -14,7 +16,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
   }
 
   const token = authHeader.split(' ')[1]
-  const secret = new TextEncoder().encode(c.env.JWT_SECRET || JWT_SECRET)
+  const secret = new TextEncoder().encode(c.env.JWT_SECRET)
 
   try {
     const { payload } = await jwtVerify(token, secret)
