@@ -109,7 +109,12 @@
     "terms": "Điều khoản sử dụng",
     "and": "và",
     "privacy": "Chính sách riêng tư",
-    "version": "Phiên bản"
+    "version": "Phiên bản",
+    "messages": {
+      "copySuccess": "Đã sao chép email",
+      "copyFailed": "Không thể sao chép email"
+    },
+    "emailNotConfigured": "Email chưa được cấu hình"
   },
   "pwa": {
     "notifications": {
@@ -118,6 +123,12 @@
       "enableAction": "Bật thông báo",
       "enabled": "Đã bật thông báo",
       "enableFailed": "Không thể bật thông báo"
+    },
+    "guide": {
+      "title": "Cài đặt ứng dụng",
+      "description": "Cài đặt ứng dụng này trên màn hình chính của bạn để sử dụng như một ứng dụng bình thường.",
+      "confirm": "Hiểu rồi",
+      "openAction": "Cài đặt ứng dụng"
     },
     "installGuide": {
       "android": {
@@ -325,11 +336,28 @@
     "notifications": {
       "title": "Thông báo",
       "status": {
-        "disabled": "Bạn đang tắt nhắc nhở"
+        "disabled": "Bạn đang tắt nhắc nhở",
+        "enabled": "Nhắc nhở đã bật"
       },
       "subtitle": "Quản lý nhắc nhở hàng ngày",
+      "unsupportedHint": "Thiết bị của bạn không hỗ trợ thông báo web push",
+      "reminderTimeLabel": "Giờ nhắc nhở",
+      "reminderBehavior": "Hành động nhắc nhở",
+      "sampleMessage": "Thông báo mẫu",
       "actions": {
-        "enable": "Bật nhắc nhở"
+        "enable": "Bật nhắc nhở",
+        "disable": "Tắt nhắc nhở",
+        "sendTest": "Gửi thử"
+      },
+      "errors": {
+        "enableFailed": "Không thể bật nhắc nhở",
+        "updateFailed": "Không thể cập nhật cài đặt nhắc nhở",
+        "permissionNotGranted": "Bạn cần cấp quyền thông báo",
+        "testSendFailed": "Không thể gửi thông báo thử",
+        "testSendRetry": "Vui lòng thử lại"
+      },
+      "messages": {
+        "testSent": "Đã gửi thông báo thử"
       }
     },
     "security": {
@@ -600,7 +628,8 @@
   "quote": {
     "card": {
       "label": "Pháp ngữ cho phiên này",
-      "defaultQuote": "Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút."
+      "defaultQuote": "Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút.",
+      "defaultSource": "3000 Việc Thiện"
     }
   },
   "stats": {
@@ -638,101 +667,89 @@
     },
     "general": {
       "title": "Chào mừng",
-      "steps": [
-        {
-          "title": "Đây không phải mạng xã hội",
-          "description": "Đây là không gian riêng để bạn nhìn lại chính mình, không khoe khoang và không so sánh."
-        },
-        {
-          "title": "Không chấm điểm - Không thao túng",
-          "description": "Ứng dụng không dùng điểm số hay cơ chế gây nghiện. Mọi thứ đều nhẹ nhàng và tự nguyện."
-        },
-        {
-          "title": "Mỗi việc nhỏ đều quý",
-          "description": "Một hành động tử tế nhỏ cũng đủ nuôi dưỡng tâm mình mỗi ngày."
-        },
-        {
-          "title": "Dữ liệu thuộc về bạn",
-          "description": "Mọi ghi nhận đều riêng tư. Bạn có thể xuất hoặc xóa dữ liệu bất cứ lúc nào."
-        }
-      ]
+      "step1": {
+        "title": "Đây không phải mạng xã hội",
+        "description": "Đây là không gian riêng để bạn nhìn lại chính mình, không khoe khoang và không so sánh."
+      },
+      "step2": {
+        "title": "Không chấm điểm – Không thao túng",
+        "description": "Ứng dụng không dùng điểm số hay cơ chế gây nghiện. Mọi thứ đều nhẹ nhàng và tự nguyện."
+      },
+      "step3": {
+        "title": "Mỗi việc nhỏ đều quý",
+        "description": "Một hành động tử tế nhỏ cũng đủ nuôi dưỡng tâm mình mỗi ngày."
+      },
+      "step4": {
+        "title": "Dữ liệu thuộc về bạn",
+        "description": "Mọi ghi nhận đều riêng tư. Bạn có thể xuất hoặc xóa dữ liệu bất cứ lúc nào."
+      }
     },
     "deeds": {
       "title": "Ghi nhận việc thiện",
-      "steps": [
-        {
-          "title": "Thân - Khẩu - Ý",
-          "description": "Bạn có thể ghi nhận theo ba nhóm để nhìn rõ cách mình thực hành mỗi ngày."
-        },
-        {
-          "title": "Ghi nhận để nhìn lại",
-          "description": "Chỉ cần vài dòng ngắn để nhớ lại điều đã làm, không cần dài."
-        },
-        {
-          "title": "Riêng tư tuyệt đối",
-          "description": "Ghi nhận này chỉ mình bạn thấy. Không công khai, không chia sẻ."
-        },
-        {
-          "title": "Sau khi lưu",
-          "description": "Bạn có thể xem lại trong hành trình để soi chiếu khi cần."
-        }
-      ]
+      "step1": {
+        "title": "Thân - Khẩu - Ý",
+        "description": "Bạn có thể ghi nhận theo ba nhóm để nhìn rõ cách mình thực hành mỗi ngày."
+      },
+      "step2": {
+        "title": "Ghi nhận để nhìn lại",
+        "description": "Chỉ cần vài dòng ngắn để nhớ lại điều đã làm, không cần dài."
+      },
+      "step3": {
+        "title": "Riêng tư tuyệt đối",
+        "description": "Ghi nhận này chỉ mình bạn thấy. Không công khai, không chia sẻ."
+      },
+      "step4": {
+        "title": "Sau khi lưu",
+        "description": "Bạn có thể xem lại trong hành trình để soi chiếu khi cần."
+      }
     },
     "quoteRandomActs": {
-      "title": "Pháp ngữ và Gieo duyên",
-      "steps": [
-        {
-          "title": "Pháp ngữ theo phiên",
-          "description": "Mỗi lần mở app, một câu pháp ngữ sẽ đồng hành với bạn trong phiên đó."
-        },
-        {
-          "title": "Gợi ý việc thiện nhỏ",
-          "description": "Gợi ý chỉ để khởi tâm. Nếu phù hợp thì thử, không phù hợp có thể bỏ qua."
-        }
-      ]
+      "title": "Pháp ngữ & Gieo duyên",
+      "step1": {
+        "title": "Pháp ngữ theo phiên",
+        "description": "Mỗi lần mở app, một câu pháp ngữ sẽ đồng hành với bạn trong phiên đó."
+      },
+      "step2": {
+        "title": "Gợi ý việc thiện nhỏ",
+        "description": "Gợi ý chỉ để khởi tâm. Nếu phù hợp thì thử, không phù hợp có thể bỏ qua."
+      }
     },
     "journey": {
       "title": "Hành trình",
-      "steps": [
-        {
-          "title": "Đường dài - không vội",
-          "description": "Hành trình là tiến trình dài hạn, không phải cuộc đua."
-        },
-        {
-          "title": "Giữ nhịp nhẹ nhàng",
-          "description": "Mỗi bước nhỏ đều đáng trân trọng. Hãy đi theo nhịp của mình."
-        }
-      ]
+      "step1": {
+        "title": "Đường dài - không vội",
+        "description": "Hành trình là tiến trình dài hạn, không phải cuộc đua."
+      },
+      "step2": {
+        "title": "Giữ nhịp nhẹ nhàng",
+        "description": "Mỗi bước nhỏ đều đáng trân trọng. Hãy đi theo nhịp của mình."
+      }
     },
     "stats": {
       "title": "Thống kê",
-      "steps": [
-        {
-          "title": "Soi chiếu, không phán xét",
-          "description": "Các con số chỉ để nhìn lại thói quen của mình, không phải để đánh giá."
-        },
-        {
-          "title": "Chuỗi ngày chỉ là nhịp",
-          "description": "Đứt quãng cũng không sao. Hãy bắt đầu lại khi bạn sẵn sàng."
-        }
-      ]
+      "step1": {
+        "title": "Soi chiếu, không phán xét",
+        "description": "Các con số chỉ để nhìn lại thói quen của mình, không phải để đánh giá."
+      },
+      "step2": {
+        "title": "Chuỗi ngày chỉ là nhịp",
+        "description": "Đứt quãng cũng không sao. Hãy bắt đầu lại khi bạn sẵn sàng."
+      }
     },
     "journal": {
       "title": "Sổ tay quán chiếu",
-      "steps": [
-        {
-          "title": "Không gian riêng tư",
-          "description": "Một nơi an toàn để bạn nhìn lại thân - khẩu - ý của mình."
-        },
-        {
-          "title": "Viết xong là đặt xuống",
-          "description": "Viết để nhìn rõ rồi buông nhẹ. Không cần giữ lại cảm xúc nặng nề."
-        },
-        {
-          "title": "Sám hối / Biết ơn",
-          "description": "Hai chế độ giúp bạn quán chiếu theo cách phù hợp với mình."
-        }
-      ]
+      "step1": {
+        "title": "Không gian riêng tư",
+        "description": "Một nơi an toàn để bạn nhìn lại thân - khẩu - ý của mình."
+      },
+      "step2": {
+        "title": "Viết xong là đặt xuống",
+        "description": "Viết để nhìn rõ rồi buông nhẹ. Không cần giữ lại cảm xúc nặng nề."
+      },
+      "step3": {
+        "title": "Sám hối / Biết ơn",
+        "description": "Hai chế độ giúp bạn quán chiếu theo cách phù hợp với mình."
+      }
     }
   },
   "deeds": {

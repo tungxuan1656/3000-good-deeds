@@ -58,7 +58,6 @@ const SettingsPage = () => {
         navigateToLogin: () => navigate(PATHS.LOGIN, { replace: true }),
         toastSuccess: toast.success,
         toastError: toast.error,
-        t,
       })
     } finally {
       setIsDeletingAccount(false)

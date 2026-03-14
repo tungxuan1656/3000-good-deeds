@@ -1,4 +1,5 @@
 import { AuthProviderError } from '@/hooks/auth/auth-provider-errors'
+import { t } from '@/lib/i18n'
 import type { ApiResponse } from '@/types/api'
 
 type DeleteAccountFlowDependencies = {
@@ -9,7 +10,6 @@ type DeleteAccountFlowDependencies = {
   navigateToLogin: () => void
   toastSuccess: (message: string) => void
   toastError: (message: string) => void
-  t: (key: string) => string
 }
 
 export const executeDeleteAccountFlow = async ({
@@ -20,7 +20,6 @@ export const executeDeleteAccountFlow = async ({
   navigateToLogin,
   toastSuccess,
   toastError,
-  t,
 }: DeleteAccountFlowDependencies): Promise<boolean> => {
   try {
     await deleteCurrentFirebaseUser()

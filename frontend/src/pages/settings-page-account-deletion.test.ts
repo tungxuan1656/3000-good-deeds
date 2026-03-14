@@ -5,17 +5,6 @@ import type { ApiResponse } from '@/types/api'
 
 import { executeDeleteAccountFlow } from './settings-page-account-deletion'
 
-const createTranslator = () => {
-  const dictionary: Record<string, string> = {
-    'settings.deleteAccount.errors.requiresRecentLogin': 'requires-recent-login',
-    'settings.deleteAccount.errors.firebaseDeleteFailed': 'firebase-delete-failed',
-    'settings.deleteAccount.errors.backendDeleteFailed': 'backend-delete-failed',
-    'settings.deleteAccount.messages.deleted': 'deleted',
-  }
-
-  return (key: string) => dictionary[key] ?? key
-}
-
 describe('executeDeleteAccountFlow', () => {
   it('completes delete flow and redirects on success', async () => {
     const deleteCurrentFirebaseUser = vi.fn().mockResolvedValue(undefined)
@@ -38,7 +27,6 @@ describe('executeDeleteAccountFlow', () => {
       navigateToLogin,
       toastSuccess,
       toastError,
-      t: createTranslator(),
     })
 
     expect(completed).toBe(true)
@@ -71,7 +59,6 @@ describe('executeDeleteAccountFlow', () => {
       navigateToLogin,
       toastSuccess,
       toastError,
-      t: createTranslator(),
     })
 
     expect(completed).toBe(false)
@@ -104,7 +91,6 @@ describe('executeDeleteAccountFlow', () => {
       navigateToLogin,
       toastSuccess,
       toastError,
-      t: createTranslator(),
     })
 
     expect(completed).toBe(true)
@@ -144,7 +130,6 @@ describe('executeDeleteAccountFlow', () => {
       navigateToLogin,
       toastSuccess,
       toastError,
-      t: createTranslator(),
     })
 
     const secondAttempt = await executeDeleteAccountFlow({
@@ -155,7 +140,6 @@ describe('executeDeleteAccountFlow', () => {
       navigateToLogin,
       toastSuccess,
       toastError,
-      t: createTranslator(),
     })
 
     expect(firstAttempt).toBe(false)
