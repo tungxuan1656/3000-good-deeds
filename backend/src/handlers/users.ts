@@ -9,7 +9,7 @@ export async function getUser(db: D1Database, userId: string): Promise<User> {
     .prepare(
       `SELECT 
         id, email, display_name as displayName,
-        avatar_url as avatarUrl, bio,
+        bio,
         reminder_time as reminderTime, reminder_enabled as reminderEnabled,
         timezone, theme_preference as themePreference, privacy_mode as privacyMode,
         created_at as createdAt, updated_at as updatedAt
@@ -43,11 +43,6 @@ export async function updateUser(
   if (body.displayName !== undefined) {
     updates.push('display_name = ?')
     values.push(body.displayName)
-  }
-
-  if (body.avatarUrl !== undefined) {
-    updates.push('avatar_url = ?')
-    values.push(body.avatarUrl)
   }
 
   if (body.bio !== undefined) {

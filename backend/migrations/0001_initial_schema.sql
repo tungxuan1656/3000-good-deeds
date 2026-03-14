@@ -7,8 +7,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,               -- ULID
   email TEXT UNIQUE NOT NULL,
-  display_name TEXT NOT NULL,
-  avatar_url TEXT,
+  display_name TEXT,
   bio TEXT,
 
   email_verified_at INTEGER,
@@ -46,21 +45,22 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 );
 
 -- ============================================
--- 3. OAUTH ACCOUNTS
+-- 3. IDENTITY ACCOUNTS
 -- ============================================
-CREATE TABLE IF NOT EXISTS oauth_accounts (
+CREATE TABLE IF NOT EXISTS identity_accounts (
   id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
-  provider TEXT NOT NULL,            -- 'google'
-  provider_user_id TEXT NOT NULL,    -- Google sub
+  provider TEXT NOT NULL,            -- 'firebase'
+  provider_user_id TEXT NOT NULL,    -- Firebase uid
   provider_email TEXT,
   created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL,
 
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_oauth_provider_user
-ON oauth_accounts(provider, provider_user_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_identity_provider_user
+ON identity_accounts(provider, provider_user_id);
 
 -- ============================================
 -- 4. CATEGORIES (System-managed in MVP)

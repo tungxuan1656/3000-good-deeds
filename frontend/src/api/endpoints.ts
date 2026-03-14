@@ -1,6 +1,6 @@
 export const API_ENDPOINTS = {
   auth: {
-    google: '/auth/google',
+    providerExchange: '/auth/provider/exchange',
     logout: '/auth/logout',
     refresh: '/auth/refresh',
   },

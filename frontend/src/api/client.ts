@@ -24,7 +24,10 @@ let failedQueue: Array<{
   reject: (reason?: unknown) => void
 }> = []
 
-const AUTH_BEARER_EXCLUDED_ENDPOINTS = [API_ENDPOINTS.auth.google, API_ENDPOINTS.auth.refresh]
+const AUTH_BEARER_EXCLUDED_ENDPOINTS = [
+  API_ENDPOINTS.auth.providerExchange,
+  API_ENDPOINTS.auth.refresh,
+]
 
 const shouldSkipAuthHeader = (url?: string) => {
   if (!url) return false

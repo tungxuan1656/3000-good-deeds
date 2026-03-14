@@ -1,34 +1,40 @@
 # 00. KIẾN TRÚC HỆ THỐNG (SYSTEM ARCHITECTURE)
 
 ## 1. Tech Stack
-Dự án được xây dựng theo tiêu chí: **Serverless, Low-cost, High-performance**.
+Dự án được xây dựng theo định hướng: **Serverless, low-ops, dễ mở rộng**.
 
-*   **Frontend:** React (Vite) + TailwindCSS + Shadcn/UI (deploy on Cloudflare Pages).
-*   **Backend:** Cloudflare Workers (Hono framework).
-*   **Database:** Cloudflare D1 (SQLite at Edge).
-*   **Package Manager:** npm (Monorepo with Workspaces).
+- **Frontend:** React 19 + Vite + TailwindCSS + shadcn/ui
+- **Frontend Hosting:** Firebase Hosting
+- **Backend:** Cloudflare Workers (Hono)
+- **Database:** Cloudflare D1 (SQLite)
+- **Auth Identity Provider:** Firebase Authentication
+- **Session cho API app:** JWT access token + refresh token do backend phát hành
+- **Package Manager:** pnpm (workspace)
 
-## 2. Luồng dữ liệu (Data Flow)
-`Client (React)` <-> `Worker (API Layer)` <-> `D1 (Database)`
+## 2. Data Flow
+`Client (React)` <-> `Worker API (Hono)` <-> `D1`
 
-*   **Authentication:** Sử dụng Google OAuth 2.0. Worker verify token và cấp JWT session riêng.
-*   **State:** Backend là stateless. Mọi request phải kèm Token.
+Luồng auth:
+1. Client xác thực user với Firebase Auth.
+2. Client gửi Firebase `idToken` đến backend qua `/api/v1/auth/provider/exchange`.
+3. Backend verify token và cấp session token nội bộ.
+4. Mọi API nghiệp vụ đi qua Bearer access token từ backend.
 
-## 3. Cấu trúc thư mục (Monorepo)
-```
+## 3. Auth Boundary (rất quan trọng)
+- Firebase chỉ là **provider xác thực danh tính**.
+- Logic phiên, quyền truy cập API, rotate refresh token đều do backend kiểm soát.
+- Thiết kế này cho phép thay/đổi provider mà không phá API contract với frontend.
+
+## 4. Cấu trúc thư mục (Monorepo)
+```text
 /
-├── backend/            # Worker API code
-│   ├── src/
-│   │   ├── index.ts    # Entry point & Routes
-│   │   └── dba/        # Database access (Drizzle/Raw)
-├── frontend/           # React App
-│   ├── src/
-│   │   ├── components/ # UI Shared
-│   │   └── pages/      # Route pages
-└── docs/               # Tài liệu dự án
+├── backend/     # Cloudflare Worker API + migrations
+├── frontend/    # React application
+├── docs/        # Specs + technical docs + deploy docs
+└── scripts/     # scripts hỗ trợ
 ```
 
-## 4. Mở rộng (Scalability)
-*   D1 Database tự động replicate ở các edge.
-*   Worker tự động scale theo request (0 -> vô cực).
-*   Giới hạn hiện tại: D1 đang ở dạng Beta/Growth, cần chú ý limit write/read nếu user tăng đột biến.
+## 5. Mở rộng
+- Mở rộng provider auth bằng adapter (Apple/Facebook/custom) mà không đổi session model.
+- D1 schema tách `identity_accounts` và `refresh_tokens` để dễ vận hành nhiều provider.
+- Worker stateless, scale theo request.

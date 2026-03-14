@@ -1,93 +1,99 @@
-# 04. HƯỚNG DẪN CÀI ĐẶT & CHẠY DỰ ÁN (SETUP GUIDE)
+# 04. HƯỚNG DẪN SETUP LOCAL (NEWCOMER FRIENDLY)
 
-Tài liệu này giúp bạn setup môi trường và chạy dự án (Backend + Frontend) trên máy local.
+Mục tiêu: clone repo, điền env, chạy backend + frontend trên máy local.
 
-## 1. Yêu cầu (Prerequisites)
-*   **Node.js:** v18 trở lên (Khuyên dùng v20 LTS).
-*   **pnpm:** (Khuyên dùng, vì project dùng pnpm workspace).
-*   **Wrangler CLI:** `pnpm add -g wrangler` (Để chạy Cloudflare Workers/D1).
+## 1. Prerequisites
+- Node.js >= 20
+- pnpm >= 10
+- Cloudflare Wrangler CLI (qua devDependency, không cần cài global)
+- Firebase CLI (chỉ cần khi deploy frontend):
+  ```bash
+  npm i -g firebase-tools
+  ```
 
-## 2. Cài đặt (Installation)
-Dự án là Monorepo. Tại thư mục gốc:
-
+## 2. Cài dependencies
 ```bash
-# 1. Cài đặt dependencies cho toàn bộ project
 pnpm install
 ```
 
-## 3. Backend Setup
+## 3. Cấu hình Environment Variables
 
-### Cấu trúc
-Backend nằm tại folder `backend/`.
-
-### Config Environment
-Copy file `.dev.vars.example` thành `.dev.vars` (nếu có) hoặc tạo file `wrangler.toml` dựa trên mẫu.
-
-### Database Setup (Local D1)
-Chúng ta cần tạo database và chạy migration trên local.
-
+### 3.1 Backend: `backend/.dev.vars`
+Tạo file từ mẫu:
 ```bash
-cd backend
-
-# 1. Tạo migration (nếu cần sửa schema)
-# npx wrangler d1 migrations create DB <tên_migration>
-
-# 2. Chạy migration trên local
-pnpm run migrate:local
-# Lệnh này tương đương: wrangler d1 migrations apply DB --local
-
-# 3. (Optional) Seed dữ liệu mẫu
-# Seed categories + random acts + dharma quotes
-pnpm run seed:data -- --local
+cp backend/.dev.vars.example backend/.dev.vars
 ```
 
-### Chạy Backend Server
+Biến bắt buộc:
+- `FIREBASE_PROJECT_ID`: Firebase project id dùng để verify idToken
+- `JWT_SECRET`: secret để ký access token
+
+Biến cho reminders (nếu dùng):
+- `VAPID_PUBLIC_KEY`
+- `VAPID_PRIVATE_KEY`
+- `VAPID_SUBJECT`
+
+### 3.2 Frontend: `frontend/.env`
+Tạo file từ mẫu:
 ```bash
-# Tại folder backend/
-pnpm run dev
-```
-Server sẽ chạy tại: `http://localhost:8787`
-
----
-
-## 4. Frontend Setup
-
-### Cấu trúc
-Frontend nằm tại folder `frontend/`.
-
-### Config Environment
-Tạo file `.env` tại `frontend/`:
-```env
-VITE_API_URL=http://localhost:8787/api/v1
+cp frontend/.env.example frontend/.env
 ```
 
-### Chạy Frontend Server
+Biến bắt buộc:
+- `VITE_API_URL` (local: `http://localhost:8787/api/v1`)
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_APP_ID`
+
+Biến tùy chọn:
+- `VITE_SUPPORT_EMAIL`
+
+## 4. Setup Database local
 ```bash
-# Tại folder gốc hoặc cd frontend/
-pnpm run dev
-# (Script gốc trong package.json có thể là "dev:frontend")
+pnpm --filter backend migrate:local
 ```
-Server sẽ chạy tại: `http://localhost:5173` (hoặc port khác nếu 5173 bận).
 
----
+(Optional) seed dữ liệu:
+```bash
+pnpm --filter backend seed:data
+```
 
-## 5. Kiểm tra hoạt động (Verification)
-1.  Đảm bảo cả Backend (8787) và Frontend (5173) đều đang chạy.
-2.  Mở trình duyệt: `http://localhost:5173`.
-3.  Thử chức năng **Đăng nhập Google** (Lưu ý: Cần cấu hình Google Client ID chính xác trong `backend/wrangler.toml` hoặc `.dev.vars` để auth hoạt động thật sự. Trên local có thể cần mock hoặc dùng Client ID test).
+## 5. Chạy ứng dụng
 
-## 6. Các lệnh thường dùng
+### Cách 1: từ root (khuyến nghị)
+```bash
+# Terminal 1
+pnpm dev:backend
 
-| Lệnh                      | Mô tả                        |
-| :------------------------ | :--------------------------- |
-| `pnpm run dev` (Backend)  | Chạy backend dev server      |
-| `pnpm run dev` (Frontend) | Chạy frontend dev server     |
-| `pnpm run migrate:local`  | Update database schema local |
-| `pnpm run type-check`     | Kiểm tra lỗi TypeScript      |
-| `pnpm run format`         | Format code với Prettier     |
+# Terminal 2
+pnpm dev:frontend
+```
 
-## 7. Deploy Production
+### Cách 2: chạy từng package
+```bash
+pnpm --filter backend dev
+pnpm --filter frontend dev
+```
 
-Checklist đầy đủ để deploy production (Backend Cloudflare Workers + Frontend Firebase Hosting):
+## 6. Verify nhanh
+1. Mở `http://localhost:5173`
+2. Test 3 luồng auth:
+   - Đăng ký email + password
+   - Đăng nhập email + password
+   - Đăng nhập Google
+3. Vào app và gọi một API protected (ví dụ danh sách deeds)
 
-- [08_production_deploy_checklist.md](./08_production_deploy_checklist.md)
+## 7. Scripts thường dùng
+```bash
+pnpm --filter frontend lint
+pnpm --filter backend lint
+pnpm --filter frontend build
+pnpm --filter backend check
+pnpm --filter backend deploy
+```
+
+## 8. Tài liệu liên quan
+- Auth implementation: [06_authentication_implementation.md](./06_authentication_implementation.md)
+- Firebase config: [05_firebase_auth_setup.md](./05_firebase_auth_setup.md)
+- Deploy production checklist: [08_production_deploy_checklist.md](./08_production_deploy_checklist.md)
