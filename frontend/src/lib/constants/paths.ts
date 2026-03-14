@@ -12,5 +12,6 @@ export const PATHS = {
   INNER_RANDOM_ACTS: '/inner/random-acts',
   INNER_JOURNAL: '/inner/journal',
   INNER_JOURNAL_HISTORY: '/inner/journal/history',
+  INNER_MEDITATION: '/inner/meditation',
   SETTINGS: '/settings',
 }

@@ -71,7 +71,15 @@ export const useAuthProvider = () => {
         await updateProfile(credential.user, { displayName: displayName.trim() })
       }
 
-      await completeBackendSession()
+      try {
+        await completeBackendSession()
+      } catch (error) {
+        // Roll back the Firebase account so the same email can be used to retry
+        try {
+          await credential.user.delete()
+        } catch {}
+        throw error
+      }
     },
     [],
   )
