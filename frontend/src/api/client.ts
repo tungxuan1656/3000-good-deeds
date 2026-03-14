@@ -129,7 +129,7 @@ client.interceptors.response.use(
         isRefreshing = false
 
         const status = (refreshError as any)?.response?.status
-        if (!status || status === 401 || status === 400) {
+        if (status === 401 || status === 400) {
           redirectToLogin()
         }
 

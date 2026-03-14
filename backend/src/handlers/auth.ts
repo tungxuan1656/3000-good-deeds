@@ -182,8 +182,10 @@ export async function refreshAccessToken(
   const refreshTokenExpiry = now + REFRESH_TOKEN_EXPIRY_DAYS * 86400 * 1000
 
   const result = await db
-    .prepare('UPDATE refresh_tokens SET revoked_at = ? WHERE token_hash = ? AND revoked_at IS NULL')
-    .bind(now, refreshToken)
+    .prepare(
+      'UPDATE refresh_tokens SET revoked_at = ? WHERE token_hash = ? AND revoked_at IS NULL AND expires_at >= ?',
+    )
+    .bind(now, refreshToken, now)
     .run()
 
   if (result.meta.changes === 0) {
