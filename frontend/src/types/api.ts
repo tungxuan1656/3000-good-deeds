@@ -7,8 +7,7 @@ export interface ApiResponse<T> {
 export interface UserDTO {
   id: string
   email: string
-  displayName: string
-  avatarUrl?: string
+  displayName: string | null
   bio?: string
   reminderTime?: string | null
   reminderEnabled?: boolean
@@ -33,9 +32,11 @@ export interface RefreshTokenResponse {
   refreshToken: string
 }
 
-export interface LoginRequest {
-  code: string
-  redirectUri?: string
+export type AuthProvider = 'firebase'
+
+export interface ProviderExchangeRequest {
+  provider: AuthProvider
+  idToken: string
 }
 
 export interface DeedDTO {

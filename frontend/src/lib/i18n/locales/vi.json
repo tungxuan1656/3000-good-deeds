@@ -60,6 +60,32 @@
         "unexpected": "Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại.",
         "googleConnection": "Không thể kết nối với Google. Vui lòng thử lại."
       }
+    },
+    "form": {
+      "title": "Chào mừng bạn trở lại",
+      "modes": {
+        "login": "Đăng nhập",
+        "register": "Đăng ký",
+        "forgot": "Quên mật khẩu"
+      },
+      "fields": {
+        "displayName": "Tên hiển thị",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmPassword": "Xác nhận mật khẩu"
+      },
+      "actions": {
+        "login": "Đăng nhập với email",
+        "register": "Tạo tài khoản",
+        "forgot": "Gửi email đặt lại mật khẩu",
+        "google": "Tiếp tục với Google"
+      },
+      "messages": {
+        "resetSent": "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư của bạn."
+      },
+      "validation": {
+        "passwordMismatch": "Mật khẩu xác nhận chưa khớp."
+      }
     }
   },
   "push": {
@@ -266,7 +292,20 @@
     "account": {
       "heading": "Hồ sơ",
       "title": "Tài khoản của bạn",
-      "helper": "Thông tin này được lấy từ tài khoản đăng nhập."
+      "helper": "Bạn có thể cập nhật tên hiển thị bất cứ lúc nào.",
+      "fields": {
+        "displayName": "Nhập tên hiển thị mới"
+      },
+      "actions": {
+        "saveDisplayName": "Cập nhật tên hiển thị"
+      },
+      "messages": {
+        "updated": "Đã cập nhật tên hiển thị."
+      },
+      "errors": {
+        "emptyDisplayName": "Tên hiển thị không được để trống.",
+        "updateFailed": "Không thể cập nhật tên hiển thị."
+      }
     },
     "session": {
       "title": "Phiên đăng nhập",
@@ -275,6 +314,28 @@
       "logoutAction": "Đăng xuất",
       "logoutTitle": "Đăng xuất khỏi tài khoản?",
       "logoutDescription": "Bạn có thể đăng nhập lại bất cứ lúc nào."
+    },
+    "security": {
+      "title": "Bảo mật tài khoản",
+      "description": "Đổi mật khẩu để bảo vệ tài khoản email của bạn.",
+      "googleOnly": "Tài khoản hiện tại đăng nhập bằng Google nên không dùng chức năng đổi mật khẩu tại đây.",
+      "fields": {
+        "currentPassword": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu mới"
+      },
+      "actions": {
+        "update": "Đổi mật khẩu"
+      },
+      "messages": {
+        "passwordUpdated": "Đổi mật khẩu thành công."
+      },
+      "errors": {
+        "missingFields": "Vui lòng nhập đầy đủ thông tin.",
+        "passwordMismatch": "Mật khẩu xác nhận chưa khớp.",
+        "passwordTooShort": "Mật khẩu mới cần tối thiểu 6 ký tự.",
+        "updateFailed": "Không thể đổi mật khẩu. Vui lòng kiểm tra lại mật khẩu hiện tại."
+      }
     },
     "deleteAccount": {
       "title": "Xóa tài khoản",

@@ -1,49 +1,53 @@
 # 02. HỒ SƠ & CÀI ĐẶT (PROFILE & SETTINGS)
 
 ## 1. Tổng quan
-Nơi người dùng quản lý thông tin cá nhân và thiết lập các tuỳ chọn cho ứng dụng.
+Màn hình để quản lý thông tin người dùng và cài đặt trải nghiệm.
 
-**Nguyên tắc:** Tối giản - Đồng bộ từ Google - Quyền riêng tư cao nhất (Right to be forgotten).
+Nguyên tắc:
+- Tối giản, tập trung nhu cầu cốt lõi.
+- Quyền riêng tư cao.
+- Firebase là nơi xác thực danh tính; backend là nơi quản lý dữ liệu nghiệp vụ.
 
 ---
 
 ## 2. User Stories
-| ID      | Là một...  | Tôi muốn...                         | Để...                                                              |
-| :------ | :--------- | :---------------------------------- | :----------------------------------------------------------------- |
-| **P01** | Người dùng | Xem thông tin cá nhân (Avatar, Tên) | Biết mình đang đăng nhập tài khoản nào                             |
-| **P02** | Người dùng | Đăng xuất (Logout)                  | Bảo mật khi dùng máy lạ                                            |
-| **P03** | Người dùng | Cài đặt nhắc nhở (ON/OFF)           | Chủ động việc có nhận thông báo hay không                          |
-| **P04** | Người dùng | Xoá tài khoản (Delete Account)      | Xoá toàn bộ dữ liệu của mình khỏi hệ thống khi không muốn dùng nữa |
+| ID      | Là một...  | Tôi muốn...                           | Để...                                               |
+| :------ | :--------- | :------------------------------------ | :-------------------------------------------------- |
+| **P01** | Người dùng | Xem email và tên hiển thị             | Biết mình đang đăng nhập tài khoản nào             |
+| **P02** | Người dùng | Cập nhật tên hiển thị                 | Cá nhân hóa trải nghiệm sử dụng                     |
+| **P03** | Người dùng | Đổi mật khẩu (email/password)         | Tăng bảo mật tài khoản                              |
+| **P04** | Người dùng | Đăng xuất                             | Bảo mật khi dùng máy lạ                             |
+| **P05** | Người dùng | Bật/tắt nhắc nhở                      | Chủ động việc nhận thông báo                        |
+| **P06** | Người dùng | Xoá tài khoản                         | Xoá toàn bộ dữ liệu của mình khi không muốn dùng nữa |
 
 ---
 
 ## 3. Chi tiết tính năng
 
-### 3.1. Thông tin cá nhân (Read-only)
-*   **Avatar & Tên hiển thị:** Đồng bộ tự động từ Google Profile khi đăng nhập.
-*   **Email:** Hiển thị email đang dùng.
-*   *Lưu ý:* Trong giai đoạn MVP, **KHÔNG** cho phép user đổi avatar/tên trong app để giảm phức tạp. Nếu họ đổi bên Google, lần login sau app sẽ cập nhật.
+### 3.1 Thông tin cá nhân
+- Hiển thị: `displayName`, `email`.
+- Cho phép cập nhật `displayName` trong app.
+- **Không dùng avatar** trong phiên bản hiện tại.
 
-### 3.2. Cài đặt chung (General Settings)
-*   **Nhắc nhở tu tập:** Toggle Switch [ON/OFF].
-    *   Nếu ON: Hiện thêm chọn giờ (Time Picker).
-    *   Liên kết với Feature `06_reminders`.
-*   **Giao diện (Future):** Chọn Dark/Light Mode (Mặc định: System).
+### 3.2 Bảo mật tài khoản
+- Tài khoản Email/Password:
+  - Đổi mật khẩu trong app.
+  - Bắt buộc nhập mật khẩu hiện tại để xác nhận.
+- Tài khoản Google-only:
+  - Không hiển thị đổi mật khẩu trong app.
 
-### 3.3. Quản lý tài khoản (Danger Zone)
-*   **Đăng xuất:**
-    *   Clear Token ở LocalStorage/Cookie.
-    *   Redirect về màn hình Login.
-*   **Xoá tài khoản:**
-    *   Nút màu đỏ, nằm dưới cùng.
-    *   **Flow:** Nhấn Xoá -> Modal xác nhận ("Bạn chắc chứ? Dữ liệu sẽ mất vĩnh viễn") -> Nhập chữ "DELETE" để xác nhận -> Gọi API xoá user & data -> Logout.
+### 3.3 Cài đặt chung
+- Nhắc nhở tu tập: ON/OFF + giờ nhắc.
+- Các setting khác giữ như hiện tại.
+
+### 3.4 Quản lý tài khoản
+- Đăng xuất: clear session local + logout backend.
+- Xoá tài khoản: vẫn theo flow xác nhận có nhập keyword.
 
 ---
 
 ## 4. UI Flow
-1.  Từ màn hình Home -> Nhấn vào Avatar nhỏ ở góc (hoặc Menu).
-2.  Mở ra màn hình **Tài khoản** (hoặc Drawer).
-3.  Hiển thị các section rõ ràng:
-    *   Header: Avatar to + Tên.
-    *   Body: List các setting.
-    *   Footer user: Version app + Nút Logout.
+1. Từ Home mở màn hình Cài đặt.
+2. Xem và chỉnh tên hiển thị.
+3. Nếu tài khoản password: đổi mật khẩu khi cần.
+4. Quản lý session và thao tác đăng xuất/xóa tài khoản.

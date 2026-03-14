@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
+import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { authTokenStorage } from '@/lib/auth-tokens'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
@@ -16,11 +17,13 @@ import { Button } from '../ui/button'
 export const LogoutButton = (props: React.ComponentProps<typeof Button>) => {
   const navigate = useNavigate()
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
+  const { logoutProvider } = useAuthProvider()
 
   const handleLogout = async () => {
     try {
       await unsubscribeFromPushNotifications()
       await logout(authTokenStorage.getRefreshToken() ?? undefined)
+      await logoutProvider()
     } catch {
       // Ignore logout errors and still clear local state
     } finally {

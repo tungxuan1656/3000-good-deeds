@@ -1,12 +1,14 @@
 import axios from 'axios'
 
-import type { ApiResponse, AuthResponse, LoginRequest } from '../types/api'
+import type { ApiResponse, AuthResponse, ProviderExchangeRequest } from '../types/api'
 import { API_URL, client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
-export const loginGoogle = async (data: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
+export const exchangeProviderToken = async (
+  data: ProviderExchangeRequest,
+): Promise<ApiResponse<AuthResponse>> => {
   const response = await axios.post<ApiResponse<AuthResponse>>(
-    `${API_URL}${API_ENDPOINTS.auth.google}`,
+    `${API_URL}${API_ENDPOINTS.auth.providerExchange}`,
     data,
     {
       headers: {

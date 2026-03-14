@@ -1,60 +1,87 @@
-# 02. API DESIGN & REFERENCE
+# 02. API DESIGN
 
-## 1. Nguyên tắc chung (Principles)
-*   **Base URL:** `/api/v1`
-*   **Auth:** Bearer Token (JWT).
-*   **Response Format:**
-    ```json
-    {
-      "success": true,
-      "data": { ... },
-      "error": null
-    }
-    ```
-*   **Error Format:**
-    ```json
-    {
-      "success": false,
-      "data": null,
-      "error": { "code": "VALIDATION_ERROR", "message": "..." }
-    }
-    ```
+## 1. Nguyên tắc chung
+- Base URL: `/api/v1`
+- Auth: `Authorization: Bearer <accessToken>` (trừ API auth)
+- JSON only
+- Response chuẩn:
+
+```json
+{
+  "success": true,
+  "data": {},
+  "error": null
+}
+```
+
+Lỗi:
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "BAD_REQUEST",
+    "message": "..."
+  }
+}
+```
 
 ---
 
-## 2. Danh sách Endpoints
+## 2. Endpoints
 
 ### Auth
-*   `POST /auth/google` - Đăng nhập bằng Google Code.
-*   `POST /auth/logout` - Đăng xuất.
+- `POST /auth/provider/exchange`: exchange Firebase `idToken` sang session token nội bộ.
+- `POST /auth/refresh`: rotate access/refresh token.
+- `POST /auth/logout`: revoke refresh token hiện tại.
 
 ### Users
-*   `GET /users/me` - Lấy profile & settings.
-*   `PATCH /users/me` - Cập nhật profile.
+- `GET /users/me`: lấy thông tin user + settings.
+- `PATCH /users/me`: cập nhật displayName/bio/settings.
 
 ### Categories
-*   `GET /categories` - Lấy danh mục việc thiện (system default).
+- `GET /categories`
 
-### Deeds (Cốt lõi)
-*   `GET /deeds` - Lấy danh sách (hỗ trợ filter date).
-*   `POST /deeds` - Thêm mới.
-*   `DELETE /deeds/:id` - Xoá.
+### Deeds
+- `GET /deeds`
+- `POST /deeds`
+- `PATCH /deeds/:id`
+- `DELETE /deeds/:id`
 
-### Cultivation (Tu tập)
-*   `GET /cultivation/quotes/random` - Lấy pháp ngữ ngẫu nhiên.
-*   `GET /cultivation/acts/random` - Gợi ý việc thiện.
-*   `GET /cultivation/acts/random-list` - Danh sách gợi ý việc thiện (ngẫu nhiên).
-*   `GET /journal` - Lấy danh sách nhật ký.
-*   `POST /journal` - Viết nhật ký.
+### Goals
+- `GET /goals`
+- `POST /goals`
+- `GET /goals/history`
 
-### Gamification
-*   `GET /stats/summary` - Lấy thống kê tổng hợp.
+### Stats / Activities
+- `GET /stats/summary`
+- `GET /activities/calendar`
+- `GET /activities/streak`
+
+### Reminders
+- `GET /reminders/settings`
+- `PATCH /reminders/settings`
+- `GET /reminders/push-key`
+- `POST /reminders/subscriptions`
+- `POST /reminders/test`
+
+### Cultivation / Journal
+- `GET /cultivation/quotes/random`
+- `GET /cultivation/acts/random`
+- `GET /cultivation/acts/random-list`
+- `GET /journal`
+- `POST /journal`
+- `GET /journal/entries`
+- `DELETE /journal/entries/:id`
 
 ---
 
 ## 3. Status Codes
-*   `200`: OK
-*   `201`: Created (khi tạo deed/journal)
-*   `400`: Bad Request (Thiếu field, sai format)
-*   `401`: Unauthorized (Token hết hạn/thiếu)
-*   `500`: Server Error
+- `200`: OK
+- `201`: Created
+- `400`: Bad Request
+- `401`: Unauthorized
+- `404`: Not Found
+- `409`: Conflict
+- `500`: Internal Server Error

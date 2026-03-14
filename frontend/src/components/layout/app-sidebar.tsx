@@ -31,11 +31,7 @@ export const AppSidebar = () => {
       <SidebarHeader>
         <div className='bg-card/80 mt-4 flex items-center gap-3 rounded-2xl border border-black/5 px-3 py-2'>
           <div className='bg-secondary/40 text-foreground flex h-10 w-10 items-center justify-center rounded-full'>
-            {user?.avatarUrl ? (
-              <img alt={displayName} className='h-full w-full rounded-full' src={user.avatarUrl} />
-            ) : (
-              <UserRoundIcon className='h-5 w-5' />
-            )}
+            <UserRoundIcon className='h-5 w-5' />
           </div>
           <div className='min-w-0'>
             <p className='text-foreground truncate text-sm font-semibold'>{displayName}</p>
