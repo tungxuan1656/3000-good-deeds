@@ -13,3 +13,9 @@ export const updateMe = async (data: UpdateUserRequest): Promise<ApiResponse<Use
 
   return response.data
 }
+
+export const deleteMe = async (): Promise<ApiResponse<boolean>> => {
+  const response = await client.delete<ApiResponse<boolean>>(API_ENDPOINTS.users.deleteMe)
+
+  return response.data
+}

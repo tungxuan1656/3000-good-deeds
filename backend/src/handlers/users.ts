@@ -1,6 +1,16 @@
 import type { UpdateUserRequest, User } from '../types'
 import { getCurrentTimestamp } from '../utils'
 
+export class UserHandlerError extends Error {
+  status: 400 | 404 | 500
+
+  constructor(message: string, status: 400 | 404 | 500) {
+    super(message)
+    this.name = 'UserHandlerError'
+    this.status = status
+  }
+}
+
 // SyncUser removed. Use Auth handler.
 
 // Lấy user by ID
@@ -93,4 +103,14 @@ export async function updateUser(
   }
 
   return await getUser(db, userId)
+}
+
+export async function deleteUserAccount(db: D1Database, userId: string): Promise<boolean> {
+  const result = await db.prepare('DELETE FROM users WHERE id = ?').bind(userId).run()
+
+  if ((result.meta?.changes ?? 0) === 0) {
+    throw new UserHandlerError('Không tìm thấy người dùng', 404)
+  }
+
+  return true
 }

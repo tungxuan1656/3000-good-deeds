@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  deleteUser as deleteFirebaseUser,
   EmailAuthProvider,
   GoogleAuthProvider,
   reauthenticateWithCredential,
@@ -15,6 +16,8 @@ import { useCallback } from 'react'
 import { exchangeProviderToken } from '@/api/auth'
 import { firebaseAuth } from '@/lib/firebase'
 import { authActions } from '@/stores/auth.store'
+
+import { AUTH_PROVIDER_ERROR_MESSAGES, AuthProviderError } from './auth-provider-errors'
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -121,6 +124,34 @@ export const useAuthProvider = () => {
     await signOut(firebaseAuth)
   }, [])
 
+  const deleteCurrentFirebaseUser = useCallback(async () => {
+    const currentUser = firebaseAuth.currentUser
+    if (!currentUser) {
+      throw new AuthProviderError(
+        'no-firebase-session',
+        AUTH_PROVIDER_ERROR_MESSAGES.NO_FIREBASE_SESSION_ERROR,
+      )
+    }
+
+    try {
+      await deleteFirebaseUser(currentUser)
+    } catch (error) {
+      if (
+        typeof error === 'object' &&
+        error &&
+        'code' in error &&
+        error.code === AUTH_PROVIDER_ERROR_MESSAGES.REQUIRES_RECENT_LOGIN_ERROR
+      ) {
+        throw new AuthProviderError(
+          'requires-recent-login',
+          AUTH_PROVIDER_ERROR_MESSAGES.REQUIRES_RECENT_LOGIN_ERROR,
+        )
+      }
+
+      throw error
+    }
+  }, [])
+
   return {
     loginWithEmailPassword,
     registerWithEmailPassword,
@@ -129,5 +160,6 @@ export const useAuthProvider = () => {
     updateDisplayNameOnly,
     changePasswordWithCurrent,
     logoutProvider,
+    deleteCurrentFirebaseUser,
   }
 }
