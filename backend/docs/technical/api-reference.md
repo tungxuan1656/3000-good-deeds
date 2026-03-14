@@ -30,6 +30,7 @@ Error:
 
 - `GET /users/me`
 - `PATCH /users/me`
+- `DELETE /users/me`
 
 ## Categories
 

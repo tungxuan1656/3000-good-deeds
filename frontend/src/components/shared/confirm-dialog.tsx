@@ -26,7 +26,7 @@ type ConfirmDialogProps = {
   variant?: 'default' | 'destructive'
   confirmDisabled?: boolean
   confirmLoading?: boolean
-  onConfirm?: () => void
+  onConfirm?: () => void | Promise<void>
   onCancel?: () => void
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<typeof DialogContent>, 'children'>
@@ -50,6 +50,8 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
     ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const isConfirmPending = Boolean(confirmLoading) || isSubmitting
 
     useImperativeHandle(
       ref,
@@ -61,13 +63,38 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
     )
 
     const handleCancel = () => {
+      if (isConfirmPending) {
+        return
+      }
+
       onCancel?.()
       setIsOpen(false)
     }
 
     const handleConfirm = () => {
-      onConfirm?.()
-      if (!confirmLoading) setIsOpen(false)
+      if (isConfirmPending) {
+        return
+      }
+
+      const maybePromise = onConfirm?.()
+      if (maybePromise && typeof (maybePromise as Promise<void>).then === 'function') {
+        setIsSubmitting(true)
+
+        void (maybePromise as Promise<void>)
+          .then(() => {
+            setIsOpen(false)
+          })
+          .catch(() => {
+            // Keep dialog open so user can retry after an async failure.
+          })
+          .finally(() => {
+            setIsSubmitting(false)
+          })
+
+        return
+      }
+
+      setIsOpen(false)
     }
 
     return (
@@ -90,13 +117,17 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
           <DialogFooter className='gap-2 sm:flex-row sm:justify-end sm:gap-3'>
             <Button
               className='h-10 rounded-full px-4'
-              disabled={confirmDisabled || confirmLoading}
+              disabled={confirmDisabled || isConfirmPending}
               variant={variant === 'destructive' ? 'destructive' : 'default'}
               onClick={handleConfirm}>
-              {confirmLoading ? t('common.actions.processing') : confirmLabel}
+              {isConfirmPending ? t('common.actions.processing') : confirmLabel}
             </Button>
             {cancelLabel ? (
-              <Button className='h-10 rounded-full px-4' variant='outline' onClick={handleCancel}>
+              <Button
+                className='h-10 rounded-full px-4'
+                disabled={isConfirmPending}
+                variant='outline'
+                onClick={handleCancel}>
                 {cancelLabel}
               </Button>
             ) : null}

@@ -7,13 +7,28 @@ import { Input } from '@/components/ui/input'
 import { t } from '@/lib/i18n'
 
 interface DeleteAccountCardProps {
-  onConfirm?: () => void
+  onConfirm?: () => void | Promise<void>
 }
 
 export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
   const [deleteText, setDeleteText] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
   const deleteDialogRef = useRef<ConfirmDialogHandle>(null)
   const deleteKeyword = t('settings.deleteAccount.keyword')
+
+  const handleConfirm = async () => {
+    if (isDeleting) {
+      return
+    }
+
+    try {
+      setIsDeleting(true)
+      await onConfirm?.()
+      setDeleteText('')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   return (
     <>
@@ -33,6 +48,7 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
         </div>
         <Button
           className='bg-destructive text-destructive-foreground hover:bg-destructive/90 mt-3 h-10 w-full rounded-full'
+          disabled={isDeleting}
           onClick={() => {
             setDeleteText('')
             deleteDialogRef.current?.open()
@@ -44,18 +60,22 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
       <ConfirmDialog
         ref={deleteDialogRef}
         cancelLabel={t('common.actions.later')}
-        confirmDisabled={deleteText !== deleteKeyword}
+        confirmDisabled={isDeleting || deleteText !== deleteKeyword}
         confirmLabel={t('settings.deleteAccount.action')}
+        confirmLoading={isDeleting}
         description={t('settings.deleteAccount.confirmDescription')}
         title={t('settings.deleteAccount.confirmTitle')}
         variant='destructive'
-        onCancel={() => setDeleteText('')}
-        onConfirm={() => {
+        onCancel={() => {
+          if (isDeleting) {
+            return
+          }
           setDeleteText('')
-          onConfirm?.()
-        }}>
+        }}
+        onConfirm={handleConfirm}>
         <Input
           className='border-input bg-card rounded-2xl border px-4 py-2 text-sm'
+          disabled={isDeleting}
           placeholder={deleteKeyword}
           value={deleteText}
           onChange={(event) => setDeleteText(event.target.value)}

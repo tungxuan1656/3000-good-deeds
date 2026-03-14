@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-import { getUser, updateUser } from '../handlers/users'
+import { deleteUserAccount, getUser, updateUser, UserHandlerError } from '../handlers/users'
 import { authMiddleware } from '../middlewares/auth'
 import type { UpdateUserRequest } from '../types'
 import { ErrorCodes, errorResponse, successResponse } from '../utils'
@@ -41,6 +41,35 @@ users.patch('/me', async (c) => {
     }
 
     return c.json(errorResponse(ErrorCodes.INTERNAL_ERROR, 'Không thể cập nhật người dùng'), 500)
+  }
+})
+
+users.delete('/me', async (c) => {
+  const currentUser = c.get('user')
+
+  try {
+    const deleted = await deleteUserAccount(c.env.DB, currentUser.id)
+
+    return c.json(successResponse(deleted))
+  } catch (e) {
+    if (e instanceof UserHandlerError) {
+      const errorCode =
+        e.status === 400
+          ? ErrorCodes.BAD_REQUEST
+          : e.status === 404
+            ? ErrorCodes.NOT_FOUND
+            : ErrorCodes.INTERNAL_ERROR
+      const errorMessage = e.status === 500 ? 'Không thể xóa tài khoản người dùng' : e.message
+
+      return c.json(errorResponse(errorCode, errorMessage), e.status)
+    }
+
+    console.error('Delete user account error', e)
+
+    return c.json(
+      errorResponse(ErrorCodes.INTERNAL_ERROR, 'Không thể xóa tài khoản người dùng'),
+      500,
+    )
   }
 })
 
