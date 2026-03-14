@@ -10,14 +10,14 @@ import {
   EmptyDataView,
   GoodDeedCard,
   HeaderSection,
+  InfoButton,
   MiniCheckInCard,
   SkeletonList,
-  TourGuideButton,
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
-import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
@@ -67,11 +67,9 @@ const TimelinePage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <TourGuideButton
-              autoOpen
-              flowTitle={ONBOARDING_CONTENT.journey.title}
-              steps={ONBOARDING_CONTENT.journey.steps}
-              storageKey={ONBOARDING_KEYS.journey}
+            <InfoButton
+              description={INFO_COPY.timeline.description}
+              title={INFO_COPY.timeline.title}
             />
           }
           description={t('pages.timeline.header.description')}

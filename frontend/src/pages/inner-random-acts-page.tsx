@@ -5,14 +5,13 @@ import {
   CardSection,
   DailyQuoteCard,
   HeaderSection,
+  InfoButton,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { InfoButton, TourGuideButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { useRandomActs } from '@/hooks/api/use-cultivation'
-import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
@@ -25,18 +24,10 @@ const InnerRandomActsPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <div className='flex items-center gap-1'>
-              <InfoButton
-                description={INFO_COPY.randomActs.description}
-                title={INFO_COPY.randomActs.title}
-              />
-              <TourGuideButton
-                autoOpen
-                flowTitle={ONBOARDING_CONTENT.quoteRandomActs.title}
-                steps={ONBOARDING_CONTENT.quoteRandomActs.steps}
-                storageKey={ONBOARDING_KEYS.quoteRandomActs}
-              />
-            </div>
+            <InfoButton
+              description={INFO_COPY.randomActs.description}
+              title={INFO_COPY.randomActs.title}
+            />
           }
           description={t('pages.randomActs.header.description')}
           note={t('pages.randomActs.header.note')}

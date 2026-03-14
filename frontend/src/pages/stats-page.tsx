@@ -1,13 +1,6 @@
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import {
-  DailyQuoteCard,
-  HeaderSection,
-  InfoButton,
-  MiniCheckInCard,
-  TourGuideButton,
-} from '@/components/shared'
+import { DailyQuoteCard, HeaderSection, InfoButton, MiniCheckInCard } from '@/components/shared'
 import { CalendarStats, StatsCard } from '@/components/stats'
-import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
@@ -17,15 +10,7 @@ const StatsPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <div className='flex items-center gap-1'>
-              <InfoButton description={INFO_COPY.stats.description} title={INFO_COPY.stats.title} />
-              <TourGuideButton
-                autoOpen
-                flowTitle={ONBOARDING_CONTENT.stats.title}
-                steps={ONBOARDING_CONTENT.stats.steps}
-                storageKey={ONBOARDING_KEYS.stats}
-              />
-            </div>
+            <InfoButton description={INFO_COPY.stats.description} title={INFO_COPY.stats.title} />
           }
           description={t('pages.stats.header.description')}
           note={t('pages.stats.header.note')}

@@ -2,7 +2,6 @@ import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 
 import { useCategories } from '@/hooks/api/use-categories'
-import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
@@ -12,7 +11,6 @@ import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { GoodDeedCategoryButton } from './good-deed-category-button'
 import { InfoButton } from './info-button'
 import { Leaf } from './leaf'
-import { TourGuideButton } from './tour-guide-button'
 
 export function CheckInCard() {
   const checkInRef = useRef<CheckInDrawerHandle>(null)
@@ -30,15 +28,7 @@ export function CheckInCard() {
         <div>
           <div className='flex items-center justify-between gap-2'>
             <h2 className='text-foreground text-lg font-semibold'>{t('checkIn.card.title')}</h2>
-            <div className='flex items-center gap-1'>
-              <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
-              <TourGuideButton
-                autoOpen
-                flowTitle={ONBOARDING_CONTENT.deeds.title}
-                steps={ONBOARDING_CONTENT.deeds.steps}
-                storageKey={ONBOARDING_KEYS.deeds}
-              />
-            </div>
+            <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
           </div>
           <p className='text-muted-foreground/90 mt-2 text-sm leading-relaxed'>
             {t('checkIn.card.description')}

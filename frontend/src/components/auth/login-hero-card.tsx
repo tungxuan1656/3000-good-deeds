@@ -1,11 +1,18 @@
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { PWAGuideDialog } from '@/components/layout'
-import { CardSection, Leaf, TourGuideButton } from '@/components/shared'
+import {
+  CardSection,
+  Leaf,
+  OnboardingDialog,
+  type OnboardingDialogHandle,
+} from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
+import { markOnboardingAsSeen, shouldAutoOpenOnboarding } from '@/lib/onboarding-persistence'
 
 type LoginHeroCardProps = {
   error: string | null
@@ -14,34 +21,40 @@ type LoginHeroCardProps = {
 }
 
 export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCardProps) => {
+  const onboardingDialogRef = useRef<OnboardingDialogHandle>(null)
+
+  useEffect(() => {
+    if (shouldAutoOpenOnboarding(localStorage, ONBOARDING_KEYS.general)) {
+      onboardingDialogRef.current?.open()
+    }
+  }, [])
+
+  const handleOnboardingClose = () => {
+    markOnboardingAsSeen(localStorage, ONBOARDING_KEYS.general)
+  }
+
   return (
     <>
       <CardSection className='flex flex-col gap-3'>
+        <OnboardingDialog
+          ref={onboardingDialogRef}
+          flowTitle={ONBOARDING_CONTENT.general.title}
+          steps={ONBOARDING_CONTENT.general.steps}
+          onClose={handleOnboardingClose}
+        />
         <Leaf className='opacity-30' position='top-right' variant={2} />
-        <div className='flex items-start justify-between gap-4'>
-          <div className='flex items-center gap-4'>
-            <div className='bg-card/80 flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 shadow-sm'>
-              <img
-                alt={t('auth.login.logoAlt')}
-                className='h-10 w-10'
-                src='/icons/icon_sprout.png'
-              />
-            </div>
-            <div>
-              <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
-                {t('auth.login.brandName')}
-              </p>
-              <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
-                {t('auth.login.heroTitle')}
-              </h1>
-            </div>
+        <div className='flex items-start gap-4'>
+          <div className='bg-card/80 flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 shadow-sm'>
+            <img alt={t('auth.login.logoAlt')} className='h-10 w-10' src='/icons/icon_sprout.png' />
           </div>
-          <TourGuideButton
-            autoOpen
-            flowTitle={ONBOARDING_CONTENT.general.title}
-            steps={ONBOARDING_CONTENT.general.steps}
-            storageKey={ONBOARDING_KEYS.general}
-          />
+          <div>
+            <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
+              {t('auth.login.brandName')}
+            </p>
+            <h1 className='text-foreground mt-2 text-2xl font-semibold sm:text-3xl'>
+              {t('auth.login.heroTitle')}
+            </h1>
+          </div>
         </div>
         <p className='text-muted-foreground/90 text-base leading-relaxed'>
           {t('auth.login.heroDescription')}

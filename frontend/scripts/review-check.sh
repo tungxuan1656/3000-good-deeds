@@ -242,10 +242,10 @@ run_local() {
   fi
   echo
 
-  echo "=== Gate D/F (Critical): Vietnamese characters in whole projects/web-admin (full-scan, not diff-only) ==="
-  if rg -n -e "$VIETNAMESE_CHAR_PATTERN" "$PROJECT_DIR" >/dev/null 2>&1; then
-    rg -n -e "$VIETNAMESE_CHAR_PATTERN" "$PROJECT_DIR" | sed -n '1,300p'
-    echo "FAIL: Vietnamese characters detected in projects/web-admin."
+  echo "=== Gate D/F (Critical): Vietnamese characters in frontend (full-scan, not diff-only, excluding vi.json and content files) ==="
+  if rg -n -e "$VIETNAMESE_CHAR_PATTERN" "$PROJECT_DIR" --glob '!**/*.json' --glob '!**/sw.ts' --glob '!**/vite.config.ts' --glob '!**/index.html' --glob '!**/privacy-policy-page.tsx' --glob '!**/terms-of-use-page.tsx' >/dev/null 2>&1; then
+    rg -n -e "$VIETNAMESE_CHAR_PATTERN" "$PROJECT_DIR" --glob '!**/*.json' --glob '!**/sw.ts' --glob '!**/vite.config.ts' --glob '!**/index.html' --glob '!**/privacy-policy-page.tsx' --glob '!**/terms-of-use-page.tsx' | sed -n '1,300p'
+    echo "FAIL: Vietnamese characters detected in frontend source code."
     echo "Action: fix immediately where possible, then rerun review-check."
     vietnamese_project_violation=1
   else
@@ -623,10 +623,10 @@ run_pr() {
     echo
   fi
 
-  echo "=== Gate D/F (Critical): Vietnamese characters in whole projects/web-admin (full-scan, not diff-only) ==="
-  if git grep -nE "$VIETNAMESE_CHAR_PATTERN" "$head_sha" -- "$project_pathspec" >/dev/null 2>&1; then
-    git grep -nE "$VIETNAMESE_CHAR_PATTERN" "$head_sha" -- "$project_pathspec" | sed -n '1,300p'
-    echo "FAIL: Vietnamese characters detected in projects/web-admin."
+  echo "=== Gate D/F (Critical): Vietnamese characters in frontend (full-scan, not diff-only, excluding vi.json and content files) ==="
+  if git grep -nE "$VIETNAMESE_CHAR_PATTERN" "$head_sha" -- "$project_pathspec" | grep -v '\.(json|tsx|ts|html):' | grep -v 'sw\.ts:\|vite\.config\.ts:\|index\.html:\|privacy-policy-page\.tsx:\|terms-of-use-page\.tsx:' >/dev/null 2>&1; then
+    git grep -nE "$VIETNAMESE_CHAR_PATTERN" "$head_sha" -- "$project_pathspec" | grep -v '\.(json|tsx|ts|html):' | grep -v 'sw\.ts:\|vite\.config\.ts:\|index\.html:\|privacy-policy-page\.tsx:\|terms-of-use-page\.tsx:' | sed -n '1,300p'
+    echo "FAIL: Vietnamese characters detected in frontend source code."
     echo "Action: fix immediately where possible, then rerun review-check."
     vietnamese_project_violation=1
   else

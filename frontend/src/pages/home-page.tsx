@@ -7,11 +7,10 @@ import {
   CheckInCard,
   DailyQuoteCard,
   HeaderSection,
+  InfoButton,
   ReminderSuggestCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { InfoButton, TourGuideButton } from '@/components/shared'
-import { ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
@@ -21,14 +20,7 @@ const HomePage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <div className='flex items-center gap-1'>
-              <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
-              <TourGuideButton
-                flowTitle={ONBOARDING_CONTENT.general.title}
-                steps={ONBOARDING_CONTENT.general.steps}
-                storageKey={ONBOARDING_KEYS.general}
-              />
-            </div>
+            <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
           }
           description={t('home.header.description')}
           note={t('home.header.note')}

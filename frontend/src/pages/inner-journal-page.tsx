@@ -12,12 +12,11 @@ import {
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { TourGuideButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateInnerJournalEntry } from '@/hooks/api/use-inner-journal'
-import { type InnerJournalType, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
+import { type InnerJournalType, PATHS } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { innerJournalSchema } from '@/lib/forms/form-schemas'
 import { t } from '@/lib/i18n'
@@ -72,18 +71,10 @@ const InnerJournalPage = () => {
       <MainColumn>
         <HeaderSection
           action={
-            <div className='flex items-center gap-1'>
-              <InfoButton
-                description={INFO_COPY.journal.description}
-                title={INFO_COPY.journal.title}
-              />
-              <TourGuideButton
-                autoOpen
-                flowTitle={ONBOARDING_CONTENT.journal.title}
-                steps={ONBOARDING_CONTENT.journal.steps}
-                storageKey={ONBOARDING_KEYS.journal}
-              />
-            </div>
+            <InfoButton
+              description={INFO_COPY.journal.description}
+              title={INFO_COPY.journal.title}
+            />
           }
           description={t('journal.page.description')}
           subtitle={t('journal.page.subtitle')}
