@@ -4,7 +4,7 @@ import { getGoalHistoryPage } from '../handlers/goal-history'
 import { getGoals, upsertGoal, upsertGoals } from '../handlers/goals'
 import { authMiddleware } from '../middlewares/auth'
 import type { User } from '../types'
-import { ErrorCodes, errorResponse, successResponse } from '../utils'
+import { ErrorCodes, errorResponse, parseJsonBody, successResponse } from '../utils'
 
 const goals = new Hono<{ Bindings: Env; Variables: { user: User } }>()
 
@@ -19,10 +19,13 @@ goals.get('/', async (c) => {
 
 goals.post('/', async (c) => {
   const currentUser = c.get('user')
-  const body = await c.req.json<
+  const body = await parseJsonBody<
     | { type: string; targetCount: number; isEnabled: boolean }
     | { goals: Array<{ type: string; targetCount: number; isEnabled: boolean }> }
-  >()
+  >(c.req.raw)
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Dữ liệu yêu cầu không hợp lệ'), 400)
+  }
 
   const isBatch = 'goals' in body
 
@@ -50,8 +53,15 @@ goals.post('/', async (c) => {
 goals.get('/history', async (c) => {
   const currentUser = c.get('user')
   const limit = Number(c.req.query('limit') || 20)
+  if (!Number.isInteger(limit) || limit < 1) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'limit phải là số nguyên dương'), 400)
+  }
+
   const cursor = c.req.query('cursor') || undefined
   const type = c.req.query('type') as 'weekly' | 'monthly' | 'yearly' | undefined
+  if (type && !['weekly', 'monthly', 'yearly'].includes(type)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'type không hợp lệ'), 400)
+  }
 
   try {
     const result = await getGoalHistoryPage(c.env.DB, currentUser.id, limit, cursor, type)

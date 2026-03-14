@@ -285,11 +285,11 @@ async function getValidRefreshToken(
     .first<RefreshTokenRecord>()
 
   if (!storedToken) {
-    throw new Error('Refresh token không hợp lệ')
+    throw new AuthHandlerError('Refresh token không hợp lệ', 401)
   }
 
   if (storedToken.expires_at < getCurrentTimestamp()) {
-    throw new Error('Refresh token đã hết hạn')
+    throw new AuthHandlerError('Refresh token đã hết hạn', 401)
   }
 
   return { ...storedToken, tokenHash }
@@ -339,7 +339,7 @@ export async function refreshAccessToken(
     .run()
 
   if (result.meta.changes === 0) {
-    throw new Error('Refresh token đã được sử dụng hoặc không hợp lệ')
+    throw new AuthHandlerError('Refresh token đã được sử dụng hoặc không hợp lệ', 401)
   }
 
   await db

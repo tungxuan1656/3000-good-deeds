@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 
 import { getRandomAct, getRandomActs, getRandomQuote } from '../handlers/cultivation'
-import { ErrorCodes, successResponse } from '../utils'
+import { ErrorCodes, errorResponse, successResponse } from '../utils'
 
 const app = new Hono<{ Bindings: Env }>()
 
@@ -11,14 +11,7 @@ app.get('/quotes/random', async (c) => {
 
   // Fallback if no quotes exist yet (though seed should provide them)
   if (!quote) {
-    return c.json(
-      {
-        success: true,
-        data: null,
-        error: { code: ErrorCodes.NOT_FOUND, message: 'No quotes available' },
-      },
-      404,
-    )
+    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'No quotes available'), 404)
   }
 
   return c.json(successResponse(quote))
@@ -30,14 +23,7 @@ app.get('/acts/random', async (c) => {
 
   // Fallback
   if (!act) {
-    return c.json(
-      {
-        success: true,
-        data: null,
-        error: { code: ErrorCodes.NOT_FOUND, message: 'No random acts available' },
-      },
-      404,
-    )
+    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'No random acts available'), 404)
   }
 
   return c.json(
@@ -54,18 +40,16 @@ app.get('/acts/random', async (c) => {
 // GET /api/v1/cultivation/acts/random-list
 app.get('/acts/random-list', async (c) => {
   const limitParam = c.req.query('limit')
-  const limit = limitParam ? Math.max(1, Math.min(50, parseInt(limitParam))) : 10
+  const parsedLimit = limitParam ? Number(limitParam) : 10
+  if (!Number.isInteger(parsedLimit) || parsedLimit < 1) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'limit must be a positive integer'), 400)
+  }
+
+  const limit = Math.min(parsedLimit, 50)
   const acts = await getRandomActs(c.env.DB, limit)
 
   if (!acts.length) {
-    return c.json(
-      {
-        success: true,
-        data: null,
-        error: { code: ErrorCodes.NOT_FOUND, message: 'No random acts available' },
-      },
-      404,
-    )
+    return c.json(errorResponse(ErrorCodes.NOT_FOUND, 'No random acts available'), 404)
   }
 
   return c.json(
