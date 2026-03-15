@@ -17,7 +17,7 @@ import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
 export interface SuggestActsDrawerHandle {
-  open: (categoryCode?: string) => void
+  open: () => void
   close: () => void
 }
 
@@ -26,14 +26,6 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
   const [open, setOpen] = React.useState(false)
   const { data, isFetching, refetch } = useRandomActs(2, open)
   const acts = data?.data ?? []
-  const categoryMeta = {
-    body: { label: t('suggestActs.categories.body'), className: 'bg-body/20 text-foreground' },
-    speech: {
-      label: t('suggestActs.categories.speech'),
-      className: 'bg-speech/20 text-foreground',
-    },
-    mind: { label: t('suggestActs.categories.mind'), className: 'bg-mind/20 text-foreground' },
-  }
 
   React.useImperativeHandle(ref, () => ({
     open: () => setOpen(true),
@@ -83,12 +75,6 @@ export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_prop
               className='bg-card/80 flex items-start gap-3 rounded-2xl border border-black/5 px-4 py-3 text-sm shadow-sm'>
               <span className='text-primary mt-0.5 text-xs font-semibold'>#{index + 1}</span>
               <div className='flex flex-col gap-1'>
-                <div className='flex flex-wrap items-center gap-2 text-xs'>
-                  <span
-                    className={`${categoryMeta[act.category].className} rounded-full px-2.5 py-0.5 font-semibold`}>
-                    {categoryMeta[act.category].label}
-                  </span>
-                </div>
                 <p className='text-foreground leading-relaxed'>
                   {[act.name, act.detail, act.note].filter(Boolean).join(' - ')}
                 </p>

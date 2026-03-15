@@ -25,22 +25,10 @@ export interface User {
   privacyMode: 'private' | 'limited'
 }
 
-// Category Entity
-export interface Category {
-  code: string
-  name: string
-  description: string | null
-  icon: string | null
-  isActive: boolean
-  style: string | null
-  createdAt: number
-}
-
 // Good Deed Entity
 export interface GoodDeed {
   id: string
   userId: string
-  categoryCode: string
   description: string | null
   labels?: string | null
   performedAt: number
@@ -82,14 +70,12 @@ export interface UserStats {
 
 // Request Types
 export interface CreateDeedRequest {
-  categoryCode: string
   description?: string
   labels?: string
   performedAt?: number // defaults to now
 }
 
 export interface UpdateDeedRequest {
-  categoryCode?: string
   description?: string
   labels?: string
   performedAt?: number
@@ -195,7 +181,6 @@ export interface CreateJournalRequest {
 
 export interface RandomAct {
   id: string
-  category: 'body' | 'speech' | 'mind'
   name: string
   detail: string | null
   note: string | null

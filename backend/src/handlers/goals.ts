@@ -122,23 +122,9 @@ export async function upsertGoals(
 ): Promise<Goal[]> {
   const results: Goal[] = []
 
-  await db.exec('BEGIN')
-
-  try {
-    for (const goal of goals) {
-      results.push(await upsertGoal(db, user, goal))
-    }
-
-    await db.exec('COMMIT')
-
-    return results
-  } catch (error) {
-    try {
-      await db.exec('ROLLBACK')
-    } catch (rollbackError) {
-      console.error('Rollback goals transaction failed', rollbackError)
-    }
-
-    throw error
+  for (const goal of goals) {
+    results.push(await upsertGoal(db, user, goal))
   }
+
+  return results
 }

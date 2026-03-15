@@ -8,7 +8,6 @@ Provide self-reflection metrics without social comparison pressure.
 
 - total deed count
 - streak days
-- category distribution
 - period trend (week/month)
 
 ## UX Rules

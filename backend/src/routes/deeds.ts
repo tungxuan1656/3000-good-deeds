@@ -48,12 +48,12 @@ deeds.post('/', async (c) => {
     return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
   }
 
-  if (!body.categoryCode) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'categoryCode là bắt buộc'), 400)
+  if (body.performedAt !== undefined && !Number.isFinite(body.performedAt)) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thời gian không hợp lệ'), 400)
   }
 
-  if (body.performedAt !== undefined && !Number.isFinite(body.performedAt)) {
-    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'performedAt không hợp lệ'), 400)
+  if (!body.description) {
+    return c.json(errorResponse(ErrorCodes.BAD_REQUEST, 'Thiếu thông tin bắt buộc'), 400)
   }
 
   try {

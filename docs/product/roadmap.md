@@ -10,7 +10,6 @@
 ## Phase 2: Reflection
 
 - weekly/monthly statistics
-- category distribution
 - streak tracking
 
 ## Phase 2.5: Inner Cultivation

@@ -150,62 +150,53 @@ async function runCommand(args: string[], cwd: string) {
   })
 }
 
-// Sample deed descriptions by category
-const deedsByCategory = {
-  body: [
-    'Giúp người già qua đường',
-    'Nhặt rác trong công viên',
-    'Dọn dẹp nhà cửa cho bố mẹ',
-    'Cho người nghèo vài chục ngàn',
-    'Phát cơm từ thiện',
-    'Giúp hàng xóm khiêng đồ',
-    'Tưới cây cho láng giềng',
-    'Sửa xe đạp cho bạn',
-    'Làm vệ sinh chung cư',
-    'Hiến máu nhân đạo',
-    'Trồng cây xanh',
-    'Chăm sóc thú cưng bị bỏ rơi',
-    'Sửa chữa nhà cho người nghèo',
-    'Giúp đỡ người khuyết tật',
-    'Tham gia hoạt động từ thiện',
-  ],
-  speech: [
-    'Động viên bạn bè',
-    'Cảm ơn người phục vụ',
-    'Khen ngợi đồng nghiệp',
-    'Xin lỗi người thân',
-    'Nói lời yêu thương với bố mẹ',
-    'An ủi người đang buồn',
-    'Khuyên bảo người làm lỗi',
-    'Chia sẻ kinh nghiệm tốt',
-    'Tán dương việc tốt của người khác',
-    'Giải thích nhẹ nhàng khi bất đồng',
-    'Chúc mừng thành công của bạn',
-    'Nói lời cảm ơn chân thành',
-    'Khuyến khích người khác làm việc thiện',
-    'Xin lỗi vì lỗi lầm của mình',
-    'Nói lời hay ý đẹp',
-  ],
-  mind: [
-    'Thiền định 15 phút',
-    'Niệm Phật 108 lần',
-    'Buông bỏ sân hận',
-    'Hướng lòng từ bi đến mọi người',
-    'Quán tưởng về vô thường',
-    'Cảm ơn những gì mình đang có',
-    'Tha thứ cho người làm mình tổn thương',
-    'Nuôi dưỡng tâm an lạc',
-    'Phát tâm bồ đề',
-    'Sám hối lỗi lầm',
-    'Hồi hướng công đức',
-    'Quán chiếu hơi thở',
-    'Trì chú Đại Bi',
-    'Đọc kinh Pháp Cú',
-    'Suy nghĩ về ân đức của cha mẹ',
-  ],
-}
-
-const categories = ['body', 'speech', 'mind']
+const deedDescriptions = [
+  'Giúp người già qua đường',
+  'Nhặt rác trong công viên',
+  'Dọn dẹp nhà cửa cho bố mẹ',
+  'Cho người nghèo vài chục ngàn',
+  'Phát cơm từ thiện',
+  'Giúp hàng xóm khiêng đồ',
+  'Tưới cây cho láng giềng',
+  'Sửa xe đạp cho bạn',
+  'Làm vệ sinh chung cư',
+  'Hiến máu nhân đạo',
+  'Trồng cây xanh',
+  'Chăm sóc thú cưng bị bỏ rơi',
+  'Sửa chữa nhà cho người nghèo',
+  'Giúp đỡ người khuyết tật',
+  'Tham gia hoạt động từ thiện',
+  'Động viên bạn bè',
+  'Cảm ơn người phục vụ',
+  'Khen ngợi đồng nghiệp',
+  'Xin lỗi người thân',
+  'Nói lời yêu thương với bố mẹ',
+  'An ủi người đang buồn',
+  'Khuyên bảo người làm lỗi',
+  'Chia sẻ kinh nghiệm tốt',
+  'Tán dương việc tốt của người khác',
+  'Giải thích nhẹ nhàng khi bất đồng',
+  'Chúc mừng thành công của bạn',
+  'Nói lời cảm ơn chân thành',
+  'Khuyến khích người khác làm việc thiện',
+  'Xin lỗi vì lỗi lầm của mình',
+  'Nói lời hay ý đẹp',
+  'Thiền định 15 phút',
+  'Niệm Phật 108 lần',
+  'Buông bỏ sân hận',
+  'Hướng lòng từ bi đến mọi người',
+  'Quán tưởng về vô thường',
+  'Cảm ơn những gì mình đang có',
+  'Tha thứ cho người làm mình tổn thương',
+  'Nuôi dưỡng tâm an lạc',
+  'Phát tâm bồ đề',
+  'Sám hối lỗi lầm',
+  'Hồi hướng công đức',
+  'Quán chiếu hơi thở',
+  'Trì chú Đại Bi',
+  'Đọc kinh Pháp Cú',
+  'Suy nghĩ về ân đức của cha mẹ',
+]
 
 const tags = ['An vui', 'Biết ơn', 'Nhẹ lòng', 'Ấm áp', 'Bình an', 'Hy vọng']
 
@@ -245,8 +236,7 @@ function formatLocalYear(date: Date): string {
 }
 
 function generateGoodDeed(userId: string, daysAgo: number) {
-  const categoryCode = randomElement(categories)
-  const description = randomElement(deedsByCategory[categoryCode as keyof typeof deedsByCategory])
+  const description = randomElement(deedDescriptions)
   const performedAt = randomDate(daysAgo)
   const now = Date.now()
 
@@ -263,7 +253,6 @@ function generateGoodDeed(userId: string, daysAgo: number) {
   return {
     id: ulid(),
     user_id: userId,
-    category_code: categoryCode,
     description,
     labels: selectedTags.length > 0 ? selectedTags.join(',') : null,
     local_date: formatLocalDate(performedAt),
@@ -283,18 +272,16 @@ async function main() {
 
   console.log(`Generating ${options.count} good deeds for user: ${options.userId}`)
 
-  const statements: string[] = ['BEGIN TRANSACTION;']
+  const statements: string[] = []
 
   // Generate deeds spread over the last 90 days
   for (let i = 0; i < options.count; i++) {
     const deed = generateGoodDeed(options.userId, 90)
     statements.push(
-      `INSERT INTO good_deeds (id, user_id, category_code, description, labels, local_date, local_week, local_month, local_year, is_private, performed_at, created_at, updated_at)
-       VALUES (${sqlString(deed.id)}, ${sqlString(deed.user_id)}, ${sqlString(deed.category_code)}, ${sqlString(deed.description)}, ${sqlString(deed.labels)}, ${sqlString(deed.local_date)}, ${sqlString(deed.local_week)}, ${sqlString(deed.local_month)}, ${sqlString(deed.local_year)}, ${deed.is_private}, ${deed.performed_at}, ${deed.created_at}, ${deed.updated_at});`,
+      `INSERT INTO good_deeds (id, user_id, description, labels, local_date, local_week, local_month, local_year, is_private, performed_at, created_at, updated_at)
+       VALUES (${sqlString(deed.id)}, ${sqlString(deed.user_id)}, ${sqlString(deed.description)}, ${sqlString(deed.labels)}, ${sqlString(deed.local_date)}, ${sqlString(deed.local_week)}, ${sqlString(deed.local_month)}, ${sqlString(deed.local_year)}, ${deed.is_private}, ${deed.performed_at}, ${deed.created_at}, ${deed.updated_at});`,
     )
   }
-
-  statements.push('COMMIT;')
 
   const sql = statements.join('\n')
 
@@ -303,7 +290,7 @@ async function main() {
   await fs.writeFile(sqlFilePath, sql)
 
   try {
-    console.log(`Generated SQL script with ${statements.length - 2} statements at ${sqlFilePath}`)
+    console.log(`Generated SQL script with ${statements.length} statements at ${sqlFilePath}`)
 
     const commandArgs = ['wrangler', 'd1', 'execute', options.dbBinding, '--file', sqlFilePath]
     if (options.target === 'local') {

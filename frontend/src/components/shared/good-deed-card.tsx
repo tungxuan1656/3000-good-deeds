@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useCategories } from '@/hooks/api/use-categories'
 import { useDeleteDeed } from '@/hooks/api/use-deeds'
 import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
@@ -18,9 +17,7 @@ import { ConfirmDialog, type ConfirmDialogHandle } from './confirm-dialog'
 import { EditDeedDialog, type EditDeedDialogHandle } from './edit-deed-dialog'
 
 export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
-  const { codeToCategoryMap } = useCategories()
   const deleteDeed = useDeleteDeed()
-  const meta = codeToCategoryMap[deed.categoryCode]
 
   const editRef = useRef<EditDeedDialogHandle>(null)
   const deleteRef = useRef<ConfirmDialogHandle>(null)
@@ -29,8 +26,7 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
     try {
       await deleteDeed.mutateAsync(deed.id)
       toast.success(t('deeds.card.messages.deleted'))
-    } catch (error) {
-      console.error(error)
+    } catch {
       toast.error(t('deeds.card.messages.deleteFailed'))
     }
   }
@@ -39,14 +35,11 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
     <>
       <CardInlineSection>
         <div className='flex items-start justify-between gap-3'>
-          <div className='flex flex-1 items-center gap-3 sm:gap-4'>
-            <div className={`flex h-10 w-10 items-center justify-center rounded-2xl ${meta.style}`}>
-              <img alt={meta.name} className='h-6 w-6' src={meta.icon} />
-            </div>
-            <div className='flex-1'>
-              <p className='text-foreground text-base font-semibold'>{meta.name}</p>
-              <p className='text-muted-foreground text-sm'>{deed.labels}</p>
-            </div>
+          <div className='flex flex-1 flex-col gap-1'>
+            {deed.labels && <p className='text-muted-foreground text-sm'>{deed.labels}</p>}
+            {deed.description && (
+              <p className='text-foreground text-sm leading-relaxed'>{deed.description}</p>
+            )}
           </div>
 
           <DropdownMenu>
@@ -67,10 +60,6 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-
-        {deed.description && (
-          <p className='text-foreground text-sm leading-relaxed'>{deed.description}</p>
-        )}
       </CardInlineSection>
 
       <EditDeedDialog ref={editRef} />

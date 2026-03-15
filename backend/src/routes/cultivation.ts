@@ -32,7 +32,6 @@ app.get('/acts/random', async (c) => {
   return c.json(
     successResponse({
       id: act.id,
-      category: act.category,
       name: act.name,
       detail: act.detail,
       note: act.note,
@@ -59,7 +58,6 @@ app.get('/acts/random-list', async (c) => {
     successResponse(
       acts.map((act) => ({
         id: act.id,
-        category: act.category,
         name: act.name,
         detail: act.detail,
         note: act.note,

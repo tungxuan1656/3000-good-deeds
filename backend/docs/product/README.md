@@ -1,7 +1,7 @@
 # Backend Product Docs
 
 - `auth-spec.md`: authentication and session behavior.
-- `users-spec.md`: user profile and categories behavior.
+- `users-spec.md`: user profile behavior.
 - `deeds-spec.md`: backend deed behavior and goal-history integration rules.
 - `goals-spec.md`: backend goals and goal-history behavior.
 - `stats-spec.md`: stats summary, activity calendar, and streak behavior.

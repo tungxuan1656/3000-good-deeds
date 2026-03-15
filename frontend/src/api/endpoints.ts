@@ -13,9 +13,6 @@ export const API_ENDPOINTS = {
     update: (id: string) => `/deeds/${id}`,
     detail: (id: string) => `/deeds/${id}`,
   },
-  categories: {
-    list: '/categories',
-  },
   goals: {
     list: '/goals',
     upsert: '/goals',

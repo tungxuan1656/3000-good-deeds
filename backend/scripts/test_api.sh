@@ -43,12 +43,8 @@ AUTH_HEADER="Authorization: Bearer $MOCK_TOKEN"
 
 CONTENT_TYPE="Content-Type: application/json"
 
-# 2. Get Categories
-echo "2. Getting Categories..."
-curl -s -X GET "$API_URL/categories" -H "$AUTH_HEADER" | grep "\"success\":true" > /dev/null && echo -e "${GREEN}✅ Categories OK${NC}" || echo -e "${RED}❌ Categories Failed${NC}"
-
-# 3. Create Goal
-echo "3. Creating Goal..."
+# 2. Create Goal
+echo "2. Creating Goal..."
 GOAL_RES=$(curl -s -X POST "$API_URL/goals" \
   -H "$AUTH_HEADER" -H "$CONTENT_TYPE" \
   -d '{"type": "daily", "targetCount": 3}')
@@ -61,11 +57,11 @@ else
     echo $GOAL_RES
 fi
 
-# 4. Create Deed (triggering achievements)
-echo "4. Creating Deed..."
+# 3. Create Deed (triggering achievements)
+echo "3. Creating Deed..."
 DEED_RES=$(curl -s -X POST "$API_URL/deeds" \
   -H "$AUTH_HEADER" -H "$CONTENT_TYPE" \
-    -d '{"categoryCode": "body", "description": "Helping test"}')
+    -d '{"description": "Helping test"}')
 DEED_ID=$(echo $DEED_RES | python3 -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
 
 if [ -n "$DEED_ID" ] && [ "$DEED_ID" != "null" ]; then
@@ -75,8 +71,8 @@ else
     echo $DEED_RES
 fi
 
-# 5. Check Stats
-echo "5. Checking Stats..."
+# 4. Check Stats
+echo "4. Checking Stats..."
 STATS_RES=$(curl -s -X GET "$API_URL/stats/summary" -H "$AUTH_HEADER")
 TOTAL=$(echo $STATS_RES | python3 -c "import sys, json; print(json.load(sys.stdin)['data']['totalDeeds'])")
 
@@ -87,8 +83,8 @@ else
     echo $STATS_RES
 fi
 
-# 6. Check Achievements (First Deed should be unlocked)
-echo "6. Checking Achievements..."
+# 5. Check Achievements (First Deed should be unlocked)
+echo "5. Checking Achievements..."
 ACH_RES=$(curl -s -X GET "$API_URL/achievements" -H "$AUTH_HEADER")
 # Check if list is not empty
 ACH_COUNT=$(echo $ACH_RES | python3 -c "import sys, json; print(len(json.load(sys.stdin)['data']))")
@@ -100,8 +96,8 @@ else
     echo $ACH_RES
 fi
 
-# 7. Update User Settings
-echo "7. Updating Settings..."
+# 6. Update User Settings
+echo "6. Updating Settings..."
 curl -s -X PUT "$API_URL/reminders/settings" \
   -H "$AUTH_HEADER" -H "$CONTENT_TYPE" \
   -d '{"reminderEnabled": true, "reminderTime": "20:00"}' | grep "\"success\":true" > /dev/null && echo -e "${GREEN}✅ Settings Updated${NC}" || echo -e "${RED}❌ Settings Update Failed${NC}"

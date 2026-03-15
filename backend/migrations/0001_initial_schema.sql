@@ -63,29 +63,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_identity_provider_user
 ON identity_accounts(provider, provider_user_id);
 
 -- ============================================
--- 4. CATEGORIES (System-managed in MVP)
--- ============================================
-CREATE TABLE IF NOT EXISTS categories (
-  code TEXT PRIMARY KEY,            -- stable identifier (e.g., 'body')
-  name TEXT NOT NULL,
-  description TEXT,
-  icon TEXT NOT NULL,                -- icon URL
-  style TEXT,                        -- className string
-  order_index INTEGER DEFAULT 0,
-  is_active BOOLEAN DEFAULT 1,
-  is_system_default BOOLEAN DEFAULT 1,
-
-  created_at INTEGER NOT NULL,
-  updated_at INTEGER NOT NULL
-);
-
--- ============================================
--- 5. GOOD DEEDS (Core)
+-- 4. GOOD DEEDS (Core)
 -- ============================================
 CREATE TABLE IF NOT EXISTS good_deeds (
   id TEXT PRIMARY KEY,               -- ULID
   user_id TEXT NOT NULL,
-  category_code TEXT NOT NULL,
 
   description TEXT,                  -- short note
   labels TEXT,                       -- comma-separated tags
@@ -102,8 +84,7 @@ CREATE TABLE IF NOT EXISTS good_deeds (
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
 
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (category_code) REFERENCES categories(code)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS idx_deeds_user_date
@@ -115,9 +96,6 @@ ON good_deeds (user_id, performed_at DESC, id DESC);
 CREATE INDEX IF NOT EXISTS idx_deeds_user_local_date
 ON good_deeds(user_id, local_date);
 
-CREATE INDEX IF NOT EXISTS idx_deeds_user_category
-ON good_deeds(user_id, category_code);
-
 CREATE INDEX IF NOT EXISTS idx_deeds_user_week
 ON good_deeds(user_id, local_week);
 
@@ -128,7 +106,7 @@ CREATE INDEX IF NOT EXISTS idx_deeds_user_year
 ON good_deeds(user_id, local_year);
 
 -- ============================================
--- 6. GOALS
+-- 5. GOALS
 -- ============================================
 CREATE TABLE IF NOT EXISTS goals (
   id TEXT PRIMARY KEY,               -- ULID
@@ -147,7 +125,7 @@ CREATE INDEX IF NOT EXISTS idx_goals_user_enabled
 ON goals(user_id, is_enabled);
 
 -- ============================================
--- 7. GOAL HISTORY
+-- 6. GOAL HISTORY
 -- ============================================
 CREATE TABLE IF NOT EXISTS goal_history (
   id TEXT PRIMARY KEY,               -- ULID
@@ -181,7 +159,7 @@ CREATE INDEX IF NOT EXISTS idx_goal_history_user_period
 ON goal_history(user_id, type, period_time);
 
 -- ============================================
--- 8. SYSTEM SETTINGS (Feature flags, content configs)
+-- 7. SYSTEM SETTINGS (Feature flags, content configs)
 -- ============================================
 CREATE TABLE IF NOT EXISTS system_settings (
   id TEXT PRIMARY KEY,               -- ULID
@@ -191,7 +169,7 @@ CREATE TABLE IF NOT EXISTS system_settings (
 );
 
 -- ============================================
--- 9. PUSH SUBSCRIPTIONS (Web Push)
+-- 8. PUSH SUBSCRIPTIONS (Web Push)
 -- ============================================
 CREATE TABLE IF NOT EXISTS push_subscriptions (
   id TEXT PRIMARY KEY,               -- ULID
@@ -219,7 +197,7 @@ CREATE INDEX IF NOT EXISTS idx_push_subscriptions_endpoint
 ON push_subscriptions(endpoint);
 
 -- ============================================
--- 10. DHARMA QUOTES (Cultivation)
+-- 9. DHARMA QUOTES (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS dharma_quotes (
   id TEXT PRIMARY KEY,               -- ULID
@@ -232,7 +210,7 @@ CREATE TABLE IF NOT EXISTS dharma_quotes (
 );
 
 -- ============================================
--- 11. JOURNAL ENTRIES (Cultivation)
+-- 10. JOURNAL ENTRIES (Cultivation)
 -- ============================================
 CREATE TABLE IF NOT EXISTS journal_entries (
   id TEXT PRIMARY KEY,               -- ULID
@@ -259,7 +237,6 @@ ON journal_entries (user_id, created_at DESC, id DESC);
 -- ============================================
 CREATE TABLE IF NOT EXISTS random_acts (
   id TEXT PRIMARY KEY,               -- ULID
-  category TEXT NOT NULL,            -- 'body' | 'speech' | 'mind'
   name TEXT NOT NULL,
   detail TEXT,
   note TEXT,

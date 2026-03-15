@@ -9,33 +9,6 @@ import { fileURLToPath } from 'node:url'
 import { parse } from 'csv-parse/sync'
 import { ulid } from 'ulid'
 
-const seedCategories = [
-  {
-    code: 'body',
-    name: 'Thân thiện',
-    description: 'Những hành động tốt như giúp đỡ, bảo vệ, bố thí,...',
-    icon: '/icons/icon_than.png',
-    style: 'bg-body/20 hover:bg-body/40',
-    order_index: 1,
-  },
-  {
-    code: 'speech',
-    name: 'Khẩu thiện',
-    description: 'Lời nói ái ngữ, chân thật',
-    icon: '/icons/icon_khau.png',
-    style: 'bg-speech/20 hover:bg-speech/40',
-    order_index: 2,
-  },
-  {
-    code: 'mind',
-    name: 'Ý thiện',
-    description: 'Suy nghĩ hiểu, thương, không ganh ghét, tham lam, sân hận, ác ý, tà kiến.',
-    icon: '/icons/icon_y.png',
-    style: 'bg-mind/20 hover:bg-mind/40',
-    order_index: 3,
-  },
-]
-
 type Target = 'local' | 'remote' | 'preview'
 
 interface CliOptions {
@@ -178,12 +151,11 @@ async function loadRandomActs(csvPath: string) {
 
   return parsed
     .map((row) => ({
-      category: String((row as Record<string, string>).category ?? '').trim(),
       name: String((row as Record<string, string>).name ?? '').trim(),
       detail: String((row as Record<string, string>).detail ?? '').trim(),
       note: String((row as Record<string, string>).note ?? '').trim(),
     }))
-    .filter((act) => act.category.length > 0 && act.name.length > 0)
+    .filter((act) => act.name.length > 0)
 }
 
 async function main() {
@@ -195,22 +167,7 @@ async function main() {
   const quotes = await loadQuotes(quotesPath)
   const randomActs = await loadRandomActs(randomActsPath)
 
-  const wrapInSqlTransaction = options.target === 'local'
   const statements: string[] = []
-
-  if (wrapInSqlTransaction) {
-    statements.push('BEGIN TRANSACTION;')
-  }
-
-  for (const category of seedCategories) {
-    const now = Date.now()
-    statements.push(
-      `INSERT OR REPLACE INTO categories (code, name, description, icon, style, order_index, is_active, is_system_default, created_at, updated_at)
-       VALUES (${sqlString(category.code)}, ${sqlString(category.name)}, ${sqlString(
-         category.description,
-       )}, ${sqlString(category.icon)}, ${sqlString(category.style)}, ${category.order_index}, 1, 1, ${now}, ${now});`,
-    )
-  }
 
   for (const quote of quotes) {
     const now = Date.now()
@@ -225,15 +182,11 @@ async function main() {
   for (const act of randomActs) {
     const now = Date.now()
     statements.push(
-      `INSERT OR REPLACE INTO random_acts (id, category, name, detail, note, created_at, updated_at)
-       VALUES (${sqlString(ulid())}, ${sqlString(act.category)}, ${sqlString(
-         act.name,
-       )}, ${sqlString(act.detail || null)}, ${sqlString(act.note || null)}, ${now}, ${now});`,
+      `INSERT OR REPLACE INTO random_acts (id, name, detail, note, created_at, updated_at)
+       VALUES (${sqlString(ulid())}, ${sqlString(act.name)}, ${sqlString(
+         act.detail || null,
+       )}, ${sqlString(act.note || null)}, ${now}, ${now});`,
     )
-  }
-
-  if (wrapInSqlTransaction) {
-    statements.push('COMMIT;')
   }
 
   const sql = statements.join('\n')
@@ -243,8 +196,7 @@ async function main() {
   await fs.writeFile(sqlFilePath, sql)
 
   try {
-    const statementCount = wrapInSqlTransaction ? statements.length - 2 : statements.length
-    console.log(`Generated SQL script with ${statementCount} statements at ${sqlFilePath}`)
+    console.log(`Generated SQL script with ${statements.length} statements at ${sqlFilePath}`)
 
     const commandArgs = ['wrangler', 'd1', 'execute', options.dbBinding, '--file', sqlFilePath]
     if (options.target === 'local') {

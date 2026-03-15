@@ -17,7 +17,6 @@ Define backend behavior for user profile retrieval and updates.
 - updatable fields: `displayName`, reminder preferences (`reminderEnabled`, `reminderTime`)
 - `DELETE /users/me` permanently removes the current user account and relies on DB cascade rules to
   clean up related user data
-- `GET /categories` returns shared category data available to all authenticated users
 
 ## Error Rules
 

@@ -8,7 +8,6 @@
 
 ## Core Feature Tables
 
-- `categories`
 - `good_deeds`
 - `goals`
 - `goal_history`
