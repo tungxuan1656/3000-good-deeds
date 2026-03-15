@@ -1,5 +1,5 @@
 import { UserIcon } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { CardSection } from '@/components/shared'
@@ -10,6 +10,8 @@ import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { t } from '@/lib/i18n'
 import { authActions } from '@/stores/auth.store'
 import type { UserDTO } from '@/types/api'
+
+import { Label } from '../ui'
 
 interface AccountProfileCardProps {
   user?: UserDTO | null
@@ -26,13 +28,6 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
 
   const displayName = user?.displayName ?? t('layout.user.fallbackName')
   const displayEmail = user?.email ?? t('layout.user.emailMissing')
-  const initials = useMemo(() => {
-    const nameSource = displayName || displayEmail
-    const parts = nameSource.trim().split(' ').filter(Boolean)
-    const letters = parts.slice(0, 2).map((part) => part[0]?.toUpperCase())
-
-    return letters.join('') || 'U'
-  }, [displayEmail, displayName])
 
   const hasChanged = displayNameInput.trim() !== (user?.displayName ?? '').trim()
 
@@ -76,24 +71,21 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
 
       <div className='bg-card/80 flex flex-col gap-3 rounded-2xl border border-black/5 p-4'>
         <div className='flex items-center gap-4'>
-          <div className='bg-muted text-muted-foreground flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold'>
-            {initials}
-          </div>
           <div>
-            <p className='text-foreground text-sm font-semibold'>{displayName}</p>
-            <p className='text-muted-foreground text-xs'>{displayEmail}</p>
+            <Label className='text-foreground text-base'>{displayName}</Label>
+            <Label className='text-muted-foreground text-sm'>{displayEmail}</Label>
           </div>
         </div>
         <div className='text-muted-foreground text-sm'>{t('settings.account.helper')}</div>
-        <div className='flex flex-col gap-3'>
+        <div className='flex flex-row gap-3'>
           <Input
             placeholder={t('settings.account.fields.displayName')}
             value={displayNameInput}
             onChange={(event) => setDisplayNameInput(event.target.value)}
           />
           <Button
-            className='h-10 w-full'
             disabled={updateUser.isPending || !hasChanged}
+            size={'sm'}
             onClick={handleUpdateDisplayName}>
             {updateUser.isPending
               ? t('common.actions.processing')

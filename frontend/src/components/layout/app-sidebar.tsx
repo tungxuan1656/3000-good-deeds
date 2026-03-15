@@ -1,4 +1,3 @@
-import { UserRoundIcon } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 
 import {
@@ -29,14 +28,9 @@ export const AppSidebar = () => {
   return (
     <Sidebar className='bg-card'>
       <SidebarHeader>
-        <div className='bg-card/80 mt-4 flex items-center gap-3 rounded-2xl border border-black/5 px-3 py-2'>
-          <div className='bg-secondary/40 text-foreground flex h-10 w-10 items-center justify-center rounded-full'>
-            <UserRoundIcon className='h-5 w-5' />
-          </div>
-          <div className='min-w-0'>
-            <p className='text-foreground truncate text-sm font-semibold'>{displayName}</p>
-            <p className='text-muted-foreground truncate text-xs'>{displayEmail}</p>
-          </div>
+        <div className='bg-card/80 mt-4 flex flex-col gap-1 rounded-2xl border border-black/5 px-3 py-2'>
+          <p className='text-foreground truncate text-sm font-semibold'>{displayName}</p>
+          <p className='text-muted-foreground truncate text-xs'>{displayEmail}</p>
         </div>
       </SidebarHeader>
       <SidebarSeparator />
