@@ -35,7 +35,7 @@ export const HeaderSection = ({
         </p>
       ) : null}
       {note || action ? (
-        <div className='mt-1 flex flex-wrap items-center'>
+        <div className='mt-1 flex items-center'>
           {note ? <p className='text-muted-foreground/90 text-sm leading-relaxed'>{note}</p> : null}
           {action ? <div className='ml-auto flex items-center'>{action}</div> : null}
         </div>
