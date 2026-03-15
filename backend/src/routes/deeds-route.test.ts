@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { DeedHandlerError, deleteDeed } from '../handlers/deeds'
+import { createDeed, DeedHandlerError, deleteDeed } from '../handlers/deeds'
 import deeds from './deeds'
 
 vi.mock('../middlewares/auth', () => {
@@ -25,6 +25,7 @@ vi.mock('../handlers/deeds', async () => {
 })
 
 const mockedDeleteDeed = vi.mocked(deleteDeed)
+const mockedCreateDeed = vi.mocked(createDeed)
 
 describe('deeds routes', () => {
   beforeEach(() => {
@@ -61,5 +62,46 @@ describe('deeds routes', () => {
     expect(response.status).toBe(404)
     expect(payload.success).toBe(false)
     expect(payload.error.code).toBe('NOT_FOUND')
+  })
+
+  it('creates deed without category field', async () => {
+    mockedCreateDeed.mockResolvedValueOnce({
+      id: 'deed_1',
+      userId: 'user_1',
+      description: 'Giúp người khác',
+      labels: 'An vui',
+      performedAt: Date.now(),
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    })
+
+    const response = await deeds.request(
+      '/',
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          description: 'Giúp người khác',
+          labels: 'An vui',
+        }),
+      },
+      { DB: {} as D1Database } as Env,
+    )
+    const payload = (await response.json()) as any
+
+    expect(response.status).toBe(201)
+    expect(payload.success).toBe(true)
+    expect(mockedCreateDeed).toHaveBeenCalledTimes(1)
+
+    expect(mockedCreateDeed).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ id: 'user_1' }),
+      expect.objectContaining({
+        description: 'Giúp người khác',
+        labels: 'An vui',
+      }),
+    )
+
+    expect(mockedCreateDeed.mock.calls[0][2]).not.toHaveProperty('categoryCode')
   })
 })

@@ -4,7 +4,6 @@ import { cors } from 'hono/cors'
 import { sendReminderNotifications } from './handlers/reminders'
 import activities from './routes/activities'
 import auth from './routes/auth'
-import categories from './routes/categories'
 import cultivation from './routes/cultivation'
 import deeds from './routes/deeds'
 import goals from './routes/goals'
@@ -47,7 +46,6 @@ app.get('/ping', (c) => {
 // Routes
 app.route('/api/v1/users', users)
 app.route('/api/v1/deeds', deeds)
-app.route('/api/v1/categories', categories)
 app.route('/api/v1/goals', goals)
 app.route('/api/v1/activities', activities)
 app.route('/api/v1/stats', stats)

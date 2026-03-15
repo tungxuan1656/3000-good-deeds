@@ -207,22 +207,6 @@
       "hopeful": "Hy vọng"
     }
   },
-  "categories": {
-    "fallback": {
-      "body": {
-        "name": "Thân thiện",
-        "description": "Hành động cụ thể bằng thân"
-      },
-      "speech": {
-        "name": "Khẩu thiện",
-        "description": "Lời nói ái ngữ, chân thật"
-      },
-      "mind": {
-        "name": "Ý thiện",
-        "description": "Suy nghĩ lành, buông xả"
-      }
-    }
-  },
   "goals": {
     "messages": {
       "invalidTargetCount": "Số lượng mục tiêu không hợp lệ",
@@ -429,7 +413,7 @@
     },
     "deeds": {
       "title": "Ghi nhận việc thiện",
-      "description": "Ghi nhận là để nhớ và quán chiếu, không phải để đạt chỉ tiêu. Bạn có thể chọn Thân Thiện/Khẩu Thiện/Ý Thiện để nhìn rõ cách mình thực hành. Mọi ghi nhận đều riêng tư.\n\t• Thân: Những hành động bạn làm bằng thân thể - giúp đỡ, nâng đỡ, bảo vệ.\n\t• Khẩu: Những lời nói bạn buông ra - lắng nghe, an ủi, nói lời chân thật.\n\t• Ý: Những suy nghĩ bạn nuôi dưỡng - hiểu, thương, không ganh ghét, không tham lam, sân hận, ác ý, không theo tà kiến."
+      "description": "Ghi nhận là để nhớ và quán chiếu, không phải để đạt chỉ tiêu. Mỗi việc thiện nhỏ đều đáng trân trọng, và mọi ghi nhận đều riêng tư."
     },
     "goals": {
       "title": "Mục tiêu tu tập",
@@ -638,12 +622,7 @@
     "title": "Gợi ý việc thiện",
     "description": "Chọn một điều nhỏ để bắt đầu ngay hôm nay.",
     "randomCount": "{{count}} gợi ý ngẫu nhiên",
-    "refresh": "Đổi gợi ý",
-    "categories": {
-      "body": "Thân",
-      "speech": "Khẩu",
-      "mind": "Ý"
-    }
+    "refresh": "Đổi gợi ý"
   },
   "reminder": {
     "card": {

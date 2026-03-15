@@ -1,8 +1,14 @@
 import { format } from 'date-fns'
 import { vi } from 'date-fns/locale'
 import { CalendarIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import type { Dispatch, SetStateAction } from 'react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -18,7 +24,6 @@ import { t } from '@/lib/i18n'
 type CreateDeedAction = {
   isPending: boolean
   mutateAsync: (payload: {
-    categoryCode: string
     description?: string
     labels?: string
     performedAt: number
@@ -27,7 +32,6 @@ type CreateDeedAction = {
 
 type CheckInSheetFlowProps = {
   step: number
-  category: string | null
   resetSeed: number
   setStep: Dispatch<SetStateAction<number>>
   onClose: () => void
@@ -48,7 +52,6 @@ const buildInitialFormState = (): CheckInFormState => ({
 
 export const CheckInSheetFlow = ({
   step,
-  category,
   resetSeed,
   setStep,
   onClose,
@@ -68,30 +71,28 @@ export const CheckInSheetFlow = ({
   }, [formState.selectedDate])
 
   const handleContinue = useCallback(() => {
-    if (step === 2 && formState.note.length < 5) {
+    if (step === 1 && formState.note.length < 5) {
       toast.error(t('checkIn.sheet.validation.minNote'))
 
       return
     }
-
-    setStep((prev) => Math.min(4, prev + 1))
+    setStep((prev) => Math.min(2, prev + 1))
   }, [formState.note.length, setStep, step])
 
   const handleSubmit = useCallback(async () => {
-    if (!category) return
-
     const performedAt = new Date(formState.selectedDate)
     performedAt.setHours(0, 0, 0, 0)
 
+    const trimmedDescription = formState.note.trim()
+
     await createDeed.mutateAsync({
-      categoryCode: category,
-      description: formState.note.trim() || undefined,
+      description: trimmedDescription.length > 0 ? trimmedDescription : undefined,
       labels: formState.moodTags.length ? formState.moodTags.join(', ') : undefined,
       performedAt: performedAt.getTime(),
     })
 
     onClose()
-  }, [category, createDeed, formState.moodTags, formState.note, formState.selectedDate, onClose])
+  }, [createDeed, formState.moodTags, formState.note, formState.selectedDate, onClose])
 
   const toggleMoodTag = useCallback((tag: string) => {
     setFormState((prev) => ({
@@ -105,7 +106,7 @@ export const CheckInSheetFlow = ({
   return (
     <>
       <div className='px-4 pb-4'>
-        {step === 2 && (
+        {step === 1 && (
           <div className='flex flex-col gap-4'>
             <div>
               <Popover>
@@ -117,14 +118,13 @@ export const CheckInSheetFlow = ({
                     {formattedDate}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent align='start' className='bg-popover'>
+                <PopoverContent align='start' className='bg-popover w-auto p-0'>
                   <Calendar
                     disabled={(date) => date > new Date()}
                     mode='single'
                     selected={formState.selectedDate}
                     onSelect={(date: Date | undefined) => {
                       if (!date) return
-
                       setFormState((prev) => ({ ...prev, selectedDate: date }))
                     }}
                   />
@@ -144,19 +144,17 @@ export const CheckInSheetFlow = ({
           </div>
         )}
 
-        {step === 3 && (
+        {step === 2 && (
           <div className='flex flex-col gap-4'>
             <div className='flex flex-wrap gap-2'>
-              {MOOD_TAGS.map((tag) => {
-                return (
-                  <TagButton
-                    key={tag}
-                    isActive={activeMoodTagSet.has(tag)}
-                    label={tag}
-                    onToggle={() => toggleMoodTag(tag)}
-                  />
-                )
-              })}
+              {MOOD_TAGS.map((tag) => (
+                <TagButton
+                  key={tag}
+                  isActive={activeMoodTagSet.has(tag)}
+                  label={tag}
+                  onToggle={() => toggleMoodTag(tag)}
+                />
+              ))}
             </div>
           </div>
         )}
@@ -164,38 +162,37 @@ export const CheckInSheetFlow = ({
 
       <SheetFooter className='gap-3'>
         <div className='flex items-center justify-center gap-2'>
-          {[1, 2, 3].map((item) => (
+          {[1, 2].map((item) => (
             <span
               key={item}
               className={`h-2 w-2 rounded-full ${item === step ? 'bg-primary' : 'bg-muted'}`}
             />
           ))}
         </div>
-        {step > 1 && (
-          <div className='flex w-full items-center justify-between'>
-            <Button
-              className='h-9 rounded-full px-4 text-sm'
-              variant='ghost'
-              onClick={() => setStep((prev) => Math.max(1, prev - 1))}>
-              <ChevronLeftIcon className='h-4 w-4' />
-              {t('onboarding.dialog.back')}
+        <div className='flex w-full items-center justify-between'>
+          <Button
+            className='h-9 rounded-full px-4 text-sm'
+            disabled={step === 1}
+            variant='ghost'
+            onClick={() => setStep((prev) => Math.max(1, prev - 1))}>
+            <ChevronLeftIcon className='h-4 w-4' />
+            {t('onboarding.dialog.back')}
+          </Button>
+          {step < 2 ? (
+            <Button className='h-11 rounded-full px-6' onClick={handleContinue}>
+              {t('onboarding.dialog.continue')}
+              <ChevronRightIcon className='h-4 w-4' />
             </Button>
-            {step < 3 ? (
-              <Button className='h-11 rounded-full px-6' onClick={handleContinue}>
-                {t('onboarding.dialog.continue')}
-                <ChevronRightIcon className='h-4 w-4' />
-              </Button>
-            ) : (
-              <Button
-                className='h-11 rounded-full px-6'
-                disabled={createDeed.isPending}
-                onClick={handleSubmit}>
-                {createDeed.isPending ? <Spinner /> : <CheckIcon className='h-4 w-4' />}
-                {createDeed.isPending ? t('common.actions.saving') : t('checkIn.sheet.saveAction')}
-              </Button>
-            )}
-          </div>
-        )}
+          ) : (
+            <Button
+              className='h-11 rounded-full px-6'
+              disabled={createDeed.isPending}
+              onClick={handleSubmit}>
+              {createDeed.isPending ? <Spinner /> : <CheckIcon className='h-4 w-4' />}
+              {createDeed.isPending ? t('common.actions.saving') : t('checkIn.sheet.saveAction')}
+            </Button>
+          )}
+        </div>
       </SheetFooter>
     </>
   )

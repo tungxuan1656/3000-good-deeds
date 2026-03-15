@@ -27,7 +27,6 @@ Error envelope:
 
 - Auth
 - Users
-- Categories
 - Deeds
 - Goals
 - Stats and Activities

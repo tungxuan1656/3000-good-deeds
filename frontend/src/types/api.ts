@@ -26,34 +26,21 @@ export interface AuthResponse {
 export interface RefreshTokenRequest {
   refreshToken: string
 }
-
 export interface RefreshTokenResponse {
   accessToken: string
   refreshToken: string
 }
-
 export type AuthProvider = 'firebase'
-
 export interface ProviderExchangeRequest {
   provider: AuthProvider
   idToken: string
 }
-
 export interface DeedDTO {
   id: string
-  categoryCode: string
   description?: string
   labels?: string
   performedAt: number
   createdAt: number
-}
-
-export interface DeedCategoryDTO {
-  code: string
-  name: string
-  description?: string | null
-  icon?: string
-  style?: string | null
 }
 
 export interface GetDeedsRequest {
@@ -73,16 +60,13 @@ export interface DeedsResponse {
   data: DeedDTO[]
   pagination: PaginationMeta
 }
-
 export interface CreateDeedRequest {
-  categoryCode: string
   description?: string
   labels?: string
   performedAt?: number
 }
 
 export interface UpdateDeedRequest {
-  categoryCode?: string
   description?: string
   labels?: string
   performedAt?: number
@@ -98,7 +82,6 @@ export interface DailyQuoteDTO {
 
 export interface RandomActDTO {
   id: string
-  category: 'body' | 'speech' | 'mind'
   name: string
   detail?: string | null
   note?: string | null
@@ -185,7 +168,6 @@ export interface PushSubscriptionPayloadDTO {
 }
 
 export type GoalType = 'weekly' | 'monthly' | 'yearly'
-
 export interface UpsertGoalRequest {
   type: GoalType
   targetCount: number

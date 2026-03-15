@@ -32,10 +32,6 @@ Error:
 - `PATCH /users/me`
 - `DELETE /users/me`
 
-## Categories
-
-- `GET /categories`
-
 ## Deeds
 
 - `GET /deeds` with `limit`, `cursor`, optional `from`/`to`

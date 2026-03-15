@@ -18,26 +18,22 @@ import {
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
-import { useCategories } from '@/hooks/api/use-categories'
 import { useUpdateDeed } from '@/hooks/api/use-deeds'
 import { MOOD_TAGS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
 import { TagButton } from '../ui/tag'
-import { GoodDeedCategoryMiniButton } from './good-deed-category-button'
 
 export type EditDeedDialogHandle = {
   open: (deed: DeedDTO) => void
 }
 
 export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, ref) => {
-  const { data: categories } = useCategories()
   const updateDeed = useUpdateDeed()
 
   const [isOpen, setIsOpen] = React.useState(false)
   const [deed, setDeed] = React.useState<DeedDTO | null>(null)
-  const [categoryCode, setCategoryCode] = React.useState('')
   const [description, setDescription] = React.useState('')
   const [moodTags, setMoodTags] = React.useState<string[]>([])
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date())
@@ -47,7 +43,6 @@ export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, re
     () => ({
       open: (d: DeedDTO) => {
         setDeed(d)
-        setCategoryCode(d.categoryCode)
         setDescription(d.description || '')
         setMoodTags(d.labels ? d.labels.split(',').map((label) => label.trim()) : [])
         setSelectedDate(new Date(d.performedAt || d.createdAt))
@@ -72,11 +67,12 @@ export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, re
       const performedAt = new Date(selectedDate)
       performedAt.setHours(0, 0, 0, 0)
 
+      const trimmedDescription = description.trim()
+
       await updateDeed.mutateAsync({
         id: deed.id,
         data: {
-          categoryCode,
-          description: description.trim() || undefined,
+          description: trimmedDescription.length > 0 ? trimmedDescription : undefined,
           labels: moodTags.length ? moodTags.join(', ') : undefined,
           performedAt: performedAt.getTime(),
         },
@@ -84,8 +80,7 @@ export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, re
 
       toast.success(t('deeds.edit.messages.updated'))
       setIsOpen(false)
-    } catch (error) {
-      console.error(error)
+    } catch {
       toast.error(t('deeds.edit.messages.updateFailed'))
     }
   }
@@ -107,17 +102,6 @@ export const EditDeedDialog = React.forwardRef<EditDeedDialogHandle>((_props, re
         <p className='text-muted-foreground text-sm'>{t('deeds.edit.privateNote')}</p>
 
         <div className='flex flex-col gap-4 py-4'>
-          <div className='flex gap-2'>
-            {categories.map((cat) => (
-              <GoodDeedCategoryMiniButton
-                key={cat.code}
-                category={cat}
-                isActive={categoryCode === cat.code}
-                onClick={() => setCategoryCode(cat.code)}
-              />
-            ))}
-          </div>
-
           <div className='flex flex-col gap-2'>
             <Label htmlFor='date'>{t('deeds.edit.fields.date')}</Label>
             <Popover>
