@@ -6,6 +6,7 @@ This folder contains product principles shared by frontend and backend teams.
 - `roadmap.md`
 - `ethics-and-principles.md`
 - `microcopy-guideline.md`
+- `feature-overview.md`
 
 Feature-specific business specs should live in:
 - `frontend/docs/product/`
