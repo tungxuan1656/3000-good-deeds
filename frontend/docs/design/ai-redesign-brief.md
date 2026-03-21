@@ -17,7 +17,7 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 
 ### Product identity
 - A personal kindness journal with inward focus.
-- A daily tool to record and reflect (body/speech/mind).
+- A daily tool to record and reflect on kind actions.
 - Not a social network, not a leaderboard, not a moral scoring app.
 
 ### Required design tone
@@ -210,7 +210,7 @@ AI should design around this component system:
   - Skeleton
 - Action components
   - PrimaryButton / SecondaryButton / GhostButton / DestructiveButton
-  - TagButton (body/speech/mind)
+  - TagButton (emotion/context labels)
   - Segmented control (journal mode)
 - Feature modules
   - CheckIn composer

@@ -30,21 +30,21 @@ This document reflects the color tokens declared in `src/index.css` of the curre
 | `input`              | `#e5e5e5` | `oklch(1 0 0 / 15%)`        | `border-input`, `bg-input/*`                |
 | `ring`               | `#799a85` | `oklch(0.556 0 0)`          | `ring-ring`, `focus-visible:ring-ring/*`    |
 
-## 3) Domain colors (Body / Speech / Mind)
+## 3) Legacy Domain Tokens (Do Not Use for New UI)
 
-Domain colors have their own tokens and are mapped to Tailwind classes:
+The project still contains legacy color tokens:
 
-| Token    | Value     | Class                      |
-| -------- | --------- | -------------------------- |
-| `body`   | `#f2b36f` | `bg-body`, `text-body`     |
-| `speech` | `#8fbad9` | `bg-speech`, `text-speech` |
-| `mind`   | `#b9a7e3` | `bg-mind`, `text-mind`     |
+- `body`
+- `speech`
+- `mind`
 
-Practical usage pattern:
+These tokens were previously tied to old deed categorization and are now deprecated in product language.
 
-- `bg-body/20 hover:bg-body/40`
-- `bg-speech/20 hover:bg-speech/40`
-- `bg-mind/20 hover:bg-mind/40`
+Rules:
+
+- Do not use `bg-body`, `bg-speech`, `bg-mind` in new screens/components.
+- Prefer neutral semantic tokens (`primary`, `secondary`, `accent`, `muted`, `border`) instead.
+- If old components still use legacy tokens, treat them as migration targets.
 
 ## 4) Chart & sidebar tokens
 
@@ -80,8 +80,7 @@ If you need these semantics, you must add real tokens to `index.css` first.
 
 <button className='bg-primary text-primary-foreground hover:bg-primary/90'>Primary</button>
 <button className='bg-secondary text-secondary-foreground hover:bg-secondary/80'>Secondary</button>
-
-<span className='bg-body/20 text-foreground rounded-full px-2 py-1 text-xs'>Body</span>
-<span className='bg-speech/20 text-foreground rounded-full px-2 py-1 text-xs'>Speech</span>
-<span className='bg-mind/20 text-foreground rounded-full px-2 py-1 text-xs'>Mind</span>
+<span className='bg-accent/20 text-foreground rounded-full px-2 py-1 text-xs'>Warm Accent</span>
+<span className='bg-primary/20 text-foreground rounded-full px-2 py-1 text-xs'>Primary Tint</span>
+<span className='bg-muted text-foreground rounded-full px-2 py-1 text-xs'>Neutral Tag</span>
 ```
