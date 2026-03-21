@@ -19,7 +19,7 @@
 - Kind deed
 - Reflection
 - Gentle reminder
-- Body / Speech / Mind
+- Kind intention
 
 ## Avoid Terms
 

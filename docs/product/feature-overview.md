@@ -53,7 +53,7 @@ Principles:
 
 ### 3.1 Record Kind Deeds
 - Quickly add a new kind deed.
-- Tag deed type as Body / Speech / Mind.
+- Add optional labels if users want personal context.
 - Add a short description.
 - Select an emotion that reflects the experience.
 

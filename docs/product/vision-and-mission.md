@@ -5,7 +5,7 @@
 3000 Good Deeds is a modern reflection tool designed as a private kindness journal.
 
 It helps users:
-- record kind actions (body, speech, mind)
+- record kind actions in daily life
 - reflect daily with honesty
 - build a sustainable compassionate habit
 
