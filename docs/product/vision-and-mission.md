@@ -9,6 +9,13 @@ It helps users:
 - reflect daily with honesty
 - build a sustainable compassionate habit
 
+## Product Purpose
+
+Provide a practical, private place where people can:
+- capture daily kind actions
+- reflect with honesty and calmness
+- maintain consistency through gentle support
+
 ## What it is not
 
 - not a social leaderboard
