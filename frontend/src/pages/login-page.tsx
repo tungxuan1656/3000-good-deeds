@@ -3,6 +3,7 @@ import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { APP_VERSION, PATHS } from '@/lib/constants'
@@ -98,15 +99,7 @@ const LoginPage = () => {
 
   return (
     <div className='bg-background text-foreground relative flex min-h-screen items-center justify-center p-6'>
-      {/* Decorative Background Elements */}
-      <div className='pointer-events-none fixed bottom-0 left-0 hidden p-12 opacity-20 lg:block'>
-        <div className='bg-primary/10 h-64 w-64 rounded-full blur-3xl' />
-      </div>
-      <div className='pointer-events-none fixed top-0 right-0 hidden p-24 opacity-10 lg:block'>
-        <div className='bg-primary/20 h-96 w-96 rounded-full blur-3xl' />
-      </div>
-
-      <main className='relative z-10 mx-auto w-full max-w-4xl'>
+      <main className='relative z-10 mx-auto w-full max-w-xl'>
         {/* Brand Identity */}
         <div className='mt-10 text-center'>
           <div className='bg-surface-container-high mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full'>
@@ -120,8 +113,8 @@ const LoginPage = () => {
           </p>
         </div>
 
-        <div className='mx-auto max-w-120'>
-          <div className='flex flex-col gap-0'>
+        <div className='mx-auto mt-8'>
+          <div className='flex flex-col gap-6'>
             {/* Auth Navigation Tabs */}
             <div className='border-outline-variant/30 mb-0 flex border-b px-2'>
               <button
@@ -157,125 +150,127 @@ const LoginPage = () => {
             </div>
 
             {/* Login Card */}
-            <div className='bg-surface-container-lowest relative overflow-hidden rounded-xl p-8 shadow-[0px_10px_30px_rgba(47,52,46,0.04)] md:p-10'>
+            <Card className='relative overflow-hidden'>
               {/* Subtle Background Accent */}
               <div className='bg-primary/5 absolute -top-12 -right-12 h-32 w-32 rounded-full blur-2xl' />
 
-              {error && (
-                <div className='mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>
-                  {error}
-                </div>
-              )}
-              {notice && (
-                <div className='mb-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800'>
-                  {notice}
-                </div>
-              )}
-
-              <form className='relative z-10 space-y-6' onSubmit={handleSubmit}>
-                {mode === 'register' ? (
-                  <div className='space-y-2'>
-                    <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                      {t('auth.form.fields.displayName')}
-                    </label>
-                    <Input
-                      className='rounded-eight bg-surface-container-low border-outline-variant/20 h-12 px-4 transition-all duration-300'
-                      placeholder={t('auth.form.fields.displayName')}
-                      value={displayName}
-                      onChange={(event) => setDisplayName(event.target.value)}
-                    />
+              <CardContent className='p-6 md:p-8'>
+                {error && (
+                  <div className='mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>
+                    {error}
                   </div>
-                ) : null}
+                )}
+                {notice && (
+                  <div className='mb-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800'>
+                    {notice}
+                  </div>
+                )}
 
-                <div className='space-y-2'>
-                  <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                    {t('auth.form.fields.email')}
-                  </label>
-                  <Input
-                    className='rounded-eight bg-surface-container-low border-outline-variant/20 h-12 px-4 transition-all duration-300'
-                    placeholder='name@example.com'
-                    type='email'
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </div>
-
-                {mode !== 'forgot' ? (
-                  <div className='space-y-2'>
-                    <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                      {t('auth.form.fields.password')}
-                    </label>
-                    <div className='relative'>
+                <form className='relative z-10 space-y-6' onSubmit={handleSubmit}>
+                  {mode === 'register' ? (
+                    <div className='space-y-2'>
+                      <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
+                        {t('auth.form.fields.displayName')}
+                      </label>
                       <Input
-                        className='rounded-eight bg-surface-container-low border-outline-variant/20 h-12 pr-12 pl-4 transition-all duration-300'
-                        placeholder='••••••••'
-                        type={showPassword ? 'text' : 'password'}
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        placeholder={t('auth.form.fields.displayName')}
+                        value={displayName}
+                        onChange={(event) => setDisplayName(event.target.value)}
                       />
-                      <button
-                        className='text-muted-foreground hover:text-primary absolute top-1/2 right-3 -translate-y-1/2 p-1'
-                        type='button'
-                        onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                      </button>
                     </div>
-                  </div>
-                ) : null}
+                  ) : null}
 
-                {mode === 'register' ? (
                   <div className='space-y-2'>
                     <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                      {t('auth.form.fields.confirmPassword')}
+                      {t('auth.form.fields.email')}
                     </label>
                     <Input
-                      className='rounded-eight bg-surface-container-low border-outline-variant/20 h-12 px-4 transition-all duration-300'
-                      placeholder='••••••••'
-                      type='password'
-                      value={confirmPassword}
-                      onChange={(event) => setConfirmPassword(event.target.value)}
+                      placeholder='name@example.com'
+                      type='email'
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
                     />
                   </div>
-                ) : null}
 
-                <Button
-                  className='btn-primary-gradient rounded-eight flex h-12 w-full items-center justify-center gap-2 font-semibold shadow-sm transition-all duration-300 hover:opacity-95 active:scale-[0.98]'
-                  disabled={isLoading}
-                  type='submit'>
-                  <span>
-                    {isLoading ? t('auth.login.loading') : t(`auth.form.actions.${mode}`)}
-                  </span>
-                  <LogIn size={18} />
-                </Button>
-
-                {mode !== 'forgot' ? (
-                  <>
-                    {/* Divider */}
-                    <div className='flex items-center gap-4 py-2'>
-                      <div className='bg-outline-variant/20 h-px grow' />
-                      <span className='text-muted-foreground text-[10px] font-bold tracking-widest uppercase'>
-                        or
-                      </span>
-                      <div className='bg-outline-variant/20 h-px grow' />
+                  {mode !== 'forgot' ? (
+                    <div className='space-y-2'>
+                      <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
+                        {t('auth.form.fields.password')}
+                      </label>
+                      <div className='relative'>
+                        <Input
+                          className='pr-12'
+                          placeholder='••••••••'
+                          type={showPassword ? 'text' : 'password'}
+                          value={password}
+                          onChange={(event) => setPassword(event.target.value)}
+                        />
+                        <button
+                          className='text-muted-foreground hover:text-primary absolute top-1/2 right-3 -translate-y-1/2 p-1'
+                          type='button'
+                          onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
                     </div>
+                  ) : null}
 
-                    <Button
-                      className='rounded-eight bg-surface-container-low border-outline-variant/20 text-on-surface-variant hover:bg-surface-container-high flex h-12 w-full items-center justify-center gap-3 font-medium transition-colors duration-300'
-                      disabled={isLoading}
-                      type='button'
-                      variant='outline'
-                      onClick={handleGoogleLogin}>
-                      <img
-                        alt='Google logo'
-                        className='h-5 w-5'
-                        src='https://lh3.googleusercontent.com/aida-public/AB6AXuBIaHPkBptnslGbDKY6MRva4MOSUbwZaixONtI3GPno8ivacHLAyW8YKqJA3XNcaeebItWTs0e-rFmB6E7RGKB2eTqcTiMxt8PulAaRpUsc36tMrWONU0CP8u8NmnGemkHFschIwCp5TIVoR1Uqnofw2ierxeAIZA6wm7WJLuwKDt9f1yldOJmHSb5tGcLrZgQdn85y2M4K8zcjjRpLbiwKhTlVt12982gwLBT9IKBhM4EcSFyKIJTIplKqXN34K-3kPJL2CBTwKYja'
+                  {mode === 'register' ? (
+                    <div className='space-y-2'>
+                      <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
+                        {t('auth.form.fields.confirmPassword')}
+                      </label>
+                      <Input
+                        placeholder='••••••••'
+                        type='password'
+                        value={confirmPassword}
+                        onChange={(event) => setConfirmPassword(event.target.value)}
                       />
-                      <span className='text-sm'>{t('auth.form.actions.google')}</span>
-                    </Button>
-                  </>
-                ) : null}
-              </form>
-            </div>
+                    </div>
+                  ) : null}
+
+                  <Button
+                    className='w-full'
+                    disabled={isLoading}
+                    size='lg'
+                    type='submit'
+                    variant='primary-gradient'>
+                    <span>
+                      {isLoading ? t('auth.login.loading') : t(`auth.form.actions.${mode}`)}
+                    </span>
+                    <LogIn size={18} />
+                  </Button>
+
+                  {mode !== 'forgot' ? (
+                    <>
+                      {/* Divider */}
+                      <div className='flex items-center gap-4 py-2'>
+                        <div className='bg-outline-variant/20 h-px grow' />
+                        <span className='text-muted-foreground text-[10px] font-bold tracking-widest uppercase'>
+                          or
+                        </span>
+                        <div className='bg-outline-variant/20 h-px grow' />
+                      </div>
+
+                      <Button
+                        className='text-on-surface-variant w-full'
+                        disabled={isLoading}
+                        size='lg'
+                        type='button'
+                        variant='outline'
+                        onClick={handleGoogleLogin}>
+                        <img
+                          alt='Google logo'
+                          className='h-5 w-5'
+                          src='https://lh3.googleusercontent.com/aida-public/AB6AXuBIaHPkBptnslGbDKY6MRva4MOSUbwZaixONtI3GPno8ivacHLAyW8YKqJA3XNcaeebItWTs0e-rFmB6E7RGKB2eTqcTiMxt8PulAaRpUsc36tMrWONU0CP8u8NmnGemkHFschIwCp5TIVoR1Uqnofw2ierxeAIZA6wm7WJLuwKDt9f1yldOJmHSb5tGcLrZgQdn85y2M4K8zcjjRpLbiwKhTlVt12982gwLBT9IKBhM4EcSFyKIJTIplKqXN34K-3kPJL2CBTwKYja'
+                        />
+                        <span className='text-sm'>{t('auth.form.actions.google')}</span>
+                      </Button>
+                    </>
+                  ) : null}
+                </form>
+              </CardContent>
+            </Card>
 
             <div className='mt-10 text-center'>
               <div className='flex items-center justify-center gap-4 pt-4'>

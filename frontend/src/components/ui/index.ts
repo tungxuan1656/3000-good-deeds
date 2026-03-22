@@ -1,6 +1,7 @@
 export * from './breadcrumb'
 export * from './button'
 export * from './calendar'
+export * from './card'
 export * from './dialog'
 export * from './dropdown-menu'
 export * from './empty'
