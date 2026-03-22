@@ -206,6 +206,14 @@
   @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
 
+@utility rounded-eight {
+  border-radius: 0.5rem;
+}
+
+@utility btn-primary-gradient {
+  background: linear-gradient(135deg, #526347 0%, #46573c 100%);
+}
+
 @utility pb-safe {
   padding-bottom: calc(constant(safe-area-inset-bottom) - 12px);
   padding-bottom: calc(env(safe-area-inset-bottom) - 12px);
