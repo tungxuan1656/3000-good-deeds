@@ -24,7 +24,7 @@ export const AppSidebar = () => {
   const openCheckIn = useCheckInStore.use.open()
 
   return (
-    <Sidebar className='bg-sidebar border-none'>
+    <Sidebar className='bg-sidebar overflow-hidden border-none md:inset-auto md:mt-4 md:h-auto md:rounded-2xl!'>
       <SidebarHeader className='px-6 pt-10 pb-4'>
         <div className='flex flex-col gap-1.5'>
           <h1 className='font-headline text-primary text-xl font-bold group-data-[collapsible=icon]:hidden'>
@@ -62,11 +62,12 @@ export const AppSidebar = () => {
                         )}
                         <Icon
                           className={cn(
-                            'size-5 transition-colors duration-300',
-                            isActive ? 'text-primary' : 'text-muted-foreground/60',
+                            'transition-colors duration-300',
+                            isActive ? 'text-primary size-6' : 'text-muted-foreground/60 size-5',
                           )}
                         />
-                        <span className={cn('font-medium transition-all', isActive ? 'font-bold' : '')}>
+                        <span
+                          className={cn('font-medium transition-all', isActive ? 'font-bold' : '')}>
                           {label}
                         </span>
                       </Link>
@@ -78,7 +79,7 @@ export const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className='p-6'>
+      <SidebarFooter className='mt-10 p-6'>
         <Button
           className='bg-primary text-primary-foreground shadow-primary/20 w-full justify-center gap-2 rounded-xl py-6 text-sm font-bold shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.98]'
           onClick={openCheckIn}>
