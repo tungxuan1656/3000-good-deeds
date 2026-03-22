@@ -1,7 +1,15 @@
-import { Eye, EyeOff, LogIn, Sprout } from 'lucide-react'
+import { Eye, EyeOff, LogIn } from 'lucide-react'
 import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import {
+  AuthBrand,
+  AuthField,
+  AuthFooter,
+  type AuthMode,
+  AuthTabs,
+  SocialAuth,
+} from '@/components/auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,7 +17,6 @@ import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { APP_VERSION, PATHS } from '@/lib/constants'
 import { getFirebaseErrorMessage } from '@/lib/firebase-errors'
 import { t } from '@/lib/i18n'
-import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth.store'
 
 const LoginPage = () => {
@@ -22,7 +29,7 @@ const LoginPage = () => {
     sendResetPasswordLink,
   } = useAuthProvider()
 
-  const [mode, setMode] = useState<'login' | 'register' | 'forgot'>('login')
+  const [mode, setMode] = useState<AuthMode>('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -43,7 +50,7 @@ const LoginPage = () => {
     setNotice(null)
   }
 
-  const handleModeChange = (nextMode: 'login' | 'register' | 'forgot') => {
+  const handleModeChange = (nextMode: AuthMode) => {
     resetMessages()
     setMode(nextMode)
   }
@@ -101,53 +108,12 @@ const LoginPage = () => {
     <div className='bg-background text-foreground relative flex min-h-screen items-center justify-center p-6'>
       <main className='relative z-10 mx-auto w-full max-w-xl'>
         {/* Brand Identity */}
-        <div className='mt-10 text-center'>
-          <div className='bg-surface-container-high mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full'>
-            <Sprout className='text-primary h-8 w-8' />
-          </div>
-          <h1 className='font-headline text-primary mb-3 text-4xl font-bold'>
-            {t('auth.login.brandName')}
-          </h1>
-          <p className='text-on-surface-variant text-sm font-light tracking-wide italic'>
-            {t('auth.login.heroDescription')}
-          </p>
-        </div>
+        <AuthBrand />
 
         <div className='mx-auto mt-8'>
           <div className='flex flex-col gap-6'>
             {/* Auth Navigation Tabs */}
-            <div className='border-outline-variant/30 mb-0 flex border-b px-2'>
-              <button
-                className={cn(
-                  'flex-1 py-3 text-[11px] font-bold tracking-widest uppercase transition-colors',
-                  mode === 'login'
-                    ? 'text-primary border-primary border-b-2'
-                    : 'text-muted-foreground hover:text-primary',
-                )}
-                onClick={() => handleModeChange('login')}>
-                {t('auth.form.modes.login')}
-              </button>
-              <button
-                className={cn(
-                  'flex-1 py-3 text-[11px] font-bold tracking-widest uppercase transition-colors',
-                  mode === 'register'
-                    ? 'text-primary border-primary border-b-2'
-                    : 'text-muted-foreground hover:text-primary',
-                )}
-                onClick={() => handleModeChange('register')}>
-                {t('auth.form.modes.register')}
-              </button>
-              <button
-                className={cn(
-                  'flex-1 py-3 text-right text-[11px] font-bold tracking-widest uppercase transition-colors',
-                  mode === 'forgot'
-                    ? 'text-primary border-primary border-b-2'
-                    : 'text-muted-foreground hover:text-primary',
-                )}
-                onClick={() => handleModeChange('forgot')}>
-                {t('auth.form.modes.forgot')}
-              </button>
-            </div>
+            <AuthTabs mode={mode} onModeChange={handleModeChange} />
 
             {/* Login Card */}
             <Card className='relative overflow-hidden'>
@@ -167,36 +133,27 @@ const LoginPage = () => {
                 )}
 
                 <form className='relative z-10 space-y-6' onSubmit={handleSubmit}>
-                  {mode === 'register' ? (
-                    <div className='space-y-2'>
-                      <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                        {t('auth.form.fields.displayName')}
-                      </label>
+                  {mode === 'register' && (
+                    <AuthField label={t('auth.form.fields.displayName')}>
                       <Input
                         placeholder={t('auth.form.fields.displayName')}
                         value={displayName}
                         onChange={(event) => setDisplayName(event.target.value)}
                       />
-                    </div>
-                  ) : null}
+                    </AuthField>
+                  )}
 
-                  <div className='space-y-2'>
-                    <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                      {t('auth.form.fields.email')}
-                    </label>
+                  <AuthField label={t('auth.form.fields.email')}>
                     <Input
                       placeholder='name@example.com'
                       type='email'
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                     />
-                  </div>
+                  </AuthField>
 
-                  {mode !== 'forgot' ? (
-                    <div className='space-y-2'>
-                      <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                        {t('auth.form.fields.password')}
-                      </label>
+                  {mode !== 'forgot' && (
+                    <AuthField label={t('auth.form.fields.password')}>
                       <div className='relative'>
                         <Input
                           className='pr-12'
@@ -212,22 +169,19 @@ const LoginPage = () => {
                           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                       </div>
-                    </div>
-                  ) : null}
+                    </AuthField>
+                  )}
 
-                  {mode === 'register' ? (
-                    <div className='space-y-2'>
-                      <label className='text-on-surface-variant block px-1 text-[10px] font-bold tracking-[0.15em] uppercase'>
-                        {t('auth.form.fields.confirmPassword')}
-                      </label>
+                  {mode === 'register' && (
+                    <AuthField label={t('auth.form.fields.confirmPassword')}>
                       <Input
                         placeholder='••••••••'
                         type='password'
                         value={confirmPassword}
                         onChange={(event) => setConfirmPassword(event.target.value)}
                       />
-                    </div>
-                  ) : null}
+                    </AuthField>
+                  )}
 
                   <Button
                     className='w-full'
@@ -236,56 +190,21 @@ const LoginPage = () => {
                     type='submit'
                     variant='primary-gradient'>
                     <span>
-                      {isLoading ? t('auth.login.loading') : t(`auth.form.actions.${mode}`)}
+                      {isLoading ? t('auth.login.loading') : t(`auth.form.actions.${mode}` as any)}
                     </span>
                     <LogIn size={18} />
                   </Button>
 
-                  {mode !== 'forgot' ? (
-                    <>
-                      {/* Divider */}
-                      <div className='flex items-center gap-4 py-2'>
-                        <div className='bg-outline-variant/20 h-px grow' />
-                        <span className='text-muted-foreground text-[10px] font-bold tracking-widest uppercase'>
-                          or
-                        </span>
-                        <div className='bg-outline-variant/20 h-px grow' />
-                      </div>
-
-                      <Button
-                        className='text-on-surface-variant w-full'
-                        disabled={isLoading}
-                        size='lg'
-                        type='button'
-                        variant='outline'
-                        onClick={handleGoogleLogin}>
-                        <img
-                          alt='Google logo'
-                          className='h-5 w-5'
-                          src='https://lh3.googleusercontent.com/aida-public/AB6AXuBIaHPkBptnslGbDKY6MRva4MOSUbwZaixONtI3GPno8ivacHLAyW8YKqJA3XNcaeebItWTs0e-rFmB6E7RGKB2eTqcTiMxt8PulAaRpUsc36tMrWONU0CP8u8NmnGemkHFschIwCp5TIVoR1Uqnofw2ierxeAIZA6wm7WJLuwKDt9f1yldOJmHSb5tGcLrZgQdn85y2M4K8zcjjRpLbiwKhTlVt12982gwLBT9IKBhM4EcSFyKIJTIplKqXN34K-3kPJL2CBTwKYja'
-                        />
-                        <span className='text-sm'>{t('auth.form.actions.google')}</span>
-                      </Button>
-                    </>
-                  ) : null}
+                  <SocialAuth
+                    isLoading={isLoading}
+                    showSocial={mode !== 'forgot'}
+                    onGoogleLogin={handleGoogleLogin}
+                  />
                 </form>
               </CardContent>
             </Card>
 
-            <div className='mt-10 text-center'>
-              <div className='flex items-center justify-center gap-4 pt-4'>
-                <span className='text-muted-foreground hover:text-primary pointer-events-none text-[10px] font-medium tracking-widest uppercase transition-colors'>
-                  {t('auth.login.termsLabel')}
-                </span>
-                <div className='bg-outline-variant/40 h-1 w-1 rounded-full' />
-                <span className='text-muted-foreground hover:text-primary pointer-events-none text-[10px] font-medium tracking-widest uppercase transition-colors'>
-                  {t('auth.login.privacyLabel')}
-                </span>
-              </div>
-              <p className='text-muted-foreground/60 mt-4 text-center text-xs leading-relaxed'>
-                {t('auth.login.version', { version: APP_VERSION })}
-              </p>
-            </div>
+            <AuthFooter version={APP_VERSION} />
           </div>
         </div>
       </main>
