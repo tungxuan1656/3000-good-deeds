@@ -22,11 +22,11 @@ export const HeaderSection = ({
     <CardSection as='header'>
       <Leaf position='top-right' variant={1} />
       {subtitle ? (
-        <p className='text-muted-foreground/70 text-xs font-semibold tracking-wider uppercase sm:text-xs'>
+        <p className='font-label text-muted-foreground/80 text-xs font-semibold tracking-[0.18em] uppercase sm:text-xs'>
           {subtitle}
         </p>
       ) : null}
-      <h1 className='text-foreground mt-2 text-2xl font-semibold tracking-tight sm:text-3xl'>
+      <h1 className='font-headline text-foreground mt-2 text-2xl tracking-tight sm:text-3xl'>
         {title}
       </h1>
       {description ? (

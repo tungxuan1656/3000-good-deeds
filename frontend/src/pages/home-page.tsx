@@ -8,6 +8,7 @@ import {
   DailyQuoteCard,
   HeaderSection,
   InfoButton,
+  KindnessSuggestionCard,
   ReminderSuggestCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
@@ -30,6 +31,7 @@ const HomePage = () => {
 
         {/* Quote Section */}
         <DailyQuoteCard />
+        <KindnessSuggestionCard />
         <CheckInCard />
 
         <TodaySection />

@@ -69,7 +69,7 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
         </div>
       </div>
 
-      <div className='bg-card/80 flex flex-col gap-3 rounded-2xl border border-black/5 p-4'>
+      <div className='bg-card/80 border-border/45 flex flex-col gap-3 rounded-2xl border p-4'>
         <div className='flex items-center gap-4'>
           <div>
             <Label className='text-foreground text-base'>{displayName}</Label>

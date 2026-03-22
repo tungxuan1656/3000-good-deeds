@@ -173,12 +173,9 @@
       "title": "Menu",
       "home": "Trang chủ",
       "timeline": "Hành trình",
-      "inner": "Tu tập",
-      "stats": "Thống kê",
-      "goals": "Mục tiêu",
-      "suggestedDeeds": "Gợi ý việc thiện",
-      "settings": "Cài đặt",
-      "more": "Thêm"
+      "more": "Thêm",
+      "handbook": "Sổ tay",
+      "progress": "Tiến trình"
     },
     "user": {
       "fallbackName": "Bạn",
@@ -296,16 +293,12 @@
   "breadcrumbs": {
     "home": "Trang chủ",
     "timeline": "Hành trình",
-    "deeds": "Việc thiện",
-    "stats": "Thống kê",
-    "goals": "Mục tiêu",
-    "inner": "Tu tập",
     "more": "Thêm",
     "quote": "Trích dẫn",
-    "randomActs": "Gợi ý việc thiện",
     "journal": "Sổ tay quán chiếu",
-    "settings": "Cài đặt",
-    "history": "Lịch sử"
+    "history": "Lịch sử",
+    "handbook": "Sổ tay quán chiếu",
+    "progress": "Tiến trình"
   },
   "settings": {
     "header": {
@@ -415,18 +408,6 @@
       "title": "Ghi nhận việc thiện",
       "description": "Ghi nhận là để nhớ và quán chiếu, không phải để đạt chỉ tiêu. Mỗi việc thiện nhỏ đều đáng trân trọng, và mọi ghi nhận đều riêng tư."
     },
-    "goals": {
-      "title": "Mục tiêu tu tập",
-      "description": "Mục tiêu giúp giữ nhịp đều đặn, không phải để tự ép. Hãy chọn mức vừa sức và có thể điều chỉnh bất cứ khi nào thấy cần."
-    },
-    "stats": {
-      "title": "Thống kê để soi chiếu",
-      "description": "Các con số chỉ là tấm gương để nhìn lại thói quen của mình. Chuỗi ngày là nhịp tham khảo. Đừng dùng để so sánh hay đánh giá, mà để hiểu rõ hơn về hành trình của mình."
-    },
-    "cultivation": {
-      "title": "Không gian tu tập",
-      "description": "Tu tập là quay vào bên trong. Sổ tay quán chiếu là nơi bạn viết xuống điều mình thấy rõ, để nhìn lại và buông nhẹ."
-    },
     "journal": {
       "title": "Sổ tay quán chiếu",
       "description": "Đây là không gian riêng tư để viết xuống điều mình thấy rõ. Viết xong là đặt xuống, không để tự phán xét. Không có chấm điểm hay xếp hạng."
@@ -443,10 +424,6 @@
       "title": "Pháp ngữ cho phiên này",
       "description": "Mỗi lần mở app sẽ có một câu pháp ngữ để bạn đọc chậm và lắng lại. Bạn có thể đổi câu khác nếu muốn, nhưng không cần tìm câu hay nhất. Mọi thứ đến đều là duyên, hãy để tâm mình đón nhận một cách nhẹ nhàng."
     },
-    "breathing": {
-      "title": "Thiền và thở",
-      "description": "Bài thở này giúp mình chậm lại. Hãy theo nhịp hít - giữ - thở ra thật nhẹ, và điều chỉnh cho phù hợp với cơ thể."
-    },
     "timeline": {
       "title": "Nhật ký hành trình",
       "description": "Đây là nơi bạn xem lại các việc thiện đã ghi nhận theo thời gian để soi chiếu và nuôi dưỡng sự đều đặn."
@@ -459,38 +436,6 @@
     }
   },
   "pages": {
-    "privacyPolicy": {
-      "header": {
-        "title": "Chính sách riêng tư",
-        "subtitle": "Pháp lý",
-        "description": "Chúng tôi coi quyền riêng tư là tối thượng. Trang này giải thích rõ dữ liệu nào được thu thập, dùng vào việc gì, và bạn có thể kiểm soát ra sao.",
-        "backToLogin": "Quay về đăng nhập"
-      }
-    },
-    "termsOfUse": {
-      "header": {
-        "title": "Điều khoản sử dụng",
-        "subtitle": "Pháp lý",
-        "description": "Một vài điều rõ ràng để bạn dùng ứng dụng một cách an tâm, nhẹ nhàng và tôn trọng quyền riêng tư.",
-        "backToLogin": "Quay về đăng nhập"
-      }
-    },
-    "stats": {
-      "header": {
-        "title": "Nhìn lại hành trình",
-        "subtitle": "Thống kê",
-        "description": "Nhìn lại để hiểu tâm của mình, không phải để so sánh.",
-        "note": "Các con số chỉ là tấm gương để soi chiếu."
-      }
-    },
-    "goals": {
-      "header": {
-        "title": "Giữ nhịp đều đặn",
-        "subtitle": "Mục tiêu",
-        "description": "Đặt mục tiêu vừa sức và điều kiện của bạn nhé!.",
-        "note": "Bạn có thể điều chỉnh mục tiêu bất cứ lúc nào."
-      }
-    },
     "timeline": {
       "header": {
         "title": "Nhật ký việc thiện",
@@ -511,18 +456,6 @@
       "loadingMore": "Đang tải...",
       "loadMore": "Tải thêm"
     },
-    "inner": {
-      "header": {
-        "title": "Không gian tu tập",
-        "subtitle": "Tu tập",
-        "description": "Sổ tay quán chiếu - một bước nhỏ để quay về với mình.",
-        "note": "Viết xuống để nhìn rõ và buông nhẹ."
-      },
-      "journalCard": {
-        "title": "Sổ tay quán chiếu",
-        "description": "Viết xuống để nhìn rõ và buông nhẹ."
-      }
-    },
     "innerJournalHistory": {
       "header": {
         "title": "Những ngày cũ",
@@ -538,83 +471,35 @@
       "loadMore": "Tải thêm",
       "writeNew": "Viết một dòng mới"
     },
-    "innerJournalEditor": {
-      "header": {
-        "title": "Một trang chánh niệm",
-        "subtitle": "Viết nhật ký",
-        "description": "Chọn cách quán chiếu và viết điều cần nhìn rõ.",
-        "note": "Mọi ghi nhận đều riêng tư."
-      },
-      "form": {
-        "titlePlaceholder": "Tiêu đề",
-        "contentPlaceholder": "Hôm nay mình...",
-        "privateNote": "Chỉ mình bạn thấy nội dung này.",
-        "save": "Lưu lại"
-      }
-    },
     "more": {
       "header": {
         "title": "Quản lý và tùy chỉnh",
         "subtitle": "Thêm",
-        "description": "Mục tiêu, gợi ý việc thiện, nhắc nhở và tài khoản của bạn.",
-        "note": "Bạn có thể tùy chỉnh theo thói quen của mình."
-      },
-      "rows": {
-        "account": {
-          "title": "Quản lý tài khoản",
-          "description": "Cập nhật hồ sơ, đăng xuất và xóa dữ liệu."
-        },
-        "notifications": {
-          "title": "Quản lý thông báo",
-          "description": "Bật/tắt nhắc nhở và chỉnh giờ gửi thông báo."
-        },
-        "goals": {
-          "title": "Mục tiêu",
-          "description": "Giữ thói quen theo tuần, tháng, năm."
-        },
-        "randomActs": {
-          "title": "Gợi ý việc thiện",
-          "description": "Một gợi ý nhỏ để khởi tâm từ bi."
-        }
+        "description": "Quản lý tài khoản, nhắc nhở và bảo mật trong một nơi duy nhất.",
+        "note": "Bạn có thể cập nhật hồ sơ, đổi mật khẩu, đăng xuất và xóa tài khoản tại đây."
       }
     },
-    "innerMeditation": {
+    "handbook": {
       "header": {
-        "title": "Trở về với hơi thở",
-        "subtitle": "Thiền và thở",
-        "description": "Thở chậm để trở về chánh niệm và an trú nơi tâm.",
-        "note": "Bạn có thể điều chỉnh nhịp thở cho phù hợp với cơ thể."
+        "title": "Sổ tay quán chiếu",
+        "subtitle": "Handbook",
+        "description": "Viết xuống điều bạn nhận ra, rồi nhìn lại hành trình chuyển hóa của mình một cách nhẹ nhàng.",
+        "note": "Quote và gợi ý việc thiện được nhúng để bạn có thể thực hành ngay trong cùng màn hình."
       },
-      "phases": {
-        "inhale": "Hít vào",
-        "hold": "Giữ",
-        "exhale": "Thở ra"
-      },
-      "durations": {
-        "3m": "3 phút",
-        "5m": "5 phút",
-        "10m": "10 phút"
-      },
-      "cycle": "Chu kỳ 4-4-4",
-      "actions": {
-        "start": "Bắt đầu",
-        "pause": "Tạm dừng",
-        "reset": "Đặt lại"
-      },
-      "finishedPrompt": "Bạn cảm thấy thế nào lúc này?"
+      "historyTitle": "Nhật ký đã lưu",
+      "historyEmptyTitle": "Chưa có dòng quán chiếu nào",
+      "historyEmptyDescription": "Khi bạn lưu một dòng mới, danh sách lịch sử sẽ xuất hiện ở đây.",
+      "kindnessSuggestion": {
+        "title": "Seed of kindness",
+        "empty": "Chưa có gợi ý lúc này. Bạn có thể thử làm mới để nhận gợi ý khác."
+      }
     },
-    "randomActs": {
+    "progress": {
       "header": {
-        "title": "Một gợi ý trong ngày",
-        "subtitle": "Gợi ý việc thiện",
-        "description": "Chọn một việc thiện nhỏ phù hợp với mình lúc này.",
-        "note": "Bạn có thể bỏ qua hoặc đổi gợi ý bất cứ lúc nào."
-      },
-      "randomLabel": "Gợi ý ngẫu nhiên",
-      "fallbackNote": "Gợi ý để bạn tham khảo",
-      "empty": "Chưa có gợi ý lúc này. Bạn có thể thử lại sau.",
-      "actions": {
-        "refresh": "Gợi ý khác"
+        "title": "Tiến trình và mục tiêu",
+        "subtitle": "Progress",
+        "description": "Theo dõi tổng số việc thiện, đặt mục tiêu theo kỳ và quan sát nhịp thực hành của bạn theo lịch tháng.",
+        "note": "Màn hình này gộp thống kê và mục tiêu trong cùng một luồng theo dõi."
       }
     }
   },
@@ -644,7 +529,10 @@
       "totalValue": "{{count}} việc thiện",
       "totalValueFallback": "-- việc thiện",
       "emptyTitle": "Chưa có dữ liệu thống kê",
-      "emptyDescription": "Hãy ghi nhận những việc thiện bạn đã làm nhé!"
+      "emptyDescription": "Hãy ghi nhận những việc thiện bạn đã làm nhé!",
+      "streakTitle": "Chuỗi đều đặn",
+      "streakValue": "{{count}} ngày liên tiếp",
+      "streakValueFallback": "-- ngày liên tiếp"
     },
     "weekly": {
       "title": "Nhịp điệu trong tuần",

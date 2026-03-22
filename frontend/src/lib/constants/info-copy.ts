@@ -10,18 +10,6 @@ export const INFO_COPY = {
     title: t('info.deeds.title'),
     description: t('info.deeds.description'),
   },
-  goals: {
-    title: t('info.goals.title'),
-    description: t('info.goals.description'),
-  },
-  stats: {
-    title: t('info.stats.title'),
-    description: t('info.stats.description'),
-  },
-  cultivation: {
-    title: t('info.cultivation.title'),
-    description: t('info.cultivation.description'),
-  },
   journal: {
     title: t('info.journal.title'),
     description: t('info.journal.description'),
@@ -41,10 +29,6 @@ export const INFO_COPY = {
   quote: {
     title: t('info.quote.title'),
     description: t('info.quote.description'),
-  },
-  breathing: {
-    title: t('info.breathing.title'),
-    description: t('info.breathing.description'),
   },
 }
 

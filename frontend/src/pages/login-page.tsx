@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { LoginSideCard } from '@/components/auth'
 import { CardSection } from '@/components/shared'
@@ -107,7 +107,7 @@ const LoginPage = () => {
           <div className='flex flex-col justify-center gap-6'>
             <CardSection className='flex flex-col gap-4'>
               <div className='flex items-center gap-3'>
-                <div className='bg-card/80 flex h-14 w-14 items-center justify-center rounded-3xl border border-black/5 shadow-sm'>
+                <div className='bg-card/80 border-border/45 flex h-14 w-14 items-center justify-center rounded-3xl border shadow-sm'>
                   <img
                     alt={t('auth.login.logoAlt')}
                     className='h-9 w-9'
@@ -215,14 +215,9 @@ const LoginPage = () => {
 
             <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
               {t('auth.login.termsPrefix')}{' '}
-              <Link className='underline decoration-dashed underline-offset-2' to={PATHS.TERMS}>
-                {t('auth.login.termsLabel')}
-              </Link>{' '}
+              <span className='font-medium'>{t('auth.login.termsLabel')}</span>{' '}
               {t('auth.login.termsConnector')}{' '}
-              <Link className='underline decoration-dashed underline-offset-2' to={PATHS.PRIVACY}>
-                {t('auth.login.privacyLabel')}
-              </Link>
-              .
+              <span className='font-medium'>{t('auth.login.privacyLabel')}</span>.
             </p>
             <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
               {t('auth.login.version', { version: APP_VERSION })}

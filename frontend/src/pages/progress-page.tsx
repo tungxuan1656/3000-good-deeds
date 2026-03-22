@@ -4,41 +4,43 @@ import {
   CardSection,
   DailyQuoteCard,
   HeaderSection,
-  InfoButton,
+  KindnessSuggestionCard,
   MiniCheckInCard,
 } from '@/components/shared'
-import { INFO_COPY } from '@/lib/constants/info-copy'
+import { CalendarStats, StatsCard } from '@/components/stats'
 import { t } from '@/lib/i18n'
 
-const GoalsPage = () => {
+const ProgressPage = () => {
   return (
     <MainContainer>
       <MainColumn>
         <HeaderSection
-          action={
-            <InfoButton description={INFO_COPY.goals.description} title={INFO_COPY.goals.title} />
-          }
-          description={t('pages.goals.header.description')}
-          note={t('pages.goals.header.note')}
-          subtitle={t('pages.goals.header.subtitle')}
-          title={t('pages.goals.header.title')}
+          description={t('pages.progress.header.description')}
+          note={t('pages.progress.header.note')}
+          subtitle={t('pages.progress.header.subtitle')}
+          title={t('pages.progress.header.title')}
         />
+
+        <StatsCard />
 
         <CardSection className='gap-4'>
           <GoalSettingCard />
         </CardSection>
+
+        <CalendarStats />
 
         <CardSection className='gap-4'>
           <GoalHistoryCard />
         </CardSection>
       </MainColumn>
 
-      <SideColumn>
+      <SideColumn hideInMobile>
         <MiniCheckInCard />
         <DailyQuoteCard />
+        <KindnessSuggestionCard />
       </SideColumn>
     </MainContainer>
   )
 }
 
-export default GoalsPage
+export default ProgressPage
