@@ -1,16 +1,13 @@
 import { format } from 'date-fns'
 import { vi } from 'date-fns/locale'
 
-import { TodaySection } from '@/components/home'
+import { JourneyStatsCard, RecordDeedCard, TodaySummarySection } from '@/components/home'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
-  CheckInCard,
   DailyQuoteCard,
   HeaderSection,
   InfoButton,
   KindnessSuggestionCard,
-  ReminderSuggestCard,
-  WeeklyRhythmCard,
 } from '@/components/shared'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
@@ -18,7 +15,7 @@ import { t } from '@/lib/i18n'
 const HomePage = () => {
   return (
     <MainContainer>
-      <MainColumn>
+      <MainColumn className='flex flex-col gap-8'>
         <HeaderSection
           action={
             <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
@@ -29,19 +26,20 @@ const HomePage = () => {
           title={t('home.header.title')}
         />
 
-        {/* Quote Section */}
-        <DailyQuoteCard />
-        <KindnessSuggestionCard />
-        <CheckInCard />
+        {/* Record Section */}
+        <RecordDeedCard />
 
-        <TodaySection />
+        {/* Today's Summary Section */}
+        <TodaySummarySection />
       </MainColumn>
 
       {/* Side column */}
-      <SideColumn>
-        <WeeklyRhythmCard />
+      <SideColumn className='flex flex-col gap-8'>
+        <DailyQuoteCard />
 
-        <ReminderSuggestCard />
+        <KindnessSuggestionCard />
+
+        <JourneyStatsCard />
       </SideColumn>
     </MainContainer>
   )
