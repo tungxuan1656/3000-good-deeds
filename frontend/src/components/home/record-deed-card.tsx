@@ -1,13 +1,13 @@
+import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-
-import { Card } from '../ui'
 
 const MOOD_TAGS = [
   { id: 'peaceful', label: 'an vui' },
@@ -54,54 +54,58 @@ export const RecordDeedCard = () => {
   }
 
   return (
-    <Card className='flex flex-col gap-4 p-6'>
-      <div className='flex items-center justify-between'>
-        <h3 className='font-headline text-primary text-lg font-bold'>Record a New Deed</h3>
-        <span className='text-muted-foreground text-xs'>
-          {new Date().toLocaleDateString('vi-VN')}
-        </span>
-      </div>
-
-      <p className='text-muted-foreground text-sm'>
-        What small spark of goodness did you ignite today?
-      </p>
-
-      <Textarea
-        className='focus-visible:ring-primary/20 min-h-30 resize-none border-none bg-stone-50 p-4 focus-visible:ring-1 dark:bg-stone-900/50'
-        placeholder='Describe your act of kindness...'
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <div className='space-y-3'>
-        <p className='text-muted-foreground text-xs font-medium tracking-wider uppercase'>
-          How did it feel?
-        </p>
-        <div className='flex flex-wrap gap-2'>
-          {MOOD_TAGS.map((tag) => (
-            <button
-              key={tag.id}
-              className={cn(
-                'rounded-full px-3 py-1 text-xs transition-all',
-                selectedTags.includes(tag.id)
-                  ? 'bg-primary/20 text-primary font-medium'
-                  : 'text-muted-foreground bg-stone-100 hover:bg-stone-200 dark:bg-stone-800',
-              )}
-              onClick={() => handleToggleTag(tag.id)}>
-              {tag.label}
-            </button>
-          ))}
+    <Card padding='none' variant='standard'>
+      <CardHeader className='flex flex-row items-start justify-between p-8 pb-0'>
+        <div className='space-y-1.5'>
+          <CardTitle className='text-2xl font-bold'>Record a New Deed</CardTitle>
+          <p className='text-muted-foreground text-sm font-medium'>
+            What small spark of goodness did you ignite today?
+          </p>
         </div>
-      </div>
+        <div className='bg-surface-container-low flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium text-stone-500'>
+          {new Date().toLocaleDateString('en-US')}
+          <CalendarIcon className='size-3.5' />
+        </div>
+      </CardHeader>
 
-      <div className='mt-2 flex justify-end'>
-        <Button
-          className='bg-primary text-primary-foreground shadow-primary/20 rounded-xl px-8 font-bold shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.98]'
-          disabled={createDeed.isPending}
-          onClick={handleRecord}>
-          {createDeed.isPending ? t('common.actions.saving') : 'Record Deed'}
-        </Button>
-      </div>
+      <CardContent className='space-y-6 p-8 pt-6'>
+        <Textarea
+          className='bg-surface-container-low min-h-36 resize-none border-none p-5 text-base placeholder:text-stone-300 focus-visible:ring-0 dark:bg-stone-900/50'
+          placeholder='Describe your act of kindness...'
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <div className='space-y-3'>
+          <p className='text-muted-foreground text-[10px] font-bold tracking-[0.15em] uppercase'>
+            How did it feel?
+          </p>
+          <div className='flex flex-wrap gap-2'>
+            {MOOD_TAGS.map((tag) => (
+              <button
+                key={tag.id}
+                className={cn(
+                  'rounded-full border px-4 py-1.5 text-xs transition-all',
+                  selectedTags.includes(tag.id)
+                    ? 'border-primary/40 bg-primary/10 text-primary font-bold'
+                    : 'border-stone-200 bg-white text-stone-500 hover:border-stone-300 dark:border-stone-800 dark:bg-stone-900',
+                )}
+                onClick={() => handleToggleTag(tag.id)}>
+                {tag.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className='flex justify-end pt-2'>
+          <Button
+            className='min-w-36 rounded-lg bg-[#526347] py-6 font-bold text-white shadow-none transition-transform hover:bg-[#46573c] active:scale-[0.98]'
+            disabled={createDeed.isPending}
+            onClick={handleRecord}>
+            {createDeed.isPending ? t('common.actions.saving') : 'Record Deed'}
+          </Button>
+        </div>
+      </CardContent>
     </Card>
   )
 }
