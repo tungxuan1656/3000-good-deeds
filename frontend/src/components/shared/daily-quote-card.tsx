@@ -1,64 +1,43 @@
-import { RefreshCwIcon, SparklesIcon } from 'lucide-react'
+import { QuoteIcon, RefreshCwIcon } from 'lucide-react'
 
-import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { useRandomQuote } from '@/hooks/api/use-cultivation'
-import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
-import { cn } from '@/lib/utils'
 
-import { InfoButton } from './info-button'
-import { Leaf } from './leaf'
-
-type DailyQuoteCardProps = {
-  label?: string
-  source?: string
-  className?: string
-}
-
-export const DailyQuoteCard = ({ label, source, className }: DailyQuoteCardProps) => {
-  const resolvedLabel = label ?? t('quote.card.label')
-  const resolvedSource = source ?? t('quote.card.defaultSource')
+export const DailyQuoteCard = () => {
   const { data, isFetching, refetch } = useRandomQuote()
   const apiQuote = data?.data
   const displayQuote = apiQuote?.content || t('quote.card.defaultQuote')
-  const displaySource =
-    [apiQuote?.author ?? '', apiQuote?.source ?? ''].join(', ') || resolvedSource
+  const displaySource = apiQuote?.author || apiQuote?.source || 'Aesop'
 
   return (
-    <CardSection className={cn(className)}>
-      <Leaf position='bottom-right' variant={5} />
-      <div className='flex items-start gap-4'>
-        <div className='bg-primary/60 mt-1 h-12 w-1 rounded-full' />
-        <div className='flex flex-1 flex-col'>
-          <div className='text-muted-foreground/80 mb-3 flex items-center justify-between gap-2 font-medium'>
-            <div className='flex items-center gap-2'>
-              <SparklesIcon className='text-accent h-4 w-4' />
-              {resolvedLabel}
-            </div>
-            <div className='flex items-center gap-1'>
-              <InfoButton description={INFO_COPY.quote.description} title={INFO_COPY.quote.title} />
-              <Button
-                className='h-7 w-7 rounded-full'
-                size='icon'
-                variant='ghost'
-                onClick={() => refetch()}>
-                <RefreshCwIcon
-                  className={isFetching ? 'h-3.5 w-3.5 animate-spin' : 'h-3.5 w-3.5'}
-                />
-              </Button>
-            </div>
-          </div>
-          <p className='text-foreground/85 text-lg leading-relaxed font-medium whitespace-pre-wrap italic'>
-            {displayQuote}
-          </p>
-          {displaySource && (
-            <div className='text-muted-foreground/60 mt-3 flex items-center gap-2 text-[10px] font-semibold tracking-[0.15em] uppercase'>
-              {displaySource}
-            </div>
-          )}
-        </div>
+    <Card className='relative border-none' padding='none' variant='surface'>
+      <div className='absolute top-6 left-6 opacity-10'>
+        <QuoteIcon className='size-12 rotate-180 fill-stone-500 text-stone-500' />
       </div>
-    </CardSection>
+
+      <div className='absolute top-6 right-6'>
+        <Button
+          className='size-8 text-stone-400 hover:bg-transparent hover:text-stone-600'
+          size='icon'
+          variant='ghost'
+          onClick={() => refetch()}>
+          <RefreshCwIcon className={isFetching ? 'size-4 animate-spin' : 'size-4'} />
+        </Button>
+      </div>
+
+      <CardContent className='space-y-6 p-10 pt-16'>
+        <p className='font-headline text-xl leading-relaxed text-stone-700 italic'>
+          "{displayQuote}"
+        </p>
+
+        <div className='flex justify-start pt-2'>
+          <p className='text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase'>
+            — {displaySource.toUpperCase()}
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   )
 }

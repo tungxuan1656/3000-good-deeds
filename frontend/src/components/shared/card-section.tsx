@@ -1,45 +1,20 @@
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { Card, type CardProps } from '@/components/ui/card'
 
-type CardSectionVariant = 'default' | 'soft' | 'muted'
-
-type CardSectionPadding = 'md' | 'lg'
-
-interface CardSectionProps extends React.HTMLAttributes<HTMLElement> {
+interface CardSectionProps extends CardProps {
   as?: React.ElementType
-  variant?: CardSectionVariant
-  padding?: CardSectionPadding
-}
-
-const variantClasses: Record<CardSectionVariant, string> = {
-  default: 'bg-surface-container-lowest',
-  soft: 'bg-surface-container-low',
-  muted: 'bg-surface-container',
-}
-
-const paddingClasses: Record<CardSectionPadding, string> = {
-  md: 'p-4',
-  lg: 'p-5',
 }
 
 const CardSection = ({
   as: Component = 'section',
-  variant = 'default',
-  padding = 'lg',
+  variant = 'standard',
+  padding = 'md',
   className,
   ...props
 }: CardSectionProps) => {
   return (
-    <Component
-      className={cn(
-        'relative flex flex-col overflow-hidden rounded-3xl shadow-[0_10px_30px_rgba(47,52,46,0.06)]',
-        variantClasses[variant],
-        paddingClasses[padding],
-        className,
-      )}
-      {...props}
-    />
+    <Card as={Component} className={className} padding={padding} variant={variant} {...props} />
   )
 }
 

@@ -1,12 +1,10 @@
-import { HandHeartIcon, RefreshCwIcon } from 'lucide-react'
+import { LightbulbIcon, RefreshCwIcon } from 'lucide-react'
 
 import { useRandomActs } from '@/hooks/api/use-cultivation'
-import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 
 import { Button } from '../ui/button'
-import { CardSection } from './card-section'
-import { InfoButton } from './info-button'
+import { Card, CardContent, CardHeader } from '../ui/card'
 
 export const KindnessSuggestionCard = () => {
   const { data, isFetching, refetch } = useRandomActs(1)
@@ -17,29 +15,32 @@ export const KindnessSuggestionCard = () => {
     t('pages.handbook.kindnessSuggestion.empty')
 
   return (
-    <CardSection>
-      <div className='flex items-start justify-between gap-3'>
-        <div className='flex items-center gap-2'>
-          <HandHeartIcon className='text-tertiary size-4' />
-          <p className='font-label text-muted-foreground text-xs tracking-[0.15em] uppercase'>
-            {t('pages.handbook.kindnessSuggestion.title')}
+    <Card padding='none' variant='standard'>
+      <CardHeader className='flex flex-row items-center justify-between p-8 pb-0'>
+        <div className='flex items-center gap-3'>
+          <LightbulbIcon className='size-5 text-stone-700' />
+          <p className='text-[10px] font-bold tracking-[0.2em] text-stone-700 uppercase'>
+            Daily Suggestion
           </p>
         </div>
-        <div className='flex items-center gap-1'>
-          <InfoButton
-            description={INFO_COPY.randomActs.description}
-            title={INFO_COPY.randomActs.title}
-          />
-          <Button
-            className='h-7 w-7 rounded-full'
-            size='icon'
-            variant='ghost'
-            onClick={() => refetch()}>
-            <RefreshCwIcon className={isFetching ? 'size-3.5 animate-spin' : 'size-3.5'} />
-          </Button>
-        </div>
-      </div>
-      <p className='text-foreground mt-3 text-sm leading-relaxed'>{suggestionText}</p>
-    </CardSection>
+        <Button
+          className='size-8 text-stone-400 hover:bg-transparent hover:text-stone-600'
+          size='icon'
+          variant='ghost'
+          onClick={() => refetch()}>
+          <RefreshCwIcon className={isFetching ? 'size-4 animate-spin' : 'size-4'} />
+        </Button>
+      </CardHeader>
+
+      <CardContent className='space-y-8 p-8 pt-6'>
+        <p className='text-sm leading-relaxed font-medium text-stone-600'>{suggestionText}</p>
+
+        <Button
+          className='w-full border-stone-200 py-6 text-[10px] font-bold tracking-[0.2em] text-stone-500 uppercase hover:bg-stone-50'
+          variant='outline'>
+          Accept Suggestion
+        </Button>
+      </CardContent>
+    </Card>
   )
 }

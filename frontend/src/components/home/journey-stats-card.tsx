@@ -1,6 +1,7 @@
-import { CardSection } from '@/components/shared'
-import { Progress } from '@/components/ui/progress'
 import { useStatsSummary } from '@/hooks/api/use-stats'
+
+import { Card, CardContent, CardHeader } from '../ui/card'
+import { Progress } from '../ui/progress'
 
 const GOAL_TOTAL = 3000
 
@@ -10,35 +11,30 @@ export const JourneyStatsCard = () => {
   const progress = Math.min((totalDeeds / GOAL_TOTAL) * 100, 100)
 
   return (
-    <CardSection className='p-6'>
-      <h3 className='font-headline text-primary mb-4 text-lg font-bold'>Your Journey</h3>
+    <Card padding='none' variant='surface'>
+      <CardHeader className='p-8 pb-0'>
+        <p className='text-[10px] font-bold tracking-[0.2em] text-stone-700 uppercase'>
+          Your Journey
+        </p>
+      </CardHeader>
 
-      <div className='mb-2 flex items-baseline justify-between'>
-        <span className='foreground text-3xl font-bold'>
-          {isLoading ? '--' : totalDeeds.toLocaleString()}
-        </span>
-        <span className='text-muted-foreground text-xs font-medium tracking-wider uppercase'>
-          Deeds Logged
-        </span>
-      </div>
-
-      <div className='mt-6 space-y-2'>
-        <div className='text-muted-foreground flex justify-between text-xs'>
-          <span>
-            {((totalDeeds / GOAL_TOTAL) * 100).toFixed(1)}% of the way to {GOAL_TOTAL}
+      <CardContent className='space-y-8 p-8 pt-6'>
+        <div className='flex items-baseline justify-between'>
+          <span className='text-5xl font-medium tracking-tighter text-stone-800'>
+            {isLoading ? '--' : totalDeeds.toLocaleString()}
+          </span>
+          <span className='text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase'>
+            Deeds Logged
           </span>
         </div>
-        <Progress className='h-2 bg-stone-100 dark:bg-stone-800' value={progress} />
-      </div>
 
-      <div className='bg-primary/5 border-primary/10 mt-8 flex items-center gap-3 rounded-xl border p-4'>
-        <div className='bg-primary/10 text-primary flex size-10 items-center justify-center rounded-full'>
-          ✨
+        <div className='space-y-4'>
+          <Progress className='h-1.5 bg-stone-200/50 dark:bg-stone-800' value={progress} />
+          <p className='text-[10px] font-bold tracking-wider text-stone-400 uppercase'>
+            {progress.toFixed(1)}% of the way to {GOAL_TOTAL.toLocaleString()}
+          </p>
         </div>
-        <p className='muted-foreground text-xs leading-relaxed'>
-          Every act of kindness moves you closer to a more compassionate world. Keep going!
-        </p>
-      </div>
-    </CardSection>
+      </CardContent>
+    </Card>
   )
 }
