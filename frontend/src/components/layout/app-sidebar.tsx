@@ -28,7 +28,7 @@ export const AppSidebar = () => {
   return (
     <Sidebar className='bg-card'>
       <SidebarHeader>
-        <div className='bg-card/80 mt-4 flex flex-col gap-1 rounded-2xl border border-black/5 px-3 py-2'>
+        <div className='bg-surface-container-high mt-4 flex flex-col gap-1 rounded-2xl px-3 py-3'>
           <p className='text-foreground truncate text-sm font-semibold'>{displayName}</p>
           <p className='text-muted-foreground truncate text-xs'>{displayEmail}</p>
         </div>
@@ -42,11 +42,6 @@ export const AppSidebar = () => {
               {APP_MENU_ITEMS.map(({ label, path, icon: Icon }) => {
                 const isActive = (() => {
                   if (path === PATHS.HOME) return location.pathname === PATHS.HOME
-                  if (path === PATHS.INNER) {
-                    return [PATHS.INNER, PATHS.INNER_JOURNAL].some((innerPath) =>
-                      location.pathname.startsWith(innerPath),
-                    )
-                  }
 
                   return location.pathname.startsWith(path)
                 })()

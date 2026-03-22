@@ -19,6 +19,12 @@ export const StatsCard = () => {
         ? t('stats.card.totalValue', { count: summary.totalDeeds })
         : t('stats.card.totalValueFallback'),
     },
+    {
+      title: t('stats.card.streakTitle'),
+      value: summary
+        ? t('stats.card.streakValue', { count: summary.streakDays })
+        : t('stats.card.streakValueFallback'),
+    },
   ]
 
   return (
@@ -34,7 +40,7 @@ export const StatsCard = () => {
       )}
 
       {!isEmpty && !isLoading && (
-        <div className='flex flex-row gap-5'>
+        <div className='grid gap-4 sm:grid-cols-2'>
           {summaryCards.map((card) => {
             return (
               <CardSection key={card.title} className='flex-1'>

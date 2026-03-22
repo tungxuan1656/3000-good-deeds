@@ -1,63 +1,69 @@
-import {
-  BellDotIcon,
-  ChevronRightIcon,
-  HeartHandshakeIcon,
-  TargetIcon,
-  UserCogIcon,
-} from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
+import { deleteMe } from '@/api/user'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
-import { LogoutButton } from '@/components/settings'
 import {
-  CardSection,
+  AccountProfileCard,
+  DeleteAccountCard,
+  NotificationSettingsCard,
+  PasswordSecurityCard,
+  SessionCard,
+} from '@/components/settings'
+import {
   DailyQuoteCard,
   HeaderSection,
-  LegalFooter,
+  KindnessSuggestionCard,
   MiniCheckInCard,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { useUser } from '@/hooks/api/use-user'
+import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
-import { cn } from '@/lib/utils'
+import { unsubscribeFromPushNotifications } from '@/lib/utils/push-notifications'
+import { authActions, useAuthStore } from '@/stores/auth.store'
 
-// Language-change in this app triggers a full page reload, so module-level t() calls are safe.
-const ROWS = [
-  {
-    title: t('pages.more.rows.account.title'),
-    description: t('pages.more.rows.account.description'),
-    icon: UserCogIcon,
-    to: PATHS.SETTINGS,
-    bgIcon: 'bg-blue-100',
-    color: 'text-blue-500',
-  },
-  {
-    title: t('pages.more.rows.notifications.title'),
-    description: t('pages.more.rows.notifications.description'),
-    icon: BellDotIcon,
-    to: PATHS.SETTINGS,
-    bgIcon: 'bg-orange-100',
-    color: 'text-amber-500',
-  },
-  {
-    title: t('pages.more.rows.goals.title'),
-    description: t('pages.more.rows.goals.description'),
-    icon: TargetIcon,
-    to: PATHS.GOALS,
-    bgIcon: 'bg-secondary/40',
-    color: 'text-primary',
-  },
-  {
-    title: t('pages.more.rows.randomActs.title'),
-    description: t('pages.more.rows.randomActs.description'),
-    icon: HeartHandshakeIcon,
-    to: PATHS.INNER_RANDOM_ACTS,
-    bgIcon: 'bg-purple-100',
-    color: 'text-purple-500',
-  },
-]
+import { executeDeleteAccountFlow } from './settings-page-account-deletion'
 
 const MorePage = () => {
+  const navigate = useNavigate()
+  const { deleteCurrentFirebaseUser } = useAuthProvider()
+  const userFromStore = useAuthStore.use.user()
+  const { data: userResponse } = useUser()
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false)
+
+  const user = userResponse?.data ?? userFromStore
+
+  useEffect(() => {
+    if (user) {
+      authActions.setUser(user)
+    }
+  }, [user])
+
+  const handleDeleteAccount = async () => {
+    if (isDeletingAccount) {
+      return
+    }
+
+    try {
+      setIsDeletingAccount(true)
+
+      await executeDeleteAccountFlow({
+        deleteCurrentFirebaseUser,
+        unsubscribeFromPushNotifications,
+        deleteMe,
+        logout: authActions.logout,
+        navigateToLogin: () => navigate(PATHS.LOGIN, { replace: true }),
+        toastSuccess: toast.success,
+        toastError: toast.error,
+      })
+    } finally {
+      setIsDeletingAccount(false)
+    }
+  }
+
   return (
     <MainContainer>
       <MainColumn>
@@ -68,31 +74,17 @@ const MorePage = () => {
           title={t('pages.more.header.title')}
         />
 
-        <CardSection className='gap-5'>
-          {ROWS.map(({ description, icon: Icon, title, to, bgIcon, color }) => (
-            <Link key={title} to={to}>
-              <div className='flex flex-row items-center gap-4'>
-                <div
-                  className={cn('flex h-12 w-12 items-center justify-center rounded-2xl', bgIcon)}>
-                  <Icon className={cn('text-primary h-5 w-5', color)} />
-                </div>
-                <div className='flex-1'>
-                  <p className='text-foreground text-base font-semibold'>{title}</p>
-                  <p className='text-muted-foreground mt-1 text-sm'>{description}</p>
-                </div>
-                <ChevronRightIcon className='text-muted-foreground' size={20} />
-              </div>
-            </Link>
-          ))}
-        </CardSection>
-        <LogoutButton className='text-destructive' variant={'ghost'} />
-
-        <LegalFooter />
+        <AccountProfileCard user={user} />
+        <NotificationSettingsCard user={user} />
+        <PasswordSecurityCard />
+        <SessionCard />
+        <DeleteAccountCard onConfirm={handleDeleteAccount} />
       </MainColumn>
 
       <SideColumn hideInMobile>
         <MiniCheckInCard />
         <DailyQuoteCard />
+        <KindnessSuggestionCard />
         <WeeklyRhythmCard />
       </SideColumn>
     </MainContainer>

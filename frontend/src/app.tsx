@@ -3,19 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { AppBack, AppLayout, ScrollToTop } from '@/components/layout'
 import { ErrorBoundary } from '@/components/shared'
 import { PATHS } from '@/lib/constants'
-import GoalsPage from '@/pages/goals-page'
+import HandbookPage from '@/pages/handbook-page'
 import HomePage from '@/pages/home-page'
-import InnerJournalHistoryPage from '@/pages/inner-journal-history-page'
-import InnerJournalPage from '@/pages/inner-journal-page'
-import InnerMeditationPage from '@/pages/inner-meditation-page'
-import InnerPage from '@/pages/inner-page'
-import InnerRandomActsPage from '@/pages/inner-random-acts-page'
 import LoginPage from '@/pages/login-page'
 import MorePage from '@/pages/more-page'
-import PrivacyPolicyPage from '@/pages/privacy-policy-page'
-import SettingsPage from '@/pages/settings-page'
-import StatsPage from '@/pages/stats-page'
-import TermsOfUsePage from '@/pages/terms-of-use-page'
+import ProgressPage from '@/pages/progress-page'
 import TimelinePage from '@/pages/timeline-page'
 import ProtectedRoute from '@/routes/protected-route'
 
@@ -28,21 +20,13 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route element={<LoginPage />} path={PATHS.LOGIN} />
-          <Route element={<TermsOfUsePage />} path={PATHS.TERMS} />
-          <Route element={<PrivacyPolicyPage />} path={PATHS.PRIVACY} />
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route element={<HomePage />} path={PATHS.HOME} />
               <Route element={<TimelinePage />} path={PATHS.TIMELINE} />
-              <Route element={<StatsPage />} path={PATHS.STATS} />
-              <Route element={<GoalsPage />} path={PATHS.GOALS} />
-              <Route element={<InnerPage />} path={PATHS.INNER} />
-              <Route element={<InnerRandomActsPage />} path={PATHS.INNER_RANDOM_ACTS} />
-              <Route element={<InnerJournalPage />} path={PATHS.INNER_JOURNAL} />
-              <Route element={<InnerJournalHistoryPage />} path={PATHS.INNER_JOURNAL_HISTORY} />
-              <Route element={<InnerMeditationPage />} path={PATHS.INNER_MEDITATION} />
+              <Route element={<HandbookPage />} path={PATHS.HANDBOOK} />
+              <Route element={<ProgressPage />} path={PATHS.PROGRESS} />
               <Route element={<MorePage />} path={PATHS.MORE} />
-              <Route element={<SettingsPage />} path={PATHS.SETTINGS} />
             </Route>
           </Route>
         </Routes>

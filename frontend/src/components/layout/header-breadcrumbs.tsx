@@ -14,15 +14,11 @@ import {
 
 const breadcrumbLabels: Record<string, string> = {
   timeline: t('breadcrumbs.timeline'),
-  deeds: t('breadcrumbs.deeds'),
-  stats: t('breadcrumbs.stats'),
-  goals: t('breadcrumbs.goals'),
-  inner: t('breadcrumbs.inner'),
+  handbook: t('breadcrumbs.handbook'),
+  progress: t('breadcrumbs.progress'),
   more: t('breadcrumbs.more'),
   quote: t('breadcrumbs.quote'),
-  'random-acts': t('breadcrumbs.randomActs'),
   journal: t('breadcrumbs.journal'),
-  settings: t('breadcrumbs.settings'),
   history: t('breadcrumbs.history'),
 }
 

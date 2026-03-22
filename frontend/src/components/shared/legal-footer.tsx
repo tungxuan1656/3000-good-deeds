@@ -1,8 +1,7 @@
 import { CopyIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
-import { APP_VERSION, PATHS, SUPPORT_EMAIL } from '@/lib/constants'
+import { APP_VERSION, SUPPORT_EMAIL } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
@@ -48,15 +47,7 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
         </p>
 
         <p className='text-muted-foreground text-xs leading-relaxed'>
-          {t('legal.readMorePrefix')}{' '}
-          <Link className='hover:text-foreground underline underline-offset-2' to={PATHS.TERMS}>
-            {t('legal.terms')}
-          </Link>{' '}
-          {t('legal.and')}{' '}
-          <Link className='hover:text-foreground underline underline-offset-2' to={PATHS.PRIVACY}>
-            {t('legal.privacy')}
-          </Link>
-          .
+          {t('legal.readMorePrefix')} {t('legal.terms')} {t('legal.and')} {t('legal.privacy')}.
         </p>
 
         <p className='text-muted-foreground/70 text-center text-xs leading-relaxed'>

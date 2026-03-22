@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
 
 import { PWAGuideDialog } from '@/components/layout'
 import {
@@ -10,7 +9,7 @@ import {
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS, PATHS } from '@/lib/constants'
+import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { markOnboardingAsSeen, shouldAutoOpenOnboarding } from '@/lib/onboarding-persistence'
 
@@ -44,7 +43,7 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
         />
         <Leaf className='opacity-30' position='top-right' variant={2} />
         <div className='flex items-start gap-4'>
-          <div className='bg-card/80 flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 shadow-sm'>
+          <div className='bg-card/80 border-border/45 flex h-16 w-16 items-center justify-center rounded-3xl border shadow-sm'>
             <img alt={t('auth.login.logoAlt')} className='h-10 w-10' src='/icons/icon_sprout.png' />
           </div>
           <div>
@@ -79,14 +78,9 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
 
       <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
         {t('auth.login.termsPrefix')}{' '}
-        <Link className='underline decoration-dashed underline-offset-2' to={PATHS.TERMS}>
-          {t('auth.login.termsLabel')}
-        </Link>{' '}
+        <span className='font-medium'>{t('auth.login.termsLabel')}</span>{' '}
         {t('auth.login.termsConnector')}{' '}
-        <Link className='underline decoration-dashed underline-offset-2' to={PATHS.PRIVACY}>
-          {t('auth.login.privacyLabel')}
-        </Link>
-        .
+        <span className='font-medium'>{t('auth.login.privacyLabel')}</span>.
       </p>
       <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
         {t('auth.login.version', { version: APP_VERSION })}

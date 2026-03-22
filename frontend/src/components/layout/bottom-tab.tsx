@@ -5,13 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
-const innerPaths = [PATHS.INNER, PATHS.INNER_JOURNAL]
-const morePaths = [PATHS.MORE, PATHS.GOALS, PATHS.SETTINGS, PATHS.INNER_RANDOM_ACTS]
-
 const isPathActive = (pathname: string, targetPath: string) => {
   if (targetPath === PATHS.HOME) return pathname === PATHS.HOME
-  if (targetPath === PATHS.INNER) return innerPaths.some((path) => pathname.startsWith(path))
-  if (targetPath === PATHS.MORE) return morePaths.some((path) => pathname.startsWith(path))
 
   return pathname.startsWith(targetPath)
 }
@@ -33,7 +28,7 @@ export const BottomTab = () => {
 
   return createPortal(
     <div className='pointer-events-none fixed inset-x-0 bottom-0 z-80 md:hidden'>
-      <div className='pb-safe bg-background pointer-events-auto border-t border-black/10 backdrop-blur'>
+      <div className='pb-safe bg-surface-container/80 pointer-events-auto shadow-[0_-8px_24px_rgba(47,52,46,0.08)] backdrop-blur-[15px]'>
         <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-0.5'>
           {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
             const active = isPathActive(location.pathname, path)

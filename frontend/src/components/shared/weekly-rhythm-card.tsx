@@ -62,7 +62,7 @@ export const WeeklyRhythmCard = () => {
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
-          onClick={() => navigate(PATHS.STATS)}>
+          onClick={() => navigate(PATHS.PROGRESS)}>
           {t('common.actions.viewAll')}
         </Button>
       </div>
@@ -79,7 +79,7 @@ export const WeeklyRhythmCard = () => {
               className={cn(
                 'flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold transition',
                 isActive ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground',
-                isCurrentDay && 'ring-primary/50 ring-2 ring-offset-2 ring-offset-white',
+                isCurrentDay && 'ring-primary/50 ring-offset-background ring-2 ring-offset-2',
                 isFuture && 'opacity-40',
               )}>
               {defaultDays[index]}

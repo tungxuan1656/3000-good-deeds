@@ -13,9 +13,9 @@ interface CardSectionProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const variantClasses: Record<CardSectionVariant, string> = {
-  default: 'bg-card/90',
-  soft: 'bg-card/80',
-  muted: 'bg-card/70',
+  default: 'bg-surface-container-lowest',
+  soft: 'bg-surface-container-low',
+  muted: 'bg-surface-container',
 }
 
 const paddingClasses: Record<CardSectionPadding, string> = {
@@ -33,7 +33,7 @@ const CardSection = ({
   return (
     <Component
       className={cn(
-        'relative flex flex-col overflow-hidden rounded-3xl border border-black/5 shadow-sm',
+        'relative flex flex-col overflow-hidden rounded-3xl shadow-[0_10px_30px_rgba(47,52,46,0.06)]',
         variantClasses[variant],
         paddingClasses[padding],
         className,

@@ -19,8 +19,8 @@ export const ReminderSuggestCard = () => {
       <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
         {t('reminder.card.quote')}
       </p>
-      <Link to={PATHS.SETTINGS}>
-        <Button className='text-foreground bg-card hover:bg-card/80 mt-4 h-11 w-full rounded-full border border-black/5 text-sm font-medium'>
+      <Link to={PATHS.MORE}>
+        <Button className='text-foreground bg-card hover:bg-card/80 border-border/45 mt-4 h-11 w-full rounded-full border text-sm font-medium'>
           {t('reminder.card.action')}
         </Button>
       </Link>

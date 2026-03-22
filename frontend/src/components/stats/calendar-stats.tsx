@@ -117,7 +117,7 @@ export const CalendarStats = () => {
               <div
                 key={key}
                 className={cn(
-                  'bg-card/80 flex min-h-16 flex-col items-center justify-between rounded-2xl border border-black/5 p-2 shadow-sm',
+                  'bg-card/80 border-border/45 flex min-h-16 flex-col items-center justify-between rounded-2xl border p-2 shadow-sm',
                   !isCurrentMonth && 'border-none opacity-50 shadow-none',
                   isFuture && 'opacity-40',
                   isCurrentDay && 'ring-primary/40 ring-offset-background ring-2 ring-offset-2',
