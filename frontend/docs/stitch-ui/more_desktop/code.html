@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>3000 Good Deeds - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#775917",
+              "on-surface-variant": "#444840",
+              "on-primary-container": "#cbdebb",
+              "surface-container-low": "#f4f4f0",
+              "surface-dim": "#dbdad6",
+              "secondary-fixed": "#dde5da",
+              "error": "#ba1a1a",
+              "surface-tint": "#526347",
+              "on-tertiary-fixed": "#261900",
+              "primary-container": "#526347",
+              "on-tertiary-fixed-variant": "#5d4200",
+              "on-secondary-container": "#5f665e",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#b9ccaa",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2f312e",
+              "secondary": "#596058",
+              "outline-variant": "#c5c8bd",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1c1a",
+              "inverse-on-surface": "#f2f1ed",
+              "secondary-container": "#dde5da",
+              "primary-fixed": "#d5e9c5",
+              "on-secondary-fixed": "#161d17",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#faf9f5",
+              "tertiary": "#5c4200",
+              "on-secondary-fixed-variant": "#414941",
+              "on-primary-fixed-variant": "#3b4b31",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#e9c175",
+              "secondary-fixed-dim": "#c1c9bf",
+              "outline": "#75786f",
+              "on-error-container": "#93000a",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#e9e8e4",
+              "background": "#faf9f5",
+              "tertiary-fixed": "#ffdea5",
+              "surface-variant": "#e3e2df",
+              "on-surface": "#1b1c1a",
+              "inverse-primary": "#b9ccaa",
+              "surface-container": "#efeeea",
+              "primary": "#3b4b31",
+              "on-primary-fixed": "#111f09",
+              "surface": "#faf9f5",
+              "surface-container-highest": "#e3e2df",
+              "on-tertiary-container": "#fcd284"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Be Vietnam Pro', sans-serif; }
+      h1, h2, h3 { font-family: 'Noto Serif', serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed-dim">
+<!-- Desktop Sidebar Navigation -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r-0 py-8 z-50">
+<div class="px-8 mb-12">
+<h1 class="text-2xl font-serif italic text-primary">3000 Good Deeds</h1>
+<p class="text-xs font-label tracking-tight text-on-secondary-container opacity-70">The Living Journal</p>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 hover:text-primary hover:bg-stone-200/50 transition-colors duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-medium tracking-tight">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 hover:text-primary hover:bg-stone-200/50 transition-colors duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-medium tracking-tight">Timeline</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 hover:text-primary hover:bg-stone-200/50 transition-colors duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-medium tracking-tight">Handbook</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 hover:text-primary hover:bg-stone-200/50 transition-colors duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-medium tracking-tight">Stats</span>
+</a>
+<!-- Active Tab: More/Settings -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold border-l-4 border-primary bg-primary/5" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-medium tracking-tight">More</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-4 bg-primary text-on-primary rounded-lg font-medium shadow-sm hover:opacity-90 transition-opacity">
+                Record Deed
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen pb-24 md:pb-12">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center w-full px-8 py-6 max-w-screen-2xl mx-auto sticky top-0 bg-background/80 backdrop-blur-md z-40">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="spa">spa</span>
+<h2 class="text-xl font-serif text-primary">Settings &amp; Profile</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-stone-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications_none">notifications_none</span>
+</button>
+</div>
+</header>
+<div class="max-w-4xl mx-auto px-8 mt-4 space-y-12">
+<!-- Profile Overview (Editorial Asymmetry) -->
+<section class="flex flex-col md:flex-row items-center md:items-start gap-8 py-10">
+<div class="relative">
+<div class="w-32 h-32 rounded-full overflow-hidden bg-secondary-container ring-4 ring-surface-container-low ring-offset-4 ring-offset-background">
+<img alt="Elias Thorne Profile" class="w-full h-full object-cover" data-alt="Portrait of a contemplative man in nature" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzCtdPCtoGq0ORi1nTALhMMBzVoZDGqEU5CIuYqIY6offvCHveJzrfvmR9P0LBOELUWb7rvQ-MvRk38ud7dFoVPV5VGs3jI8rtNisrElIp9QEI5pGwV2rqQHAwPgUX5V_KGTJebl3nqWvUujPe1qO9DxkMThUxX34mhWIUtfWFNPIKBYF9b7U7oWT2f-nU5flaw8YTim13TH1ZTno6oRtv6FGDd0GnzAS7x2TXnbs3DydwfathF7TyHjGRK6HiY7N30u5qRzMYU8JY"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary-container p-2 rounded-full text-on-primary-container border-4 border-background">
+<span class="material-symbols-outlined text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="text-center md:text-left pt-4">
+<h3 class="text-4xl font-headline font-bold text-on-surface">Elias Thorne</h3>
+<div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+<span class="px-4 py-1.5 bg-secondary-fixed-dim text-on-secondary-fixed rounded-full text-xs font-label tracking-widest uppercase">The Caretaker</span>
+<span class="px-4 py-1.5 bg-primary-fixed text-on-primary-fixed-variant rounded-full text-xs font-label tracking-widest uppercase">Level 14 · 142 Deeds</span>
+</div>
+<p class="mt-6 text-on-surface-variant max-w-md leading-relaxed italic">
+                        "Small acts, when multiplied by millions of people, can transform the world."
+                    </p>
+</div>
+</section>
+<!-- Settings Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-20">
+<!-- Section 1: Personal Info -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_10px_30px_rgba(47,52,46,0.04)] space-y-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="person_outline">person_outline</span>
+<h4 class="text-lg font-headline font-semibold">Personal Info</h4>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-label uppercase tracking-widest text-on-surface-variant mb-2">Display Name</label>
+<input class="w-full bg-surface-container-high border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/20 text-on-surface outline-none" type="text" value="Elias Thorne"/>
+</div>
+<p class="text-[13px] text-on-surface-variant/70 leading-relaxed">This is how your name will appear in the global community and handbook entries.</p>
+</div>
+</div>
+<!-- Section 2: Notifications -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_10px_30px_rgba(47,52,46,0.04)] space-y-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+<h4 class="text-lg font-headline font-semibold">Daily Reminders</h4>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-medium">Active Reminder</p>
+<p class="text-xs text-on-surface-variant">A soft nudge to log your deeds</p>
+</div>
+<button class="w-12 h-6 rounded-full bg-primary-container relative flex items-center transition-colors px-1">
+<div class="w-4 h-4 bg-on-primary rounded-full ml-auto"></div>
+</button>
+</div>
+<div class="pt-4 border-t border-outline-variant/15">
+<label class="block text-xs font-label uppercase tracking-widest text-on-surface-variant mb-2">Preferred Time</label>
+<div class="flex items-center gap-4">
+<div class="flex-1 bg-surface-container-high rounded-lg px-4 py-3 flex items-center justify-between">
+<span class="text-on-surface">08:00 AM</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="schedule">schedule</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Security -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_10px_30px_rgba(47,52,46,0.04)] space-y-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="lock">lock</span>
+<h4 class="text-lg font-headline font-semibold">Security</h4>
+</div>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-between px-4 py-4 bg-surface-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="text-sm font-medium">Change Password</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between px-4 py-4 bg-surface-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="text-sm font-medium">Two-Factor Authentication</span>
+<span class="px-2 py-0.5 bg-surface-container-highest text-[10px] rounded uppercase">Disabled</span>
+</button>
+</div>
+</div>
+<!-- Section 4: Actions -->
+<div class="bg-surface-container-low p-8 rounded-xl space-y-6 border border-outline-variant/10">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="logout">logout</span>
+<h4 class="text-lg font-headline font-semibold">Account Actions</h4>
+</div>
+<div class="space-y-3">
+<button class="w-full py-4 bg-surface-container-highest text-on-surface-variant rounded-lg font-medium hover:bg-error-container hover:text-on-error-container transition-all">
+                            Sign Out
+                        </button>
+<button class="w-full py-4 text-error text-sm font-medium hover:underline">
+                            Delete Account permanently
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-[0_-2px_10px_rgba(0,0,0,0.02)] z-50">
+<a class="flex flex-col items-center justify-center text-stone-400" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Timeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Handbook</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-110" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">More</span>
+</a>
+</nav>
+</body></html>

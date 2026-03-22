@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Handbook - 3000 Good Deeds</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#775917",
+              "on-surface-variant": "#444840",
+              "on-primary-container": "#cbdebb",
+              "surface-container-low": "#f4f4f0",
+              "surface-dim": "#dbdad6",
+              "secondary-fixed": "#dde5da",
+              "error": "#ba1a1a",
+              "surface-tint": "#526347",
+              "on-tertiary-fixed": "#261900",
+              "primary-container": "#526347",
+              "on-tertiary-fixed-variant": "#5d4200",
+              "on-secondary-container": "#5f665e",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#b9ccaa",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2f312e",
+              "secondary": "#596058",
+              "outline-variant": "#c5c8bd",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1c1a",
+              "inverse-on-surface": "#f2f1ed",
+              "secondary-container": "#dde5da",
+              "primary-fixed": "#d5e9c5",
+              "on-secondary-fixed": "#161d17",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#faf9f5",
+              "tertiary": "#5c4200",
+              "on-secondary-fixed-variant": "#414941",
+              "on-primary-fixed-variant": "#3b4b31",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#e9c175",
+              "secondary-fixed-dim": "#c1c9bf",
+              "outline": "#75786f",
+              "on-error-container": "#93000a",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#e9e8e4",
+              "background": "#faf9f5",
+              "tertiary-fixed": "#ffdea5",
+              "surface-variant": "#e3e2df",
+              "on-surface": "#1b1c1a",
+              "inverse-primary": "#b9ccaa",
+              "surface-container": "#efeeea",
+              "primary": "#3b4b31",
+              "on-primary-fixed": "#111f09",
+              "surface": "#faf9f5",
+              "surface-container-highest": "#e3e2df",
+              "on-tertiary-container": "#fcd284"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0px 10px 30px rgba(47, 52, 46, 0.06);
+        }
+        .frosted-sage {
+            background: linear-gradient(135deg, #526347 0%, #46573c 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed-variant">
+<!-- Desktop SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low py-8 z-30">
+<div class="px-8 mb-12">
+<h1 class="text-2xl font-headline italic text-primary-container leading-none">3000 Good Deeds</h1>
+<p class="text-xs font-label text-on-surface-variant tracking-widest mt-1">The Living Journal</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Home -->
+<a class="flex items-center gap-3 px-8 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-medium tracking-tight">Home</span>
+</a>
+<!-- Timeline -->
+<a class="flex items-center gap-3 px-8 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-medium tracking-tight">Timeline</span>
+</a>
+<!-- Handbook (Active) -->
+<a class="flex items-center gap-3 px-8 py-3 text-primary-container font-bold border-l-4 border-primary-container bg-primary-container/5" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-medium tracking-tight">Handbook</span>
+</a>
+<!-- Stats -->
+<a class="flex items-center gap-3 px-8 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-medium tracking-tight">Stats</span>
+</a>
+<!-- More -->
+<a class="flex items-center gap-3 px-8 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-medium tracking-tight">More</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full frosted-sage text-on-primary py-4 rounded-lg font-medium editorial-shadow flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                Record Deed
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 mr-0 lg:mr-80 min-h-screen">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center w-full px-8 py-8 max-w-screen-xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-container" data-icon="spa">spa</span>
+<h2 class="text-2xl font-headline text-on-surface">Reflection Handbook</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="notifications_none">notifications_none</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a serene woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA50iWRBCS_LU5kJnfaAg1MY_kRFu_t3N6dmaxoCHoz-5ZojedG0igMfqzeT4jaIjCDd6RTggViR5l2oL3Us9WB19J-Tb2wwfWqb3UeaNAZkhsFu-DwgxZHd1crxJ6b2-uvT2uviwBVSL-WV-YdxsxIZgMLkstBjcjquK_PIT8zuQD6RTxwfiFg9ETNXZEHmkHCH97ksEUEc190EQe2kDFWEwcUK8znuDMZb-Oj6AOroLxw5MunmUMuDfnZIEF3C9fPGHowYcSeKHOA"/>
+</div>
+</div>
+</header>
+<div class="px-8 max-w-screen-xl mx-auto pb-24">
+<!-- Asymmetric Grid Section -->
+<div class="grid grid-cols-1 gap-12">
+<!-- Handbook Editor Section -->
+<section class="bg-surface-container-lowest p-8 md:p-12 rounded-xl editorial-shadow">
+<!-- Tab Switcher -->
+<div class="flex gap-8 mb-10 overflow-x-auto no-scrollbar">
+<button class="pb-2 border-b-2 border-primary-container text-on-surface font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                            Gratitude
+                        </button>
+<button class="pb-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="auto_stories">auto_stories</span>
+                            Repentance
+                        </button>
+</div>
+<!-- Journal Area -->
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-widest text-primary-container/60">The Inquiry</label>
+<h3 class="text-xl font-headline italic text-on-surface">What quiet bloom of goodness did you witness or nurture today?</h3>
+</div>
+<div class="relative group">
+<textarea class="w-full min-h-[300px] bg-surface-container-high/50 border-none rounded-lg p-6 font-body text-lg focus:ring-1 focus:ring-primary-container/20 placeholder:text-on-surface-variant/40 resize-none transition-all" placeholder="Let your thoughts flow onto the page..."></textarea>
+<div class="absolute bottom-4 right-4 text-xs font-label text-on-surface-variant/40">Words of reflection</div>
+</div>
+<div class="flex items-center justify-between pt-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-secondary-container border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="tag">tag</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-secondary-container border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="location_on">location_on</span>
+</div>
+</div>
+<button class="frosted-sage text-on-primary px-8 py-3 rounded-lg font-medium editorial-shadow flex items-center gap-2 hover:opacity-95 transition-opacity">
+                                Seal Reflection
+                                <span class="material-symbols-outlined text-sm" data-icon="history_edu">history_edu</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Past Whispers Section -->
+<section class="space-y-8">
+<div class="flex items-end justify-between">
+<div class="space-y-1">
+<h4 class="text-2xl font-headline text-on-surface">Past Whispers</h4>
+<p class="text-sm text-on-surface-variant">The echo of your previous contemplations</p>
+</div>
+<button class="text-sm font-medium text-primary-container flex items-center gap-1 hover:underline">
+                            View All Archive
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Reflection Card 1 -->
+<div class="bg-surface-container-low p-6 rounded-lg group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-label uppercase tracking-widest text-primary-container">October 24</span>
+<span class="material-symbols-outlined text-on-surface-variant/30 text-lg" data-icon="more_horiz">more_horiz</span>
+</div>
+<p class="font-headline italic text-on-surface mb-4 leading-relaxed line-clamp-3">
+                                Today I noticed the way the light filtered through the neighbor's window. I left a small basket of fresh pears on their porch. A quiet exchange...
+                            </p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-secondary-fixed-dim text-on-secondary-fixed rounded-full text-[11px] font-label uppercase tracking-wider">Neighbor</span>
+<span class="px-3 py-1 bg-secondary-fixed-dim text-on-secondary-fixed rounded-full text-[11px] font-label uppercase tracking-wider">Gratitude</span>
+</div>
+</div>
+<!-- Reflection Card 2 -->
+<div class="bg-surface-container p-6 rounded-lg group hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-label uppercase tracking-widest text-primary-container">October 22</span>
+<span class="material-symbols-outlined text-on-surface-variant/30 text-lg" data-icon="more_horiz">more_horiz</span>
+</div>
+<p class="font-headline italic text-on-surface mb-4 leading-relaxed line-clamp-3">
+                                Spent an hour listening to a stranger's story at the park. Sometimes the best deed is simply offering one's silence and attention.
+                            </p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-secondary-fixed-dim text-on-secondary-fixed rounded-full text-[11px] font-label uppercase tracking-wider">Kindness</span>
+<span class="px-3 py-1 bg-secondary-fixed-dim text-on-secondary-fixed rounded-full text-[11px] font-label uppercase tracking-wider">Listening</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Right Rail (Desktop Only) -->
+<aside class="hidden lg:block fixed right-0 top-0 h-screen w-80 bg-surface border-l-0 pt-24 px-8 z-20">
+<div class="space-y-12">
+<!-- Seed of Kindness Card -->
+<div class="bg-tertiary-fixed text-on-tertiary-fixed p-8 rounded-xl editorial-shadow relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-8xl" data-icon="eco">eco</span>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-xs font-label uppercase tracking-widest">Seed of Kindness</span>
+</div>
+<h5 class="text-xl font-headline italic leading-snug">"Write a handwritten note to someone who inspired you years ago."</h5>
+<button class="mt-4 text-xs font-bold border-b border-on-tertiary-fixed pb-1 hover:opacity-70 transition-opacity">
+                        Adopt this Seed
+                    </button>
+</div>
+</div>
+<!-- Stats Mini View -->
+<div class="space-y-6">
+<h6 class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Reflection Pulse</h6>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-body">Gratitude Loop</span>
+<span class="text-sm font-bold text-primary-container italic font-headline">12 Days</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-3/4"></div>
+</div>
+<p class="text-[11px] leading-relaxed text-on-surface-variant">Your journal is a living testament to the goodness you cultivate.</p>
+</div>
+</div>
+<!-- Quick Quote -->
+<div class="pt-12 italic text-on-surface-variant/60 font-headline text-sm leading-relaxed border-t border-outline-variant/15">
+                "The quietest deeds often whisper the loudest in the chambers of memory."
+            </div>
+</div>
+</aside>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl flex justify-around items-center px-4 pb-6 pt-3 z-50 shadow-sm">
+<a class="flex flex-col items-center justify-center text-stone-400 active:opacity-70" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 active:opacity-70" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Timeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary-container scale-110 active:opacity-70" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Handbook</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 active:opacity-70" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 active:opacity-70" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">More</span>
+</a>
+</nav>
+</body></html>

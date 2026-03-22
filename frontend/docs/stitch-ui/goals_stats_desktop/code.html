@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Goals &amp; Stats | 3000 Good Deeds</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#775917",
+              "on-surface-variant": "#444840",
+              "on-primary-container": "#cbdebb",
+              "surface-container-low": "#f4f4f0",
+              "surface-dim": "#dbdad6",
+              "secondary-fixed": "#dde5da",
+              "error": "#ba1a1a",
+              "surface-tint": "#526347",
+              "on-tertiary-fixed": "#261900",
+              "primary-container": "#526347",
+              "on-tertiary-fixed-variant": "#5d4200",
+              "on-secondary-container": "#5f665e",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#b9ccaa",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2f312e",
+              "secondary": "#596058",
+              "outline-variant": "#c5c8bd",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1c1a",
+              "inverse-on-surface": "#f2f1ed",
+              "secondary-container": "#dde5da",
+              "primary-fixed": "#d5e9c5",
+              "on-secondary-fixed": "#161d17",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#faf9f5",
+              "tertiary": "#5c4200",
+              "on-secondary-fixed-variant": "#414941",
+              "on-primary-fixed-variant": "#3b4b31",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#e9c175",
+              "secondary-fixed-dim": "#c1c9bf",
+              "outline": "#75786f",
+              "on-error-container": "#93000a",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#e9e8e4",
+              "background": "#faf9f5",
+              "tertiary-fixed": "#ffdea5",
+              "surface-variant": "#e3e2df",
+              "on-surface": "#1b1c1a",
+              "inverse-primary": "#b9ccaa",
+              "surface-container": "#efeeea",
+              "primary": "#3b4b31",
+              "on-primary-fixed": "#111f09",
+              "surface": "#faf9f5",
+              "surface-container-highest": "#e3e2df",
+              "on-tertiary-container": "#fcd284"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        h1, h2, h3, .font-serif { font-family: 'Noto Serif', serif; }
+        .glass-surface {
+            background: rgba(239, 238, 234, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .frosted-sage {
+            background: linear-gradient(135deg, #526347 0%, #46573c 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed-variant">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden md:flex flex-col h-full py-8 bg-[#f4f4ef] dark:bg-stone-900 h-screen w-64 fixed left-0 top-0 border-r-0 z-50">
+<div class="px-8 mb-12">
+<h1 class="text-2xl font-serif italic text-[#526347] dark:text-[#a3b899]">3000 Good Deeds</h1>
+<p class="text-xs font-label uppercase tracking-widest text-outline mt-1">The Living Journal</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-8 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-200/50 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-medium tracking-tight">Home</span>
+</a>
+<a class="flex items-center gap-3 px-8 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-200/50 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-medium tracking-tight">Timeline</span>
+</a>
+<a class="flex items-center gap-3 px-8 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-200/50 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-medium tracking-tight">Handbook</span>
+</a>
+<a class="flex items-center gap-3 px-8 py-3 text-[#526347] dark:text-[#a3b899] font-bold border-l-4 border-[#526347] bg-[#526347]/5" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-medium tracking-tight">Stats</span>
+</a>
+<a class="flex items-center gap-3 px-8 py-3 text-stone-500 dark:text-stone-400 hover:bg-stone-200/50 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium tracking-tight">More</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full frosted-sage text-on-primary py-4 rounded-lg font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                Record Deed
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen pb-24 md:pb-12">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-8 py-8 max-w-screen-2xl mx-auto sticky top-0 z-40 bg-background/80 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#526347] text-3xl">spa</span>
+<h2 class="text-3xl font-serif text-[#526347]">Consistency &amp; Growth</h2>
+</div>
+<div class="flex gap-4">
+<button class="p-2 text-stone-400 hover:text-[#526347] transition-colors">
+<span class="material-symbols-outlined">notifications_none</span>
+</button>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-8 space-y-12">
+<!-- Top Section: Hero Stats -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface-container-lowest p-10 rounded-xl relative overflow-hidden flex flex-col justify-between min-h-[240px]">
+<div>
+<p class="text-sm font-label uppercase tracking-widest text-outline mb-2">Lifetime Impact</p>
+<h3 class="text-6xl font-serif text-primary">1,248</h3>
+<p class="text-stone-500 mt-2 font-body italic">Deeds recorded since 2023</p>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-5">
+<span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="bg-primary text-on-primary p-10 rounded-xl relative overflow-hidden flex flex-col justify-between min-h-[240px]">
+<div>
+<p class="text-sm font-label uppercase tracking-widest text-primary-fixed-dim mb-2">Current Streak</p>
+<h3 class="text-6xl font-serif">14 Days</h3>
+<p class="text-on-primary-container opacity-80 mt-2 font-body italic">A quiet rhythm of kindness</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[140px]" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+</div>
+</section>
+<!-- Middle Section: Goal Setting (Bento Style) -->
+<section class="space-y-6">
+<div class="flex items-baseline justify-between">
+<h4 class="text-2xl font-serif text-on-surface">Intentional Goals</h4>
+<span class="text-xs font-label uppercase tracking-widest text-outline">Adjust your pace</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Weekly -->
+<div class="bg-surface-container-low p-8 rounded-xl space-y-6">
+<div class="flex justify-between items-center">
+<span class="text-sm font-label uppercase tracking-widest text-primary">Weekly</span>
+<span class="material-symbols-outlined text-primary/40">calendar_view_week</span>
+</div>
+<div class="flex items-baseline gap-2">
+<input class="bg-transparent text-4xl font-serif text-on-surface border-none p-0 w-16 focus:ring-0" type="number" value="7"/>
+<span class="text-stone-400 italic">deeds</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 71%;"></div>
+</div>
+<p class="text-sm text-stone-500">5 of 7 completed this week</p>
+</div>
+<!-- Monthly -->
+<div class="bg-surface-container-highest p-8 rounded-xl space-y-6 border border-primary/10">
+<div class="flex justify-between items-center">
+<span class="text-sm font-label uppercase tracking-widest text-primary">Monthly</span>
+<span class="material-symbols-outlined text-primary/40">calendar_month</span>
+</div>
+<div class="flex items-baseline gap-2">
+<input class="bg-transparent text-4xl font-serif text-on-surface border-none p-0 w-20 focus:ring-0" type="number" value="30"/>
+<span class="text-stone-400 italic">deeds</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 40%;"></div>
+</div>
+<p class="text-sm text-stone-500">12 of 30 completed in October</p>
+</div>
+<!-- Yearly -->
+<div class="bg-surface-container-low p-8 rounded-xl space-y-6">
+<div class="flex justify-between items-center">
+<span class="text-sm font-label uppercase tracking-widest text-primary">Yearly</span>
+<span class="material-symbols-outlined text-primary/40">auto_awesome</span>
+</div>
+<div class="flex items-baseline gap-2">
+<input class="bg-transparent text-4xl font-serif text-on-surface border-none p-0 w-24 focus:ring-0" type="number" value="365"/>
+<span class="text-stone-400 italic">deeds</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%;"></div>
+</div>
+<p class="text-sm text-stone-500">312 of 365 completed in 2024</p>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Monthly Grid & History -->
+<section class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+<!-- Activity Grid -->
+<div class="lg:col-span-3 space-y-6">
+<div class="flex items-center justify-between">
+<h4 class="text-2xl font-serif">October Activity</h4>
+<div class="flex gap-2">
+<button class="p-1 text-outline hover:text-primary"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 text-outline hover:text-primary"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+<div class="grid grid-cols-7 gap-3">
+<!-- Day Labels -->
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Mon</div>
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Tue</div>
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Wed</div>
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Thu</div>
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Fri</div>
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Sat</div>
+<div class="text-center text-[10px] font-label text-outline uppercase tracking-tighter">Sun</div>
+<!-- Calendar Grid -->
+<div class="aspect-square bg-surface-container rounded-sm flex items-center justify-center text-xs text-stone-300">30</div>
+<div class="aspect-square bg-primary/20 rounded-sm flex items-center justify-center text-xs text-primary font-bold">1</div>
+<div class="aspect-square bg-primary/40 rounded-sm flex items-center justify-center text-xs text-primary font-bold">2</div>
+<div class="aspect-square bg-primary/10 rounded-sm flex items-center justify-center text-xs text-primary font-bold">3</div>
+<div class="aspect-square bg-surface-container rounded-sm flex items-center justify-center text-xs text-stone-400">4</div>
+<div class="aspect-square bg-primary/60 rounded-sm flex items-center justify-center text-xs text-white font-bold">5</div>
+<div class="aspect-square bg-surface-container rounded-sm flex items-center justify-center text-xs text-stone-400">6</div>
+<div class="aspect-square bg-primary/20 rounded-sm flex items-center justify-center text-xs text-primary font-bold">7</div>
+<div class="aspect-square bg-surface-container rounded-sm flex items-center justify-center text-xs text-stone-400">8</div>
+<div class="aspect-square bg-primary/100 rounded-sm flex items-center justify-center text-xs text-white font-bold">9</div>
+<div class="aspect-square bg-primary/20 rounded-sm flex items-center justify-center text-xs text-primary font-bold">10</div>
+<div class="aspect-square bg-surface-container rounded-sm flex items-center justify-center text-xs text-stone-400">11</div>
+<div class="aspect-square bg-primary/40 rounded-sm flex items-center justify-center text-xs text-primary font-bold">12</div>
+<div class="aspect-square bg-surface-container rounded-sm flex items-center justify-center text-xs text-stone-400">13</div>
+<div class="aspect-square bg-primary/20 rounded-sm flex items-center justify-center text-xs text-primary font-bold">14</div>
+<div class="aspect-square bg-surface-container-high rounded-sm flex items-center justify-center text-xs text-stone-500 font-medium">15</div>
+<div class="aspect-square bg-surface-container-high rounded-sm flex items-center justify-center text-xs text-stone-500 font-medium">16</div>
+<div class="aspect-square bg-surface-container-high rounded-sm flex items-center justify-center text-xs text-stone-500 font-medium">17</div>
+<div class="aspect-square bg-surface-container-high rounded-sm flex items-center justify-center text-xs text-stone-500 font-medium">18</div>
+<div class="aspect-square bg-surface-container-high rounded-sm flex items-center justify-center text-xs text-stone-500 font-medium">19</div>
+<div class="aspect-square bg-surface-container-high rounded-sm flex items-center justify-center text-xs text-stone-500 font-medium">20</div>
+<!-- Rest of grid... -->
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+<div class="aspect-square bg-surface-container-high opacity-20 rounded-sm"></div>
+</div>
+<div class="mt-8 flex gap-6 items-center border-t border-outline-variant/10 pt-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-surface-container rounded-sm"></div>
+<span class="text-[10px] uppercase font-label text-outline tracking-wider">None</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary/20 rounded-sm"></div>
+<span class="text-[10px] uppercase font-label text-outline tracking-wider">Light</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<span class="text-[10px] uppercase font-label text-outline tracking-wider">Steady</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary/100 rounded-sm"></div>
+<span class="text-[10px] uppercase font-label text-outline tracking-wider">Radiant</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Goal History -->
+<div class="lg:col-span-2 space-y-6">
+<h4 class="text-2xl font-serif">Journey Log</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-5 rounded-lg bg-surface-container-low">
+<div>
+<p class="font-medium text-on-surface">September 2024</p>
+<p class="text-xs text-stone-500">Target: 30 deeds</p>
+</div>
+<div class="text-right">
+<p class="font-serif text-lg text-primary">32/30</p>
+<span class="text-[10px] uppercase font-label text-on-tertiary-fixed-variant bg-tertiary-fixed px-2 py-0.5 rounded-full">Exceeded</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 rounded-lg bg-surface-container-low">
+<div>
+<p class="font-medium text-on-surface">August 2024</p>
+<p class="text-xs text-stone-500">Target: 30 deeds</p>
+</div>
+<div class="text-right">
+<p class="font-serif text-lg text-stone-500">28/30</p>
+<span class="text-[10px] uppercase font-label text-stone-400 bg-surface-container-high px-2 py-0.5 rounded-full">Near</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 rounded-lg bg-surface-container-low">
+<div>
+<p class="font-medium text-on-surface">July 2024</p>
+<p class="text-xs text-stone-500">Target: 25 deeds</p>
+</div>
+<div class="text-right">
+<p class="font-serif text-lg text-primary">25/25</p>
+<span class="text-[10px] uppercase font-label text-on-primary-container bg-primary-container/20 px-2 py-0.5 rounded-full">Met</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-5 rounded-lg bg-surface-container-low opacity-60">
+<div>
+<p class="font-medium text-on-surface">June 2024</p>
+<p class="text-xs text-stone-500">Target: 25 deeds</p>
+</div>
+<div class="text-right">
+<p class="font-serif text-lg text-stone-500">18/25</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 active:opacity-70 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 active:opacity-70 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Timeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 active:opacity-70 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Handbook</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#526347] dark:text-[#a3b899] scale-110 transition-transform active:opacity-70" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 active:opacity-70 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[11px] font-sans uppercase tracking-widest mt-1">More</span>
+</a>
+</nav>
+</body></html>
