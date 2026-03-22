@@ -1,25 +1,19 @@
 import { PlusIcon } from 'lucide-react'
-import { useRef } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
+import { useCheckInStore } from '@/stores/check-in.store'
 
-import { Button } from '../ui/button'
 import { CardSection } from './card-section'
-import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { InfoButton } from './info-button'
 import { Leaf } from './leaf'
 
 export function CheckInCard() {
-  const checkInRef = useRef<CheckInDrawerHandle>(null)
-
-  const openCheckIn = () => {
-    checkInRef.current?.open()
-  }
+  const openCheckIn = useCheckInStore.use.open()
 
   return (
     <CardSection>
-      <CheckInSheet ref={checkInRef} />
       <Leaf className='h-32 w-32 rotate-180' position='top-right' variant={4} />
       <div className='flex flex-col gap-4'>
         <div>
