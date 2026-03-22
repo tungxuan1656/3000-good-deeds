@@ -1,372 +1,262 @@
-# 3000 Good Deeds - Unified Product Screen, Feature, and Component Specification
+# 3000 Good Deeds - Product Feature Overview
 
-## 1) Purpose and Scope
+## 1) Giới thiệu về dự án
 
-This document is the single source of truth for the product scope across the system.
+3000 Good Deeds là một sản phẩm nhật ký hướng thiện, giúp người dùng ghi lại những việc tốt hằng ngày, nhìn lại hành trình của mình và duy trì động lực sống tử tế theo cách nhẹ nhàng, riêng tư.
 
-It defines:
-- Screen inventory
-- Feature list per screen
-- Shared component library
-- Core data object structures
-
-This document is intentionally product-focused and implementation-ready, while avoiding UI style constraints.
-
-Interface modes covered by this specification:
-- Web version: sidebar-based navigation.
-- Mobile responsive version: bottom-tab navigation.
+Trọng tâm của sản phẩm:
+- Ghi nhận việc tốt nhanh, dễ làm mỗi ngày.
+- Quán chiếu bản thân mà không so sánh với người khác.
+- Duy trì thói quen bằng mục tiêu và nhắc nhở phù hợp.
 
 ---
 
-## 2) Product-Level Decisions (Applied)
+## 2) Định hướng triển khai giao diện
 
-The following scope decisions are already applied in this spec:
+Sản phẩm được triển khai theo 2 trải nghiệm chính:
 
-1. Remove deed categorization by `Body / Speech / Mind` completely.
-2. Remove meditation feature completely.
-3. Replace the old Inner reflection screen with a new **Reflection Handbook** screen.
-4. Random quotes and kindness suggestions are no longer standalone screens.
-   They are reusable embedded components that can appear in multiple screens.
-5. Stats do not include consecutive practice days (streak).
-6. Terms of Use and Privacy Policy screens are temporarily out of scope.
+1. Phiên bản web (desktop/tablet)
+- Điều hướng chính bằng sidebar.
+- Phù hợp cho người dùng xem tổng quan và theo dõi lịch sử dài.
 
----
-
-## 3) Screen Inventory (System-Wide)
-
-## 3.1 Authentication
-1. Login Screen
-
-## 3.2 Main App Screens
-1. Home Screen
-2. Timeline Screen
-3. Reflection Handbook Screen
-4. Goals Screen
-5. Stats Screen
-6. Settings Screen
-7. More Screen (navigation/support hub)
+2. Phiên bản web responsive cho mobile
+- Điều hướng chính bằng bottom-tab.
+- Tối ưu thao tác nhanh, dùng một tay, ưu tiên ghi nhận việc tốt ngay.
 
 ---
 
-## 4) Screen-by-Screen Specification
+## 3) Các khái niệm dữ liệu trong dự án
 
-## 4.1 Login Screen
+Phần này mô tả dữ liệu theo góc nhìn nghiệp vụ, không theo định dạng kỹ thuật.
 
-### Main features
-- Sign in with email/password
-- Sign up with email/password
-- Forgot password flow
-- Sign in with Google
+### 3.1 Người dùng
+Mỗi người dùng có các thông tin:
+- Email
+- Tên hiển thị
+- Không sử dụng avatar
+- Trạng thái phương thức đăng nhập (email/mật khẩu hoặc Google)
 
-### Screen components
-- `AuthModeSelector` (Sign in / Sign up / Forgot password)
-- `AuthForm` (email, password, confirm password when needed)
-- `GoogleSignInAction`
-- `AuthErrorNotice`
-- `AuthSuccessNotice`
-- `AppVersionInfo`
+### 3.2 Việc tốt
+Mỗi việc tốt người dùng ghi lại gồm:
+- Ngày/giờ thực hiện
+- Mô tả ngắn về việc tốt
+- Các nhãn cảm xúc do người dùng tự gán (ví dụ: an vui, biết ơn, nhẹ lòng, ấm áp, bình an, hy vọng)
 
----
+### 3.3 Mục tiêu theo kỳ
+Người dùng có thể đặt mục tiêu cho:
+- Tuần
+- Tháng
+- Năm
 
-## 4.2 Home Screen
+Mỗi mục tiêu có ý nghĩa:
+- Mốc phấn đấu cho kỳ hiện tại
+- Trạng thái bật/tắt
+- Số lượng mục tiêu mong muốn đạt
 
-### Main features
-- Daily overview
-- Quick record action for a new kind deed
-- Display today's deed entries
-- Show optional supportive modules (embedded)
+### 3.4 Lịch sử hoàn thành mục tiêu
+Mỗi bản ghi lịch sử mục tiêu thể hiện:
+- Loại mục tiêu (tuần/tháng/năm)
+- Khoảng thời gian áp dụng (ngày bắt đầu - ngày kết thúc)
+- Mức mục tiêu đã đặt
+- Kết quả thực tế đã làm
+- Trạng thái hoàn thành (đã hoàn thành / đang thực hiện / chưa hoàn thành)
 
-### Screen components
-- `PageHeaderSection`
-- `QuickCheckInCard`
-- `TodayDeedListSection`
-- `EmptyStateBlock` (when no deeds today)
-- `RandomQuoteCard` (embedded component)
-- `KindnessSuggestionCard` (embedded component)
-- `ReminderSuggestionCard` (embedded when reminders are off)
+### 3.5 Dữ liệu thống kê
+Phần thống kê hiển thị:
+- Tổng số việc tốt đã ghi nhận
+- Tình hình theo kỳ tuần/tháng
+- Lịch tháng thể hiện mức độ hoạt động theo từng ngày
 
----
+### 3.6 Câu quote ngẫu nhiên
+Một câu quote gồm:
+- Nội dung câu quote
+- Tác giả (nếu có)
 
-## 4.3 Timeline Screen
+### 3.7 Gợi ý việc tốt ngẫu nhiên
+Một gợi ý việc tốt gồm:
+- Tên gợi ý
+- Mô tả ngắn
+- Ghi chú đi kèm (nếu có)
 
-### Main features
-- View deed history in reverse chronological order
-- Group entries by day
-- Edit deed entry
-- Delete deed entry
-- Load more history
-
-### Screen components
-- `PageHeaderSection`
-- `TimelineGroupList`
-- `TimelineGroupHeader`
-- `DeedItemCard`
-- `DeedItemActionMenu` (edit/delete)
-- `EditDeedDialog`
-- `DeleteConfirmDialog`
-- `LoadMoreAction`
-- `SkeletonList`
-- `EmptyStateBlock`
+### 3.8 Cài đặt nhắc nhở
+Dữ liệu nhắc nhở gồm:
+- Bật/tắt nhắc nhở
+- Giờ nhắc nhở hằng ngày
 
 ---
 
-## 4.4 Reflection Handbook Screen
+## 4) Danh sách màn hình
 
-### Main features
-- Create reflective journal entry
-- Support journal modes:
-  - Gratitude
-  - Repentance
-- View reflection history
-- Delete reflection entry according to product rules
-- Surface supportive embedded components (quote/suggestion)
+Hệ thống hiện sử dụng các màn hình sau:
 
-### Screen components
-- `PageHeaderSection`
-- `ReflectionTypeSelector`
-- `ReflectionEditor`
-- `ReflectionImmutableNotice`
-- `SaveReflectionAction`
-- `ReflectionHistoryList`
-- `ReflectionHistoryItem`
-- `DeleteConfirmDialog`
-- `RandomQuoteCard` (embedded)
-- `KindnessSuggestionCard` (embedded)
-- `SkeletonList`
-- `EmptyStateBlock`
+1. Màn hình đăng nhập
+2. Màn hình trang chủ
+3. Màn hình lịch sử việc tốt (timeline)
+4. Màn hình sổ tay quán chiếu (Reflection Handbook)
+5. Màn hình tiến trình và mục tiêu (gộp Goals + Stats)
+6. Màn hình More (thông tin tài khoản và cài đặt cá nhân)
 
 ---
 
-## 4.5 Goals Screen
+## 5) Các thành phần dùng chung ở nhiều màn hình
 
-### Main features
-- Configure goals by period:
-  - Weekly
-  - Monthly
-  - Yearly
-- Enable/disable each goal
-- Update target counts
-- View goal history
-- View progress per period
+Các thành phần dưới đây xuất hiện lặp lại ở nhiều màn hình để giúp hệ thống dễ bảo trì và tái sử dụng.
 
-### Screen components
-- `PageHeaderSection`
-- `GoalSettingsCard`
-- `GoalSettingRow`
-- `GoalSettingControls`
-- `SaveGoalsAction`
-- `GoalHistorySection`
-- `GoalHistoryItem`
-- `SkeletonList`
-- `EmptyStateBlock`
+### 5.1 Khối tiêu đề màn hình
+- Hiển thị tiêu đề, mô tả ngắn và ngữ cảnh của màn hình.
 
----
+### 5.2 Khối thẻ nội dung
+- Dùng để nhóm nội dung theo từng cụm rõ ràng (ví dụ: một phần thống kê, một phần lịch sử, một phần thao tác).
 
-## 4.6 Stats Screen
+### 5.3 Khối trạng thái dữ liệu
+- Trạng thái đang tải dữ liệu.
+- Trạng thái chưa có dữ liệu.
+- Trạng thái có lỗi.
 
-### Main features
-- View total deed count
-- View period trends (weekly/monthly)
-- View activity calendar
-- Reflective, non-competitive metric presentation
+### 5.4 Khối xác nhận hành động quan trọng
+- Dùng khi người dùng thực hiện hành động nhạy cảm như xóa dữ liệu, xóa tài khoản.
 
-### Screen components
-- `PageHeaderSection`
-- `StatsSummaryCard`
-- `TrendSection`
-- `ActivityCalendarCard`
-- `PeriodNavigator`
-- `SkeletonList`
-- `EmptyStateBlock`
+### 5.5 Thành phần quote ngẫu nhiên
+- Hiển thị một câu quote ngẫu nhiên.
+- Có nút làm mới để hiển thị câu quote khác.
+- Mỗi quote gồm nội dung và tác giả.
 
-Note:
-- Streak is intentionally excluded from this screen scope.
+### 5.6 Thành phần gợi ý việc tốt ngẫu nhiên
+- Hiển thị một hoặc nhiều gợi ý việc tốt.
+- Có thao tác đổi gợi ý khác.
+
+### 5.7 Thành phần ghi nhận nhanh việc tốt
+- Cho phép mở luồng ghi nhận việc tốt ngay tại chỗ.
+- Tối ưu cho thao tác nhanh, ít bước.
+
+### 5.8 Thành phần danh sách lịch sử
+- Dùng cho danh sách việc tốt hoặc danh sách lịch sử mục tiêu.
+- Hỗ trợ tải thêm dữ liệu khi cần.
 
 ---
 
-## 4.7 Settings Screen
+## 6) Giới thiệu chi tiết từng màn hình
 
-### Main features
-- View/edit profile basics (display name)
-- Reminder settings (enable/disable, time)
-- Test notification delivery
-- Password change (for eligible auth providers)
-- Sign out
-- Delete account flow
+## 6.1 Màn hình đăng nhập
 
-### Screen components
-- `PageHeaderSection`
-- `AccountProfileCard`
-- `NotificationSettingsCard`
-- `PasswordSecurityCard`
-- `SessionCard`
-- `LogoutAction`
-- `DeleteAccountCard`
-- `DeleteConfirmDialog`
+### Người dùng làm gì
+- Đăng nhập bằng email/mật khẩu.
+- Đăng ký tài khoản mới.
+- Yêu cầu quên mật khẩu.
+- Đăng nhập bằng Google.
+
+### Thành phần chính trong màn hình
+- Khu vực chuyển đổi giữa đăng nhập/đăng ký/quên mật khẩu.
+- Biểu mẫu nhập thông tin tài khoản.
+- Nút đăng nhập Google.
+- Vùng hiển thị thông báo lỗi hoặc thông báo thành công.
 
 ---
 
-## 4.8 More Screen
+## 6.2 Màn hình trang chủ
 
-### Main features
-- Provide quick navigation to secondary app areas
-- Provide compact access to account/settings actions
+### Người dùng làm gì
+- Xem tổng quan trong ngày.
+- Ghi nhận nhanh một việc tốt mới.
+- Xem các việc tốt đã ghi trong ngày hôm nay.
+- Nhận nội dung hỗ trợ như quote ngẫu nhiên và gợi ý việc tốt.
 
-### Screen components
-- `PageHeaderSection`
-- `NavigationRowList`
-- `NavigationRowItem`
-- `LogoutAction`
-
----
-
-## 5) Shared Component Library (Reusable Across Screens)
-
-This section defines the shared building blocks for maintainability and reuse.
-
-## 5.1 Layout & Navigation Shared Components
-- `AppLayoutShell`
-- `AppHeader`
-- `HeaderBreadcrumbs`
-- `AppSidebar`
-- `BottomTabNavigation`
-- `MainContainer`
-- `MainColumn`
-- `SideColumn`
-
-## 5.2 Page Structure Shared Components
-- `PageHeaderSection`
-- `CardSection`
-- `CardInlineSection`
-- `InfoActionTrigger`
-- `InfoDialog`
-
-## 5.3 Feedback and State Shared Components
-- `EmptyStateBlock`
-- `SkeletonList`
-- `ErrorBoundary`
-- `ConfirmDialog`
-
-## 5.4 Deed Logging Shared Components
-- `CheckInComposer` (sheet/flow)
-- `QuickCheckInCard`
-- `MiniCheckInCard`
-- `DeedItemCard`
-- `EditDeedDialog`
-
-## 5.5 Reflection Shared Components
-- `RandomQuoteCard`
-- `KindnessSuggestionCard`
-- `ReflectionTypeSelector`
-- `ReflectionEditor`
-- `ReflectionHistoryItem`
-
-## 5.6 Goal/Stats Shared Components
-- `GoalSettingRow`
-- `GoalHistoryItem`
-- `StatsSummaryCard`
-- `ActivityCalendarCard`
-- `WeeklyRhythmCard`
-
-## 5.7 Settings Shared Components
-- `NotificationSettingsCard`
-- `PasswordSecurityCard`
-- `LogoutAction`
-- `DeleteAccountCard`
-
-Note:
-- This shared library intentionally excludes low-level UI primitives (for example: `Input`, `Switch`, `Button`, etc.).
-- This document focuses on reusable product-level and feature-level components only.
+### Thành phần chính trong màn hình
+- Khối tiêu đề trang.
+- Khối ghi nhận nhanh việc tốt.
+- Khối danh sách việc tốt hôm nay.
+- Khối quote ngẫu nhiên.
+- Khối gợi ý việc tốt ngẫu nhiên.
+- Khối gợi ý bật nhắc nhở (khi người dùng đang tắt nhắc nhở).
 
 ---
 
-## 6) Embedded Feature Components (Cross-Screen)
+## 6.3 Màn hình lịch sử việc tốt (Timeline)
 
-These features are represented as reusable components, not standalone screens:
+### Người dùng làm gì
+- Xem lại toàn bộ việc tốt đã ghi theo thứ tự mới nhất.
+- Xem dữ liệu theo từng nhóm ngày.
+- Chỉnh sửa thông tin một việc tốt đã ghi.
+- Xóa một việc tốt đã ghi.
 
-1. `RandomQuoteCard`
-- Can appear in: Home, Timeline side section, Reflection Handbook, Goals, Stats.
-
-2. `KindnessSuggestionCard`
-- Can appear in: Home, Reflection Handbook, More, and optional side sections.
-
-3. `ReminderSuggestionCard`
-- Can appear in: Home or Settings context when reminders are disabled.
-
----
-
-## 7) Core Data Object Structures
-
-## 7.1 Kind Deed Object
-- `id`: string
-- `description`: string
-- `labels`: string[] (optional user-defined labels)
-- `performedAt`: datetime
-- `createdAt`: datetime
-- `updatedAt`: datetime
-
-## 7.2 Reflection Entry Object
-- `id`: string
-- `type`: enum (`gratitude`, `repentance`)
-- `content`: string
-- `createdAt`: datetime
-- `updatedAt`: datetime
-
-## 7.3 Goal Configuration Object
-- `type`: enum (`weekly`, `monthly`, `yearly`)
-- `targetCount`: number
-- `isEnabled`: boolean
-
-## 7.4 Goal History Object
-- `id`: string
-- `type`: enum (`weekly`, `monthly`, `yearly`)
-- `periodStartDate`: date
-- `periodEndDate`: date
-- `targetCount`: number
-- `actualCount`: number
-- `status`: enum (`completed`, `in-progress`, `not-completed`)
-- `createdAt`: datetime
-
-## 7.5 Stats Summary Object
-- `totalDeeds`: number
-- `periodTrend`: object
-  - `weekly`: number[] or keyed values
-  - `monthly`: number[] or keyed values
-- `calendarActivity`: array
-  - item fields: `date`, `count`
-
-## 7.6 Reminder Settings Object
-- `reminderEnabled`: boolean
-- `reminderTime`: time string (HH:mm)
-- `timezone`: string (optional)
-
-## 7.7 User Profile Object
-- `id`: string
-- `email`: string
-- `displayName`: string
-- `provider`: enum (`password`, `google`, etc.)
-- `createdAt`: datetime
-- `updatedAt`: datetime
+### Thành phần chính trong màn hình
+- Khối tiêu đề trang.
+- Khối nhóm dữ liệu theo ngày.
+- Mỗi mục việc tốt có vùng thao tác chỉnh sửa/xóa.
+- Hộp xác nhận khi xóa.
+- Khối tải thêm dữ liệu.
 
 ---
 
-## 8) Screen-State Requirements (Mandatory for Every Screen)
+## 6.4 Màn hình sổ tay quán chiếu (Reflection Handbook)
 
-Each screen must define and support:
-1. Loading state
-2. Empty state
-3. Content/success state
-4. Error state
-5. Confirmation state for destructive actions (where applicable)
+### Người dùng làm gì
+- Viết nhật ký quán chiếu theo 2 chế độ: biết ơn hoặc sám hối.
+- Lưu bài quán chiếu.
+- Xem lại lịch sử các bài đã viết.
+- Xóa bài viết theo quy tắc sản phẩm.
+
+### Thành phần chính trong màn hình
+- Khối tiêu đề trang.
+- Khu vực chọn loại quán chiếu.
+- Khu vực nhập nội dung quán chiếu.
+- Ghi chú định hướng giúp người dùng viết đúng mục đích.
+- Danh sách lịch sử bài quán chiếu.
+- Hộp xác nhận khi xóa.
+- Khối quote ngẫu nhiên và gợi ý việc tốt ngẫu nhiên (dạng nhúng).
 
 ---
 
-## 9) Final Scope Checklist
+## 6.5 Màn hình tiến trình và mục tiêu (gộp Goals + Stats)
 
-- [ ] Screen inventory is complete and aligned with this document
-- [ ] Features are mapped clearly per screen
-- [ ] Shared component list is used for decomposition and reuse
-- [ ] Embedded components are reused instead of new duplicate screens
-- [ ] Data objects include required fields for all major features
-- [ ] No Body/Speech/Mind categorization remains in product scope
-- [ ] Meditation feature is excluded from product scope
+### Ý nghĩa màn hình
+Người dùng có thể xem thống kê việc tốt của mình và cài đặt mục tiêu để tăng động lực phấn đấu.
+
+### Thứ tự hiển thị nội dung từ trên xuống dưới
+1. Tổng số việc tốt đã thực hiện.
+2. Mục tiêu tuần/tháng/năm hiện tại.
+3. Lịch tháng.
+4. Danh sách các kỳ tuần/tháng/năm đã hoàn thành mục tiêu.
+
+### Người dùng làm gì
+- Xem tổng quan mức độ thực hành của bản thân.
+- Cài đặt hoặc cập nhật mục tiêu theo tuần/tháng/năm.
+- Theo dõi hoạt động theo lịch tháng.
+- Xem lịch sử các kỳ đã hoàn thành mục tiêu để tự tạo động lực.
+
+### Thành phần chính trong màn hình
+- Khối tổng số việc tốt.
+- Khối cài đặt mục tiêu hiện tại.
+- Khối lịch tháng.
+- Khối danh sách lịch sử hoàn thành mục tiêu.
+
+---
+
+## 6.6 Màn hình More
+
+### Người dùng làm gì
+- Xem thông tin tài khoản.
+- Cập nhật tên hiển thị (không có avatar).
+- Quản lý thông báo nhắc nhở.
+- Thay đổi mật khẩu.
+- Đăng xuất.
+- Xóa tài khoản.
+
+### Thành phần chính trong màn hình
+- Khối thông tin tài khoản cơ bản.
+- Khối cập nhật tên hiển thị.
+- Khối cài đặt nhắc nhở.
+- Khối thay đổi mật khẩu.
+- Hành động đăng xuất.
+- Hành động xóa tài khoản và xác nhận xóa.
+
+---
+
+## 7) Ghi chú thêm (Product-Level Decisions Applied)
+
+1. Loại bỏ hoàn toàn phân loại việc tốt theo thân/khẩu/ý.
+2. Loại bỏ hoàn toàn tính năng thiền (meditation).
+3. Sử dụng màn hình Reflection Handbook thay cho màn hình Inner reflection cũ.
+4. Random quotes và kindness suggestions được dùng dưới dạng thành phần nhúng, không có màn hình riêng.
+5. Tạm thời loại bỏ Terms of Use và Privacy Policy khỏi phạm vi triển khai hiện tại.
+6. Tài liệu này là nguồn mô tả nghiệp vụ chính để frontend hiện thực thành website.
