@@ -7,6 +7,7 @@ import { CheckInSheet } from '@/components/shared'
 import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { t } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
 import {
   isPushSupported,
   subscribeToPushNotifications,
@@ -57,18 +58,25 @@ export const AppLayout = () => {
   }
 
   return (
-    <SidebarProvider className='bg-background relative min-h-screen pb-24 md:pb-0'>
-      <AppSidebar />
-      <SidebarInset>
-        <div className='relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6 sm:gap-7 sm:px-6 lg:gap-8 lg:px-8'>
-          <AppHeader />
-          <main className='flex flex-col gap-6'>
-            <Outlet />
-          </main>
-        </div>
-        <BottomTab />
-        <CheckInSheet />
-      </SidebarInset>
+    <div className='min-h-screen md:flex md:items-center md:justify-center'>
+      <SidebarProvider
+        className={cn(
+          'group/sidebar-wrapper flex h-full w-full flex-col md:flex-row',
+          'md:bg-background md:max-w-7xl md:overflow-hidden',
+        )}>
+        <AppSidebar />
+        <SidebarInset className='flex flex-1 flex-col overflow-hidden'>
+          <div className='flex flex-1 flex-col overflow-y-auto px-4 pt-6 sm:px-6 md:px-8'>
+            <AppHeader />
+            <main className='mt-6 flex flex-col gap-6 pb-20 md:mt-8 md:pb-8'>
+              <Outlet />
+            </main>
+          </div>
+          <BottomTab />
+          <CheckInSheet />
+        </SidebarInset>
+      </SidebarProvider>
+
       <ConfirmDialog
         ref={refNotificationDialog}
         confirmLabel={t('pwa.notifications.enableAction')}
@@ -81,6 +89,6 @@ export const AppLayout = () => {
         }}
       />
       <PWAGuideDialog />
-    </SidebarProvider>
+    </div>
   )
 }
