@@ -11,36 +11,32 @@ import { useCreateDeed } from '@/hooks/api/use-deeds'
 import { useIsMobile } from '@/hooks/shared/use-mobile'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
+import { useCheckInStore } from '@/stores/check-in.store'
 
 import { CheckInSheetFlow } from './check-in-sheet-flow'
 import { CheckInSheetTip } from './check-in-sheet-tip'
 import { InfoButton } from './info-button'
 
-export interface CheckInDrawerHandle {
-  open: () => void
-  close: () => void
-}
-
-export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) => {
+export const CheckInSheet = () => {
   const isMobile = useIsMobile()
   const createDeed = useCreateDeed()
 
-  const [isOpen, setIsOpen] = React.useState(false)
+  const isOpen = useCheckInStore.use.isOpen()
+  const close = useCheckInStore.use.close()
+
   const [step, setStep] = React.useState(1)
   const [resetSeed, setResetSeed] = React.useState(0)
 
-  const open = React.useCallback(() => {
-    setStep(1)
-    setResetSeed((prev) => prev + 1)
-    setIsOpen(true)
-  }, [])
-
-  const close = React.useCallback(() => setIsOpen(false), [])
-
-  React.useImperativeHandle(ref, () => ({ open, close }), [open, close])
+  // Reset step and seed when opening
+  React.useEffect(() => {
+    if (isOpen) {
+      setStep(1)
+      setResetSeed((prev) => prev + 1)
+    }
+  }, [isOpen])
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={(open) => !open && close()}>
       <SheetContent
         className={isMobile ? 'rounded-t-2xl' : ''}
         side={isMobile ? 'bottom' : 'right'}>
@@ -69,4 +65,4 @@ export const CheckInSheet = React.forwardRef<CheckInDrawerHandle>((_props, ref) 
       </SheetContent>
     </Sheet>
   )
-})
+}

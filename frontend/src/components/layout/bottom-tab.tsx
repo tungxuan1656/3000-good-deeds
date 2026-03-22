@@ -28,24 +28,27 @@ export const BottomTab = () => {
 
   return createPortal(
     <div className='pointer-events-none fixed inset-x-0 bottom-0 z-80 md:hidden'>
-      <div className='pb-safe bg-surface-container/80 pointer-events-auto shadow-[0_-8px_24px_rgba(47,52,46,0.08)] backdrop-blur-[15px]'>
-        <div className='mx-auto flex max-w-lg items-center justify-between px-2 py-0.5'>
+      <div className='pb-safe bg-surface-container/80 pointer-events-auto rounded-t-[1.5rem] shadow-[0_-8px_24px_rgba(47,52,46,0.08)] backdrop-blur-[15px]'>
+        <div className='mx-auto flex max-w-lg items-center justify-between px-6 py-3'>
           {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
             const active = isPathActive(location.pathname, path)
 
             return (
               <button
                 key={label}
-                className='flex flex-1 touch-manipulation flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors'
+                className='flex flex-1 touch-manipulation flex-col items-center justify-center gap-1.5 transition-all duration-300 active:scale-95'
                 type='button'
                 onClick={() => navigate(path)}>
                 <Icon
-                  className={cn('size-5', active ? 'text-primary' : 'text-muted-foreground/70')}
+                  className={cn(
+                    'size-6 transition-colors duration-300',
+                    active ? 'text-primary fill-primary/10' : 'text-muted-foreground/60',
+                  )}
                 />
                 <span
                   className={cn(
-                    'text-xs font-medium',
-                    active ? 'text-primary font-semibold' : 'text-muted-foreground/70',
+                    'text-[10px] font-bold tracking-widest uppercase transition-colors duration-300',
+                    active ? 'text-primary' : 'text-muted-foreground/60',
                   )}>
                   {label}
                 </span>

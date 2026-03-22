@@ -1,12 +1,11 @@
 import { PlusIcon } from 'lucide-react'
-import { useRef } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+import { t } from '@/lib/i18n'
+import { useCheckInStore } from '@/stores/check-in.store'
 
 import { CardSection } from './card-section'
-import { type CheckInDrawerHandle, CheckInSheet } from './check-in-sheet'
 import { Leaf } from './leaf'
 
 type MiniCheckInCardProps = {
@@ -18,11 +17,7 @@ type MiniCheckInCardProps = {
 export const MiniCheckInCard = ({ title, description, className }: MiniCheckInCardProps) => {
   const resolvedTitle = title ?? t('checkIn.card.title')
   const resolvedDescription = description ?? t('checkIn.card.description')
-  const checkInRef = useRef<CheckInDrawerHandle>(null)
-
-  const openCheckIn = () => {
-    checkInRef.current?.open()
-  }
+  const openCheckIn = useCheckInStore.use.open()
 
   return (
     <CardSection className={cn('flex flex-col gap-4', className)} padding='md'>
@@ -37,7 +32,6 @@ export const MiniCheckInCard = ({ title, description, className }: MiniCheckInCa
         <PlusIcon className='size-4' />
         {t('checkIn.card.addAction')}
       </Button>
-      <CheckInSheet ref={checkInRef} />
     </CardSection>
   )
 }
