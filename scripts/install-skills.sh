@@ -91,5 +91,15 @@ for skill in "${testing_skills[@]}"; do
 done
 
 echo ""
+echo "Installing @gstack (browser automation)..."
+if [ ! -d "$DEST/gstack" ]; then
+  git clone https://github.com/garrytan/gstack.git "$DEST/gstack"
+else
+  echo "Updating @gstack..."
+  (cd "$DEST/gstack" && git pull)
+fi
+(cd "$DEST/gstack" && ./setup --host codex)
+
+echo ""
 echo "Project skills installed successfully."
 echo "Location: $DEST"

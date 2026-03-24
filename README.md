@@ -65,7 +65,6 @@ You can invoke a skill directly in prompts using the `@skill-name` syntax.
 Example:
 `Use @api-patterns to design a REST API for managing orders.`
 
-
 ---
 
 ## Planning
@@ -106,6 +105,7 @@ Example:
 | -------------------------- | --------------------------------------------------- |
 | `@test-driven-development` | Encourages writing tests before implementing logic. |
 | `@e2e-testing-patterns`    | Patterns for reliable end-to-end tests.             |
+| `@gstack`                  | Browser automation and visual testing tool.         |
 
 ---
 
@@ -120,3 +120,4 @@ Example:
 
 These skills help AI assistants produce **consistent, maintainable, and production-ready code**
 aligned with this project's architecture.
+
