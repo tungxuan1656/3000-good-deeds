@@ -13,10 +13,10 @@ export const SocialAuth = ({ isLoading, onGoogleLogin, showSocial = true }: Soci
   return (
     <>
       {/* Divider */}
-      <div className='flex items-center gap-4 py-2'>
+      <div className='flex items-center'>
         <div className='bg-outline-variant/20 h-px grow' />
-        <span className='text-muted-foreground text-[10px] font-bold tracking-widest uppercase'>
-          or
+        <span className='text-muted-foreground text-xss font-bold tracking-widest uppercase'>
+          {t('common.actions.or')}
         </span>
         <div className='bg-outline-variant/20 h-px grow' />
       </div>
@@ -24,7 +24,6 @@ export const SocialAuth = ({ isLoading, onGoogleLogin, showSocial = true }: Soci
       <Button
         className='text-on-surface-variant w-full'
         disabled={isLoading}
-        size='lg'
         type='button'
         variant='outline'
         onClick={onGoogleLogin}>
