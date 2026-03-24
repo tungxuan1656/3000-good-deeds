@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
+import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { useCheckInStore } from '@/stores/check-in.store'
 
@@ -25,13 +26,13 @@ export const AppSidebar = () => {
 
   return (
     <Sidebar className='bg-sidebar overflow-hidden border-none md:inset-auto md:mt-4 md:h-auto md:rounded-2xl!'>
-      <SidebarHeader className='px-6 pt-10 pb-4'>
+      <SidebarHeader className='p-6'>
         <div className='flex flex-col gap-1.5'>
-          <h1 className='font-headline text-primary text-xl font-bold group-data-[collapsible=icon]:hidden'>
-            The Living Journal
-          </h1>
-          <p className='text-muted-foreground/60 text-[10px] font-bold tracking-widest uppercase group-data-[collapsible=icon]:hidden'>
-            Kindness in Focus
+          <h3 className='font-headline text-primary text-2xl font-medium italic group-data-[collapsible=icon]:hidden'>
+            {t('auth.login.brandName')}
+          </h3>
+          <p className='text-muted-foreground text-xss font-medium tracking-widest uppercase group-data-[collapsible=icon]:hidden'>
+            {t('auth.login.heroTitle')}
           </p>
         </div>
       </SidebarHeader>
@@ -67,7 +68,10 @@ export const AppSidebar = () => {
                           )}
                         />
                         <span
-                          className={cn('font-medium transition-all', isActive ? 'font-bold' : '')}>
+                          className={cn(
+                            'font-medium transition-all',
+                            isActive ? 'font-semibold' : '',
+                          )}>
                           {label}
                         </span>
                       </Link>
