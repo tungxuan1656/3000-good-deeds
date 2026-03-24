@@ -105,7 +105,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className='bg-background text-foreground relative flex min-h-screen items-center justify-center p-6'>
+    <div className='bg-background text-foreground relative flex min-h-screen justify-center p-6'>
       <main className='relative z-10 mx-auto w-full max-w-xl'>
         {/* Brand Identity */}
         <AuthBrand />
@@ -116,11 +116,8 @@ const LoginPage = () => {
             <AuthTabs mode={mode} onModeChange={handleModeChange} />
 
             {/* Login Card */}
-            <Card className='relative overflow-hidden'>
-              {/* Subtle Background Accent */}
-              <div className='bg-primary/5 absolute -top-12 -right-12 h-32 w-32 rounded-full blur-2xl' />
-
-              <CardContent className='p-6 md:p-8'>
+            <Card className='relative overflow-hidden' padding='sm'>
+              <CardContent>
                 {error && (
                   <div className='mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>
                     {error}
@@ -132,7 +129,7 @@ const LoginPage = () => {
                   </div>
                 )}
 
-                <form className='relative z-10 space-y-6' onSubmit={handleSubmit}>
+                <form className='relative z-10 space-y-4 md:space-y-6' onSubmit={handleSubmit}>
                   {mode === 'register' && (
                     <AuthField label={t('auth.form.fields.displayName')}>
                       <Input
@@ -186,7 +183,6 @@ const LoginPage = () => {
                   <Button
                     className='w-full'
                     disabled={isLoading}
-                    size='lg'
                     type='submit'
                     variant='primary-gradient'>
                     <span>

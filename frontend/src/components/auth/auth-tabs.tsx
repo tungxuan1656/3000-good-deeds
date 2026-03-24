@@ -16,12 +16,12 @@ export const AuthTabs = ({ mode, onModeChange }: AuthTabsProps) => {
   ]
 
   return (
-    <div className='border-outline-variant/30 mb-0 flex border-b px-2'>
+    <div className='border-outline-variant/30 mb-0 flex justify-between border-b md:justify-evenly'>
       {tabs.map((tab) => (
         <button
           key={tab.id}
           className={cn(
-            'flex-1 py-3 text-xs font-bold tracking-widest uppercase transition-colors',
+            'py-3 text-xs font-bold tracking-widest uppercase transition-colors',
             tab.align === 'right' ? 'text-right' : 'text-center',
             mode === tab.id
               ? 'text-primary border-primary border-b-2'

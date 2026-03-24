@@ -15,9 +15,9 @@ const cardVariants = tv({
     },
     padding: {
       none: 'p-0',
-      sm: 'p-4',
-      md: 'p-6',
-      lg: 'p-8',
+      sm: 'p-4 md:p-6',
+      md: 'p-6 md:p-8',
+      lg: 'p-8 md:p-10',
     },
   },
   defaultVariants: {
@@ -72,7 +72,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('p-6 pt-0', className)} data-slot='card-content' {...props} />
+  return <div className={cn('', className)} data-slot='card-content' {...props} />
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
