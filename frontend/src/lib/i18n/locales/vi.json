@@ -233,8 +233,7 @@
   "home": {
     "header": {
       "title": "Hôm nay của bạn",
-      "description": "Ghi nhận một việc thiện nhỏ và dành một phút nhìn lại tâm mình.",
-      "note": "Mọi ghi nhận đều riêng tư và không dùng để so sánh."
+      "description": "Ghi nhận một việc thiện nhỏ và dành một phút nhìn lại tâm mình."
     },
     "todaySection": {
       "title": "Hôm nay",
@@ -304,9 +303,7 @@
   "settings": {
     "header": {
       "title": "Tùy chỉnh trải nghiệm",
-      "subtitle": "Cài đặt",
-      "description": "Điều chỉnh nhắc nhở và tài khoản để giữ nếp sống chánh niệm.",
-      "note": "Bạn có thể xuất hoặc xóa dữ liệu của mình bất cứ lúc nào."
+      "description": "Điều chỉnh nhắc nhở và tài khoản để giữ nếp sống chánh niệm."
     },
     "account": {
       "heading": "Hồ sơ",
@@ -440,9 +437,7 @@
     "timeline": {
       "header": {
         "title": "Nhật ký việc thiện",
-        "subtitle": "Hành trình",
-        "description": "Nhật ký việc thiện của riêng bạn - để nhìn lại, không phải để so sánh.",
-        "note": "Mỗi việc thiện, dù rất nhỏ, đều đáng trân trọng."
+        "description": "Nhật ký việc thiện của riêng bạn - để nhìn lại, không phải để so sánh."
       },
       "dateLabel": {
         "today": "Hôm nay · {{date}}",
@@ -460,9 +455,7 @@
     "innerJournalHistory": {
       "header": {
         "title": "Những ngày cũ",
-        "subtitle": "Sổ tay",
-        "description": "Xem lại những dòng đã viết. Mỗi bài là một khoảnh khắc đã được giữ nguyên.",
-        "note": "Đọc lại khi cần soi chiếu. Bạn có thể xóa bài viết trong 15 phút đầu sau khi lưu."
+        "description": "Xem lại những dòng đã viết. Mỗi bài là một khoảnh khắc đã được giữ nguyên."
       },
       "empty": {
         "title": "Chưa có bài viết nào",
@@ -475,17 +468,13 @@
     "more": {
       "header": {
         "title": "Quản lý và tùy chỉnh",
-        "subtitle": "Thêm",
-        "description": "Quản lý tài khoản, nhắc nhở và bảo mật trong một nơi duy nhất.",
-        "note": "Bạn có thể cập nhật hồ sơ, đổi mật khẩu, đăng xuất và xóa tài khoản tại đây."
+        "description": "Quản lý tài khoản, nhắc nhở và bảo mật trong một nơi duy nhất."
       }
     },
     "handbook": {
       "header": {
         "title": "Sổ tay quán chiếu",
-        "subtitle": "Handbook",
-        "description": "Viết xuống điều bạn nhận ra, rồi nhìn lại hành trình chuyển hóa của mình một cách nhẹ nhàng.",
-        "note": "Quote và gợi ý việc thiện được nhúng để bạn có thể thực hành ngay trong cùng màn hình."
+        "description": "Viết xuống điều bạn nhận ra, rồi nhìn lại hành trình chuyển hóa của mình một cách nhẹ nhàng."
       },
       "historyTitle": "Nhật ký đã lưu",
       "historyEmptyTitle": "Chưa có dòng quán chiếu nào",
@@ -498,9 +487,7 @@
     "progress": {
       "header": {
         "title": "Tiến trình và mục tiêu",
-        "subtitle": "Progress",
-        "description": "Theo dõi tổng số việc thiện, đặt mục tiêu theo kỳ và quan sát nhịp thực hành của bạn theo lịch tháng.",
-        "note": "Màn hình này gộp thống kê và mục tiêu trong cùng một luồng theo dõi."
+        "description": "Theo dõi tổng số việc thiện, đặt mục tiêu theo kỳ và quan sát nhịp thực hành của bạn theo lịch tháng."
       }
     }
   },

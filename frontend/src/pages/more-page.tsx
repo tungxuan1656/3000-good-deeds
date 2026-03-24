@@ -69,8 +69,6 @@ const MorePage = () => {
       <MainColumn>
         <HeaderSection
           description={t('pages.more.header.description')}
-          note={t('pages.more.header.note')}
-          subtitle={t('pages.more.header.subtitle')}
           title={t('pages.more.header.title')}
         />
 

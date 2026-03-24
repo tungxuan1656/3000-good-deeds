@@ -1,45 +1,29 @@
+import { LeafIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
-
-import { CardSection } from './card-section'
-import { Leaf } from './leaf'
 
 type HeaderSectionProps = {
   title: string
-  subtitle?: string
   description?: string
-  note?: string
   action?: ReactNode
 }
 
-export const HeaderSection = ({
-  title,
-  subtitle,
-  description,
-  note,
-  action,
-}: HeaderSectionProps) => {
+export const HeaderSection = ({ title, description, action }: HeaderSectionProps) => {
   return (
-    <CardSection as='header'>
-      <Leaf position='top-right' variant={1} />
-      {subtitle ? (
-        <p className='font-label text-muted-foreground/80 text-xs font-semibold tracking-[0.18em] uppercase sm:text-xs'>
-          {subtitle}
-        </p>
-      ) : null}
-      <h1 className='font-headline text-foreground mt-2 text-2xl tracking-tight sm:text-3xl'>
-        {title}
-      </h1>
+    <div className='flex flex-col gap-2'>
+      <div className='mt-1 flex items-center gap-2'>
+        <div className='bg-primary/10 flex size-8 items-center justify-center rounded-xl sm:size-10'>
+          <LeafIcon className='text-primary size-4 fill-current sm:size-6' />
+        </div>
+        <h1 className='font-headline text-foreground mt-2 ml-2 text-2xl font-medium md:text-4xl'>
+          {title}
+        </h1>
+        {action ? <div className='ml-auto flex items-center'>{action}</div> : null}
+      </div>
       {description ? (
-        <p className='text-muted-foreground/90 mt-3 max-w-xl text-sm leading-relaxed sm:text-base'>
+        <p className='text-muted-foreground px-1 text-sm leading-relaxed font-light md:text-base'>
           {description}
         </p>
       ) : null}
-      {note || action ? (
-        <div className='mt-1 flex items-center'>
-          {note ? <p className='text-muted-foreground/90 text-sm leading-relaxed'>{note}</p> : null}
-          {action ? <div className='ml-auto flex items-center'>{action}</div> : null}
-        </div>
-      ) : null}
-    </CardSection>
+    </div>
   )
 }

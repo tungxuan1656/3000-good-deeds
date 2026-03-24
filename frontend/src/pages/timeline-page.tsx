@@ -73,8 +73,6 @@ const TimelinePage = () => {
             />
           }
           description={t('pages.timeline.header.description')}
-          note={t('pages.timeline.header.note')}
-          subtitle={t('pages.timeline.header.subtitle')}
           title={t('pages.timeline.header.title')}
         />
 

@@ -16,8 +16,6 @@ const ProgressPage = () => {
       <MainColumn>
         <HeaderSection
           description={t('pages.progress.header.description')}
-          note={t('pages.progress.header.note')}
-          subtitle={t('pages.progress.header.subtitle')}
           title={t('pages.progress.header.title')}
         />
 

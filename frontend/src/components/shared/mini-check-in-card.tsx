@@ -1,8 +1,8 @@
 import { PlusIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { t } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
 import { useCheckInStore } from '@/stores/check-in.store'
 
 import { CardSection } from './card-section'

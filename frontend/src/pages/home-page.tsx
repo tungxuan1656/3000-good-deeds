@@ -1,6 +1,3 @@
-import { format } from 'date-fns'
-import { vi } from 'date-fns/locale'
-
 import { JourneyStatsCard, RecordDeedCard, TodaySummarySection } from '@/components/home'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
@@ -21,8 +18,6 @@ const HomePage = () => {
             <InfoButton description={INFO_COPY.home.description} title={INFO_COPY.home.title} />
           }
           description={t('home.header.description')}
-          note={t('home.header.note')}
-          subtitle={format(new Date(), t('dates.formats.homeHeaderSubtitle'), { locale: vi })}
           title={t('home.header.title')}
         />
 
