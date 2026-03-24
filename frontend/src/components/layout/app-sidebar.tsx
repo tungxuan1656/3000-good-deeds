@@ -52,14 +52,14 @@ export const AppSidebar = () => {
                     <SidebarMenuButton
                       asChild
                       className={cn(
-                        'group relative h-auto rounded-none px-6 py-3.5 transition-colors hover:bg-black/5 active:bg-black/10',
+                        'group relative h-auto rounded-none px-5 py-3.5 transition-colors hover:bg-black/5 active:bg-black/10',
                         isActive ? 'text-foreground' : 'text-muted-foreground/60',
                       )}
                       isActive={isActive}
                       tooltip={label}>
                       <Link className='flex items-center gap-4' to={path}>
                         {isActive && (
-                          <div className='bg-primary absolute top-1/2 left-0 h-6 w-1 -translate-y-1/2 rounded-r-full' />
+                          <div className='bg-primary absolute top-1/2 left-0 h-4/5 w-1 -translate-y-1/2 rounded-r-full' />
                         )}
                         <Icon
                           className={cn(
@@ -71,7 +71,7 @@ export const AppSidebar = () => {
                         />
                         <span
                           className={cn(
-                            'font-medium transition-all',
+                            'font-normal tracking-wide transition-all',
                             isActive ? 'font-semibold' : '',
                           )}>
                           {label}
