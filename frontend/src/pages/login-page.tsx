@@ -1,4 +1,4 @@
-import { Eye, EyeOff, LogIn } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, LogIn } from 'lucide-react'
 import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -166,7 +166,7 @@ const LoginPage = () => {
                           className='text-muted-foreground hover:text-primary absolute top-1/2 right-3 -translate-y-1/2 p-1'
                           type='button'
                           onClick={() => setShowPassword(!showPassword)}>
-                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                          {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
                         </button>
                       </div>
                     </AuthField>
