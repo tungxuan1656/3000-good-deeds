@@ -5,10 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: 'Be Vietnam Pro', sans-serif;
+  --font-sans: 'Be Vietnam Pro', 'Noto Serif', sans-serif;
   --font-headline: 'Noto Serif', serif;
-  --font-body: 'Be Vietnam Pro', sans-serif;
-  --font-label: 'Be Vietnam Pro', sans-serif;
+  --font-body: 'Be Vietnam Pro', 'Noto Serif', sans-serif;
+  --font-label: 'Be Vietnam Pro', 'Noto Serif', sans-serif;
+  --text-xss: 0.625rem;
 
   --radius: 0.875rem;
 

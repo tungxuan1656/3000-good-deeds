@@ -21,7 +21,7 @@ export const AuthTabs = ({ mode, onModeChange }: AuthTabsProps) => {
         <button
           key={tab.id}
           className={cn(
-            'flex-1 py-3 text-[11px] font-bold tracking-widest uppercase transition-colors',
+            'flex-1 py-3 text-xs font-bold tracking-widest uppercase transition-colors',
             tab.align === 'right' ? 'text-right' : 'text-center',
             mode === tab.id
               ? 'text-primary border-primary border-b-2'
