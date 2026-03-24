@@ -29,7 +29,7 @@ export const InfoButton = ({
         size='icon'
         variant='ghost'
         onClick={() => setOpen(true)}>
-        <InfoIcon className='h-4 w-4' />
+        <InfoIcon className='fill-primary/10 h-4 w-4' />
       </Button>
       <InfoDialog description={description} open={open} title={title} onOpenChange={setOpen} />
     </>

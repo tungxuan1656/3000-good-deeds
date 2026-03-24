@@ -64,7 +64,9 @@ export const AppSidebar = () => {
                         <Icon
                           className={cn(
                             'transition-colors duration-300',
-                            isActive ? 'text-primary size-6' : 'text-muted-foreground/60 size-5',
+                            isActive
+                              ? 'text-primary fill-primary/20 size-6'
+                              : 'text-muted-foreground/60 size-5',
                           )}
                         />
                         <span
