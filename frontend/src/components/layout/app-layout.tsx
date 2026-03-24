@@ -15,7 +15,6 @@ import {
 } from '@/lib/utils/push-notifications'
 import { useAuthStore } from '@/stores/auth.store'
 
-import { AppHeader } from './app-header'
 import { PWAGuideDialog } from './pwa-guide-dialog'
 
 export const AppLayout = () => {
@@ -67,8 +66,7 @@ export const AppLayout = () => {
         <AppSidebar />
         <SidebarInset className='flex flex-1 flex-col overflow-hidden'>
           <div className='flex flex-1 flex-col overflow-y-auto px-4 pt-6 sm:px-6 md:px-8'>
-            <AppHeader />
-            <main className='mt-6 flex flex-col gap-6 pb-20 md:mt-8 md:pb-8'>
+            <main className='flex flex-col gap-6 pb-20 md:pb-8'>
               <Outlet />
             </main>
           </div>

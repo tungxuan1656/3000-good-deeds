@@ -87,8 +87,6 @@ const HandbookPage = () => {
             />
           }
           description={t('pages.handbook.header.description')}
-          note={t('pages.handbook.header.note')}
-          subtitle={t('pages.handbook.header.subtitle')}
           title={t('pages.handbook.header.title')}
         />
 
