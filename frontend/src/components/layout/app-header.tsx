@@ -1,6 +1,6 @@
 import { useIsMobile } from '@/hooks/shared/use-mobile'
 
-import { HeaderBreadcrumbs } from './header-breadcrumbs'
+import { HeaderBrand } from './header-brand'
 
 export const AppHeader = () => {
   const isMobile = useIsMobile()
@@ -11,7 +11,7 @@ export const AppHeader = () => {
 
   return (
     <header className='flex items-center gap-4'>
-      <HeaderBreadcrumbs />
+      <HeaderBrand />
     </header>
   )
 }
