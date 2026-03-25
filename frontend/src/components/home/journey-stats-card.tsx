@@ -1,4 +1,5 @@
 import { useStatsSummary } from '@/hooks/api/use-stats'
+import { t } from '@/lib/i18n'
 
 import { Card, CardContent, CardHeader } from '../ui/card'
 import { Progress } from '../ui/progress'
@@ -11,20 +12,20 @@ export const JourneyStatsCard = () => {
   const progress = Math.min((totalDeeds / GOAL_TOTAL) * 100, 100)
 
   return (
-    <Card padding='none' variant='surface'>
-      <CardHeader className='p-8 pb-0'>
-        <p className='text-[10px] font-bold tracking-[0.2em] text-stone-700 uppercase'>
-          Your Journey
+    <Card variant='surface'>
+      <CardHeader>
+        <p className='text-xss font-bold tracking-[0.2em] text-stone-700 uppercase'>
+          {t('journey.stats.card.title')}
         </p>
       </CardHeader>
 
-      <CardContent className='space-y-8 p-8 pt-6'>
+      <CardContent className='space-y-4'>
         <div className='flex items-baseline justify-between'>
           <span className='text-5xl font-medium tracking-tighter text-stone-800'>
             {isLoading ? '--' : totalDeeds.toLocaleString()}
           </span>
-          <span className='text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase'>
-            Deeds Logged
+          <span className='text-xss font-bold tracking-[0.2em] text-stone-400 uppercase'>
+            {t('journey.stats.card.deedsLogged')}
           </span>
         </div>
 
@@ -33,8 +34,12 @@ export const JourneyStatsCard = () => {
             className='h-1.5 bg-stone-200/50 dark:bg-stone-800'
             value={progress}
           />
-          <p className='text-[10px] font-bold tracking-wider text-stone-400 uppercase'>
-            {progress.toFixed(1)}% of the way to {GOAL_TOTAL.toLocaleString()}
+          <p className='text-xss text-muted-foreground/50 font-bold tracking-wider uppercase'>
+            {t('journey.stats.card.progressPrefix')}
+            {progress.toFixed(1)}
+            {t('journey.stats.card.progressSuffix', {
+              total: GOAL_TOTAL.toLocaleString(),
+            })}
           </p>
         </div>
       </CardContent>

@@ -508,7 +508,28 @@
     "card": {
       "label": "Pháp ngữ cho phiên này",
       "defaultQuote": "Một việc thiện nhỏ mỗi ngày, tâm an yên hơn từng chút.",
-      "defaultSource": "3000 Việc Thiện"
+      "defaultSource": "3000 Việc Thiện",
+      "refreshButton": "Đổi câu khác",
+      "authorPrefix": "— ",
+      "authorSuffix": " —"
+    }
+  },
+  "kindness": {
+    "suggestion": {
+      "card": {
+        "label": "Gợi ý mỗi ngày",
+        "refreshButton": "Đổi gợi ý"
+      }
+    }
+  },
+  "journey": {
+    "stats": {
+      "card": {
+        "title": "Hành trình của bạn",
+        "deedsLogged": "Việc thiện đã ghi",
+        "progressPrefix": "",
+        "progressSuffix": "% trên con đường tới {{total}}"
+      }
     }
   },
   "stats": {

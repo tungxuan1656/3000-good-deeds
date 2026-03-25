@@ -67,11 +67,11 @@ export const TodaySummarySection = () => {
           Today's Summary
         </h2>
         <div className='flex items-center gap-4'>
-          <span className='text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase'>
+          <span className='text-xss font-bold tracking-[0.2em] text-stone-400 uppercase'>
             {format(new Date(), 'EEEE, MMM d', { locale: vi }).toUpperCase()}
           </span>
           <Button
-            className='hover:text-primary h-auto p-0 text-[10px] font-bold tracking-wider text-stone-400 uppercase hover:bg-transparent'
+            className='hover:text-primary text-xss h-auto p-0 font-bold tracking-wider text-stone-400 uppercase hover:bg-transparent'
             variant='ghost'
             onClick={() => navigate(PATHS.TIMELINE)}>
             View All <ChevronRight className='ml-1 size-3' />

@@ -16,7 +16,7 @@ import { t } from '@/lib/i18n'
 const HomePage = () => {
   return (
     <MainContainer>
-      <MainColumn className='flex flex-col gap-8'>
+      <MainColumn className='flex flex-col gap-4 md:gap-6'>
         <PageHeader
           action={
             <InfoButton
@@ -36,7 +36,7 @@ const HomePage = () => {
       </MainColumn>
 
       {/* Side column */}
-      <SideColumn className='flex flex-col gap-8'>
+      <SideColumn className='flex flex-col gap-4 md:gap-6'>
         <DailyQuoteCard />
 
         <KindnessSuggestionCard />

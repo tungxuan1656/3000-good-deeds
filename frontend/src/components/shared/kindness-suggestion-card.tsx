@@ -16,17 +16,18 @@ export const KindnessSuggestionCard = () => {
       .join(' - ') || t('pages.handbook.kindnessSuggestion.empty')
 
   return (
-    <Card padding='none' variant='standard'>
-      <CardHeader className='flex flex-row items-center justify-between p-8 pb-0'>
+    <Card>
+      <CardHeader className='flex flex-row items-center justify-between'>
         <div className='flex items-center gap-3'>
           <LightbulbIcon className='size-5 text-stone-700' />
-          <p className='text-[10px] font-bold tracking-[0.2em] text-stone-700 uppercase'>
-            Daily Suggestion
+          <p className='text-muted-foreground text-xss font-semibold tracking-[0.2em] uppercase'>
+            {t('kindness.suggestion.card.label')}
           </p>
         </div>
         <Button
           className='size-8 text-stone-400 hover:bg-transparent hover:text-stone-600'
           size='icon'
+          title={t('kindness.suggestion.card.refreshButton')}
           variant='ghost'
           onClick={() => refetch()}>
           <RefreshCwIcon
@@ -35,16 +36,10 @@ export const KindnessSuggestionCard = () => {
         </Button>
       </CardHeader>
 
-      <CardContent className='space-y-8 p-8 pt-6'>
-        <p className='text-sm leading-relaxed font-medium text-stone-600'>
+      <CardContent className='space-y-6'>
+        <p className='text-foreground/70 font-headline text-base leading-relaxed font-medium italic'>
           {suggestionText}
         </p>
-
-        <Button
-          className='w-full border-stone-200 py-6 text-[10px] font-bold tracking-[0.2em] text-stone-500 uppercase hover:bg-stone-50'
-          variant='outline'>
-          Accept Suggestion
-        </Button>
       </CardContent>
     </Card>
   )
