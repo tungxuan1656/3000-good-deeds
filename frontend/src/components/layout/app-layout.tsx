@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { AppSidebar, BottomTab } from '@/components/layout'
-import { CheckInSheet } from '@/components/shared'
+import { GoodDeedFormSheet } from '@/components/shared'
 import {
   ConfirmDialog,
   type ConfirmDialogHandle,
@@ -74,7 +74,7 @@ export const AppLayout = () => {
             </main>
           </div>
           <BottomTab />
-          <CheckInSheet />
+          <GoodDeedFormSheet />
         </SidebarInset>
       </SidebarProvider>
 

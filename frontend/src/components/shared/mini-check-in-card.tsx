@@ -3,7 +3,7 @@ import { PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import { useCheckInStore } from '@/stores/check-in.store'
+import { useGoodDeedStore } from '@/stores/good-deed.store'
 
 import { Card } from '../ui'
 import { Leaf } from './leaf'
@@ -21,7 +21,7 @@ export const MiniCheckInCard = ({
 }: MiniCheckInCardProps) => {
   const resolvedTitle = title ?? t('checkIn.card.title')
   const resolvedDescription = description ?? t('checkIn.card.description')
-  const openCheckIn = useCheckInStore.use.open()
+  const openCreateDeed = useGoodDeedStore.use.openCreate()
 
   return (
     <Card className={cn('flex flex-col gap-4', className)} padding='md'>
@@ -36,7 +36,7 @@ export const MiniCheckInCard = ({
       </div>
       <Button
         className='h-10 w-full rounded-full text-sm'
-        onClick={() => openCheckIn()}>
+        onClick={() => openCreateDeed()}>
         <PlusIcon className='size-4' />
         {t('checkIn.card.addAction')}
       </Button>

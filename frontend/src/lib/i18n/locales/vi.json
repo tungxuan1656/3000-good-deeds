@@ -602,6 +602,21 @@
         "moodTagsHint": "Nhãn chỉ để tự nhận diện, không cần đúng hay sai."
       }
     },
+    "form": {
+      "title": "Ghi nhận một việc thiện",
+      "subtitle": "Điều tử tế nhỏ nào bạn vừa gieo hôm nay?",
+      "fields": {
+        "date": "Ngày thực hiện",
+        "descriptionPlaceholder": "Mô tả việc thiện của bạn...",
+        "moodHeading": "CẢM GIÁC HÔM NAY",
+        "customMoodPlaceholder": "Thêm cảm xúc riêng..."
+      },
+      "actions": {
+        "record": "Ghi nhận việc thiện",
+        "saveChanges": "Lưu thay đổi",
+        "addCustomMood": "Thêm nhãn cảm xúc tùy chỉnh"
+      }
+    },
     "moodTags": {
       "peaceful": "An vui",
       "grateful": "Biết ơn",

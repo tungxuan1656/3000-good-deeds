@@ -10,16 +10,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useDeleteDeed } from '@/hooks/api/use-deeds'
 import { t } from '@/lib/i18n'
+import { useGoodDeedStore } from '@/stores/good-deed.store'
 import type { DeedDTO } from '@/types/api'
 
 import { Card } from '../ui'
 import { ConfirmDialog, type ConfirmDialogHandle } from './confirm-dialog'
-import { EditDeedDialog, type EditDeedDialogHandle } from './edit-deed-dialog'
 
 export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
   const deleteDeed = useDeleteDeed()
+  const openEditDeed = useGoodDeedStore.use.openEdit()
 
-  const editRef = useRef<EditDeedDialogHandle>(null)
   const deleteRef = useRef<ConfirmDialogHandle>(null)
 
   const handleDelete = async () => {
@@ -51,7 +51,7 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
               <MoreVertical className='size-6' />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='rounded-xl'>
-              <DropdownMenuItem onClick={() => editRef.current?.open(deed)}>
+              <DropdownMenuItem onClick={() => openEditDeed(deed)}>
                 <Pencil className='mr-2 h-4 w-4' />
                 {t('deeds.card.actions.edit')}
               </DropdownMenuItem>
@@ -65,8 +65,6 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
           </DropdownMenu>
         </div>
       </Card>
-
-      <EditDeedDialog ref={editRef} />
 
       <ConfirmDialog
         ref={deleteRef}

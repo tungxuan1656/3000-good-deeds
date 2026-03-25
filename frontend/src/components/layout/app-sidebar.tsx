@@ -15,14 +15,14 @@ import {
 import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import { useCheckInStore } from '@/stores/check-in.store'
+import { useGoodDeedStore } from '@/stores/good-deed.store'
 
 import { LogoutButton } from '../settings/logout-button'
 import { Button } from '../ui/button'
 
 export const AppSidebar = () => {
   const location = useLocation()
-  const openCheckIn = useCheckInStore.use.open()
+  const openCreateDeed = useGoodDeedStore.use.openCreate()
 
   return (
     <Sidebar className='bg-sidebar overflow-hidden border-none md:inset-auto md:mt-4 md:h-auto md:rounded-2xl!'>
@@ -91,9 +91,9 @@ export const AppSidebar = () => {
       <SidebarFooter className='mt-10 p-6'>
         <Button
           className='bg-primary text-primary-foreground shadow-primary/20 w-full justify-center gap-2 rounded-xl py-6 text-sm font-bold shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.98]'
-          onClick={openCheckIn}>
+          onClick={openCreateDeed}>
           <Edit3Icon className='size-5' />
-          Log a Deed
+          {t('deeds.form.actions.record')}
         </Button>
         <SidebarMenu className='mt-4'>
           <SidebarMenuItem>
