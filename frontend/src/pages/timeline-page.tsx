@@ -1,6 +1,6 @@
 import { format, isToday, isYesterday } from 'date-fns'
 import { vi } from 'date-fns/locale'
-import { LeafyGreenIcon, Loader2 } from 'lucide-react'
+import { LeafyGreenIcon, Loader2Icon } from 'lucide-react'
 import * as React from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
@@ -14,7 +14,6 @@ import {
   SkeletonList,
   WeeklyRhythmCard,
 } from '@/components/shared'
-import { Card } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { INFO_COPY } from '@/lib/constants/info-copy'
@@ -24,7 +23,7 @@ import type { DeedDTO } from '@/types/api'
 const TimelinePage = () => {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useDeeds({
-      limit: 20,
+      limit: 10,
     })
 
   const deeds = React.useMemo(() => {
@@ -92,12 +91,12 @@ const TimelinePage = () => {
         {!showLoading && !isEmpty && (
           <div className='flex flex-col gap-4'>
             {timelineGroups.map((group) => (
-              <Card key={group.dateKey} className='gap-2'>
-                <div className='mb-2 flex flex-wrap items-center justify-between gap-2'>
-                  <p className='text-foreground text-sm font-semibold tracking-widest uppercase'>
+              <div key={group.dateKey} className='gap-2'>
+                <div className='mb-2 flex flex-wrap items-center justify-between gap-2 px-1'>
+                  <h3 className='font-headline text-primary text-base italic md:text-lg'>
                     {group.dateLabel}
-                  </p>
-                  <span className='text-muted-foreground text-sm sm:text-xs'>
+                  </h3>
+                  <span className='text-muted-foreground tracking-xs text-xs font-light md:text-sm'>
                     {t('pages.timeline.groupCount', {
                       count: group.items.length,
                     })}
@@ -108,7 +107,7 @@ const TimelinePage = () => {
                     <GoodDeedCard key={item.id} deed={item} />
                   ))}
                 </div>
-              </Card>
+              </div>
             ))}
 
             {hasNextPage && (
@@ -119,7 +118,7 @@ const TimelinePage = () => {
                   onClick={() => void fetchNextPage()}>
                   {isFetchingNextPage ? (
                     <>
-                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                      <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />
                       {t('pages.timeline.loadingMore')}
                     </>
                   ) : (
