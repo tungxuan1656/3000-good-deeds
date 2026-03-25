@@ -5,6 +5,7 @@ const customTwMerge = extendTailwindMerge({
   extend: {
     classGroups: {
       'font-size': [{ text: ['xss'] }],
+      tracking: [{ tracking: ['xss', 'xs'] }],
     },
   },
 })

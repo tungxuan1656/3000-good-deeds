@@ -13,31 +13,24 @@ import {
 } from '@/components/ui/popover'
 import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
+import { useCreateDeed, useUpdateDeed } from '@/hooks/api/use-deeds'
 import { MOOD_TAGS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import type { CreateDeedRequest, DeedDTO, UpdateDeedRequest } from '@/types/api'
+import type { CreateDeedRequest, DeedDTO } from '@/types/api'
 
-type GoodDeedPayload = Pick<
-  UpdateDeedRequest,
-  'description' | 'labels' | 'performedAt'
->
-
-type GoodDeedInitialValue = Partial<
-  Pick<DeedDTO, 'description' | 'labels' | 'performedAt' | 'createdAt'>
->
+type GoodDeedInitialValue = Partial<DeedDTO>
 
 type GoodDeedFormProps = {
   mode: 'create' | 'edit'
   initialValue?: GoodDeedInitialValue
-  isSubmitting?: boolean
-  onSubmit: (payload: GoodDeedPayload) => Promise<void> | void
   className?: string
   formId?: string
   resetOnSuccess?: boolean
   showHeader?: boolean
   showActions?: boolean
   submitLabel?: string
+  onSuccess?: () => void
 }
 
 type FormState = {
@@ -87,15 +80,17 @@ const buildInitialState = (initialValue?: GoodDeedInitialValue): FormState => {
 export const GoodDeedForm = ({
   mode,
   initialValue,
-  isSubmitting = false,
-  onSubmit,
   className,
   formId,
   resetOnSuccess = mode === 'create',
   showHeader = mode === 'create',
   showActions = mode === 'create',
   submitLabel,
+  onSuccess,
 }: GoodDeedFormProps) => {
+  const createDeed = useCreateDeed()
+  const updateDeed = useUpdateDeed()
+
   const [formState, setFormState] = React.useState<FormState>(() =>
     buildInitialState(initialValue),
   )
@@ -162,6 +157,8 @@ export const GoodDeedForm = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    const isSubmitting = createDeed.isPending || updateDeed.isPending
     if (isSubmitting) return
 
     const trimmedDescription = formState.description.trim()
@@ -185,7 +182,25 @@ export const GoodDeedForm = ({
     }
 
     try {
-      await onSubmit(payload)
+      if (mode === 'edit') {
+        if (!initialValue?.id) {
+          toast.error(t('deeds.edit.messages.updateFailed'))
+
+          return
+        }
+
+        await updateDeed.mutateAsync({
+          id: initialValue.id,
+          data: payload,
+        })
+
+        toast.success(t('deeds.edit.messages.updated'))
+      } else {
+        await createDeed.mutateAsync(payload)
+        toast.success(t('common.success.saved'))
+      }
+
+      onSuccess?.()
 
       if (resetOnSuccess) {
         setFormState(buildInitialState())
@@ -205,7 +220,7 @@ export const GoodDeedForm = ({
       {showHeader && (
         <div className='flex items-start justify-between gap-4'>
           <div className='space-y-1.5'>
-            <h3 className='font-headline text-primary text-2xl font-bold'>
+            <h3 className='font-headline text-primary text-2xl font-medium italic'>
               {t('deeds.form.title')}
             </h3>
             <p className='text-muted-foreground text-sm font-light'>
@@ -348,9 +363,9 @@ export const GoodDeedForm = ({
         <div className='flex justify-end pt-2'>
           <Button
             className='min-w-36 rounded-2xl px-6 py-6 text-base font-bold shadow-none'
-            disabled={isSubmitting}
+            disabled={createDeed.isPending || updateDeed.isPending}
             type='submit'>
-            {isSubmitting
+            {createDeed.isPending || updateDeed.isPending
               ? t('common.actions.saving')
               : (submitLabel ??
                 (mode === 'create'
