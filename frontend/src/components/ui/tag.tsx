@@ -14,10 +14,10 @@ export const TagButton = ({
   return (
     <button
       className={cn(
-        `rounded-full border px-3 py-1 text-sm transition-colors duration-300`,
+        `tracking-xs rounded-sm border px-3 py-0.5 text-sm transition-colors duration-300`,
         isActive
-          ? 'border-primary/35 bg-primary/12 text-primary'
-          : 'text-foreground bg-secondary/55 border-transparent',
+          ? 'border-primary/35 bg-primary/20 text-primary'
+          : 'text-muted-foreground bg-secondary/10 border-border',
         className,
       )}
       type='button'

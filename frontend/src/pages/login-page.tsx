@@ -123,7 +123,7 @@ const LoginPage = () => {
             <AuthTabs mode={mode} onModeChange={handleModeChange} />
 
             {/* Login Card */}
-            <Card className='relative overflow-hidden' padding='sm'>
+            <Card className='relative overflow-hidden'>
               <CardContent>
                 {error && (
                   <div className='mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>

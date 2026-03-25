@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card'
 
 export const RecordDeedCard = () => {
   return (
-    <Card padding='sm' variant='standard'>
+    <Card>
       <CardContent>
         <GoodDeedForm mode='create' />
       </CardContent>

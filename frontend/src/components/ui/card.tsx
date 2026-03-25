@@ -16,10 +16,11 @@ const cardVariants = tv({
     },
     padding: {
       none: 'p-0',
+      xss: 'p-1 md:p-2',
       xs: 'p-2 md:p-3',
-      sm: 'p-4 md:p-6',
-      md: 'p-6 md:p-8',
-      lg: 'p-8 md:p-10',
+      sm: 'p-3 md:p-5',
+      md: 'p-4 md:p-6',
+      lg: 'p-6 md:p-8',
     },
   },
   defaultVariants: {
