@@ -9,18 +9,18 @@ export const DailyQuoteCard = () => {
   const { data, isFetching, refetch } = useRandomQuote()
   const apiQuote = data?.data
   const displayQuote = apiQuote?.content || t('quote.card.defaultQuote')
-  const displaySource = apiQuote?.author || apiQuote?.source || 'Aesop'
 
   return (
-    <Card className='relative border-none' padding='none' variant='surface'>
-      <div className='absolute top-6 left-6 opacity-10'>
-        <QuoteIcon className='size-12 rotate-180 fill-stone-500 text-stone-500' />
+    <Card className='relative' variant='surface'>
+      <div className='absolute top-3 left-3 opacity-10'>
+        <QuoteIcon className='size-8 rotate-180 fill-stone-500 text-stone-500' />
       </div>
 
-      <div className='absolute top-6 right-6'>
+      <div className='absolute top-3 right-3'>
         <Button
           className='size-8 text-stone-400 hover:bg-transparent hover:text-stone-600'
           size='icon'
+          title={t('quote.card.refreshButton')}
           variant='ghost'
           onClick={() => refetch()}>
           <RefreshCwIcon
@@ -29,15 +29,22 @@ export const DailyQuoteCard = () => {
         </Button>
       </div>
 
-      <CardContent className='space-y-6 p-10 pt-16'>
-        <p className='font-headline text-xl leading-relaxed text-stone-700 italic'>
+      <CardContent className='mt-5 space-y-6'>
+        <p className='font-headline text-foreground/80 text-lg leading-relaxed italic'>
           "{displayQuote}"
         </p>
 
-        <div className='flex justify-start pt-2'>
-          <p className='text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase'>
-            — {displaySource.toUpperCase()}
+        <div className='flex flex-col items-end gap-0.5'>
+          <p className='font-headline text-muted-foreground text-xs font-medium tracking-wider uppercase'>
+            {t('quote.card.authorPrefix')}
+            {[apiQuote?.author].filter(Boolean).join(', ')}
+            {t('quote.card.authorSuffix')}
           </p>
+          {apiQuote?.source ? (
+            <p className='font-headline text-muted-foreground/70 tracking-xs text-xs font-medium'>
+              {apiQuote?.source}
+            </p>
+          ) : null}
         </div>
       </CardContent>
     </Card>
