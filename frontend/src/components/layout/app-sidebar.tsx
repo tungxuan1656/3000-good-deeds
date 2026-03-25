@@ -90,7 +90,8 @@ export const AppSidebar = () => {
       </SidebarContent>
       <SidebarFooter className='mt-10 p-6'>
         <Button
-          className='bg-primary text-primary-foreground shadow-primary/20 w-full justify-center gap-2 rounded-xl py-6 text-sm font-bold shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.98]'
+          className='gap-2 rounded-lg text-xs font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]'
+          variant={'outline'}
           onClick={openCreateDeed}>
           <Edit3Icon className='size-5' />
           {t('deeds.form.actions.record')}

@@ -10,12 +10,13 @@ const cardVariants = tv({
       emphasis:
         'bg-white border-none shadow-[0px_10px_30px_rgba(47,52,46,0.08)] dark:bg-stone-900/50',
       standard:
-        'bg-white border border-stone-200/20 shadow-none dark:bg-stone-900/50 dark:border-stone-800',
+        'bg-white border border-stone-200/30 shadow-none dark:bg-stone-900/50 dark:border-stone-800',
       surface:
         'bg-surface-container-low border-none shadow-none dark:bg-stone-900/30',
     },
     padding: {
       none: 'p-0',
+      xs: 'p-2 md:p-3',
       sm: 'p-4 md:p-6',
       md: 'p-6 md:p-8',
       lg: 'p-8 md:p-10',

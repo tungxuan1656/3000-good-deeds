@@ -57,6 +57,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --text-xss: 0.625rem;
+  --tracking-xss: 0.01em;
+  --tracking-xs: 0.015em;
 }
 
 :root {
@@ -161,7 +163,12 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    font-family:
+      'Be Vietnam Pro',
+      system-ui,
+      -apple-system,
+      sans-serif;
+    @apply bg-background text-foreground antialiased;
   }
 
   h1,
@@ -169,16 +176,24 @@
   h3,
   h4,
   .font-headline {
-    font-family: var(--font-headline);
+    font-family: 'Noto Serif', serif;
     letter-spacing: -0.01em;
   }
 
   .font-body {
-    font-family: var(--font-body);
+    font-family:
+      'Be Vietnam Pro',
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 
   .font-label {
-    font-family: var(--font-label);
+    font-family:
+      'Be Vietnam Pro',
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 }
 
