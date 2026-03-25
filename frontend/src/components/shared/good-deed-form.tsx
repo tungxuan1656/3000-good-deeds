@@ -208,7 +208,7 @@ export const GoodDeedForm = ({
       onSubmit={(event) => void handleSubmit(event)}>
       <div className='flex items-start justify-between gap-4'>
         <div className='space-y-1.5'>
-          <h3 className='font-headline text-primary text-xl italic'>
+          <h3 className='font-headline text-primary text-lg italic md:text-xl'>
             {mode === 'edit'
               ? t('deeds.form.editTitle')
               : t('deeds.form.title')}

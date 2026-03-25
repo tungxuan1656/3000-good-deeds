@@ -1,7 +1,7 @@
 import {
   JourneyStatsCard,
   RecordDeedCard,
-  TodaySummarySection,
+  TodaySection,
 } from '@/components/home'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
@@ -32,7 +32,7 @@ const HomePage = () => {
         <RecordDeedCard />
 
         {/* Today's Summary Section */}
-        <TodaySummarySection />
+        <TodaySection />
       </MainColumn>
 
       {/* Side column */}
