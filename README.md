@@ -14,6 +14,7 @@ Monorepo for a kindness-tracking web application.
 
 ```bash
 pnpm install
+npx gitnexus analyze
 ```
 
 ### 2) Configure environment files
@@ -105,7 +106,6 @@ Example:
 | -------------------------- | --------------------------------------------------- |
 | `@test-driven-development` | Encourages writing tests before implementing logic. |
 | `@e2e-testing-patterns`    | Patterns for reliable end-to-end tests.             |
-| `@gstack`                  | Browser automation and visual testing tool.         |
 
 ---
 

@@ -41,7 +41,7 @@ Before marking work as done:
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **3000-good-deeds** (1591 symbols, 2778 relationships, 26 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **3000-good-deeds** (1594 symbols, 2779 relationships, 26 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
 
@@ -75,31 +75,31 @@ This project is indexed by GitNexus as **3000-good-deeds** (1591 symbols, 2778 r
 
 ## Tools Quick Reference
 
-| Tool             | When to use                   | Command                                                                 |
-| ---------------- | ----------------------------- | ----------------------------------------------------------------------- |
-| `query`          | Find code by concept          | `gitnexus_query({query: "auth validation"})`                            |
-| `context`        | 360-degree view of one symbol | `gitnexus_context({name: "validateUser"})`                              |
-| `impact`         | Blast radius before editing   | `gitnexus_impact({target: "X", direction: "upstream"})`                 |
-| `detect_changes` | Pre-commit scope check        | `gitnexus_detect_changes({scope: "staged"})`                            |
-| `rename`         | Safe multi-file rename        | `gitnexus_rename({symbol_name: "old", new_name: "new", dry_run: true})` |
-| `cypher`         | Custom graph queries          | `gitnexus_cypher({query: "MATCH ..."})`                                 |
+| Tool | When to use | Command |
+|------|-------------|---------|
+| `query` | Find code by concept | `gitnexus_query({query: "auth validation"})` |
+| `context` | 360-degree view of one symbol | `gitnexus_context({name: "validateUser"})` |
+| `impact` | Blast radius before editing | `gitnexus_impact({target: "X", direction: "upstream"})` |
+| `detect_changes` | Pre-commit scope check | `gitnexus_detect_changes({scope: "staged"})` |
+| `rename` | Safe multi-file rename | `gitnexus_rename({symbol_name: "old", new_name: "new", dry_run: true})` |
+| `cypher` | Custom graph queries | `gitnexus_cypher({query: "MATCH ..."})` |
 
 ## Impact Risk Levels
 
-| Depth | Meaning                               | Action                |
-| ----- | ------------------------------------- | --------------------- |
-| d=1   | WILL BREAK — direct callers/importers | MUST update these     |
-| d=2   | LIKELY AFFECTED — indirect deps       | Should test           |
-| d=3   | MAY NEED TESTING — transitive         | Test if critical path |
+| Depth | Meaning | Action |
+|-------|---------|--------|
+| d=1 | WILL BREAK — direct callers/importers | MUST update these |
+| d=2 | LIKELY AFFECTED — indirect deps | Should test |
+| d=3 | MAY NEED TESTING — transitive | Test if critical path |
 
 ## Resources
 
-| Resource                                         | Use for                                  |
-| ------------------------------------------------ | ---------------------------------------- |
-| `gitnexus://repo/3000-good-deeds/context`        | Codebase overview, check index freshness |
-| `gitnexus://repo/3000-good-deeds/clusters`       | All functional areas                     |
-| `gitnexus://repo/3000-good-deeds/processes`      | All execution flows                      |
-| `gitnexus://repo/3000-good-deeds/process/{name}` | Step-by-step execution trace             |
+| Resource | Use for |
+|----------|---------|
+| `gitnexus://repo/3000-good-deeds/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/3000-good-deeds/clusters` | All functional areas |
+| `gitnexus://repo/3000-good-deeds/processes` | All execution flows |
+| `gitnexus://repo/3000-good-deeds/process/{name}` | Step-by-step execution trace |
 
 ## Self-Check Before Finishing
 
@@ -125,17 +125,26 @@ npx gitnexus analyze --embeddings
 
 To check whether embeddings exist, inspect `.gitnexus/meta.json` — the `stats.embeddings` field shows the count (0 means no embeddings). **Running analyze without `--embeddings` will delete any previously generated embeddings.**
 
-> Agents Code users: A PostToolUse hook handles this automatically after `git commit` and `git merge`.
+> Claude Code users: A PostToolUse hook handles this automatically after `git commit` and `git merge`.
 
 ## CLI
 
-| Task                                         | Read this skill file                                        |
-| -------------------------------------------- | ----------------------------------------------------------- |
-| Understand architecture / "How does X work?" | `.agents/skills/gitnexus/gitnexus-exploring/SKILL.md`       |
-| Blast radius / "What breaks if I change X?"  | `.agents/skills/gitnexus/gitnexus-impact-analysis/SKILL.md` |
-| Trace bugs / "Why is X failing?"             | `.agents/skills/gitnexus/gitnexus-debugging/SKILL.md`       |
-| Rename / extract / split / refactor          | `.agents/skills/gitnexus/gitnexus-refactoring/SKILL.md`     |
-| Tools, resources, schema reference           | `.agents/skills/gitnexus/gitnexus-guide/SKILL.md`           |
-| Index, status, clean, wiki CLI commands      | `.agents/skills/gitnexus/gitnexus-cli/SKILL.md`             |
+| Task | Read this skill file |
+|------|---------------------|
+| Understand architecture / "How does X work?" | `.agents/skills/gitnexus/gitnexus-exploring/SKILL.md` |
+| Blast radius / "What breaks if I change X?" | `.agents/skills/gitnexus/gitnexus-impact-analysis/SKILL.md` |
+| Trace bugs / "Why is X failing?" | `.agents/skills/gitnexus/gitnexus-debugging/SKILL.md` |
+| Rename / extract / split / refactor | `.agents/skills/gitnexus/gitnexus-refactoring/SKILL.md` |
+| Tools, resources, schema reference | `.agents/skills/gitnexus/gitnexus-guide/SKILL.md` |
+| Index, status, clean, wiki CLI commands | `.agents/skills/gitnexus/gitnexus-cli/SKILL.md` |
+| Work in the Ui area (99 symbols) | `.agents/skills/generated/ui/SKILL.md` |
+| Work in the Handlers area (49 symbols) | `.agents/skills/generated/handlers/SKILL.md` |
+| Work in the Scripts area (19 symbols) | `.agents/skills/generated/scripts/SKILL.md` |
+| Work in the Layout area (14 symbols) | `.agents/skills/generated/layout/SKILL.md` |
+| Work in the Pages area (6 symbols) | `.agents/skills/generated/pages/SKILL.md` |
+| Work in the Auth area (4 symbols) | `.agents/skills/generated/auth/SKILL.md` |
+| Work in the Goals area (4 symbols) | `.agents/skills/generated/goals/SKILL.md` |
+| Work in the Cluster_33 area (3 symbols) | `.agents/skills/generated/cluster-33/SKILL.md` |
+| Work in the Cluster_42 area (3 symbols) | `.agents/skills/generated/cluster-42/SKILL.md` |
 
 <!-- gitnexus:end -->

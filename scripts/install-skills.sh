@@ -2,9 +2,9 @@
 
 set -e
 
-npx antigravity-awesome-skills --codex
+git clone https://github.com/sickn33/antigravity-awesome-skills.git
 
-SOURCE="$HOME/.codex/skills"
+SOURCE="./antigravity-awesome-skills/skills"
 DEST="./.agents/skills"
 
 echo "Creating project skills directory..."
@@ -90,15 +90,10 @@ for skill in "${testing_skills[@]}"; do
   copy_skill "$skill"
 done
 
+rm -rf antigravity-awesome-skills
+
 echo ""
-echo "Installing @gstack (browser automation)..."
-if [ ! -d "$DEST/gstack" ]; then
-  git clone https://github.com/garrytan/gstack.git "$DEST/gstack"
-else
-  echo "Updating @gstack..."
-  (cd "$DEST/gstack" && git pull)
-fi
-(cd "$DEST/gstack" && ./setup --host codex)
+sh scripts/sync-gitnexus.sh
 
 echo ""
 echo "Project skills installed successfully."
