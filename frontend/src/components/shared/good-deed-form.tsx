@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { CalendarIcon, PencilIcon, PlusIcon } from 'lucide-react'
+import { CalendarIcon, PencilIcon, PlusIcon, XIcon } from 'lucide-react'
 import * as React from 'react'
 import { toast } from 'sonner'
 
@@ -25,11 +25,6 @@ type GoodDeedFormProps = {
   mode: 'create' | 'edit'
   initialValue?: GoodDeedInitialValue
   className?: string
-  formId?: string
-  resetOnSuccess?: boolean
-  showHeader?: boolean
-  showActions?: boolean
-  submitLabel?: string
   onSuccess?: () => void
 }
 
@@ -81,11 +76,6 @@ export const GoodDeedForm = ({
   mode,
   initialValue,
   className,
-  formId,
-  resetOnSuccess = mode === 'create',
-  showHeader = mode === 'create',
-  showActions = mode === 'create',
-  submitLabel,
   onSuccess,
 }: GoodDeedFormProps) => {
   const createDeed = useCreateDeed()
@@ -202,7 +192,7 @@ export const GoodDeedForm = ({
 
       onSuccess?.()
 
-      if (resetOnSuccess) {
+      if (mode === 'create') {
         setFormState(buildInitialState())
         setCustomMoodValue('')
         setIsCustomMoodInputVisible(false)
@@ -214,82 +204,52 @@ export const GoodDeedForm = ({
 
   return (
     <form
-      className={cn('flex flex-col gap-6', className)}
-      id={formId}
+      className={cn('flex flex-col gap-5', className)}
       onSubmit={(event) => void handleSubmit(event)}>
-      {showHeader && (
-        <div className='flex items-start justify-between gap-4'>
-          <div className='space-y-1.5'>
-            <h3 className='font-headline text-primary text-2xl font-medium italic'>
-              {t('deeds.form.title')}
-            </h3>
-            <p className='text-muted-foreground text-sm font-light'>
-              {t('deeds.form.subtitle')}
-            </p>
-          </div>
-
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                aria-label={t('deeds.form.fields.date')}
-                className='border-input bg-card text-muted-foreground h-9 justify-between rounded-full border px-3 py-1.5 text-xs'
-                type='button'
-                variant='secondary'>
-                {datePillLabel}
-                <CalendarIcon className='size-3.5' />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align='end' className='bg-card w-auto p-0'>
-              <Calendar
-                disabled={(date) => date > new Date()}
-                mode='single'
-                selected={formState.selectedDate}
-                onSelect={(date) =>
-                  date &&
-                  setFormState((prev) => ({
-                    ...prev,
-                    selectedDate: date,
-                  }))
-                }
-              />
-            </PopoverContent>
-          </Popover>
+      <div className='flex items-start justify-between gap-4'>
+        <div className='space-y-1.5'>
+          <h3 className='font-headline text-primary text-xl italic'>
+            {mode === 'edit'
+              ? t('deeds.form.editTitle')
+              : t('deeds.form.title')}
+          </h3>
+          <p className='text-muted-foreground text-sm font-light'>
+            {mode === 'edit'
+              ? t('deeds.form.editSubtitle')
+              : t('deeds.form.subtitle')}
+          </p>
         </div>
-      )}
 
-      {!showHeader && (
-        <div>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                aria-label={t('deeds.form.fields.date')}
-                className='border-input bg-card text-muted-foreground h-9 justify-between rounded-full border px-3 py-1.5 text-xs'
-                type='button'
-                variant='secondary'>
-                {datePillLabel}
-                <CalendarIcon className='size-3.5' />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align='start' className='bg-card w-auto p-0'>
-              <Calendar
-                disabled={(date) => date > new Date()}
-                mode='single'
-                selected={formState.selectedDate}
-                onSelect={(date) =>
-                  date &&
-                  setFormState((prev) => ({
-                    ...prev,
-                    selectedDate: date,
-                  }))
-                }
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-      )}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              aria-label={t('deeds.form.fields.date')}
+              className='border-input text-muted-foreground bg-primary/10 h-9 justify-between rounded-sm border px-3 py-1.5 text-sm'
+              type='button'
+              variant='secondary'>
+              {datePillLabel}
+              <CalendarIcon className='size-3.5' />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent align='end' className='bg-card w-auto p-0'>
+            <Calendar
+              disabled={(date) => date > new Date()}
+              mode='single'
+              selected={formState.selectedDate}
+              onSelect={(date) =>
+                date &&
+                setFormState((prev) => ({
+                  ...prev,
+                  selectedDate: date,
+                }))
+              }
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
 
       <Textarea
-        className='bg-muted placeholder:text-muted-foreground/45 min-h-36 resize-none rounded-2xl border-none p-5 text-base focus-visible:ring-0'
+        className='placeholder:text-muted-foreground/45 min-h-36 resize-none rounded-md border-none p-3 text-base md:p-4'
         placeholder={t('deeds.form.fields.descriptionPlaceholder')}
         value={formState.description}
         onChange={(event) =>
@@ -301,7 +261,7 @@ export const GoodDeedForm = ({
       />
 
       <div className='space-y-3'>
-        <p className='text-muted-foreground text-xss font-bold tracking-[0.15em] uppercase'>
+        <p className='text-muted-foreground text-xs uppercase'>
           {t('deeds.form.fields.moodHeading')}
         </p>
 
@@ -317,12 +277,11 @@ export const GoodDeedForm = ({
 
           <Button
             aria-label={t('deeds.form.actions.addCustomMood')}
-            className='rounded-full'
-            size='icon-sm'
+            size='icon-xs'
             type='button'
             variant='outline'
             onClick={() => setIsCustomMoodInputVisible((prev) => !prev)}>
-            <PencilIcon />
+            {isCustomMoodInputVisible ? <XIcon /> : <PlusIcon />}
           </Button>
         </div>
 
@@ -330,7 +289,7 @@ export const GoodDeedForm = ({
           <div className='flex items-center gap-2'>
             <Input
               ref={customMoodInputRef}
-              className='h-9 max-w-60 rounded-full text-sm'
+              className='h-8 max-w-48 rounded-sm px-3 text-xs!'
               placeholder={t('deeds.form.fields.customMoodPlaceholder')}
               value={customMoodValue}
               onChange={(event) => setCustomMoodValue(event.target.value)}
@@ -348,7 +307,6 @@ export const GoodDeedForm = ({
             />
 
             <Button
-              className='rounded-full'
               size='icon-sm'
               type='button'
               variant='secondary'
@@ -359,21 +317,18 @@ export const GoodDeedForm = ({
         )}
       </div>
 
-      {showActions && (
-        <div className='flex justify-end pt-2'>
-          <Button
-            className='min-w-36 rounded-2xl px-6 py-6 text-base font-bold shadow-none'
-            disabled={createDeed.isPending || updateDeed.isPending}
-            type='submit'>
-            {createDeed.isPending || updateDeed.isPending
-              ? t('common.actions.saving')
-              : (submitLabel ??
-                (mode === 'create'
-                  ? t('deeds.form.actions.record')
-                  : t('deeds.form.actions.saveChanges')))}
-          </Button>
-        </div>
-      )}
+      <div className='flex justify-end pt-2'>
+        <Button
+          disabled={createDeed.isPending || updateDeed.isPending}
+          type='submit'>
+          <PencilIcon />
+          {createDeed.isPending || updateDeed.isPending
+            ? t('common.actions.saving')
+            : mode === 'create'
+              ? t('deeds.form.actions.record')
+              : t('deeds.form.actions.saveChanges')}
+        </Button>
+      </div>
     </form>
   )
 }

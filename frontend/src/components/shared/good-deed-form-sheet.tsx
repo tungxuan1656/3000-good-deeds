@@ -1,5 +1,5 @@
 import { useIsMobile } from '@/hooks/shared/use-mobile'
-import { t } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
 import { useGoodDeedStore } from '@/stores/good-deed.store'
 
 import { Sheet, SheetContent } from '../ui/sheet'
@@ -16,23 +16,18 @@ export const GoodDeedFormSheet = () => {
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && reset()}>
       <SheetContent
-        className={isMobile ? 'rounded-t-2xl' : ''}
+        className={cn(
+          isMobile ? 'rounded-t-2xl' : '',
+          'bg-surface-container-lowest z-100 pb-20',
+        )}
         showCloseButton={false}
         side={isMobile ? 'bottom' : 'right'}>
         <div className='p-4'>
           <GoodDeedForm
-            showActions
             initialValue={
               mode === 'edit' ? editingDeed || undefined : undefined
             }
             mode={mode}
-            resetOnSuccess={false}
-            showHeader={mode === 'create'}
-            submitLabel={
-              mode === 'edit'
-                ? t('deeds.form.actions.saveChanges')
-                : t('deeds.form.actions.record')
-            }
             onSuccess={reset}
           />
         </div>

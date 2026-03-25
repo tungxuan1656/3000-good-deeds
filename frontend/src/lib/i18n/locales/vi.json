@@ -605,10 +605,12 @@
     "form": {
       "title": "Ghi nhận một việc thiện",
       "subtitle": "Điều tử tế nhỏ nào bạn vừa gieo hôm nay?",
+      "editTitle": "Cập nhật việc thiện",
+      "editSubtitle": "Cập nhật thông tin việc thiện của bạn.",
       "fields": {
         "date": "Ngày thực hiện",
         "descriptionPlaceholder": "Mô tả việc thiện của bạn...",
-        "moodHeading": "CẢM GIÁC HÔM NAY",
+        "moodHeading": "CẢM GIÁC CỦA BẠN",
         "customMoodPlaceholder": "Thêm cảm xúc riêng..."
       },
       "actions": {

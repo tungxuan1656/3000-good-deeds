@@ -13,3 +13,7 @@ const customTwMerge = extendTailwindMerge({
 export function cn(...inputs: ClassValue[]) {
   return customTwMerge(clsx(inputs))
 }
+
+export function lowerCaseAndCapitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1)
+}
