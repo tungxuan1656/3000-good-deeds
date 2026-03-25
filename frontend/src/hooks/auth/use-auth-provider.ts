@@ -17,7 +17,10 @@ import { exchangeProviderToken } from '@/api/auth'
 import { firebaseAuth } from '@/lib/firebase'
 import { authActions } from '@/stores/auth.store'
 
-import { AUTH_PROVIDER_ERROR_MESSAGES, AuthProviderError } from './auth-provider-errors'
+import {
+  AUTH_PROVIDER_ERROR_MESSAGES,
+  AuthProviderError,
+} from './auth-provider-errors'
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -53,7 +56,10 @@ const completeBackendSession = async () => {
 
   if (!response.success || !response.data) {
     throw new Error(
-      getApiErrorMessage(response.error as unknown, 'Failed to create backend session'),
+      getApiErrorMessage(
+        response.error as unknown,
+        'Failed to create backend session',
+      ),
     )
   }
 
@@ -61,17 +67,26 @@ const completeBackendSession = async () => {
 }
 
 export const useAuthProvider = () => {
-  const loginWithEmailPassword = useCallback(async (email: string, password: string) => {
-    await signInWithEmailAndPassword(firebaseAuth, email, password)
-    await completeBackendSession()
-  }, [])
+  const loginWithEmailPassword = useCallback(
+    async (email: string, password: string) => {
+      await signInWithEmailAndPassword(firebaseAuth, email, password)
+      await completeBackendSession()
+    },
+    [],
+  )
 
   const registerWithEmailPassword = useCallback(
     async (email: string, password: string, displayName?: string) => {
-      const credential = await createUserWithEmailAndPassword(firebaseAuth, email, password)
+      const credential = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password,
+      )
 
       if (displayName?.trim()) {
-        await updateProfile(credential.user, { displayName: displayName.trim() })
+        await updateProfile(credential.user, {
+          displayName: displayName.trim(),
+        })
       }
 
       try {
@@ -113,7 +128,10 @@ export const useAuthProvider = () => {
         throw new Error('No Firebase password account')
       }
 
-      const credential = EmailAuthProvider.credential(currentUser.email, currentPassword)
+      const credential = EmailAuthProvider.credential(
+        currentUser.email,
+        currentPassword,
+      )
       await reauthenticateWithCredential(currentUser, credential)
       await updatePassword(currentUser, nextPassword)
     },

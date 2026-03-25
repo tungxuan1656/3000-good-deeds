@@ -7,7 +7,11 @@ interface SocialAuthProps {
   showSocial?: boolean
 }
 
-export const SocialAuth = ({ isLoading, onGoogleLogin, showSocial = true }: SocialAuthProps) => {
+export const SocialAuth = ({
+  isLoading,
+  onGoogleLogin,
+  showSocial = true,
+}: SocialAuthProps) => {
   if (!showSocial) return null
 
   return (

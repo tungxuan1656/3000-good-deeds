@@ -4,7 +4,10 @@ import { toast } from 'sonner'
 
 import { AppSidebar, BottomTab } from '@/components/layout'
 import { CheckInSheet } from '@/components/shared'
-import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared/confirm-dialog'
+import {
+  ConfirmDialog,
+  type ConfirmDialogHandle,
+} from '@/components/shared/confirm-dialog'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'

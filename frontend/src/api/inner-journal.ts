@@ -22,7 +22,9 @@ export const getJournalEntriesPaged = async (
   return response.data
 }
 
-export const getJournalEntryDetail = async (id: string): Promise<ApiResponse<JournalEntryDTO>> => {
+export const getJournalEntryDetail = async (
+  id: string,
+): Promise<ApiResponse<JournalEntryDTO>> => {
   const response = await client.get<ApiResponse<JournalEntryDTO>>(
     API_ENDPOINTS.journal.entryDetail(id),
   )
@@ -54,15 +56,23 @@ export const deleteJournalEntry = async (
 export const getJournal = async (
   params: GetJournalRequest,
 ): Promise<ApiResponse<JournalEntryDTO[]>> => {
-  const response = await client.get<ApiResponse<JournalEntryDTO[]>>(API_ENDPOINTS.journal.list, {
-    params,
-  })
+  const response = await client.get<ApiResponse<JournalEntryDTO[]>>(
+    API_ENDPOINTS.journal.list,
+    {
+      params,
+    },
+  )
 
   return response.data
 }
 
-export const createJournal = async (data: CreateJournalRequest): Promise<ApiResponse<void>> => {
-  const response = await client.post<ApiResponse<void>>(API_ENDPOINTS.journal.create, data)
+export const createJournal = async (
+  data: CreateJournalRequest,
+): Promise<ApiResponse<void>> => {
+  const response = await client.post<ApiResponse<void>>(
+    API_ENDPOINTS.journal.create,
+    data,
+  )
 
   return response.data
 }

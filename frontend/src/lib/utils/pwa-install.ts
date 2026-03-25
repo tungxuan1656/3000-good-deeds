@@ -7,7 +7,8 @@ export const getMobileOs = (): MobileOs => {
 
   const ua = navigator.userAgent.toLowerCase()
   if (ua.includes('android')) return 'android'
-  if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) return 'ios'
+  if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod'))
+    return 'ios'
 
   return 'other'
 }
@@ -15,7 +16,9 @@ export const getMobileOs = (): MobileOs => {
 export const isPwaInstalled = () => {
   if (typeof window === 'undefined') return false
 
-  const displayModeStandalone = window.matchMedia('(display-mode: standalone)').matches
+  const displayModeStandalone = window.matchMedia(
+    '(display-mode: standalone)',
+  ).matches
   const iosStandalone = Boolean(
     (window.navigator as Navigator & { standalone?: boolean }).standalone,
   )

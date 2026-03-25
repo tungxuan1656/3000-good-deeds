@@ -47,7 +47,8 @@ export const LegalFooter = ({ className }: LegalFooterProps) => {
         </p>
 
         <p className='text-muted-foreground text-xs leading-relaxed'>
-          {t('legal.readMorePrefix')} {t('legal.terms')} {t('legal.and')} {t('legal.privacy')}.
+          {t('legal.readMorePrefix')} {t('legal.terms')} {t('legal.and')}{' '}
+          {t('legal.privacy')}.
         </p>
 
         <p className='text-muted-foreground/70 text-center text-xs leading-relaxed'>

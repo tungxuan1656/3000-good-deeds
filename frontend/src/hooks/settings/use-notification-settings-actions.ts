@@ -11,7 +11,10 @@ import {
 import { authActions } from '@/stores/auth.store'
 import type { UserDTO } from '@/types/api'
 
-import { DEFAULT_REMINDER_TIME, TIME_INPUT_PATTERN } from './use-notification-settings-state'
+import {
+  DEFAULT_REMINDER_TIME,
+  TIME_INPUT_PATTERN,
+} from './use-notification-settings-state'
 
 type UseNotificationSettingsActionsParams = {
   user?: UserDTO | null
@@ -60,7 +63,9 @@ export const useNotificationSettingsActions = ({
         if (nextValue) {
           const result = await subscribeToPushNotifications()
           if (!result.success) {
-            setPushError(result.error ?? t('settings.notifications.errors.enableFailed'))
+            setPushError(
+              result.error ?? t('settings.notifications.errors.enableFailed'),
+            )
 
             return
           }
@@ -113,7 +118,13 @@ export const useNotificationSettingsActions = ({
     } catch {
       // Keep local value; backend validation will show on next successful fetch
     }
-  }, [applyUserPatch, isToggleLoading, reminderTime, setReminderTime, user?.reminderTime])
+  }, [
+    applyUserPatch,
+    isToggleLoading,
+    reminderTime,
+    setReminderTime,
+    user?.reminderTime,
+  ])
 
   const handleTestNotification = useCallback(async () => {
     if (isTestLoading || isToggleLoading) return
@@ -124,7 +135,8 @@ export const useNotificationSettingsActions = ({
 
       const response = await testPushNotification()
       if (!response.success) {
-        const message = response.error ?? t('settings.notifications.errors.testSendFailed')
+        const message =
+          response.error ?? t('settings.notifications.errors.testSendFailed')
         setPushError(message)
         toast.error(message)
 

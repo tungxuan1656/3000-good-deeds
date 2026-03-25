@@ -2,12 +2,13 @@ import { KeyRoundIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { CardSection } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { firebaseAuth } from '@/lib/firebase'
 import { t } from '@/lib/i18n'
+
+import { Card } from '../ui'
 
 export const PasswordSecurityCard = () => {
   const { changePasswordWithCurrent } = useAuthProvider()
@@ -17,7 +18,9 @@ export const PasswordSecurityCard = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const providerData = firebaseAuth.currentUser?.providerData ?? []
-  const canChangePassword = providerData.some((provider) => provider.providerId === 'password')
+  const canChangePassword = providerData.some(
+    (provider) => provider.providerId === 'password',
+  )
 
   const resetForm = () => {
     setCurrentPassword('')
@@ -61,11 +64,15 @@ export const PasswordSecurityCard = () => {
   }
 
   return (
-    <CardSection className='gap-4'>
+    <Card className='gap-4'>
       <div className='flex items-start justify-between gap-4'>
         <div>
-          <p className='text-foreground text-base font-semibold'>{t('settings.security.title')}</p>
-          <p className='text-muted-foreground mt-1 text-sm'>{t('settings.security.description')}</p>
+          <p className='text-foreground text-base font-semibold'>
+            {t('settings.security.title')}
+          </p>
+          <p className='text-muted-foreground mt-1 text-sm'>
+            {t('settings.security.description')}
+          </p>
         </div>
         <div className='flex items-center justify-center rounded-full'>
           <KeyRoundIcon className='text-primary h-5 w-5' />
@@ -92,13 +99,20 @@ export const PasswordSecurityCard = () => {
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
-          <Button className='h-11 w-full' disabled={isSubmitting} onClick={handleChangePassword}>
-            {isSubmitting ? t('common.actions.processing') : t('settings.security.actions.update')}
+          <Button
+            className='h-11 w-full'
+            disabled={isSubmitting}
+            onClick={handleChangePassword}>
+            {isSubmitting
+              ? t('common.actions.processing')
+              : t('settings.security.actions.update')}
           </Button>
         </div>
       ) : (
-        <div className='text-muted-foreground text-sm'>{t('settings.security.googleOnly')}</div>
+        <div className='text-muted-foreground text-sm'>
+          {t('settings.security.googleOnly')}
+        </div>
       )}
-    </CardSection>
+    </Card>
   )
 }

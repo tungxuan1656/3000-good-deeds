@@ -31,7 +31,12 @@ export const InfoButton = ({
         onClick={() => setOpen(true)}>
         <InfoIcon className='fill-primary/10 h-4 w-4' />
       </Button>
-      <InfoDialog description={description} open={open} title={title} onOpenChange={setOpen} />
+      <InfoDialog
+        description={description}
+        open={open}
+        title={title}
+        onOpenChange={setOpen}
+      />
     </>
   )
 }

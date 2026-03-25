@@ -3,9 +3,9 @@ import { LeafIcon } from 'lucide-react'
 import { useStatsSummary } from '@/hooks/api/use-stats'
 import { t } from '@/lib/i18n'
 
-import { CardSection } from '../shared'
 import { EmptyDataView } from '../shared/empty-data-view'
 import { SkeletonList } from '../shared/skeleton-list'
+import { Card } from '../ui'
 
 export const StatsCard = () => {
   const { data, isLoading } = useStatsSummary()
@@ -43,7 +43,7 @@ export const StatsCard = () => {
         <div className='grid gap-4 sm:grid-cols-2'>
           {summaryCards.map((card) => {
             return (
-              <CardSection key={card.title} className='flex-1'>
+              <Card key={card.title} className='flex-1'>
                 <div className='flex items-start justify-between gap-3'>
                   <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase sm:text-xs'>
                     {card.title}
@@ -52,7 +52,7 @@ export const StatsCard = () => {
                 <p className='text-foreground text-xl leading-tight font-semibold sm:text-3xl'>
                   {card.value}
                 </p>
-              </CardSection>
+              </Card>
             )
           })}
         </div>

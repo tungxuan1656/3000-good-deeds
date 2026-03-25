@@ -1,7 +1,9 @@
 const REQUIRES_RECENT_LOGIN_ERROR = 'auth/requires-recent-login'
 const NO_FIREBASE_SESSION_ERROR = 'no-firebase-session'
 
-export type AuthProviderErrorCode = 'requires-recent-login' | 'no-firebase-session'
+export type AuthProviderErrorCode =
+  | 'requires-recent-login'
+  | 'no-firebase-session'
 
 export class AuthProviderError extends Error {
   code: AuthProviderErrorCode

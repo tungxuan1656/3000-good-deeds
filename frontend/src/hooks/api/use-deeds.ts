@@ -1,4 +1,8 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 import { createDeed, deleteDeed, getDeeds, updateDeed } from '../../api/deeds'
 import type { GetDeedsRequest, UpdateDeedRequest } from '../../types/api'
@@ -6,7 +10,8 @@ import { ACTIVITIES_KEYS } from './use-activities'
 
 export const DEED_KEYS = {
   all: ['deeds'] as const,
-  list: (params: Omit<GetDeedsRequest, 'cursor'>) => [...DEED_KEYS.all, 'list', params] as const,
+  list: (params: Omit<GetDeedsRequest, 'cursor'>) =>
+    [...DEED_KEYS.all, 'list', params] as const,
 }
 
 export const useDeeds = (params: Omit<GetDeedsRequest, 'cursor'> = {}) => {
@@ -40,7 +45,8 @@ export const useUpdateDeed = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: UpdateDeedRequest }) => updateDeed(id, data),
+    mutationFn: ({ id, data }: { id: string; data: UpdateDeedRequest }) =>
+      updateDeed(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: DEED_KEYS.all })
       queryClient.invalidateQueries({ queryKey: ACTIVITIES_KEYS.all_calendar })

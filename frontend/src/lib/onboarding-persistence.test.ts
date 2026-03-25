@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { markOnboardingAsSeen, shouldAutoOpenOnboarding } from './onboarding-persistence'
+import {
+  markOnboardingAsSeen,
+  shouldAutoOpenOnboarding,
+} from './onboarding-persistence'
 
 const STORAGE_KEY = 'onboarding.general.v1'
 

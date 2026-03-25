@@ -1,35 +1,35 @@
 import { GoalHistoryCard, GoalSettingCard } from '@/components/goals'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
-  CardSection,
   DailyQuoteCard,
-  HeaderSection,
   KindnessSuggestionCard,
   MiniCheckInCard,
+  PageHeader,
 } from '@/components/shared'
 import { CalendarStats, StatsCard } from '@/components/stats'
+import { Card } from '@/components/ui'
 import { t } from '@/lib/i18n'
 
 const ProgressPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <HeaderSection
+        <PageHeader
           description={t('pages.progress.header.description')}
           title={t('pages.progress.header.title')}
         />
 
         <StatsCard />
 
-        <CardSection className='gap-4'>
+        <Card className='gap-4'>
           <GoalSettingCard />
-        </CardSection>
+        </Card>
 
         <CalendarStats />
 
-        <CardSection className='gap-4'>
+        <Card className='gap-4'>
           <GoalHistoryCard />
-        </CardSection>
+        </Card>
       </MainColumn>
 
       <SideColumn hideInMobile>

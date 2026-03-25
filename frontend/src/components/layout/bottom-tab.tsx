@@ -42,7 +42,9 @@ export const BottomTab = () => {
                 <Icon
                   className={cn(
                     'size-5 transition-colors duration-300',
-                    active ? 'text-primary fill-primary/20' : 'text-muted-foreground/60',
+                    active
+                      ? 'text-primary fill-primary/20'
+                      : 'text-muted-foreground/60',
                   )}
                 />
                 <span

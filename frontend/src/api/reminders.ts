@@ -3,7 +3,9 @@ import type { ApiResponse, PushSubscriptionPayloadDTO } from '@/types/api'
 import { client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
-export const getVapidPublicKey = async (): Promise<ApiResponse<{ publicKey: string }>> => {
+export const getVapidPublicKey = async (): Promise<
+  ApiResponse<{ publicKey: string }>
+> => {
   const response = await client.get<ApiResponse<{ publicKey: string }>>(
     API_ENDPOINTS.reminders.pushKey,
   )
@@ -36,9 +38,9 @@ export const unsubscribePush = async (payload: {
 export const testPushNotification = async (): Promise<
   ApiResponse<{ sent: number; total: number }>
 > => {
-  const response = await client.post<ApiResponse<{ sent: number; total: number }>>(
-    API_ENDPOINTS.reminders.test,
-  )
+  const response = await client.post<
+    ApiResponse<{ sent: number; total: number }>
+  >(API_ENDPOINTS.reminders.test)
 
   return response.data
 }

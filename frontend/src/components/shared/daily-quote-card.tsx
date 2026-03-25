@@ -23,7 +23,9 @@ export const DailyQuoteCard = () => {
           size='icon'
           variant='ghost'
           onClick={() => refetch()}>
-          <RefreshCwIcon className={isFetching ? 'size-4 animate-spin' : 'size-4'} />
+          <RefreshCwIcon
+            className={isFetching ? 'size-4 animate-spin' : 'size-4'}
+          />
         </Button>
       </div>
 

@@ -4,8 +4,8 @@ import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
 
+import { Card } from '../ui'
 import { Button } from '../ui/button'
-import { CardSection } from './card-section'
 
 export const ReminderSuggestCard = () => {
   const enable = useAuthStore.use.user()?.reminderEnabled
@@ -14,8 +14,10 @@ export const ReminderSuggestCard = () => {
   }
 
   return (
-    <CardSection padding='md'>
-      <h3 className='text-foreground text-base font-semibold'>{t('reminder.card.title')}</h3>
+    <Card padding='md'>
+      <h3 className='text-foreground text-base font-semibold'>
+        {t('reminder.card.title')}
+      </h3>
       <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
         {t('reminder.card.quote')}
       </p>
@@ -24,6 +26,6 @@ export const ReminderSuggestCard = () => {
           {t('reminder.card.action')}
         </Button>
       </Link>
-    </CardSection>
+    </Card>
   )
 }

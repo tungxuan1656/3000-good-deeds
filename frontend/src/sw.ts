@@ -59,19 +59,21 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close()
 
   event.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
-      const existing = clients.find((client) => 'focus' in client)
-      if (existing) {
-        return (existing as WindowClient).focus().then((focused) => {
-          if ('navigate' in focused) {
-            return focused.navigate(targetUrl)
-          }
+    self.clients
+      .matchAll({ type: 'window', includeUncontrolled: true })
+      .then((clients) => {
+        const existing = clients.find((client) => 'focus' in client)
+        if (existing) {
+          return (existing as WindowClient).focus().then((focused) => {
+            if ('navigate' in focused) {
+              return focused.navigate(targetUrl)
+            }
 
-          return undefined
-        })
-      }
+            return undefined
+          })
+        }
 
-      return self.clients.openWindow(targetUrl)
-    }),
+        return self.clients.openWindow(targetUrl)
+      }),
   )
 })

@@ -4,12 +4,14 @@ import { Trash2Icon } from 'lucide-react'
 import * as React from 'react'
 import { toast } from 'sonner'
 
-import { CardSection, ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
+import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { useDeleteInnerJournalEntry } from '@/hooks/api/use-inner-journal'
 import { type InnerJournalType } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import type { JournalEntryDTO } from '@/types/api'
+
+import { Card } from '../ui'
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000
 
@@ -17,7 +19,9 @@ type InnerJournalHistoryItemProps = {
   entry: JournalEntryDTO
 }
 
-export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps) => {
+export const InnerJournalHistoryItem = ({
+  entry,
+}: InnerJournalHistoryItemProps) => {
   const deleteMutation = useDeleteInnerJournalEntry()
   const dialogRef = React.useRef<ConfirmDialogHandle>(null)
 
@@ -38,7 +42,10 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
     dateLabel = t('pages.timeline.dateLabel.day', { date: dateBaseLabel })
   }
 
-  const snippet = entry.content.length > 120 ? entry.content.slice(0, 120) + '…' : entry.content
+  const snippet =
+    entry.content.length > 120
+      ? entry.content.slice(0, 120) + '…'
+      : entry.content
   const type = entry.type as InnerJournalType
   const typeLabel = t(`journal.types.${type}.label`)
 
@@ -49,7 +56,9 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
       if (!result.success) {
         const message =
           (result as any).error?.message ??
-          (result.error ? String(result.error) : t('common.errors.deleteFailed'))
+          (result.error
+            ? String(result.error)
+            : t('common.errors.deleteFailed'))
         toast.error(message)
 
         return
@@ -62,7 +71,7 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
   }
 
   return (
-    <CardSection className='gap-2'>
+    <Card className='gap-2'>
       <div className='flex items-center justify-between'>
         <span className='text-foreground text-lg font-semibold' title={dateKey}>
           {dateLabel} - {typeLabel}
@@ -91,6 +100,6 @@ export const InnerJournalHistoryItem = ({ entry }: InnerJournalHistoryItemProps)
         variant='destructive'
         onConfirm={() => void handleConfirmDelete()}
       />
-    </CardSection>
+    </Card>
   )
 }

@@ -14,4 +14,6 @@ export const INNER_JOURNAL_TYPE_GUIDANCE: Record<InnerJournalType, string> = {
   gratitude: t('journal.types.gratitude.guidance'),
 }
 
-export const INNER_JOURNAL_IMMUTABLE_NOTE = t('constants.innerJournal.immutableNote')
+export const INNER_JOURNAL_IMMUTABLE_NOTE = t(
+  'constants.innerJournal.immutableNote',
+)

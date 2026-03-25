@@ -38,8 +38,10 @@ void i18n
 export default i18n
 
 /** Shorthand translate — use directly instead of hook (page reloads on language change). */
-export const t = (key: ParseKeys<'translation'>, options?: Record<string, unknown>) =>
-  i18n.t(key, options as never) as unknown as string
+export const t = (
+  key: ParseKeys<'translation'>,
+  options?: Record<string, unknown>,
+) => i18n.t(key, options as never) as unknown as string
 
 /** Change language and reload the page (language changes are rare). */
 export const changeLanguage = (lang: string) => {

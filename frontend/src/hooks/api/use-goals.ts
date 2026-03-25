@@ -6,7 +6,8 @@ import type { GetGoalHistoryRequest, UpsertGoalsRequest } from '../../types/api'
 export const GOAL_KEYS = {
   all: ['goals'] as const,
   list: () => [...GOAL_KEYS.all, 'list'] as const,
-  history: (params?: GetGoalHistoryRequest) => [...GOAL_KEYS.all, 'history', params] as const,
+  history: (params?: GetGoalHistoryRequest) =>
+    [...GOAL_KEYS.all, 'history', params] as const,
 }
 
 export const useGoals = () => {

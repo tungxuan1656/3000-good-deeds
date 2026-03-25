@@ -2,7 +2,6 @@ import { UserIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-import { CardSection } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useUpdateUser } from '@/hooks/api/use-user'
@@ -11,14 +10,16 @@ import { t } from '@/lib/i18n'
 import { authActions } from '@/stores/auth.store'
 import type { UserDTO } from '@/types/api'
 
-import { Label } from '../ui'
+import { Card, Label } from '../ui'
 
 interface AccountProfileCardProps {
   user?: UserDTO | null
 }
 
 export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
-  const [displayNameInput, setDisplayNameInput] = useState(user?.displayName ?? '')
+  const [displayNameInput, setDisplayNameInput] = useState(
+    user?.displayName ?? '',
+  )
   const updateUser = useUpdateUser()
   const { updateDisplayNameOnly } = useAuthProvider()
 
@@ -29,7 +30,8 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   const displayName = user?.displayName ?? t('layout.user.fallbackName')
   const displayEmail = user?.email ?? t('layout.user.emailMissing')
 
-  const hasChanged = displayNameInput.trim() !== (user?.displayName ?? '').trim()
+  const hasChanged =
+    displayNameInput.trim() !== (user?.displayName ?? '').trim()
 
   const handleUpdateDisplayName = async () => {
     const nextDisplayName = displayNameInput.trim()
@@ -42,7 +44,9 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
     try {
       await updateDisplayNameOnly(nextDisplayName)
 
-      const response = await updateUser.mutateAsync({ displayName: nextDisplayName })
+      const response = await updateUser.mutateAsync({
+        displayName: nextDisplayName,
+      })
 
       if (response?.data) {
         authActions.setUser(response.data)
@@ -54,7 +58,7 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   }
 
   return (
-    <CardSection className='gap-4'>
+    <Card className='gap-4'>
       <div className='flex justify-between'>
         <div>
           <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
@@ -73,10 +77,14 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
         <div className='flex items-center gap-4'>
           <div>
             <Label className='text-foreground text-base'>{displayName}</Label>
-            <Label className='text-muted-foreground text-sm'>{displayEmail}</Label>
+            <Label className='text-muted-foreground text-sm'>
+              {displayEmail}
+            </Label>
           </div>
         </div>
-        <div className='text-muted-foreground text-sm'>{t('settings.account.helper')}</div>
+        <div className='text-muted-foreground text-sm'>
+          {t('settings.account.helper')}
+        </div>
         <div className='flex flex-row gap-3'>
           <Input
             placeholder={t('settings.account.fields.displayName')}
@@ -93,6 +101,6 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
           </Button>
         </div>
       </div>
-    </CardSection>
+    </Card>
   )
 }

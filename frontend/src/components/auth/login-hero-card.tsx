@@ -2,16 +2,24 @@ import { useEffect, useRef } from 'react'
 
 import { PWAGuideDialog } from '@/components/layout'
 import {
-  CardSection,
   Leaf,
   OnboardingDialog,
   type OnboardingDialogHandle,
 } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { APP_VERSION, ONBOARDING_CONTENT, ONBOARDING_KEYS } from '@/lib/constants'
+import {
+  APP_VERSION,
+  ONBOARDING_CONTENT,
+  ONBOARDING_KEYS,
+} from '@/lib/constants'
 import { t } from '@/lib/i18n'
-import { markOnboardingAsSeen, shouldAutoOpenOnboarding } from '@/lib/onboarding-persistence'
+import {
+  markOnboardingAsSeen,
+  shouldAutoOpenOnboarding,
+} from '@/lib/onboarding-persistence'
+
+import { Card } from '../ui'
 
 type LoginHeroCardProps = {
   error: string | null
@@ -19,7 +27,11 @@ type LoginHeroCardProps = {
   onGoogleLogin: () => void
 }
 
-export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCardProps) => {
+export const LoginHeroCard = ({
+  error,
+  isLoading,
+  onGoogleLogin,
+}: LoginHeroCardProps) => {
   const onboardingDialogRef = useRef<OnboardingDialogHandle>(null)
 
   useEffect(() => {
@@ -34,7 +46,7 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
 
   return (
     <>
-      <CardSection className='flex flex-col gap-3'>
+      <Card className='flex flex-col gap-3'>
         <OnboardingDialog
           ref={onboardingDialogRef}
           flowTitle={ONBOARDING_CONTENT.general.title}
@@ -44,7 +56,11 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
         <Leaf className='opacity-30' position='top-right' variant={2} />
         <div className='flex items-start gap-4'>
           <div className='bg-card/80 border-border/45 flex h-16 w-16 items-center justify-center rounded-3xl border shadow-sm'>
-            <img alt={t('auth.login.logoAlt')} className='h-10 w-10' src='/icons/icon_sprout.png' />
+            <img
+              alt={t('auth.login.logoAlt')}
+              className='h-10 w-10'
+              src='/icons/icon_sprout.png'
+            />
           </div>
           <div>
             <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase'>
@@ -58,7 +74,9 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
         <p className='text-muted-foreground/90 text-base leading-relaxed'>
           {t('auth.login.heroDescription')}
         </p>
-        <p className='text-muted-foreground text-sm'>{t('auth.login.privacyNote')}</p>
+        <p className='text-muted-foreground text-sm'>
+          {t('auth.login.privacyNote')}
+        </p>
 
         {error && (
           <div className='rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800'>
@@ -74,7 +92,7 @@ export const LoginHeroCard = ({ error, isLoading, onGoogleLogin }: LoginHeroCard
           {isLoading ? t('auth.login.loading') : t('auth.login.googleAction')}
         </Button>
         <PWAGuideDialog showIcon />
-      </CardSection>
+      </Card>
 
       <p className='text-muted-foreground/60 text-center text-xs leading-relaxed'>
         {t('auth.login.termsPrefix')}{' '}

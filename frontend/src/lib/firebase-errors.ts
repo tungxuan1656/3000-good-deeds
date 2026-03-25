@@ -45,7 +45,9 @@ const REST_API_ERROR_MESSAGES: Record<string, string> = {
   EMAIL_NOT_FOUND: t('auth.form.errors.userNotFound'),
   INVALID_EMAIL: t('auth.form.errors.invalidEmail'),
   OPERATION_NOT_ALLOWED: t('auth.form.errors.operationNotAllowed'),
-  TOO_MANY_ATTEMPTS_LOGIN_FAILURE: t('auth.form.errors.tooManyAttemptsLoginFailure'),
+  TOO_MANY_ATTEMPTS_LOGIN_FAILURE: t(
+    'auth.form.errors.tooManyAttemptsLoginFailure',
+  ),
   WEAK_PASSWORD: t('auth.form.errors.weakPassword'),
 }
 
@@ -62,7 +64,10 @@ export interface FirebaseError {
  * Extract user-friendly error message from Firebase errors
  * Handles both Firebase SDK errors and REST API errors
  */
-export const getFirebaseErrorMessage = (error: unknown, fallback: string): string => {
+export const getFirebaseErrorMessage = (
+  error: unknown,
+  fallback: string,
+): string => {
   if (!error) {
     return fallback
   }
@@ -97,7 +102,11 @@ export const getFirebaseErrorMessage = (error: unknown, fallback: string): strin
   }
 
   // Handle error objects with message property
-  if (typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
+  if (
+    typeof error === 'object' &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
     const message = error.message as string
     if (message.trim()) {
       return message

@@ -13,9 +13,9 @@ import {
 } from '@/components/settings'
 import {
   DailyQuoteCard,
-  HeaderSection,
   KindnessSuggestionCard,
   MiniCheckInCard,
+  PageHeader,
   WeeklyRhythmCard,
 } from '@/components/shared'
 import { useUser } from '@/hooks/api/use-user'
@@ -67,7 +67,7 @@ const MorePage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <HeaderSection
+        <PageHeader
           description={t('pages.more.header.description')}
           title={t('pages.more.header.title')}
         />

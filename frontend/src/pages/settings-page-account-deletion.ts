@@ -24,13 +24,19 @@ export const executeDeleteAccountFlow = async ({
   try {
     await deleteCurrentFirebaseUser()
   } catch (error) {
-    if (error instanceof AuthProviderError && error.code === 'requires-recent-login') {
+    if (
+      error instanceof AuthProviderError &&
+      error.code === 'requires-recent-login'
+    ) {
       toastError(t('settings.deleteAccount.errors.requiresRecentLogin'))
 
       return false
     }
 
-    if (error instanceof AuthProviderError && error.code === 'no-firebase-session') {
+    if (
+      error instanceof AuthProviderError &&
+      error.code === 'no-firebase-session'
+    ) {
       // Continue deleting backend account. Firebase user may already be removed.
     } else {
       toastError(t('settings.deleteAccount.errors.firebaseDeleteFailed'))
