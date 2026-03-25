@@ -5,10 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: 'Be Vietnam Pro';
-  --font-headline: 'Noto Serif';
-  --font-body: 'Be Vietnam Pro';
-  --font-label: 'Be Vietnam Pro';
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  --font-headline: 'Noto Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  --font-label: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
 
   --radius: 0.875rem;
 
@@ -163,11 +163,7 @@
   }
 
   body {
-    font-family:
-      'Be Vietnam Pro',
-      system-ui,
-      -apple-system,
-      sans-serif;
+    font-family: var(--font-body);
     @apply bg-background text-foreground antialiased;
   }
 
@@ -176,28 +172,15 @@
   h3,
   h4,
   .font-headline {
-    font-family: 'Noto Serif', serif;
+    font-family: var(--font-headline);
     letter-spacing: -0.01em;
   }
 
-  .font-body {
-    font-family:
-      'Be Vietnam Pro',
-      system-ui,
-      -apple-system,
-      sans-serif;
-  }
-
+  .font-body,
   .font-label {
-    font-family:
-      'Be Vietnam Pro',
-      system-ui,
-      -apple-system,
-      sans-serif;
+    font-family: var(--font-body);
   }
-}
 
-@layer base {
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: pointer;
