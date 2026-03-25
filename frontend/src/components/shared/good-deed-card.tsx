@@ -1,4 +1,4 @@
-import { LeafIcon, MoreVertical, Pencil, Trash2 } from 'lucide-react'
+import { LeafIcon, MoreHorizontalIcon, Pencil, Trash2 } from 'lucide-react'
 import { useRef } from 'react'
 import { toast } from 'sonner'
 
@@ -33,7 +33,7 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
 
   return (
     <>
-      <Card>
+      <Card padding='sm'>
         <div className='flex items-start justify-between gap-3'>
           <div className='flex flex-row items-center gap-3'>
             <div className='bg-primary/25 flex size-8 items-center justify-center rounded-full'>
@@ -55,7 +55,7 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
 
           <DropdownMenu>
             <DropdownMenuTrigger className='text-muted-foreground hover:text-foreground'>
-              <MoreVertical className='size-6' />
+              <MoreHorizontalIcon className='size-4 md:size-5' />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='rounded-xl'>
               <DropdownMenuItem onClick={() => openEditDeed(deed)}>
