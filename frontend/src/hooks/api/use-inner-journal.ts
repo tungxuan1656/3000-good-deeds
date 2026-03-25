@@ -1,4 +1,9 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 import {
   createJournalEntry,
@@ -6,7 +11,10 @@ import {
   getJournalEntriesPaged,
   getJournalEntryDetail,
 } from '@/api/inner-journal'
-import type { CreateJournalRequest, GetJournalEntriesRequest } from '@/types/api'
+import type {
+  CreateJournalRequest,
+  GetJournalEntriesRequest,
+} from '@/types/api'
 
 export const INNER_JOURNAL_KEYS = {
   all: ['inner-journal'] as const,
@@ -15,16 +23,21 @@ export const INNER_JOURNAL_KEYS = {
   detail: (id: string) => [...INNER_JOURNAL_KEYS.all, 'detail', id] as const,
 }
 
-export const useInnerJournalEntries = (params: Omit<GetJournalEntriesRequest, 'cursor'> = {}) => {
+export const useInnerJournalEntries = (
+  params: Omit<GetJournalEntriesRequest, 'cursor'> = {},
+) => {
   return useInfiniteQuery({
     queryKey: INNER_JOURNAL_KEYS.list(params),
-    queryFn: ({ pageParam }) => getJournalEntriesPaged({ ...params, cursor: pageParam }),
+    queryFn: ({ pageParam }) =>
+      getJournalEntriesPaged({ ...params, cursor: pageParam }),
     getNextPageParam: (lastPage) => {
       if (!lastPage.success || !lastPage.data) return undefined
 
       const { pagination } = lastPage.data
 
-      return pagination.hasMore ? (pagination.nextCursor ?? undefined) : undefined
+      return pagination.hasMore
+        ? (pagination.nextCursor ?? undefined)
+        : undefined
     },
     initialPageParam: undefined as string | undefined,
   })

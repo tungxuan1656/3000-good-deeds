@@ -19,8 +19,6 @@
   "embeddedLanguageFormatting": "auto",
   "vueIndentScriptAndStyle": false,
   "experimentalTernaries": false,
-  "printWidth": 100,
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ]
+  "printWidth": 80,
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

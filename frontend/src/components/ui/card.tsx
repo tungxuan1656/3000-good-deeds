@@ -11,7 +11,8 @@ const cardVariants = tv({
         'bg-white border-none shadow-[0px_10px_30px_rgba(47,52,46,0.08)] dark:bg-stone-900/50',
       standard:
         'bg-white border border-stone-200/20 shadow-none dark:bg-stone-900/50 dark:border-stone-800',
-      surface: 'bg-surface-container-low border-none shadow-none dark:bg-stone-900/30',
+      surface:
+        'bg-surface-container-low border-none shadow-none dark:bg-stone-900/30',
     },
     padding: {
       none: 'p-0',
@@ -26,7 +27,8 @@ const cardVariants = tv({
   },
 })
 
-export interface CardProps extends React.ComponentProps<'div'>, VariantProps<typeof cardVariants> {}
+export interface CardProps
+  extends React.ComponentProps<'div'>, VariantProps<typeof cardVariants> {}
 
 function Card({ className, variant, padding, ...props }: CardProps) {
   return (
@@ -72,7 +74,9 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('', className)} data-slot='card-content' {...props} />
+  return (
+    <div className={cn('', className)} data-slot='card-content' {...props} />
+  )
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {

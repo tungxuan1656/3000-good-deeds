@@ -1,7 +1,9 @@
 import { useIsMobile } from '@/hooks/shared/use-mobile'
 
 export function MainContainer(props: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className='pt-safe grid gap-6 xl:grid-cols-[1fr_320px]' {...props} />
+  return (
+    <div className='pt-safe grid gap-6 xl:grid-cols-[1fr_320px]' {...props} />
+  )
 }
 
 export function MainColumn(props: React.HTMLAttributes<HTMLDivElement>) {

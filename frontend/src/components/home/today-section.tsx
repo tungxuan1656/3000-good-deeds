@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 
 import type { SuggestActsDrawerHandle } from '@/components/shared'
 import {
-  CardSection,
   EmptyDataView,
   GoodDeedCard,
   Leaf,
@@ -17,6 +16,8 @@ import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
+
+import { Card } from '../ui'
 
 export const TodaySection = () => {
   const navigate = useNavigate()
@@ -48,15 +49,19 @@ export const TodaySection = () => {
   const isEmpty = !showLoading && deeds.length === 0
 
   return (
-    <CardSection>
+    <Card>
       <Leaf position='top-left' variant={4} />
       <div className='mb-4 flex items-start justify-between gap-3'>
         <div>
-          <h2 className='text-foreground text-lg font-semibold'>{t('home.todaySection.title')}</h2>
+          <h2 className='text-foreground text-lg font-semibold'>
+            {t('home.todaySection.title')}
+          </h2>
           <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
             {format(new Date(), t('dates.formats.dayMonth'), { locale: vi })}
           </p>
-          <p className='text-muted-foreground mt-2 text-sm'>{t('home.todaySection.subtitle')}</p>
+          <p className='text-muted-foreground mt-2 text-sm'>
+            {t('home.todaySection.subtitle')}
+          </p>
         </div>
         <Button
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
@@ -92,6 +97,6 @@ export const TodaySection = () => {
       </Button>
 
       <SuggestActsSheet ref={suggestActsDrawerRef} />
-    </CardSection>
+    </Card>
   )
 }

@@ -29,7 +29,10 @@ export const useNotificationSettingsState = (user?: UserDTO | null) => {
       return
     }
 
-    if (typeof Notification === 'undefined' || Notification.permission !== 'granted') {
+    if (
+      typeof Notification === 'undefined' ||
+      Notification.permission !== 'granted'
+    ) {
       setPushError(t('settings.notifications.errors.permissionNotGranted'))
 
       return

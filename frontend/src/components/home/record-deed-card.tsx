@@ -27,7 +27,9 @@ export const RecordDeedCard = () => {
 
   const handleToggleTag = (tagId: string) => {
     setSelectedTags((prev) =>
-      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId],
+      prev.includes(tagId)
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId],
     )
   }
 
@@ -57,7 +59,9 @@ export const RecordDeedCard = () => {
     <Card padding='none' variant='standard'>
       <CardHeader className='flex flex-row items-start justify-between p-8 pb-0'>
         <div className='space-y-1.5'>
-          <CardTitle className='text-2xl font-bold'>Record a New Deed</CardTitle>
+          <CardTitle className='text-2xl font-bold'>
+            Record a New Deed
+          </CardTitle>
           <p className='text-muted-foreground text-sm font-medium'>
             What small spark of goodness did you ignite today?
           </p>

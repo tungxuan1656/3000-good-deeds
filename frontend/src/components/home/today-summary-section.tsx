@@ -63,7 +63,9 @@ export const TodaySummarySection = () => {
   return (
     <div className='mt-12 space-y-8'>
       <div className='flex items-baseline justify-between border-b border-stone-100 pb-4'>
-        <h2 className='font-headline text-3xl font-medium text-stone-800'>Today's Summary</h2>
+        <h2 className='font-headline text-3xl font-medium text-stone-800'>
+          Today's Summary
+        </h2>
         <div className='flex items-center gap-4'>
           <span className='text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase'>
             {format(new Date(), 'EEEE, MMM d', { locale: vi }).toUpperCase()}

@@ -1,4 +1,8 @@
-import { getVapidPublicKey, subscribePush, unsubscribePush } from '@/api/reminders'
+import {
+  getVapidPublicKey,
+  subscribePush,
+  unsubscribePush,
+} from '@/api/reminders'
 import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
 import type { PushSubscriptionPayloadDTO } from '@/types/api'
@@ -53,15 +57,27 @@ export const syncPushSubscription = async ({
   const currentUser = useAuthStore.getState().user
 
   if (!currentUser?.id) {
-    return { success: false, error: t('push.errors.unauthenticated'), code: 'unauthenticated' }
+    return {
+      success: false,
+      error: t('push.errors.unauthenticated'),
+      code: 'unauthenticated',
+    }
   }
 
   if (!requestPermission && !currentUser.reminderEnabled) {
-    return { success: false, error: t('push.errors.reminderDisabled'), code: 'reminder-disabled' }
+    return {
+      success: false,
+      error: t('push.errors.reminderDisabled'),
+      code: 'reminder-disabled',
+    }
   }
 
   if (!isPushSupported()) {
-    return { success: false, error: t('push.errors.unsupported'), code: 'unsupported' }
+    return {
+      success: false,
+      error: t('push.errors.unsupported'),
+      code: 'unsupported',
+    }
   }
 
   let permission = Notification.permission
@@ -103,7 +119,10 @@ export const syncPushSubscription = async ({
 
   if (
     subscription &&
-    !isSameApplicationServerKey(subscription.options.applicationServerKey, applicationServerKey)
+    !isSameApplicationServerKey(
+      subscription.options.applicationServerKey,
+      applicationServerKey,
+    )
   ) {
     const oldEndpoint = subscription.endpoint
     await subscription.unsubscribe()
@@ -151,7 +170,8 @@ export const syncPushSubscription = async ({
   const lastSyncedEndpoint = getLastSyncedEndpoint()
 
   const isAlreadySyncedForThisUser =
-    lastSyncedUserId === currentUser.id && lastSyncedEndpoint === payload.endpoint
+    lastSyncedUserId === currentUser.id &&
+    lastSyncedEndpoint === payload.endpoint
 
   if (!isAlreadySyncedForThisUser) {
     await subscribePush(payload)
@@ -167,9 +187,10 @@ export const syncPushSubscription = async ({
   return { success: true }
 }
 
-export const subscribeToPushNotifications = async (): Promise<PushSyncResult> => {
-  return syncPushSubscription({ requestPermission: true })
-}
+export const subscribeToPushNotifications =
+  async (): Promise<PushSyncResult> => {
+    return syncPushSubscription({ requestPermission: true })
+  }
 
 export const unsubscribeFromPushNotifications = async () => {
   const storedEndpoint = getStoredEndpoint()

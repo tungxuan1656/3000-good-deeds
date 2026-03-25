@@ -31,7 +31,10 @@ type ConfirmDialogProps = {
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<typeof DialogContent>, 'children'>
 
-export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>(
+export const ConfirmDialog = forwardRef<
+  ConfirmDialogHandle,
+  ConfirmDialogProps
+>(
   (
     {
       title,
@@ -77,7 +80,10 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
       }
 
       const maybePromise = onConfirm?.()
-      if (maybePromise && typeof (maybePromise as Promise<void>).then === 'function') {
+      if (
+        maybePromise &&
+        typeof (maybePromise as Promise<void>).then === 'function'
+      ) {
         setIsSubmitting(true)
 
         void (maybePromise as Promise<void>)
@@ -104,7 +110,9 @@ export const ConfirmDialog = forwardRef<ConfirmDialogHandle, ConfirmDialogProps>
           showCloseButton={false}
           {...contentProps}>
           <DialogHeader className='gap-2'>
-            <DialogTitle className='text-[17px] font-semibold'>{title}</DialogTitle>
+            <DialogTitle className='text-[17px] font-semibold'>
+              {title}
+            </DialogTitle>
             {description ? (
               <DialogDescription className='text-sm leading-relaxed'>
                 {description}

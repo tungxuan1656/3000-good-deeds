@@ -96,9 +96,15 @@ export const GoalSettingCard = () => {
     <div className='flex flex-col gap-4'>
       <div className='flex items-start justify-between'>
         <div>
-          <p className='text-foreground text-base font-semibold'>{t('goals.setting.title')}</p>
-          <p className='text-muted-foreground mt-1 text-sm'>{t('goals.setting.subtitle')}</p>
-          <p className='text-muted-foreground mt-1 text-sm'>{t('goals.setting.helper')}</p>
+          <p className='text-foreground text-base font-semibold'>
+            {t('goals.setting.title')}
+          </p>
+          <p className='text-muted-foreground mt-1 text-sm'>
+            {t('goals.setting.subtitle')}
+          </p>
+          <p className='text-muted-foreground mt-1 text-sm'>
+            {t('goals.setting.helper')}
+          </p>
         </div>
         <Button
           disabled={isLoading || upsertGoalsMutation.isPending}
@@ -113,7 +119,9 @@ export const GoalSettingCard = () => {
       <div className='grid gap-2'>
         {goalTypes.map((type) => (
           <div key={type} className='flex items-center justify-between gap-3'>
-            <p className='text-foreground text-sm font-semibold'>{GOAL_LABELS[type]}</p>
+            <p className='text-foreground text-sm font-semibold'>
+              {GOAL_LABELS[type]}
+            </p>
             <div className='flex items-center gap-5'>
               <Input
                 className='w-24 rounded-full text-sm'
@@ -121,7 +129,9 @@ export const GoalSettingCard = () => {
                 min={1}
                 type='number'
                 value={goalForms[type].targetCount}
-                onChange={(event) => handleTargetChange(type, event.target.value)}
+                onChange={(event) =>
+                  handleTargetChange(type, event.target.value)
+                }
               />
               <Switch
                 checked={goalForms[type].isEnabled}

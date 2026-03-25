@@ -1,6 +1,6 @@
 import { CheckCircle2Icon, XCircleIcon } from 'lucide-react'
 
-import { CardSection, InfoButton } from '@/components/shared'
+import { InfoButton } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,27 +10,35 @@ import { INFO_COPY } from '@/lib/constants/info-copy'
 import { t } from '@/lib/i18n'
 import type { UserDTO } from '@/types/api'
 
+import { Card } from '../ui'
+
 interface NotificationSettingsCardProps {
   user?: UserDTO | null
 }
 
-export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps) => {
+export const NotificationSettingsCard = ({
+  user,
+}: NotificationSettingsCardProps) => {
   const { ui, status, actions } = useNotificationSettings(user)
 
   return (
-    <CardSection className='gap-4'>
+    <Card className='gap-4'>
       <div className='flex items-center justify-between'>
         <div>
           <div className='flex items-center gap-2 text-xs font-semibold tracking-widest uppercase'>
             {user?.reminderEnabled ? (
               <span className='text-primary flex items-center'>
                 <CheckCircle2Icon className='inline h-4 w-4' />
-                <span className='ml-1'>{t('settings.notifications.status.enabled')}</span>
+                <span className='ml-1'>
+                  {t('settings.notifications.status.enabled')}
+                </span>
               </span>
             ) : (
               <span className='text-muted-foreground flex items-center'>
                 <XCircleIcon className='inline h-4 w-4' />
-                <span className='ml-1'>{t('settings.notifications.status.disabled')}</span>
+                <span className='ml-1'>
+                  {t('settings.notifications.status.disabled')}
+                </span>
               </span>
             )}
           </div>
@@ -51,10 +59,15 @@ export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps
               {t('settings.notifications.unsupportedHint')}
             </p>
           )}
-          {ui.pushError && <p className='text-destructive mt-1 text-sm'>{ui.pushError}</p>}
+          {ui.pushError && (
+            <p className='text-destructive mt-1 text-sm'>{ui.pushError}</p>
+          )}
         </div>
         <Button
-          disabled={status.isToggleLoading || (!ui.pushSupported && !user?.reminderEnabled)}
+          disabled={
+            status.isToggleLoading ||
+            (!ui.pushSupported && !user?.reminderEnabled)
+          }
           variant={user?.reminderEnabled ? 'outline' : 'default'}
           onClick={() => actions.handleReminderToggle(!user?.reminderEnabled)}>
           {status.isToggleLoading ? <Spinner /> : null}
@@ -85,7 +98,11 @@ export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps
           </p>
           <div className='flex justify-end'>
             <Button
-              disabled={status.isTestLoading || status.isToggleLoading || !ui.pushSupported}
+              disabled={
+                status.isTestLoading ||
+                status.isToggleLoading ||
+                !ui.pushSupported
+              }
               size='sm'
               variant='outline'
               onClick={actions.handleTestNotification}>
@@ -95,6 +112,6 @@ export const NotificationSettingsCard = ({ user }: NotificationSettingsCardProps
           </div>
         </div>
       )}
-    </CardSection>
+    </Card>
   )
 }

@@ -5,20 +5,23 @@ import { toast } from 'sonner'
 import { InnerJournalHistoryItem } from '@/components/inner'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
-  CardSection,
   DailyQuoteCard,
   EmptyDataView,
-  HeaderSection,
   InfoButton,
   KindnessSuggestionCard,
   MiniCheckInCard,
+  PageHeader,
   SkeletonList,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { Card } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
-import { useCreateInnerJournalEntry, useInnerJournalEntries } from '@/hooks/api/use-inner-journal'
+import {
+  useCreateInnerJournalEntry,
+  useInnerJournalEntries,
+} from '@/hooks/api/use-inner-journal'
 import { INNER_JOURNAL_TYPES, type InnerJournalType } from '@/lib/constants'
 import { INFO_COPY } from '@/lib/constants/info-copy'
 import { innerJournalSchema } from '@/lib/forms/form-schemas'
@@ -48,7 +51,8 @@ const HandbookPage = () => {
 
     const parsed = innerJournalSchema.safeParse({ type, content })
     if (!parsed.success) {
-      const message = parsed.error.issues[0]?.message ?? t('common.errors.invalidContent')
+      const message =
+        parsed.error.issues[0]?.message ?? t('common.errors.invalidContent')
       setErrorText(message)
 
       return
@@ -79,7 +83,7 @@ const HandbookPage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <HeaderSection
+        <PageHeader
           action={
             <InfoButton
               description={INFO_COPY.journal.description}
@@ -91,7 +95,7 @@ const HandbookPage = () => {
         />
 
         <form onSubmit={(event) => void handleSubmit(event)}>
-          <CardSection className='gap-4'>
+          <Card className='gap-4'>
             <div className='flex flex-wrap gap-2'>
               {INNER_JOURNAL_TYPES.map((key) => {
                 const isActive = key === type
@@ -121,10 +125,15 @@ const HandbookPage = () => {
               <p className='text-muted-foreground text-sm leading-relaxed'>
                 {t('journal.page.immutableNote')}
               </p>
-              {errorText && <p className='text-destructive text-xs'>{errorText}</p>}
+              {errorText && (
+                <p className='text-destructive text-xs'>{errorText}</p>
+              )}
             </div>
 
-            <Button className='self-end' disabled={createMutation.isPending} type='submit'>
+            <Button
+              className='self-end'
+              disabled={createMutation.isPending}
+              type='submit'>
               {createMutation.isPending ? (
                 <>
                   <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />
@@ -134,10 +143,10 @@ const HandbookPage = () => {
                 t('common.actions.save')
               )}
             </Button>
-          </CardSection>
+          </Card>
         </form>
 
-        <CardSection className='gap-4'>
+        <Card className='gap-4'>
           <div className='flex items-center justify-between gap-2'>
             <p className='font-headline text-foreground text-xl'>
               {t('pages.handbook.historyTitle')}
@@ -173,7 +182,7 @@ const HandbookPage = () => {
               )}
             </div>
           )}
-        </CardSection>
+        </Card>
       </MainColumn>
 
       <SideColumn hideInMobile>

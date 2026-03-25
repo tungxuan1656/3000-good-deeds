@@ -29,7 +29,10 @@ export const JourneyStatsCard = () => {
         </div>
 
         <div className='space-y-4'>
-          <Progress className='h-1.5 bg-stone-200/50 dark:bg-stone-800' value={progress} />
+          <Progress
+            className='h-1.5 bg-stone-200/50 dark:bg-stone-800'
+            value={progress}
+          />
           <p className='text-[10px] font-bold tracking-wider text-stone-400 uppercase'>
             {progress.toFixed(1)}% of the way to {GOAL_TOTAL.toLocaleString()}
           </p>

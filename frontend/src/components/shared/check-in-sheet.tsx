@@ -43,7 +43,10 @@ export const CheckInSheet = () => {
         <SheetHeader>
           <div className='flex items-center gap-1 pr-4'>
             <SheetTitle>{t('checkIn.sheet.title')}</SheetTitle>
-            <InfoButton description={INFO_COPY.deeds.description} title={INFO_COPY.deeds.title} />
+            <InfoButton
+              description={INFO_COPY.deeds.description}
+              title={INFO_COPY.deeds.title}
+            />
           </div>
           <SheetDescription>
             {step === 1 && t('checkIn.sheet.stepDescription.2')}

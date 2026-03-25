@@ -114,7 +114,8 @@ client.interceptors.response.use(
           },
         )
 
-        const { accessToken, refreshToken: nextRefreshToken } = response.data.data
+        const { accessToken, refreshToken: nextRefreshToken } =
+          response.data.data
 
         authActions.updateTokens({
           accessToken,

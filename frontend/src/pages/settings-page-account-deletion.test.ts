@@ -9,12 +9,16 @@ import { executeDeleteAccountFlow } from './settings-page-account-deletion'
 describe('executeDeleteAccountFlow', () => {
   it('completes delete flow and redirects on success', async () => {
     const deleteCurrentFirebaseUser = vi.fn().mockResolvedValue(undefined)
-    const unsubscribeFromPushNotifications = vi.fn().mockResolvedValue(undefined)
-    const deleteMe = vi.fn<() => Promise<ApiResponse<boolean>>>().mockResolvedValue({
-      success: true,
-      data: true,
-      error: null,
-    })
+    const unsubscribeFromPushNotifications = vi
+      .fn()
+      .mockResolvedValue(undefined)
+    const deleteMe = vi
+      .fn<() => Promise<ApiResponse<boolean>>>()
+      .mockResolvedValue({
+        success: true,
+        data: true,
+        error: null,
+      })
     const logout = vi.fn()
     const navigateToLogin = vi.fn()
     const toastSuccess = vi.fn()
@@ -35,7 +39,11 @@ describe('executeDeleteAccountFlow', () => {
     expect(deleteMe).toHaveBeenCalledTimes(1)
     expect(logout).toHaveBeenCalledTimes(1)
     expect(navigateToLogin).toHaveBeenCalledTimes(1)
-    expect(toastSuccess).toHaveBeenCalledWith(t('settings.deleteAccount.messages.deleted'))
+
+    expect(toastSuccess).toHaveBeenCalledWith(
+      t('settings.deleteAccount.messages.deleted'),
+    )
+
     expect(toastError).not.toHaveBeenCalled()
   })
 
@@ -43,9 +51,14 @@ describe('executeDeleteAccountFlow', () => {
     const deleteCurrentFirebaseUser = vi
       .fn()
       .mockRejectedValue(
-        new AuthProviderError('requires-recent-login', 'auth/requires-recent-login'),
+        new AuthProviderError(
+          'requires-recent-login',
+          'auth/requires-recent-login',
+        ),
       )
-    const unsubscribeFromPushNotifications = vi.fn().mockResolvedValue(undefined)
+    const unsubscribeFromPushNotifications = vi
+      .fn()
+      .mockResolvedValue(undefined)
     const deleteMe = vi.fn<() => Promise<ApiResponse<boolean>>>()
     const logout = vi.fn()
     const navigateToLogin = vi.fn()
@@ -66,19 +79,28 @@ describe('executeDeleteAccountFlow', () => {
     expect(deleteMe).not.toHaveBeenCalled()
     expect(logout).not.toHaveBeenCalled()
     expect(navigateToLogin).not.toHaveBeenCalled()
-    expect(toastError).toHaveBeenCalledWith(t('settings.deleteAccount.errors.requiresRecentLogin'))
+
+    expect(toastError).toHaveBeenCalledWith(
+      t('settings.deleteAccount.errors.requiresRecentLogin'),
+    )
   })
 
   it('continues backend deletion when Firebase session is already missing', async () => {
     const deleteCurrentFirebaseUser = vi
       .fn()
-      .mockRejectedValue(new AuthProviderError('no-firebase-session', 'no-firebase-session'))
-    const unsubscribeFromPushNotifications = vi.fn().mockResolvedValue(undefined)
-    const deleteMe = vi.fn<() => Promise<ApiResponse<boolean>>>().mockResolvedValue({
-      success: true,
-      data: true,
-      error: null,
-    })
+      .mockRejectedValue(
+        new AuthProviderError('no-firebase-session', 'no-firebase-session'),
+      )
+    const unsubscribeFromPushNotifications = vi
+      .fn()
+      .mockResolvedValue(undefined)
+    const deleteMe = vi
+      .fn<() => Promise<ApiResponse<boolean>>>()
+      .mockResolvedValue({
+        success: true,
+        data: true,
+        error: null,
+      })
     const logout = vi.fn()
     const navigateToLogin = vi.fn()
     const toastSuccess = vi.fn()
@@ -104,8 +126,12 @@ describe('executeDeleteAccountFlow', () => {
     const deleteCurrentFirebaseUser = vi
       .fn()
       .mockResolvedValueOnce(undefined)
-      .mockRejectedValueOnce(new AuthProviderError('no-firebase-session', 'no-firebase-session'))
-    const unsubscribeFromPushNotifications = vi.fn().mockResolvedValue(undefined)
+      .mockRejectedValueOnce(
+        new AuthProviderError('no-firebase-session', 'no-firebase-session'),
+      )
+    const unsubscribeFromPushNotifications = vi
+      .fn()
+      .mockResolvedValue(undefined)
     const deleteMe = vi
       .fn<() => Promise<ApiResponse<boolean>>>()
       .mockResolvedValueOnce({
@@ -148,7 +174,13 @@ describe('executeDeleteAccountFlow', () => {
     expect(deleteMe).toHaveBeenCalledTimes(2)
     expect(logout).toHaveBeenCalledTimes(1)
     expect(navigateToLogin).toHaveBeenCalledTimes(1)
-    expect(toastError).toHaveBeenCalledWith(t('settings.deleteAccount.errors.backendDeleteFailed'))
-    expect(toastSuccess).toHaveBeenCalledWith(t('settings.deleteAccount.messages.deleted'))
+
+    expect(toastError).toHaveBeenCalledWith(
+      t('settings.deleteAccount.errors.backendDeleteFailed'),
+    )
+
+    expect(toastSuccess).toHaveBeenCalledWith(
+      t('settings.deleteAccount.messages.deleted'),
+    )
   })
 })

@@ -21,68 +21,74 @@ export interface SuggestActsDrawerHandle {
   close: () => void
 }
 
-export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>((_props, ref) => {
-  const isMobile = useIsMobile()
-  const [open, setOpen] = React.useState(false)
-  const { data, isFetching, refetch } = useRandomActs(2, open)
-  const acts = data?.data ?? []
+export const SuggestActsSheet = React.forwardRef<SuggestActsDrawerHandle>(
+  (_props, ref) => {
+    const isMobile = useIsMobile()
+    const [open, setOpen] = React.useState(false)
+    const { data, isFetching, refetch } = useRandomActs(2, open)
+    const acts = data?.data ?? []
 
-  React.useImperativeHandle(ref, () => ({
-    open: () => setOpen(true),
-    close: () => setOpen(false),
-  }))
+    React.useImperativeHandle(ref, () => ({
+      open: () => setOpen(true),
+      close: () => setOpen(false),
+    }))
 
-  const onOpenChange = (nextOpen: boolean) => {
-    setOpen(nextOpen)
-  }
+    const onOpenChange = (nextOpen: boolean) => {
+      setOpen(nextOpen)
+    }
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        className={isMobile ? 'rounded-t-2xl' : ''}
-        side={isMobile ? 'bottom' : 'right'}>
-        <SheetHeader>
-          <div className='flex items-center gap-1'>
-            <SheetTitle>{t('suggestActs.title')}</SheetTitle>
-            <InfoButton
-              description={INFO_COPY.randomActs.description}
-              title={INFO_COPY.randomActs.title}
-            />
-          </div>
-          <SheetDescription>{t('suggestActs.description')}</SheetDescription>
-        </SheetHeader>
-
-        <div className='mx-4 flex items-center justify-between gap-3'>
-          <div className='text-muted-foreground flex items-center gap-2 text-xs'>
-            <SparklesIcon className='h-4 w-4' />
-            {t('suggestActs.randomCount', { count: acts.length })}
-          </div>
-          <Button
-            className='h-8 rounded-full px-3 text-xs'
-            disabled={isFetching}
-            size='sm'
-            variant='outline'
-            onClick={() => refetch()}>
-            {isFetching ? <Spinner /> : <RefreshCwIcon className='h-4 w-4' />}
-            {t('suggestActs.refresh')}
-          </Button>
-        </div>
-
-        <div className='no-scrollbar mx-4 mt-4 flex flex-col gap-3 overflow-y-auto pb-10'>
-          {acts.map((act, index) => (
-            <div
-              key={`${act.name}-${index}`}
-              className='bg-card/80 border-border/45 flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm shadow-sm'>
-              <span className='text-primary mt-0.5 text-xs font-semibold'>#{index + 1}</span>
-              <div className='flex flex-col gap-1'>
-                <p className='text-foreground leading-relaxed'>
-                  {[act.name, act.detail, act.note].filter(Boolean).join(' - ')}
-                </p>
-              </div>
+    return (
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent
+          className={isMobile ? 'rounded-t-2xl' : ''}
+          side={isMobile ? 'bottom' : 'right'}>
+          <SheetHeader>
+            <div className='flex items-center gap-1'>
+              <SheetTitle>{t('suggestActs.title')}</SheetTitle>
+              <InfoButton
+                description={INFO_COPY.randomActs.description}
+                title={INFO_COPY.randomActs.title}
+              />
             </div>
-          ))}
-        </div>
-      </SheetContent>
-    </Sheet>
-  )
-})
+            <SheetDescription>{t('suggestActs.description')}</SheetDescription>
+          </SheetHeader>
+
+          <div className='mx-4 flex items-center justify-between gap-3'>
+            <div className='text-muted-foreground flex items-center gap-2 text-xs'>
+              <SparklesIcon className='h-4 w-4' />
+              {t('suggestActs.randomCount', { count: acts.length })}
+            </div>
+            <Button
+              className='h-8 rounded-full px-3 text-xs'
+              disabled={isFetching}
+              size='sm'
+              variant='outline'
+              onClick={() => refetch()}>
+              {isFetching ? <Spinner /> : <RefreshCwIcon className='h-4 w-4' />}
+              {t('suggestActs.refresh')}
+            </Button>
+          </div>
+
+          <div className='no-scrollbar mx-4 mt-4 flex flex-col gap-3 overflow-y-auto pb-10'>
+            {acts.map((act, index) => (
+              <div
+                key={`${act.name}-${index}`}
+                className='bg-card/80 border-border/45 flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm shadow-sm'>
+                <span className='text-primary mt-0.5 text-xs font-semibold'>
+                  #{index + 1}
+                </span>
+                <div className='flex flex-col gap-1'>
+                  <p className='text-foreground leading-relaxed'>
+                    {[act.name, act.detail, act.note]
+                      .filter(Boolean)
+                      .join(' - ')}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </SheetContent>
+      </Sheet>
+    )
+  },
+)

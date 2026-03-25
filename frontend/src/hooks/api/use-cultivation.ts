@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { getRandomAct, getRandomActs, getRandomQuote } from '../../api/cultivation'
+import {
+  getRandomAct,
+  getRandomActs,
+  getRandomQuote,
+} from '../../api/cultivation'
 import { createJournal, getJournal } from '../../api/inner-journal'
 import type { GetJournalRequest } from '../../types/api'
 
@@ -11,7 +15,8 @@ export const CULTIVATION_KEYS = {
   act: ['cultivation', 'act'] as const,
   acts: (limit: number) => ['cultivation', 'acts', limit] as const,
   journalRoot: JOURNAL_ROOT_KEY,
-  journal: (params: GetJournalRequest) => [...JOURNAL_ROOT_KEY, params] as const,
+  journal: (params: GetJournalRequest) =>
+    [...JOURNAL_ROOT_KEY, params] as const,
 }
 
 const SIX_HOURS = 1000 * 60 * 60 * 6

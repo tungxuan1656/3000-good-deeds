@@ -63,7 +63,9 @@ const LoginPage = () => {
       await loginWithGoogle()
       navigate(PATHS.HOME, { replace: true })
     } catch (error) {
-      setError(getFirebaseErrorMessage(error, t('auth.login.errors.googleConnection')))
+      setError(
+        getFirebaseErrorMessage(error, t('auth.login.errors.googleConnection')),
+      )
     } finally {
       setIsLoading(false)
     }
@@ -89,7 +91,12 @@ const LoginPage = () => {
           return
         }
 
-        await registerWithEmailPassword(email.trim(), password, displayName.trim())
+        await registerWithEmailPassword(
+          email.trim(),
+          password,
+          displayName.trim(),
+        )
+
         navigate(PATHS.HOME, { replace: true })
 
         return
@@ -129,7 +136,9 @@ const LoginPage = () => {
                   </div>
                 )}
 
-                <form className='relative z-10 space-y-4 md:space-y-6' onSubmit={handleSubmit}>
+                <form
+                  className='relative z-10 space-y-4 md:space-y-6'
+                  onSubmit={handleSubmit}>
                   {mode === 'register' && (
                     <AuthField label={t('auth.form.fields.displayName')}>
                       <Input
@@ -163,7 +172,11 @@ const LoginPage = () => {
                           className='text-muted-foreground hover:text-primary absolute top-1/2 right-3 -translate-y-1/2 p-1'
                           type='button'
                           onClick={() => setShowPassword(!showPassword)}>
-                          {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+                          {showPassword ? (
+                            <EyeOffIcon size={20} />
+                          ) : (
+                            <EyeIcon size={20} />
+                          )}
                         </button>
                       </div>
                     </AuthField>
@@ -175,7 +188,9 @@ const LoginPage = () => {
                         placeholder='••••••••'
                         type='password'
                         value={confirmPassword}
-                        onChange={(event) => setConfirmPassword(event.target.value)}
+                        onChange={(event) =>
+                          setConfirmPassword(event.target.value)
+                        }
                       />
                     </AuthField>
                   )}
@@ -186,7 +201,9 @@ const LoginPage = () => {
                     type='submit'
                     variant='primary-gradient'>
                     <span>
-                      {isLoading ? t('auth.login.loading') : t(`auth.form.actions.${mode}` as any)}
+                      {isLoading
+                        ? t('auth.login.loading')
+                        : t(`auth.form.actions.${mode}` as any)}
                     </span>
                     <LogIn size={18} />
                   </Button>

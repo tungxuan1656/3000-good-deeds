@@ -1,10 +1,12 @@
 import { Trash2Icon } from 'lucide-react'
 import { useRef, useState } from 'react'
 
-import { CardSection, ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
+import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { t } from '@/lib/i18n'
+
+import { Card } from '../ui'
 
 interface DeleteAccountCardProps {
   onConfirm?: () => void | Promise<void>
@@ -32,7 +34,7 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
 
   return (
     <>
-      <CardSection className='border-destructive/30 bg-destructive/10 border'>
+      <Card className='border-destructive/30 bg-destructive/10 border'>
         <div className='flex items-start justify-between gap-4'>
           <div>
             <p className='text-foreground text-base font-semibold'>
@@ -55,7 +57,7 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
           }}>
           {t('settings.deleteAccount.action')}
         </Button>
-      </CardSection>
+      </Card>
 
       <ConfirmDialog
         ref={deleteDialogRef}

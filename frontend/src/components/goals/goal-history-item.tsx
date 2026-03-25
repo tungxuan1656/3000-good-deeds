@@ -5,15 +5,22 @@ import { GOAL_LABELS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import type { GoalHistoryDTO } from '@/types/api'
 
-import { CardInlineSection } from '../shared/card-inline-section'
+import { Card } from '../ui'
 
-export const GoalHistoryItem = ({ goalHistory }: { goalHistory: GoalHistoryDTO }) => {
+export const GoalHistoryItem = ({
+  goalHistory,
+}: {
+  goalHistory: GoalHistoryDTO
+}) => {
   return (
-    <CardInlineSection>
+    <Card>
       <div className='flex items-center justify-between'>
-        <p className='text-foreground text-sm font-semibold'>{GOAL_LABELS[goalHistory.type]}</p>
+        <p className='text-foreground text-sm font-semibold'>
+          {GOAL_LABELS[goalHistory.type]}
+        </p>
         <span className='text-muted-foreground text-xs'>
-          {formatDate(goalHistory.startDate, 'dd/MM')} -{formatDate(goalHistory.endDate, 'dd/MM')}
+          {formatDate(goalHistory.startDate, 'dd/MM')} -
+          {formatDate(goalHistory.endDate, 'dd/MM')}
         </span>
       </div>
       <div className='text-foreground flex items-center gap-2 text-xs font-medium'>
@@ -25,6 +32,6 @@ export const GoalHistoryItem = ({ goalHistory }: { goalHistory: GoalHistoryDTO }
               targetCount: goalHistory.targetCount,
             })}
       </div>
-    </CardInlineSection>
+    </Card>
   )
 }

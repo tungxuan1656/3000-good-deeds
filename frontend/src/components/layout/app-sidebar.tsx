@@ -42,7 +42,8 @@ export const AppSidebar = () => {
             <SidebarMenu className='gap-0'>
               {APP_MENU_ITEMS.map(({ label, path, icon: Icon }) => {
                 const isActive = (() => {
-                  if (path === PATHS.HOME) return location.pathname === PATHS.HOME
+                  if (path === PATHS.HOME)
+                    return location.pathname === PATHS.HOME
 
                   return location.pathname.startsWith(path)
                 })()
@@ -53,7 +54,9 @@ export const AppSidebar = () => {
                       asChild
                       className={cn(
                         'group relative h-auto rounded-none px-5 py-3.5 transition-colors hover:bg-black/5 active:bg-black/10',
-                        isActive ? 'text-foreground' : 'text-muted-foreground/60',
+                        isActive
+                          ? 'text-foreground'
+                          : 'text-muted-foreground/60',
                       )}
                       isActive={isActive}
                       tooltip={label}>

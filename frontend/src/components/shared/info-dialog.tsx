@@ -43,7 +43,9 @@ export const InfoDialog = ({
         </DialogHeader>
 
         <DialogFooter className='gap-2 sm:flex-row sm:justify-end sm:gap-3'>
-          <Button className='h-10 rounded-full px-4' onClick={() => onOpenChange(false)}>
+          <Button
+            className='h-10 rounded-full px-4'
+            onClick={() => onOpenChange(false)}>
             {closeLabel}
           </Button>
         </DialogFooter>

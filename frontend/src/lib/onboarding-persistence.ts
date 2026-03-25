@@ -3,7 +3,10 @@ const ONBOARDING_SEEN_VALUE = 'seen'
 type StorageReader = Pick<Storage, 'getItem'>
 type StorageWriter = Pick<Storage, 'setItem'>
 
-export const shouldAutoOpenOnboarding = (storage: StorageReader, storageKey: string) => {
+export const shouldAutoOpenOnboarding = (
+  storage: StorageReader,
+  storageKey: string,
+) => {
   try {
     return !storage.getItem(storageKey)
   } catch {
@@ -11,7 +14,10 @@ export const shouldAutoOpenOnboarding = (storage: StorageReader, storageKey: str
   }
 }
 
-export const markOnboardingAsSeen = (storage: StorageWriter, storageKey: string) => {
+export const markOnboardingAsSeen = (
+  storage: StorageWriter,
+  storageKey: string,
+) => {
   try {
     storage.setItem(storageKey, ONBOARDING_SEEN_VALUE)
 

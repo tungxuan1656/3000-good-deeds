@@ -5,16 +5,16 @@ import * as React from 'react'
 
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
-  CardSection,
   DailyQuoteCard,
   EmptyDataView,
   GoodDeedCard,
-  HeaderSection,
   InfoButton,
   MiniCheckInCard,
+  PageHeader,
   SkeletonList,
   WeeklyRhythmCard,
 } from '@/components/shared'
+import { Card } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { INFO_COPY } from '@/lib/constants/info-copy'
@@ -22,16 +22,20 @@ import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
 const TimelinePage = () => {
-  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useDeeds({
-    limit: 20,
-  })
+  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useDeeds({
+      limit: 20,
+    })
 
   const deeds = React.useMemo(() => {
     return data?.pages.flatMap((page) => page.data?.data ?? []) ?? []
   }, [data])
 
   const timelineGroups = React.useMemo(() => {
-    const groupMap = new Map<string, { dateKey: string; dateLabel: string; items: DeedDTO[] }>()
+    const groupMap = new Map<
+      string,
+      { dateKey: string; dateLabel: string; items: DeedDTO[] }
+    >()
     const groupOrder: string[] = []
 
     deeds.forEach((item) => {
@@ -65,7 +69,7 @@ const TimelinePage = () => {
   return (
     <MainContainer>
       <MainColumn>
-        <HeaderSection
+        <PageHeader
           action={
             <InfoButton
               description={INFO_COPY.timeline.description}
@@ -88,13 +92,15 @@ const TimelinePage = () => {
         {!showLoading && !isEmpty && (
           <div className='flex flex-col gap-4'>
             {timelineGroups.map((group) => (
-              <CardSection key={group.dateKey} className='gap-2'>
+              <Card key={group.dateKey} className='gap-2'>
                 <div className='mb-2 flex flex-wrap items-center justify-between gap-2'>
                   <p className='text-foreground text-sm font-semibold tracking-widest uppercase'>
                     {group.dateLabel}
                   </p>
                   <span className='text-muted-foreground text-sm sm:text-xs'>
-                    {t('pages.timeline.groupCount', { count: group.items.length })}
+                    {t('pages.timeline.groupCount', {
+                      count: group.items.length,
+                    })}
                   </span>
                 </div>
                 <div className='flex flex-col gap-3'>
@@ -102,7 +108,7 @@ const TimelinePage = () => {
                     <GoodDeedCard key={item.id} deed={item} />
                   ))}
                 </div>
-              </CardSection>
+              </Card>
             ))}
 
             {hasNextPage && (

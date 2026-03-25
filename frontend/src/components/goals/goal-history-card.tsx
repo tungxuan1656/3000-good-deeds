@@ -10,11 +10,15 @@ import { GoalHistoryItem } from './goal-history-item'
 export const GoalHistoryCard = () => {
   const { data: historyResponse, isLoading } = useGoalHistory({ limit: 20 })
 
-  const historyGoals = historyResponse?.success ? (historyResponse.data?.data ?? []) : []
+  const historyGoals = historyResponse?.success
+    ? (historyResponse.data?.data ?? [])
+    : []
 
   return (
     <div className='gap-4'>
-      <p className='text-foreground mb-2 text-base font-semibold'>{t('goals.history.title')}</p>
+      <p className='text-foreground mb-2 text-base font-semibold'>
+        {t('goals.history.title')}
+      </p>
       {isLoading && <SkeletonList length={1} />}
 
       {!isLoading && historyGoals.length === 0 && (

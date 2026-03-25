@@ -1,6 +1,11 @@
 import { format } from 'date-fns'
 import { vi } from 'date-fns/locale'
-import { CalendarIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import {
+  CalendarIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from 'lucide-react'
 import {
   type Dispatch,
   type SetStateAction,
@@ -13,7 +18,11 @@ import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { SheetFooter } from '@/components/ui/sheet'
 import { Spinner } from '@/components/ui/spinner'
 import { TagButton } from '@/components/ui/tag'
@@ -57,15 +66,22 @@ export const CheckInSheetFlow = ({
   onClose,
   createDeed,
 }: CheckInSheetFlowProps) => {
-  const [formState, setFormState] = useState<CheckInFormState>(buildInitialFormState)
-  const activeMoodTagSet = useMemo(() => new Set(formState.moodTags), [formState.moodTags])
+  const [formState, setFormState] = useState<CheckInFormState>(
+    buildInitialFormState,
+  )
+  const activeMoodTagSet = useMemo(
+    () => new Set(formState.moodTags),
+    [formState.moodTags],
+  )
 
   useEffect(() => {
     setFormState(buildInitialFormState())
   }, [resetSeed])
 
   const formattedDate = useMemo(() => {
-    const value = format(formState.selectedDate, t('dates.formats.fullDate'), { locale: vi })
+    const value = format(formState.selectedDate, t('dates.formats.fullDate'), {
+      locale: vi,
+    })
 
     return value.charAt(0).toUpperCase() + value.slice(1)
   }, [formState.selectedDate])
@@ -86,13 +102,22 @@ export const CheckInSheetFlow = ({
     const trimmedDescription = formState.note.trim()
 
     await createDeed.mutateAsync({
-      description: trimmedDescription.length > 0 ? trimmedDescription : undefined,
-      labels: formState.moodTags.length ? formState.moodTags.join(', ') : undefined,
+      description:
+        trimmedDescription.length > 0 ? trimmedDescription : undefined,
+      labels: formState.moodTags.length
+        ? formState.moodTags.join(', ')
+        : undefined,
       performedAt: performedAt.getTime(),
     })
 
     onClose()
-  }, [createDeed, formState.moodTags, formState.note, formState.selectedDate, onClose])
+  }, [
+    createDeed,
+    formState.moodTags,
+    formState.note,
+    formState.selectedDate,
+    onClose,
+  ])
 
   const toggleMoodTag = useCallback((tag: string) => {
     setFormState((prev) => ({
@@ -140,7 +165,9 @@ export const CheckInSheetFlow = ({
                 setFormState((prev) => ({ ...prev, note: nextNote }))
               }}
             />
-            <p className='text-muted-foreground text-sm'>{t('checkIn.sheet.privateNote')}</p>
+            <p className='text-muted-foreground text-sm'>
+              {t('checkIn.sheet.privateNote')}
+            </p>
           </div>
         )}
 
@@ -188,8 +215,14 @@ export const CheckInSheetFlow = ({
               className='h-11 rounded-full px-6'
               disabled={createDeed.isPending}
               onClick={handleSubmit}>
-              {createDeed.isPending ? <Spinner /> : <CheckIcon className='h-4 w-4' />}
-              {createDeed.isPending ? t('common.actions.saving') : t('checkIn.sheet.saveAction')}
+              {createDeed.isPending ? (
+                <Spinner />
+              ) : (
+                <CheckIcon className='h-4 w-4' />
+              )}
+              {createDeed.isPending
+                ? t('common.actions.saving')
+                : t('checkIn.sheet.saveAction')}
             </Button>
           )}
         </div>

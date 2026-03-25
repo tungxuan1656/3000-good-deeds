@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-import type { ApiResponse, AuthResponse, ProviderExchangeRequest } from '../types/api'
+import type {
+  ApiResponse,
+  AuthResponse,
+  ProviderExchangeRequest,
+} from '../types/api'
 import { API_URL, client } from './client'
 import { API_ENDPOINTS } from './endpoints'
 
@@ -20,10 +24,15 @@ export const exchangeProviderToken = async (
   return response.data
 }
 
-export const logout = async (refreshToken?: string): Promise<ApiResponse<boolean>> => {
-  const response = await client.post<ApiResponse<boolean>>(API_ENDPOINTS.auth.logout, {
-    refreshToken,
-  })
+export const logout = async (
+  refreshToken?: string,
+): Promise<ApiResponse<boolean>> => {
+  const response = await client.post<ApiResponse<boolean>>(
+    API_ENDPOINTS.auth.logout,
+    {
+      refreshToken,
+    },
+  )
 
   return response.data
 }

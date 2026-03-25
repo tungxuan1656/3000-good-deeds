@@ -9,8 +9,12 @@ export const CheckInSheetTip = () => {
         <SparklesIcon className='text-primary h-5 w-5' />
       </div>
       <div>
-        <p className='text-foreground text-sm font-medium'>{t('checkIn.sheet.footerTitle')}</p>
-        <p className='text-muted-foreground text-xs'>{t('checkIn.sheet.footerDescription')}</p>
+        <p className='text-foreground text-sm font-medium'>
+          {t('checkIn.sheet.footerTitle')}
+        </p>
+        <p className='text-muted-foreground text-xs'>
+          {t('checkIn.sheet.footerDescription')}
+        </p>
       </div>
     </div>
   )

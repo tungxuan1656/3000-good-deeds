@@ -1,13 +1,13 @@
 import { LeafIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-type HeaderSectionProps = {
+type PageHeaderProps = {
   title: string
   description?: string
   action?: ReactNode
 }
 
-export const HeaderSection = ({ title, description, action }: HeaderSectionProps) => {
+export const PageHeader = ({ title, description, action }: PageHeaderProps) => {
   return (
     <div className='flex flex-col gap-2'>
       <div className='mt-2 flex items-center gap-2'>
@@ -17,7 +17,9 @@ export const HeaderSection = ({ title, description, action }: HeaderSectionProps
         <h1 className='font-headline text-foreground ml-2 text-2xl font-medium md:text-4xl'>
           {title}
         </h1>
-        {action ? <div className='ml-auto flex items-center'>{action}</div> : null}
+        {action ? (
+          <div className='ml-auto flex items-center'>{action}</div>
+        ) : null}
       </div>
       {description ? (
         <p className='text-muted-foreground px-1 text-sm leading-relaxed font-light md:text-base'>

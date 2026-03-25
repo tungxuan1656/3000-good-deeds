@@ -11,8 +11,9 @@ export const KindnessSuggestionCard = () => {
   const suggestion = data?.data?.[0]
 
   const suggestionText =
-    [suggestion?.name, suggestion?.detail, suggestion?.note].filter(Boolean).join(' - ') ||
-    t('pages.handbook.kindnessSuggestion.empty')
+    [suggestion?.name, suggestion?.detail, suggestion?.note]
+      .filter(Boolean)
+      .join(' - ') || t('pages.handbook.kindnessSuggestion.empty')
 
   return (
     <Card padding='none' variant='standard'>
@@ -28,12 +29,16 @@ export const KindnessSuggestionCard = () => {
           size='icon'
           variant='ghost'
           onClick={() => refetch()}>
-          <RefreshCwIcon className={isFetching ? 'size-4 animate-spin' : 'size-4'} />
+          <RefreshCwIcon
+            className={isFetching ? 'size-4 animate-spin' : 'size-4'}
+          />
         </Button>
       </CardHeader>
 
       <CardContent className='space-y-8 p-8 pt-6'>
-        <p className='text-sm leading-relaxed font-medium text-stone-600'>{suggestionText}</p>
+        <p className='text-sm leading-relaxed font-medium text-stone-600'>
+          {suggestionText}
+        </p>
 
         <Button
           className='w-full border-stone-200 py-6 text-[10px] font-bold tracking-[0.2em] text-stone-500 uppercase hover:bg-stone-50'

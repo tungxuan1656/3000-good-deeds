@@ -3,12 +3,13 @@ import { vi } from 'date-fns/locale'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { CardSection } from '@/components/shared/card-section'
 import { Button } from '@/components/ui/button'
 import { useCalendar } from '@/hooks/api/use-activities'
 import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+
+import { Card } from '../ui'
 
 const defaultDays = [
   t('stats.calendar.weekdays.mon'),
@@ -50,10 +51,12 @@ export const WeeklyRhythmCard = () => {
   const activeCount = days.filter((day) => day.count > 0).length
 
   return (
-    <CardSection padding='md'>
+    <Card padding='md'>
       <div className='flex items-start justify-between gap-3'>
         <div>
-          <h3 className='text-foreground text-base font-semibold'>{t('stats.weekly.title')}</h3>
+          <h3 className='text-foreground text-base font-semibold'>
+            {t('stats.weekly.title')}
+          </h3>
           <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
             {t('stats.weekly.description', { activeCount })}
           </p>
@@ -78,8 +81,11 @@ export const WeeklyRhythmCard = () => {
               key={day.date}
               className={cn(
                 'flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold transition',
-                isActive ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground',
-                isCurrentDay && 'ring-primary/50 ring-offset-background ring-2 ring-offset-2',
+                isActive
+                  ? 'bg-primary/20 text-primary'
+                  : 'bg-muted text-muted-foreground',
+                isCurrentDay &&
+                  'ring-primary/50 ring-offset-background ring-2 ring-offset-2',
                 isFuture && 'opacity-40',
               )}>
               {defaultDays[index]}
@@ -88,9 +94,10 @@ export const WeeklyRhythmCard = () => {
         })}
       </div>
       <p className='text-muted-foreground/70 mt-3 text-[11px]'>
-        {t('stats.weekly.rangePrefix')} · {format(startOfCurrentWeek, 'dd/MM', { locale: vi })} -{' '}
+        {t('stats.weekly.rangePrefix')} ·{' '}
+        {format(startOfCurrentWeek, 'dd/MM', { locale: vi })} -{' '}
         {format(addDays(startOfCurrentWeek, 6), 'dd/MM', { locale: vi })}
       </p>
-    </CardSection>
+    </Card>
   )
 }

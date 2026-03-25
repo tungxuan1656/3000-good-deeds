@@ -12,7 +12,7 @@ import { useDeleteDeed } from '@/hooks/api/use-deeds'
 import { t } from '@/lib/i18n'
 import type { DeedDTO } from '@/types/api'
 
-import { CardInlineSection } from './card-inline-section'
+import { Card } from '../ui'
 import { ConfirmDialog, type ConfirmDialogHandle } from './confirm-dialog'
 import { EditDeedDialog, type EditDeedDialogHandle } from './edit-deed-dialog'
 
@@ -33,12 +33,16 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
 
   return (
     <>
-      <CardInlineSection>
+      <Card>
         <div className='flex items-start justify-between gap-3'>
           <div className='flex flex-1 flex-col gap-1'>
-            {deed.labels && <p className='text-muted-foreground text-sm'>{deed.labels}</p>}
+            {deed.labels && (
+              <p className='text-muted-foreground text-sm'>{deed.labels}</p>
+            )}
             {deed.description && (
-              <p className='text-foreground text-sm leading-relaxed'>{deed.description}</p>
+              <p className='text-foreground text-sm leading-relaxed'>
+                {deed.description}
+              </p>
             )}
           </div>
 
@@ -60,7 +64,7 @@ export const GoodDeedCard = ({ deed }: { deed: DeedDTO }) => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </CardInlineSection>
+      </Card>
 
       <EditDeedDialog ref={editRef} />
 

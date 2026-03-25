@@ -15,7 +15,10 @@ export const PWAGuideDialog = ({ showIcon }: { showIcon?: boolean }) => {
   const isMobile = useIsMobile()
   const installDialogRef = useRef<ConfirmDialogHandle>(null)
   const mobileOs = useMemo(() => getMobileOs(), [])
-  const installSteps = useMemo(() => getPwaInstallGuideSteps(mobileOs), [mobileOs])
+  const installSteps = useMemo(
+    () => getPwaInstallGuideSteps(mobileOs),
+    [mobileOs],
+  )
 
   useEffect(() => {
     if (!shouldShowPwaInstallGuide(isMobile)) return

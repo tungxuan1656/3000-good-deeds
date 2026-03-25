@@ -22,7 +22,7 @@ import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
-import { CardSection } from '../shared'
+import { Card } from '../ui'
 import { Button } from '../ui/button'
 
 // Language-change in this app triggers a full page reload, so module-level t() calls are safe.
@@ -37,7 +37,9 @@ const weekdayLabels = [
 ]
 
 export const CalendarStats = () => {
-  const [currentMonth, setCurrentMonth] = useState(() => startOfMonth(new Date()))
+  const [currentMonth, setCurrentMonth] = useState(() =>
+    startOfMonth(new Date()),
+  )
 
   const monthStart = startOfMonth(currentMonth)
   const monthEnd = endOfMonth(currentMonth)
@@ -57,7 +59,10 @@ export const CalendarStats = () => {
     const dayList: Date[] = []
     let day = calendarStart
 
-    while (isBefore(day, calendarEnd) || day.getTime() === calendarEnd.getTime()) {
+    while (
+      isBefore(day, calendarEnd) ||
+      day.getTime() === calendarEnd.getTime()
+    ) {
       dayList.push(day)
       day = addDays(day, 1)
     }
@@ -89,9 +94,11 @@ export const CalendarStats = () => {
         </div>
       </div>
 
-      <CardSection>
+      <Card>
         <div className='mb-5 flex items-center justify-between gap-2'>
-          <p className='text-foreground font-semibold'>{t('stats.calendar.monthOverview')}</p>
+          <p className='text-foreground font-semibold'>
+            {t('stats.calendar.monthOverview')}
+          </p>
           <Link
             className='text-foreground/80 hover:text-foreground -mr-2 px-2 text-xs'
             to={PATHS.TIMELINE}>
@@ -120,7 +127,8 @@ export const CalendarStats = () => {
                   'bg-card/80 border-border/45 flex min-h-16 flex-col items-center justify-between rounded-2xl border p-2 shadow-sm',
                   !isCurrentMonth && 'border-none opacity-50 shadow-none',
                   isFuture && 'opacity-40',
-                  isCurrentDay && 'ring-primary/40 ring-offset-background ring-2 ring-offset-2',
+                  isCurrentDay &&
+                    'ring-primary/40 ring-offset-background ring-2 ring-offset-2',
                 )}>
                 {isCurrentMonth ? (
                   <>
@@ -142,7 +150,7 @@ export const CalendarStats = () => {
             )
           })}
         </div>
-      </CardSection>
+      </Card>
     </div>
   )
 }
