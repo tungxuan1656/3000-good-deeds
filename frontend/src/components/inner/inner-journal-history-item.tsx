@@ -1,11 +1,14 @@
-import { format, isToday, isYesterday } from 'date-fns'
-import { vi } from 'date-fns/locale'
-import { Trash2Icon } from 'lucide-react'
+import { LeafIcon, MoreHorizontalIcon, Trash2Icon } from 'lucide-react'
 import * as React from 'react'
 import { toast } from 'sonner'
 
 import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
-import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { useDeleteInnerJournalEntry } from '@/hooks/api/use-inner-journal'
 import { type InnerJournalType } from '@/lib/constants'
 import { t } from '@/lib/i18n'
@@ -28,19 +31,6 @@ export const InnerJournalHistoryItem = ({
   const canDelete = React.useMemo(() => {
     return Date.now() - entry.createdAt <= FIFTEEN_MINUTES
   }, [entry.createdAt])
-
-  const date = React.useMemo(() => new Date(entry.createdAt), [entry.createdAt])
-  const dateKey = format(date, 'dd/MM/yyyy')
-
-  const dateBaseLabel = format(date, 'dd/MM', { locale: vi })
-  let dateLabel = dateBaseLabel
-  if (isToday(date)) {
-    dateLabel = t('pages.timeline.dateLabel.today', { date: dateBaseLabel })
-  } else if (isYesterday(date)) {
-    dateLabel = t('pages.timeline.dateLabel.yesterday', { date: dateBaseLabel })
-  } else {
-    dateLabel = t('pages.timeline.dateLabel.day', { date: dateBaseLabel })
-  }
 
   const snippet =
     entry.content.length > 120
@@ -71,25 +61,45 @@ export const InnerJournalHistoryItem = ({
   }
 
   return (
-    <Card className='gap-2'>
-      <div className='flex items-center justify-between'>
-        <span className='text-foreground text-lg font-semibold' title={dateKey}>
-          {dateLabel} - {typeLabel}
-        </span>
-        {canDelete && (
-          <div className='sm:pl-3'>
-            <Button
-              className='h-6 rounded-full px-4 text-xs'
-              size='sm'
-              variant='outline'
-              onClick={() => dialogRef.current?.open()}>
-              <Trash2Icon className='size-3' />
-              {t('common.actions.delete')}
-            </Button>
+    <>
+      <Card padding='sm'>
+        <div className='flex items-start justify-between gap-3'>
+          <div className='flex flex-row items-center gap-3'>
+            <div className='bg-primary/25 flex size-8 items-center justify-center rounded-full'>
+              <LeafIcon className='fill-primary/50 text-primary' size={16} />
+            </div>
+            <div className='flex flex-1 flex-col gap-1'>
+              <p className='text-muted-foreground text-sm font-light tracking-wide'>
+                {typeLabel}
+              </p>
+              <p className='text-foreground tracking-xs leading-relaxed'>
+                {snippet}
+              </p>
+            </div>
           </div>
-        )}
-      </div>
-      <p className='text-muted-foreground text-sm leading-relaxed'>{snippet}</p>
+
+          {canDelete ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className='text-muted-foreground hover:text-foreground'>
+                <MoreHorizontalIcon className='size-4 md:size-5' />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end' className='rounded-xl'>
+                <DropdownMenuItem
+                  className='text-destructive focus:text-destructive'
+                  onClick={() => dialogRef.current?.open()}>
+                  <Trash2Icon className='mr-2 h-4 w-4' />
+                  {t('common.actions.delete')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <span className='text-muted-foreground/40 inline-flex h-5 w-5 items-center justify-center'>
+              <MoreHorizontalIcon className='size-4' />
+            </span>
+          )}
+        </div>
+      </Card>
+
       <ConfirmDialog
         ref={dialogRef}
         cancelLabel={t('common.actions.later')}
@@ -100,6 +110,6 @@ export const InnerJournalHistoryItem = ({
         variant='destructive'
         onConfirm={() => void handleConfirmDelete()}
       />
-    </Card>
+    </>
   )
 }
