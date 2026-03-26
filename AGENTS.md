@@ -41,7 +41,7 @@ Before marking work as done:
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **3000-good-deeds** (1594 symbols, 2779 relationships, 26 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **3000-good-deeds** (1581 symbols, 2737 relationships, 28 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
 
@@ -137,14 +137,14 @@ To check whether embeddings exist, inspect `.gitnexus/meta.json` — the `stats.
 | Rename / extract / split / refactor | `.agents/skills/gitnexus/gitnexus-refactoring/SKILL.md` |
 | Tools, resources, schema reference | `.agents/skills/gitnexus/gitnexus-guide/SKILL.md` |
 | Index, status, clean, wiki CLI commands | `.agents/skills/gitnexus/gitnexus-cli/SKILL.md` |
-| Work in the Ui area (99 symbols) | `.agents/skills/generated/ui/SKILL.md` |
+| Work in the Ui area (96 symbols) | `.agents/skills/generated/ui/SKILL.md` |
 | Work in the Handlers area (49 symbols) | `.agents/skills/generated/handlers/SKILL.md` |
 | Work in the Scripts area (19 symbols) | `.agents/skills/generated/scripts/SKILL.md` |
 | Work in the Layout area (14 symbols) | `.agents/skills/generated/layout/SKILL.md` |
 | Work in the Pages area (6 symbols) | `.agents/skills/generated/pages/SKILL.md` |
+| Work in the Cluster_38 area (5 symbols) | `.agents/skills/generated/cluster-38/SKILL.md` |
 | Work in the Auth area (4 symbols) | `.agents/skills/generated/auth/SKILL.md` |
 | Work in the Goals area (4 symbols) | `.agents/skills/generated/goals/SKILL.md` |
 | Work in the Cluster_33 area (3 symbols) | `.agents/skills/generated/cluster-33/SKILL.md` |
-| Work in the Cluster_42 area (3 symbols) | `.agents/skills/generated/cluster-42/SKILL.md` |
 
 <!-- gitnexus:end -->
