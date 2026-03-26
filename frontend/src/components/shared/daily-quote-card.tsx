@@ -11,7 +11,7 @@ export const DailyQuoteCard = () => {
   const displayQuote = apiQuote?.content || t('quote.card.defaultQuote')
 
   return (
-    <Card className='relative' variant='surface'>
+    <Card className='bg-accent relative' variant='surface'>
       <div className='absolute top-3 left-3 opacity-10'>
         <QuoteIcon className='size-8 rotate-180 fill-stone-500 text-stone-500' />
       </div>
@@ -35,9 +35,9 @@ export const DailyQuoteCard = () => {
         </p>
 
         <div className='flex flex-col items-end gap-0.5'>
-          <p className='font-headline text-muted-foreground text-xs font-medium tracking-wider uppercase'>
+          <p className='font-headline text-muted-foreground text-xs font-bold tracking-wider uppercase'>
             {t('quote.card.authorPrefix')}
-            {[apiQuote?.author].filter(Boolean).join(', ')}
+            {apiQuote?.author ?? '-'}
             {t('quote.card.authorSuffix')}
           </p>
           {apiQuote?.source ? (
