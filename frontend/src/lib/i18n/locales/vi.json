@@ -282,7 +282,18 @@
       "subtitle": "Sổ tay",
       "description": "Ghi lại quán chiếu để nhìn rõ và thấy được sự chuyển biến của tâm.",
       "placeholder": "Viết ngắn thôi, chỉ điều bạn thật sự nhận ra trong lòng...",
-      "immutableNote": "Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung sẽ không sửa lại được, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống.",
+      "immutableNote": "Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung chỉ có thể sửa được trong vòng 15 phút, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống.",
+      "form": {
+        "inquiryLabel": "Quán chiếu",
+        "questions": {
+          "gratitude": "Điều thiện lành nào bạn đã chứng kiến hoặc nuôi dưỡng hôm nay?",
+          "repentance": "Điều gì hôm nay bạn muốn nhìn lại để lòng được nhẹ hơn?"
+        },
+        "placeholder": "Hãy để những dòng suy niệm của bạn chảy xuống trang...",
+        "submitLabel": "Ghi nhận sự quán chiếu",
+        "tagsActionLabel": "Thêm nhãn",
+        "pinActionLabel": "Ghim quán chiếu"
+      },
       "deleteTitle": "Xóa bài viết?",
       "deleteDescription": "Nếu xóa, bạn sẽ không xem lại được bài viết này nữa."
     },
