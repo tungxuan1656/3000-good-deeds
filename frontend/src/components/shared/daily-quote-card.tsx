@@ -41,7 +41,7 @@ export const DailyQuoteCard = () => {
             {t('quote.card.authorSuffix')}
           </p>
           {apiQuote?.source ? (
-            <p className='font-headline text-muted-foreground/70 tracking-xs text-xs font-medium'>
+            <p className='text-muted-foreground text-xs font-light tracking-wide italic'>
               {apiQuote?.source}
             </p>
           ) : null}

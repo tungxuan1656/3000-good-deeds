@@ -53,11 +53,11 @@ export const WeeklyRhythmCard = () => {
   return (
     <Card padding='md'>
       <div className='flex items-start justify-between gap-3'>
-        <div>
-          <h3 className='text-foreground text-base font-semibold'>
+        <div className='space-y-2'>
+          <h3 className='font-headline text-primary text-base italic md:text-lg'>
             {t('stats.weekly.title')}
           </h3>
-          <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
+          <p className='text-muted-foreground px-1 text-xs leading-relaxed font-light md:text-sm'>
             {t('stats.weekly.description', { activeCount })}
           </p>
         </div>
@@ -69,7 +69,7 @@ export const WeeklyRhythmCard = () => {
           {t('common.actions.viewAll')}
         </Button>
       </div>
-      <div className='mt-4 flex gap-2'>
+      <div className='mt-4 flex gap-0.5'>
         {days.map((day, index) => {
           const date = new Date(day.date)
           const isFuture = isAfter(date, new Date())
@@ -80,12 +80,11 @@ export const WeeklyRhythmCard = () => {
             <div
               key={day.date}
               className={cn(
-                'flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold transition',
+                'flex h-9 w-9 items-center justify-center rounded-xs text-xs font-semibold transition',
                 isActive
                   ? 'bg-primary/20 text-primary'
                   : 'bg-muted text-muted-foreground',
-                isCurrentDay &&
-                  'ring-primary/50 ring-offset-background ring-2 ring-offset-2',
+                isCurrentDay && 'ring-primary/50 ring-offset-background ring-1',
                 isFuture && 'opacity-40',
               )}>
               {defaultDays[index]}
