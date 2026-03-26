@@ -282,7 +282,7 @@
       "subtitle": "Sổ tay",
       "description": "Ghi lại quán chiếu để nhìn rõ và thấy được sự chuyển biến của tâm.",
       "placeholder": "Viết ngắn thôi, chỉ điều bạn thật sự nhận ra trong lòng...",
-      "immutableNote": "Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung chỉ có thể sửa được trong vòng 15 phút, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống.",
+      "immutableNote": "Những dòng này được giữ nguyên như khoảnh khắc bạn đã thấy và đã viết; sau khi lưu, nội dung chỉ có thể xoá trong vòng 15 phút, để việc quán chiếu được trọn vẹn và những gì được viết ra có thể buông xuống.",
       "form": {
         "inquiryLabel": "Quán chiếu",
         "questions": {
