@@ -95,6 +95,10 @@ rm -rf antigravity-awesome-skills
 echo ""
 sh scripts/sync-gitnexus.sh
 
+git clone https://github.com/obra/superpowers.git
+cp -a superpowers/skills/. "$DEST/"
+rm -rf superpowers
+
 echo ""
 echo "Project skills installed successfully."
 echo "Location: $DEST"
