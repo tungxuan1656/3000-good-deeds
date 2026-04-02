@@ -22,96 +22,88 @@ export const NotificationSettingsCard = ({
   const { ui, status, actions } = useNotificationSettings(user)
 
   return (
-    <Card className='gap-4'>
-      <div className='flex items-center justify-between'>
-        <div>
-          <div className='flex items-center gap-2 text-xs font-semibold tracking-widest uppercase'>
-            {user?.reminderEnabled ? (
-              <span className='text-primary flex items-center'>
-                <CheckCircle2Icon className='inline h-4 w-4' />
-                <span className='ml-1'>
-                  {t('settings.notifications.status.enabled')}
-                </span>
-              </span>
-            ) : (
-              <span className='text-muted-foreground flex items-center'>
-                <XCircleIcon className='inline h-4 w-4' />
-                <span className='ml-1'>
-                  {t('settings.notifications.status.disabled')}
-                </span>
-              </span>
-            )}
-          </div>
-          <div className='flex items-center gap-2'>
-            <p className='text-foreground text-base font-semibold'>
-              {t('settings.notifications.title')}
-            </p>
-            <InfoButton
-              description={INFO_COPY.reminders.description}
-              title={INFO_COPY.reminders.title}
-            />
-          </div>
-          <p className='text-muted-foreground mt-1 text-sm'>
-            {t('settings.notifications.subtitle')}
-          </p>
-          {!ui.pushSupported && (
-            <p className='text-muted-foreground mt-1 text-sm'>
-              {t('settings.notifications.unsupportedHint')}
-            </p>
-          )}
-          {ui.pushError && (
-            <p className='text-destructive mt-1 text-sm'>{ui.pushError}</p>
-          )}
+    <Card className='flex flex-col gap-2' padding='sm'>
+      <div>
+        <div className='flex items-center gap-2'>
+          <h4 className='text-foreground text-base font-semibold md:text-xl'>
+            {t('settings.notifications.title')}
+          </h4>
+          <InfoButton
+            description={INFO_COPY.reminders.description}
+            title={INFO_COPY.reminders.title}
+          />
         </div>
+        <p className='text-muted-foreground text-sm'>
+          {t('settings.notifications.subtitle')}
+        </p>
+      </div>
+      {user?.reminderEnabled && (
+        <div className='flex items-center justify-between gap-4'>
+          <div className='flex flex-col gap-0.5'>
+            <span className='text-primary text-xss flex items-center md:text-xs'>
+              {user?.reminderEnabled ? (
+                <CheckCircle2Icon className='inline size-3' />
+              ) : (
+                <XCircleIcon className='inline size-3' />
+              )}
+              <span className='ml-1'>
+                {user?.reminderEnabled
+                  ? t('settings.notifications.status.enabled')
+                  : t('settings.notifications.status.disabled')}
+              </span>
+            </span>
+            <Label className='text-foreground text-xs font-semibold tracking-widest uppercase'>
+              {t('settings.notifications.reminderTimeLabel')}
+            </Label>
+          </div>
+          <Input
+            className='border-border bg-card h-auto w-36 rounded-2xl border px-4 py-2 text-sm'
+            type='time'
+            value={ui.reminderTime}
+            onBlur={actions.handleReminderTimeBlur}
+            onChange={(event) => actions.setReminderTime(event.target.value)}
+          />
+        </div>
+      )}
+      {!ui.pushSupported && (
+        <p className='text-muted-foreground mt-1 text-sm'>
+          {t('settings.notifications.unsupportedHint')}
+        </p>
+      )}
+      {ui.pushError && (
+        <p className='text-destructive mt-1 text-sm'>{ui.pushError}</p>
+      )}
+      <div className='flex gap-2'>
         <Button
+          className='flex-2'
           disabled={
             status.isToggleLoading ||
             (!ui.pushSupported && !user?.reminderEnabled)
           }
-          variant={user?.reminderEnabled ? 'outline' : 'default'}
+          size={'sm'}
+          variant={user?.reminderEnabled ? 'secondary' : 'default'}
           onClick={() => actions.handleReminderToggle(!user?.reminderEnabled)}>
           {status.isToggleLoading ? <Spinner /> : null}
           {user?.reminderEnabled
             ? t('settings.notifications.actions.disable')
             : t('settings.notifications.actions.enable')}
         </Button>
+        {user?.reminderEnabled ? (
+          <Button
+            className='flex-1'
+            disabled={
+              status.isTestLoading ||
+              status.isToggleLoading ||
+              !ui.pushSupported
+            }
+            size='sm'
+            variant='outline'
+            onClick={actions.handleTestNotification}>
+            {status.isTestLoading ? <Spinner /> : null}
+            {t('settings.notifications.actions.sendTest')}
+          </Button>
+        ) : null}
       </div>
-      {user?.reminderEnabled && (
-        <div className='flex flex-col gap-2'>
-          <div className='flex items-center justify-between gap-4'>
-            <Label className='text-foreground text-xs font-semibold tracking-widest uppercase'>
-              {t('settings.notifications.reminderTimeLabel')}
-            </Label>
-            <Input
-              className='border-border bg-card w-36 rounded-2xl border px-4 py-2 text-sm'
-              type='time'
-              value={ui.reminderTime}
-              onBlur={actions.handleReminderTimeBlur}
-              onChange={(event) => actions.setReminderTime(event.target.value)}
-            />
-          </div>
-          <p className='text-muted-foreground text-sm'>
-            {t('settings.notifications.reminderBehavior')}
-          </p>
-          <p className='text-muted-foreground text-sm'>
-            {t('settings.notifications.sampleMessage')}
-          </p>
-          <div className='flex justify-end'>
-            <Button
-              disabled={
-                status.isTestLoading ||
-                status.isToggleLoading ||
-                !ui.pushSupported
-              }
-              size='sm'
-              variant='outline'
-              onClick={actions.handleTestNotification}>
-              {status.isTestLoading ? <Spinner /> : null}
-              {t('settings.notifications.actions.sendTest')}
-            </Button>
-          </div>
-        </div>
-      )}
     </Card>
   )
 }
