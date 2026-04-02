@@ -15,10 +15,8 @@ import {
 import { vi } from 'date-fns/locale'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { useCalendar } from '@/hooks/api/use-activities'
-import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
@@ -36,6 +34,13 @@ const weekdayLabels = [
   t('stats.calendar.weekdays.sun'),
 ]
 
+const intensityLabels = [
+  t('stats.calendar.levels.none'),
+  t('stats.calendar.levels.light'),
+  t('stats.calendar.levels.steady'),
+  t('stats.calendar.levels.radiant'),
+]
+
 export const CalendarStats = () => {
   const [currentMonth, setCurrentMonth] = useState(() =>
     startOfMonth(new Date()),
@@ -50,6 +55,11 @@ export const CalendarStats = () => {
   const to = format(monthEnd, 'yyyy-MM-dd')
   const { data, isLoading } = useCalendar(from, to)
   const calendar = data?.data ?? []
+
+  const maxCount = useMemo(
+    () => calendar.reduce((max, item) => Math.max(max, item.count), 0),
+    [calendar],
+  )
 
   const counts = useMemo(() => {
     return new Map(calendar.map((item) => [item.date, item.count]))
@@ -70,22 +80,47 @@ export const CalendarStats = () => {
     return dayList
   }, [calendarStart, calendarEnd])
 
+  const getIntensityClassName = (
+    count: number,
+    isCurrentMonthDay: boolean,
+    isFutureDay: boolean,
+  ) => {
+    if (!isCurrentMonthDay) return 'bg-stone-50 text-muted-foreground'
+    if (isFutureDay || isLoading) return 'bg-stone-100 text-muted-foreground/25'
+    if (count <= 0 || maxCount <= 0) return 'bg-stone-100 text-muted-foreground'
+
+    const ratio = count / maxCount
+    if (ratio >= 0.8) return 'bg-[#3F5335] text-stone-100'
+    if (ratio >= 0.5) return 'bg-[#8A9584] text-[#2F3A29]'
+
+    return 'bg-[#C8CEC5] text-[#41503A]'
+  }
+
+  const legendToneClassName = [
+    'bg-primary/10',
+    'bg-primary/30',
+    'bg-primary/70',
+    'bg-primary',
+  ]
+
   return (
     <div>
-      <div className='mx-2 mt-4 flex flex-wrap items-center justify-between gap-3'>
-        <h2 className='text-foreground text-xl font-semibold'>
-          {format(currentMonth, 'MMMM/yyyy', { locale: vi }).toUpperCase()}
+      <div className='mx-2 mt-4 mb-4 flex flex-wrap items-center justify-between gap-3'>
+        <h2 className='text-foreground text-2xl leading-tight font-medium tracking-tight'>
+          {t('stats.calendar.activityTitle', {
+            month: format(currentMonth, 'M', { locale: vi }),
+          })}
         </h2>
-        <div className='mb-2 flex items-center gap-2'>
+        <div className='mb-2 flex items-center gap-1'>
           <Button
-            className='bg-card h-9 w-9 rounded-full shadow-sm'
+            className='text-muted-foreground h-9 w-9 rounded-full border-none bg-transparent shadow-none hover:bg-stone-100 hover:text-stone-700'
             size='icon'
             variant='outline'
             onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
           <Button
-            className='bg-card h-9 w-9 rounded-full shadow-sm'
+            className='text-muted-foreground h-9 w-9 rounded-full border-none bg-transparent shadow-none hover:bg-stone-100 hover:text-stone-700'
             size='icon'
             variant='outline'
             onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}>
@@ -94,61 +129,48 @@ export const CalendarStats = () => {
         </div>
       </div>
 
-      <Card>
-        <div className='mb-5 flex items-center justify-between gap-2'>
-          <p className='text-foreground font-semibold'>
-            {t('stats.calendar.monthOverview')}
-          </p>
-          <Link
-            className='text-foreground/80 hover:text-foreground -mr-2 px-2 text-xs'
-            to={PATHS.TIMELINE}>
-            {t('stats.calendar.viewTimeline')}
-          </Link>
+      <Card className='bg-surface-container-lowest p-5 md:flex md:flex-row md:gap-5 md:p-7'>
+        <div className='md:flex md:flex-1 md:flex-col'>
+          <div className='text-xss text-muted-foreground mb-3 grid grid-cols-7 gap-2 text-center font-semibold tracking-wide uppercase'>
+            {weekdayLabels.map((label) => (
+              <div key={label}>{label}</div>
+            ))}
+          </div>
+
+          <div className='mt-2 grid grid-cols-7 gap-1'>
+            {days.map((day) => {
+              const key = format(day, 'yyyy-MM-dd')
+              const count = counts.get(key) ?? 0
+              const isCurrentMonth = isSameMonth(day, currentMonth)
+              const isFuture = isAfter(day, new Date())
+              const isCurrentDay = isToday(day)
+
+              return (
+                <div
+                  key={key}
+                  className={cn(
+                    'flex aspect-square items-center justify-center rounded-xs text-xs font-medium md:aspect-auto md:py-5 md:text-sm',
+                    getIntensityClassName(count, isCurrentMonth, isFuture),
+                    isCurrentDay && 'ring-primary/30 ring-1 ring-offset-1',
+                  )}>
+                  {isCurrentMonth ? <span>{format(day, 'd')}</span> : null}
+                </div>
+              )
+            })}
+          </div>
         </div>
 
-        <div className='text-foreground/80 grid grid-cols-7 gap-2 text-center text-xs font-semibold'>
-          {weekdayLabels.map((label) => (
-            <div key={label}>{label}</div>
+        <div className='mt-5 flex flex-wrap items-center gap-5 md:mt-10 md:flex-col md:items-end md:gap-3'>
+          {intensityLabels.map((label, index) => (
+            <div key={label} className='flex items-center gap-2'>
+              <span className='text-xss font-semibold tracking-wide text-stone-500 uppercase'>
+                {label}
+              </span>
+              <span
+                className={cn('h-3 w-3 rounded-xs', legendToneClassName[index])}
+              />
+            </div>
           ))}
-        </div>
-
-        <div className='mt-2 grid grid-cols-7 gap-2'>
-          {days.map((day) => {
-            const key = format(day, 'yyyy-MM-dd')
-            const count = counts.get(key) ?? 0
-            const isCurrentMonth = isSameMonth(day, currentMonth)
-            const isFuture = isAfter(day, new Date())
-            const isCurrentDay = isToday(day)
-
-            return (
-              <div
-                key={key}
-                className={cn(
-                  'bg-card/80 border-border/45 flex min-h-16 flex-col items-center justify-between rounded-2xl border p-2 shadow-sm',
-                  !isCurrentMonth && 'border-none opacity-50 shadow-none',
-                  isFuture && 'opacity-40',
-                  isCurrentDay &&
-                    'ring-primary/40 ring-offset-background ring-2 ring-offset-2',
-                )}>
-                {isCurrentMonth ? (
-                  <>
-                    <span className='text-foreground text-sm font-semibold'>
-                      {format(day, 'd')}
-                    </span>
-                    {isLoading ? (
-                      <span className='bg-muted h-4 w-10 animate-pulse rounded-full' />
-                    ) : count > 0 ? (
-                      <span className='bg-primary/15 text-primary rounded-full px-2 py-1 text-xs font-semibold'>
-                        {count}
-                      </span>
-                    ) : (
-                      <span className='text-muted-foreground text-xs'>—</span>
-                    )}
-                  </>
-                ) : null}
-              </div>
-            )
-          })}
         </div>
       </Card>
     </div>
