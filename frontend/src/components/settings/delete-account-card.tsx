@@ -1,4 +1,3 @@
-import { Trash2Icon } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
@@ -34,29 +33,26 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
 
   return (
     <>
-      <Card className='border-destructive/30 bg-destructive/10 border'>
-        <div className='flex items-start justify-between gap-4'>
-          <div>
-            <p className='text-foreground text-base font-semibold'>
-              {t('settings.deleteAccount.title')}
-            </p>
-            <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
-              {t('settings.deleteAccount.description')}
-            </p>
-          </div>
-          <div className='flex items-center justify-center rounded-full'>
-            <Trash2Icon className='text-destructive h-4 w-4' />
-          </div>
+      <Card
+        className='border-destructive/30 bg-destructive/10 border'
+        padding='sm'>
+        <h4 className='text-foreground text-base font-semibold md:text-xl'>
+          {t('settings.deleteAccount.title')}
+        </h4>
+        <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
+          {t('settings.deleteAccount.description')}
+        </p>
+        <div className='flex w-full justify-end'>
+          <Button
+            className='bg-destructive text-destructive-foreground hover:bg-destructive/90 mt-3 h-9'
+            disabled={isDeleting}
+            onClick={() => {
+              setDeleteText('')
+              deleteDialogRef.current?.open()
+            }}>
+            {t('settings.deleteAccount.action')}
+          </Button>
         </div>
-        <Button
-          className='bg-destructive text-destructive-foreground hover:bg-destructive/90 mt-3 h-10 w-full rounded-full'
-          disabled={isDeleting}
-          onClick={() => {
-            setDeleteText('')
-            deleteDialogRef.current?.open()
-          }}>
-          {t('settings.deleteAccount.action')}
-        </Button>
       </Card>
 
       <ConfirmDialog

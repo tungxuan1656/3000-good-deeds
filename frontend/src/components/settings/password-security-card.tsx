@@ -1,4 +1,3 @@
-import { KeyRoundIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -14,7 +13,6 @@ export const PasswordSecurityCard = () => {
   const { changePasswordWithCurrent } = useAuthProvider()
   const [currentPassword, setCurrentPassword] = useState('')
   const [nextPassword, setNextPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const providerData = firebaseAuth.currentUser?.providerData ?? []
@@ -25,7 +23,6 @@ export const PasswordSecurityCard = () => {
   const resetForm = () => {
     setCurrentPassword('')
     setNextPassword('')
-    setConfirmPassword('')
   }
 
   const handleChangePassword = async () => {
@@ -33,14 +30,8 @@ export const PasswordSecurityCard = () => {
       return
     }
 
-    if (!currentPassword || !nextPassword || !confirmPassword) {
+    if (!currentPassword || !nextPassword) {
       toast.error(t('settings.security.errors.missingFields'))
-
-      return
-    }
-
-    if (nextPassword !== confirmPassword) {
-      toast.error(t('settings.security.errors.passwordMismatch'))
 
       return
     }
@@ -64,44 +55,33 @@ export const PasswordSecurityCard = () => {
   }
 
   return (
-    <Card className='gap-4'>
-      <div className='flex items-start justify-between gap-4'>
-        <div>
-          <p className='text-foreground text-base font-semibold'>
-            {t('settings.security.title')}
-          </p>
-          <p className='text-muted-foreground mt-1 text-sm'>
-            {t('settings.security.description')}
-          </p>
-        </div>
-        <div className='flex items-center justify-center rounded-full'>
-          <KeyRoundIcon className='text-primary h-5 w-5' />
-        </div>
-      </div>
+    <Card padding='sm'>
+      <h4 className='text-foreground text-base font-semibold md:text-xl'>
+        {t('settings.security.title')}
+      </h4>
+      <p className='text-muted-foreground mt-1 text-sm'>
+        {t('settings.security.description')}
+      </p>
 
       {canChangePassword ? (
-        <div className='flex flex-col gap-3'>
+        <div className='mt-3 flex flex-col gap-2'>
           <Input
+            className='h-9'
             placeholder={t('settings.security.fields.currentPassword')}
             type='password'
             value={currentPassword}
             onChange={(event) => setCurrentPassword(event.target.value)}
           />
           <Input
+            className='h-9'
             placeholder={t('settings.security.fields.newPassword')}
             type='password'
             value={nextPassword}
             onChange={(event) => setNextPassword(event.target.value)}
           />
-          <Input
-            placeholder={t('settings.security.fields.confirmPassword')}
-            type='password'
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-          />
           <Button
-            className='h-11 w-full'
             disabled={isSubmitting}
+            size={'sm'}
             onClick={handleChangePassword}>
             {isSubmitting
               ? t('common.actions.processing')
