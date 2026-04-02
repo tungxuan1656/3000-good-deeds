@@ -21,10 +21,7 @@ const ProgressPage = () => {
 
         <StatsCard />
 
-        <Card className='gap-4'>
-          <GoalSettingCard />
-        </Card>
-
+        <GoalSettingCard />
         <CalendarStats />
 
         <Card className='gap-4'>
