@@ -2,14 +2,14 @@ import { CheckIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
-import { Input } from '@/components/ui/input'
-import { Switch } from '@/components/ui/switch'
 import { useGoals, useUpsertGoals } from '@/hooks/api/use-goals'
 import { GOAL_LABELS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 import type { GoalType } from '@/types/api'
 
+import { Card, Switch } from '../ui'
 import { Button } from '../ui/button'
+import { InputGroup, InputGroupInput } from '../ui/input-group'
 
 type GoalFormState = {
   targetCount: string
@@ -93,20 +93,21 @@ export const GoalSettingCard = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4'>
+    <Card className='flex flex-col gap-3 md:flex-row md:gap-5'>
       <div className='flex items-start justify-between'>
         <div>
-          <p className='text-foreground text-base font-semibold'>
+          <h4 className='text-foreground text-base font-semibold'>
             {t('goals.setting.title')}
-          </p>
-          <p className='text-muted-foreground mt-1 text-sm'>
+          </h4>
+          <p className='text-muted-foreground mt-1 text-xs'>
             {t('goals.setting.subtitle')}
           </p>
-          <p className='text-muted-foreground mt-1 text-sm'>
+          <p className='text-muted-foreground mt-1 text-xs'>
             {t('goals.setting.helper')}
           </p>
         </div>
         <Button
+          className='md:invisible md:w-0'
           disabled={isLoading || upsertGoalsMutation.isPending}
           size={'xs'}
           onClick={() => void handleSave()}>
@@ -116,32 +117,38 @@ export const GoalSettingCard = () => {
             : t('goals.setting.saveAction')}
         </Button>
       </div>
-      <div className='grid gap-2'>
+      <div className='grid gap-2 md:self-end'>
         {goalTypes.map((type) => (
-          <div key={type} className='flex items-center justify-between gap-3'>
+          <InputGroup className='px-3'>
             <p className='text-foreground text-sm font-semibold'>
-              {GOAL_LABELS[type]}
+              {GOAL_LABELS[type]}:
             </p>
-            <div className='flex items-center gap-5'>
-              <Input
-                className='w-24 rounded-full text-sm'
-                disabled={isLoading || upsertGoalsMutation.isPending}
-                min={1}
-                type='number'
-                value={goalForms[type].targetCount}
-                onChange={(event) =>
-                  handleTargetChange(type, event.target.value)
-                }
-              />
-              <Switch
-                checked={goalForms[type].isEnabled}
-                disabled={isLoading || upsertGoalsMutation.isPending}
-                onCheckedChange={(value) => handleToggle(type, value)}
-              />
-            </div>
-          </div>
+            <InputGroupInput
+              className='focus:bg-transparent!'
+              disabled={isLoading || upsertGoalsMutation.isPending}
+              min={1}
+              type='number'
+              value={goalForms[type].targetCount}
+              onChange={(event) => handleTargetChange(type, event.target.value)}
+            />
+            <Switch
+              checked={goalForms[type].isEnabled}
+              disabled={isLoading || upsertGoalsMutation.isPending}
+              onCheckedChange={(value) => handleToggle(type, value)}
+            />
+          </InputGroup>
         ))}
+        <Button
+          className='invisible mt-2 ml-auto h-0 self-end md:visible md:h-auto'
+          disabled={isLoading || upsertGoalsMutation.isPending}
+          size={'xs'}
+          onClick={() => void handleSave()}>
+          <CheckIcon className='mr-1' />
+          {upsertGoalsMutation.isPending
+            ? t('common.actions.saving')
+            : t('goals.setting.saveAction')}
+        </Button>
       </div>
-    </div>
+    </Card>
   )
 }
