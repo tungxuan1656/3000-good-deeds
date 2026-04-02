@@ -120,7 +120,7 @@ export const GoalSettingCard = () => {
       <div className='grid gap-2 md:self-end'>
         {goalTypes.map((type) => (
           <InputGroup className='px-3'>
-            <p className='text-foreground text-sm font-semibold'>
+            <p className='text-muted-foreground text-sm font-medium'>
               {GOAL_LABELS[type]}:
             </p>
             <InputGroupInput
@@ -139,7 +139,7 @@ export const GoalSettingCard = () => {
           </InputGroup>
         ))}
         <Button
-          className='invisible mt-2 ml-auto h-0 self-end md:visible md:h-auto'
+          className='invisible mt-2 ml-auto h-0 self-end md:visible md:h-7'
           disabled={isLoading || upsertGoalsMutation.isPending}
           size={'xs'}
           onClick={() => void handleSave()}>
