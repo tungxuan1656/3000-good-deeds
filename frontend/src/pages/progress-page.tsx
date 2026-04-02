@@ -7,7 +7,6 @@ import {
   PageHeader,
 } from '@/components/shared'
 import { CalendarStats, StatsCard } from '@/components/stats'
-import { Card } from '@/components/ui'
 import { t } from '@/lib/i18n'
 
 const ProgressPage = () => {
@@ -20,13 +19,9 @@ const ProgressPage = () => {
         />
 
         <StatsCard />
-
         <GoalSettingCard />
         <CalendarStats />
-
-        <Card className='gap-4'>
-          <GoalHistoryCard />
-        </Card>
+        <GoalHistoryCard />
       </MainColumn>
 
       <SideColumn hideInMobile>
