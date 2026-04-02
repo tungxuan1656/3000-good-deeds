@@ -61,54 +61,54 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   }
 
   return (
-    <div>
-      <h4 className='text-foreground mx-2 my-2 text-sm font-semibold md:text-base'>
+    <Card className='flex flex-col gap-2' padding='sm'>
+      <h4 className='text-foreground text-base font-semibold md:text-xl'>
         {t('settings.account.title')}
       </h4>
-      <Card className='flex flex-col gap-2' padding='sm'>
-        <Label className='text-muted-foreground font-headline text-xs md:text-sm'>
-          {displayEmail}
-        </Label>
-        <div className='flex items-center gap-0.5'>
-          {editingDisplayName ? (
-            <Input
-              className='border-border h-8 w-auto bg-transparent py-0 md:min-w-48'
-              placeholder={t('settings.account.fields.displayName')}
-              value={displayNameInput}
-              onChange={(event) => setDisplayNameInput(event.target.value)}
-            />
-          ) : (
-            <Label className='text-foreground text-base'>{displayName}</Label>
-          )}
-          {editingDisplayName ? (
-            <>
-              <Button
-                className='ml-1 h-7'
-                size={'xs'}
-                variant={'outline'}
-                onClick={handleUpdateDisplayName}>
-                {!isSaving
-                  ? t('common.actions.save')
-                  : t('common.actions.saving')}
-              </Button>
-              <Button
-                className='h-7'
-                size={'xs'}
-                variant={'ghost'}
-                onClick={() => setEditingDisplayName(false)}>
-                {t('common.actions.cancel')}
-              </Button>
-            </>
-          ) : (
+      <Label className='text-muted-foreground font-headline text-xs md:text-sm'>
+        {displayEmail}
+      </Label>
+      <div className='flex items-center gap-0.5'>
+        {editingDisplayName ? (
+          <Input
+            className='border-border h-8 w-auto bg-transparent py-0 md:min-w-48'
+            placeholder={t('settings.account.fields.displayName')}
+            value={displayNameInput}
+            onChange={(event) => setDisplayNameInput(event.target.value)}
+          />
+        ) : (
+          <Label className='text-foreground text-sm md:text-base'>
+            {displayName}
+          </Label>
+        )}
+        {editingDisplayName ? (
+          <>
             <Button
-              size={'icon-sm'}
-              variant={'ghost'}
-              onClick={() => setEditingDisplayName(true)}>
-              <EditIcon className='size-4' />
+              className='ml-1 h-7'
+              size={'xs'}
+              variant={'outline'}
+              onClick={handleUpdateDisplayName}>
+              {!isSaving
+                ? t('common.actions.save')
+                : t('common.actions.saving')}
             </Button>
-          )}
-        </div>
-      </Card>
-    </div>
+            <Button
+              className='h-7'
+              size={'xs'}
+              variant={'ghost'}
+              onClick={() => setEditingDisplayName(false)}>
+              {t('common.actions.cancel')}
+            </Button>
+          </>
+        ) : (
+          <Button
+            size={'icon-sm'}
+            variant={'ghost'}
+            onClick={() => setEditingDisplayName(true)}>
+            <EditIcon className='size-4' />
+          </Button>
+        )}
+      </div>
+    </Card>
   )
 }
