@@ -15,10 +15,10 @@ export const GoalHistoryCard = () => {
     : []
 
   return (
-    <div className='gap-4'>
-      <p className='text-foreground mb-2 text-base font-semibold'>
+    <div className='flex flex-col gap-2'>
+      <h3 className='font-headline text-primary px-2 text-lg italic md:text-xl'>
         {t('goals.history.title')}
-      </p>
+      </h3>
       {isLoading && <SkeletonList length={1} />}
 
       {!isLoading && historyGoals.length === 0 && (
