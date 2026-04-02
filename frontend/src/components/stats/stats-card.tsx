@@ -12,21 +12,6 @@ export const StatsCard = () => {
   const summary = data?.data
   const isEmpty = !isLoading && !summary
 
-  const summaryCards = [
-    {
-      title: t('stats.card.recordedTitle'),
-      value: summary
-        ? t('stats.card.totalValue', { count: summary.totalDeeds })
-        : t('stats.card.totalValueFallback'),
-    },
-    {
-      title: t('stats.card.streakTitle'),
-      value: summary
-        ? t('stats.card.streakValue', { count: summary.streakDays })
-        : t('stats.card.streakValueFallback'),
-    },
-  ]
-
   return (
     <>
       {isLoading && <SkeletonList length={2} />}
@@ -40,22 +25,18 @@ export const StatsCard = () => {
       )}
 
       {!isEmpty && !isLoading && (
-        <div className='grid gap-4 sm:grid-cols-2'>
-          {summaryCards.map((card) => {
-            return (
-              <Card key={card.title} className='flex-1'>
-                <div className='flex items-start justify-between gap-3'>
-                  <p className='text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase sm:text-xs'>
-                    {card.title}
-                  </p>
-                </div>
-                <p className='text-foreground text-xl leading-tight font-semibold sm:text-3xl'>
-                  {card.value}
-                </p>
-              </Card>
-            )
-          })}
-        </div>
+        <Card className='flex flex-row items-center justify-between'>
+          <div className='flex items-start justify-between gap-3'>
+            <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase sm:text-sm'>
+              {t('stats.card.recordedTitle')}
+            </p>
+          </div>
+          <h4 className='text-foreground text-lg leading-tight font-semibold md:text-2xl'>
+            {t('stats.card.totalValue', {
+              count: `${summary?.totalDeeds || 0}`,
+            })}
+          </h4>
+        </Card>
       )}
     </>
   )
