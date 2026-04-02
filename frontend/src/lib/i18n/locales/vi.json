@@ -560,8 +560,15 @@
       "rangePrefix": "Tuần này"
     },
     "calendar": {
+      "activityTitle": "Hoạt động tháng {{month}}",
       "monthOverview": "Tổng quan tháng",
       "viewTimeline": "Xem timeline",
+      "levels": {
+        "none": "Không",
+        "light": "Nhẹ",
+        "steady": "Đều",
+        "radiant": "Rực rỡ"
+      },
       "weekdays": {
         "mon": "T2",
         "tue": "T3",
