@@ -90,14 +90,14 @@ export const CalendarStats = () => {
     if (count <= 0 || maxCount <= 0) return 'bg-stone-100 text-muted-foreground'
 
     const ratio = count / maxCount
-    if (ratio >= 0.8) return 'bg-[#3F5335] text-stone-100'
-    if (ratio >= 0.5) return 'bg-[#8A9584] text-[#2F3A29]'
+    if (ratio >= 0.8) return 'bg-primary text-stone-100'
+    if (ratio >= 0.5) return 'bg-primary/70 text-stone-100'
 
-    return 'bg-[#C8CEC5] text-[#41503A]'
+    return 'bg-primary/30 text-primary'
   }
 
   const legendToneClassName = [
-    'bg-primary/10',
+    'bg-stone-100',
     'bg-primary/30',
     'bg-primary/70',
     'bg-primary',
@@ -129,7 +129,7 @@ export const CalendarStats = () => {
         </div>
       </div>
 
-      <Card className='bg-surface-container-lowest p-5 md:flex md:flex-row md:gap-5 md:p-7'>
+      <Card className='md:flex md:flex-row md:gap-5'>
         <div className='md:flex md:flex-1 md:flex-col'>
           <div className='text-xss text-muted-foreground mb-3 grid grid-cols-7 gap-2 text-center font-semibold tracking-wide uppercase'>
             {weekdayLabels.map((label) => (
