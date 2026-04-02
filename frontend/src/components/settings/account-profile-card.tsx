@@ -1,4 +1,4 @@
-import { UserIcon } from 'lucide-react'
+import { EditIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -20,6 +20,8 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   const [displayNameInput, setDisplayNameInput] = useState(
     user?.displayName ?? '',
   )
+  const [editingDisplayName, setEditingDisplayName] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
   const updateUser = useUpdateUser()
   const { updateDisplayNameOnly } = useAuthProvider()
 
@@ -30,9 +32,6 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   const displayName = user?.displayName ?? t('layout.user.fallbackName')
   const displayEmail = user?.email ?? t('layout.user.emailMissing')
 
-  const hasChanged =
-    displayNameInput.trim() !== (user?.displayName ?? '').trim()
-
   const handleUpdateDisplayName = async () => {
     const nextDisplayName = displayNameInput.trim()
     if (!nextDisplayName) {
@@ -42,6 +41,7 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
     }
 
     try {
+      setIsSaving(true)
       await updateDisplayNameOnly(nextDisplayName)
 
       const response = await updateUser.mutateAsync({
@@ -54,53 +54,61 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
       toast.success(t('settings.account.messages.updated'))
     } catch {
       toast.error(t('settings.account.errors.updateFailed'))
+    } finally {
+      setEditingDisplayName(false)
+      setIsSaving(false)
     }
   }
 
   return (
-    <Card className='gap-4'>
-      <div className='flex justify-between'>
-        <div>
-          <p className='text-muted-foreground text-xs font-semibold tracking-widest uppercase'>
-            {t('settings.account.heading')}
-          </p>
-          <p className='text-foreground mt-2 text-base font-semibold'>
-            {t('settings.account.title')}
-          </p>
-        </div>
-        <div className='flex justify-center rounded-full'>
-          <UserIcon className='text-primary h-5 w-5' />
-        </div>
-      </div>
-
-      <div className='bg-card/80 border-border/45 flex flex-col gap-3 rounded-2xl border p-4'>
-        <div className='flex items-center gap-4'>
-          <div>
+    <div>
+      <h4 className='text-foreground mx-2 my-2 text-sm font-semibold md:text-base'>
+        {t('settings.account.title')}
+      </h4>
+      <Card className='flex flex-col gap-2' padding='sm'>
+        <Label className='text-muted-foreground font-headline text-xs md:text-sm'>
+          {displayEmail}
+        </Label>
+        <div className='flex items-center gap-0.5'>
+          {editingDisplayName ? (
+            <Input
+              className='border-border h-8 w-auto bg-transparent py-0 md:min-w-48'
+              placeholder={t('settings.account.fields.displayName')}
+              value={displayNameInput}
+              onChange={(event) => setDisplayNameInput(event.target.value)}
+            />
+          ) : (
             <Label className='text-foreground text-base'>{displayName}</Label>
-            <Label className='text-muted-foreground text-sm'>
-              {displayEmail}
-            </Label>
-          </div>
+          )}
+          {editingDisplayName ? (
+            <>
+              <Button
+                className='ml-1 h-7'
+                size={'xs'}
+                variant={'outline'}
+                onClick={handleUpdateDisplayName}>
+                {!isSaving
+                  ? t('common.actions.save')
+                  : t('common.actions.saving')}
+              </Button>
+              <Button
+                className='h-7'
+                size={'xs'}
+                variant={'ghost'}
+                onClick={() => setEditingDisplayName(false)}>
+                {t('common.actions.cancel')}
+              </Button>
+            </>
+          ) : (
+            <Button
+              size={'icon-sm'}
+              variant={'ghost'}
+              onClick={() => setEditingDisplayName(true)}>
+              <EditIcon className='size-4' />
+            </Button>
+          )}
         </div>
-        <div className='text-muted-foreground text-sm'>
-          {t('settings.account.helper')}
-        </div>
-        <div className='flex flex-row gap-3'>
-          <Input
-            placeholder={t('settings.account.fields.displayName')}
-            value={displayNameInput}
-            onChange={(event) => setDisplayNameInput(event.target.value)}
-          />
-          <Button
-            disabled={updateUser.isPending || !hasChanged}
-            size={'sm'}
-            onClick={handleUpdateDisplayName}>
-            {updateUser.isPending
-              ? t('common.actions.processing')
-              : t('settings.account.actions.saveDisplayName')}
-          </Button>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   )
 }
