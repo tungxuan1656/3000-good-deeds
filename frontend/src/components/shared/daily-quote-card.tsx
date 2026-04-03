@@ -5,13 +5,16 @@ import { Card, CardContent } from '@/components/ui/card'
 import { useRandomQuote } from '@/hooks/api/use-cultivation'
 import { t } from '@/lib/i18n'
 
+import { Skeleton } from '../ui'
+import { SkeletonList } from './skeleton-list'
+
 export const DailyQuoteCard = () => {
   const { data, isFetching, refetch } = useRandomQuote()
   const apiQuote = data?.data
   const displayQuote = apiQuote?.content || t('quote.card.defaultQuote')
 
   return (
-    <Card className='bg-accent relative' variant='surface'>
+    <Card className='bg-muted relative' variant='surface'>
       <div className='absolute top-3 left-3 opacity-10'>
         <QuoteIcon className='size-8 rotate-180 fill-stone-500 text-stone-500' />
       </div>
@@ -46,6 +49,8 @@ export const DailyQuoteCard = () => {
             </p>
           ) : null}
         </div>
+        <Skeleton />
+        <SkeletonList />
       </CardContent>
     </Card>
   )
