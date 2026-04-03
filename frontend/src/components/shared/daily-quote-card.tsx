@@ -5,9 +5,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { useRandomQuote } from '@/hooks/api/use-cultivation'
 import { t } from '@/lib/i18n'
 
-import { Skeleton } from '../ui'
-import { SkeletonList } from './skeleton-list'
-
 export const DailyQuoteCard = () => {
   const { data, isFetching, refetch } = useRandomQuote()
   const apiQuote = data?.data
@@ -49,8 +46,6 @@ export const DailyQuoteCard = () => {
             </p>
           ) : null}
         </div>
-        <Skeleton />
-        <SkeletonList />
       </CardContent>
     </Card>
   )
