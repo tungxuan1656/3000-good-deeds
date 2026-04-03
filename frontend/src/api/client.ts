@@ -74,6 +74,8 @@ client.interceptors.response.use(
       return Promise.reject(error)
     }
 
+    console.log('API error:', JSON.stringify(error.response))
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -101,7 +103,11 @@ client.interceptors.response.use(
         const refreshToken = authTokenStorage.getRefreshToken()
 
         if (!refreshToken) {
-          throw new Error('Missing refresh token')
+          processQueue(new Error('Missing refresh token'))
+          isRefreshing = false
+          redirectToLogin()
+
+          return Promise.reject(error)
         }
 
         const response = await axios.post<ApiResponse<RefreshTokenResponse>>(
