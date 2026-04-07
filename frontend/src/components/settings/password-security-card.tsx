@@ -55,7 +55,7 @@ export const PasswordSecurityCard = () => {
   }
 
   return (
-    <Card padding='sm'>
+    <Card>
       <h4 className='text-foreground text-base font-semibold md:text-xl'>
         {t('settings.security.title')}
       </h4>
@@ -66,14 +66,14 @@ export const PasswordSecurityCard = () => {
       {canChangePassword ? (
         <div className='mt-3 flex flex-col gap-2'>
           <Input
-            className='h-9'
+            className='h-9 text-sm'
             placeholder={t('settings.security.fields.currentPassword')}
             type='password'
             value={currentPassword}
             onChange={(event) => setCurrentPassword(event.target.value)}
           />
           <Input
-            className='h-9'
+            className='h-9 text-sm'
             placeholder={t('settings.security.fields.newPassword')}
             type='password'
             value={nextPassword}

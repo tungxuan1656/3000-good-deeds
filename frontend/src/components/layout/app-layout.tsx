@@ -18,8 +18,6 @@ import {
 } from '@/lib/utils/push-notifications'
 import { useAuthStore } from '@/stores/auth.store'
 
-import { PWAGuideDialog } from './pwa-guide-dialog'
-
 export const AppLayout = () => {
   const user = useAuthStore.use.user()
   const refNotificationDialog = useRef<ConfirmDialogHandle>(null)
@@ -89,7 +87,6 @@ export const AppLayout = () => {
           refNotificationDialog.current?.close()
         }}
       />
-      <PWAGuideDialog />
     </div>
   )
 }

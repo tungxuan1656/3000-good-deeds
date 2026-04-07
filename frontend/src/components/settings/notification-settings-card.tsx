@@ -22,7 +22,7 @@ export const NotificationSettingsCard = ({
   const { ui, status, actions } = useNotificationSettings(user)
 
   return (
-    <Card className='flex flex-col gap-2' padding='sm'>
+    <Card className='flex flex-col gap-2'>
       <div>
         <div className='flex items-center gap-2'>
           <h4 className='text-foreground text-base font-semibold md:text-xl'>

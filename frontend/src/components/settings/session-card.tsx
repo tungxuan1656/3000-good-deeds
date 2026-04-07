@@ -5,7 +5,7 @@ import { LogoutButton } from './logout-button'
 
 export const SessionCard = () => {
   return (
-    <Card padding='sm'>
+    <Card>
       <h4 className='text-foreground text-base font-semibold md:text-xl'>
         {t('settings.session.title')}
       </h4>

@@ -61,7 +61,7 @@ export const AccountProfileCard = ({ user }: AccountProfileCardProps) => {
   }
 
   return (
-    <Card className='flex flex-col gap-2' padding='sm'>
+    <Card className='flex flex-col gap-2'>
       <h4 className='text-foreground text-base font-semibold md:text-xl'>
         {t('settings.account.title')}
       </h4>

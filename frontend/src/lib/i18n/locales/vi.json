@@ -154,6 +154,10 @@
       "confirm": "Hiểu rồi",
       "openAction": "Cài đặt ứng dụng"
     },
+    "suggestion": {
+      "message": "Cài đặt ứng dụng để truy cập nhanh hơn",
+      "viewGuide": "Xem hướng dẫn"
+    },
     "installGuide": {
       "android": {
         "step1": "Bước 1: Mở trang web trên trình duyệt Chrome trên điện thoại Android.",
@@ -162,7 +166,7 @@
         "step4": "Bước 4: Xác nhận cài đặt. Biểu tượng ứng dụng sẽ xuất hiện trên màn hình chính và trong ngăn ứng dụng."
       },
       "ios": {
-        "step1": "Bước 1: Mở trang web trên trình duyệt Safari (không sử dụng trình duyệt khác) trên iPhone/iPad.",
+        "step1": "Bước 1: Mở trang web trên trình duyệt Safari/Chrome trên iPhone/iPad.",
         "step2": "Bước 2: Nhấn vào nút Chia sẻ (hình vuông có mũi tên hướng lên) ở thanh công cụ.",
         "step3": "Bước 3: Chọn Thêm vào Màn hình chính (Add to Home Screen).",
         "step4": "Bước 4: Nhấn Thêm để xác nhận. Biểu tượng ứng dụng sẽ xuất hiện trên màn hình chính."

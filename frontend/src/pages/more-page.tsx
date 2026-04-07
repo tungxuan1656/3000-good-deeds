@@ -9,6 +9,7 @@ import {
   DeleteAccountCard,
   NotificationSettingsCard,
   PasswordSecurityCard,
+  PWASuggestion,
   SessionCard,
 } from '@/components/settings'
 import {
@@ -71,6 +72,8 @@ const MorePage = () => {
           description={t('pages.more.header.description')}
           title={t('pages.more.header.title')}
         />
+
+        <PWASuggestion />
 
         <AccountProfileCard user={user} />
         <NotificationSettingsCard user={user} />
