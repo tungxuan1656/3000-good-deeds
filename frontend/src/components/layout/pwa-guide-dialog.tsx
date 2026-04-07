@@ -10,6 +10,35 @@ import {
 
 import { ConfirmDialog, type ConfirmDialogHandle } from '../shared'
 
+const PWA_GUIDE_DIALOG_LAST_SHOWN_KEY = 'pwaGuideDialogLastShown'
+const ONE_DAY_MS = 24 * 60 * 60 * 1000 // 1 day in milliseconds
+
+/**
+ * Check if enough time has passed (1 day) since the last PWA guide display
+ * Returns true if we should show, false if we should skip due to cooldown
+ */
+const isShowPwaGuideDue = (): boolean => {
+  const lastShownTimestamp = localStorage.getItem(
+    PWA_GUIDE_DIALOG_LAST_SHOWN_KEY,
+  )
+
+  if (!lastShownTimestamp) {
+    return true // Never shown before
+  }
+
+  const lastShown = parseInt(lastShownTimestamp, 10)
+  const now = Date.now()
+
+  return now - lastShown >= ONE_DAY_MS
+}
+
+/**
+ * Save current timestamp when PWA guide is shown
+ */
+const savePwaGuideLaunchTime = (): void => {
+  localStorage.setItem(PWA_GUIDE_DIALOG_LAST_SHOWN_KEY, Date.now().toString())
+}
+
 type PWAGuideDialogProps = {
   autoHandle?: boolean
 }
@@ -34,7 +63,9 @@ export const PWAGuideDialog = React.forwardRef<
   useEffect(() => {
     if (!autoHandle) return
     if (!shouldShowPwaInstallGuide(isMobile)) return
+    if (!isShowPwaGuideDue()) return
 
+    savePwaGuideLaunchTime()
     installDialogRef.current?.open()
   }, [isMobile, autoHandle])
 
