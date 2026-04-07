@@ -10,6 +10,7 @@ import {
   AuthTabs,
   SocialAuth,
 } from '@/components/auth'
+import { PWAGuideDialog } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -216,6 +217,8 @@ const LoginPage = () => {
                 </form>
               </CardContent>
             </Card>
+
+            <PWAGuideDialog />
 
             <AuthFooter version={APP_VERSION} />
           </div>

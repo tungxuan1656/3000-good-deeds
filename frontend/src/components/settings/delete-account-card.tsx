@@ -33,9 +33,7 @@ export const DeleteAccountCard = ({ onConfirm }: DeleteAccountCardProps) => {
 
   return (
     <>
-      <Card
-        className='border-destructive/30 bg-destructive/10 border'
-        padding='sm'>
+      <Card className='border-destructive/30 bg-destructive/10 border'>
         <h4 className='text-foreground text-base font-semibold md:text-xl'>
           {t('settings.deleteAccount.title')}
         </h4>

@@ -27,7 +27,7 @@ export const BottomTab = () => {
   }
 
   return createPortal(
-    <div className='pointer-events-none fixed inset-x-0 bottom-0 z-80 md:hidden'>
+    <div className='fixed inset-x-0 bottom-0 z-80 md:hidden'>
       <div className='pb-safe bg-surface-container/50 border-border/50 pointer-events-auto rounded-t-3xl border-t shadow-md backdrop-blur-lg'>
         <div className='flex items-center justify-between px-1 py-3'>
           {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
