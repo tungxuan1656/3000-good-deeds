@@ -155,4 +155,5 @@ Tài liệu này chia dự án thành các task có kích thước cân bằng: 
 - Đã hoàn thành: LP-03 (Thiết kế UI system và component lõi).
 - Đã hoàn thành: LP-04 (Viết nội dung tiếng Việt chuẩn SEO).
 - Đã hoàn thành: LP-05 (Tích hợp placeholder ảnh + media slots).
-- Chưa bắt đầu: LP-06 trở đi.
+- Đã hoàn thành: LP-06 (SEO metadata và schema).
+- Chưa bắt đầu: LP-07 trở đi.

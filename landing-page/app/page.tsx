@@ -7,6 +7,57 @@ import { SiteHeader } from '@/components/site-header'
 
 export default function Home() {
   const webAppUrl = 'https://3000-viec-thien.web.app/'
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    'https://3000-viec-thien-landing.vercel.app'
+  const faqItems = [
+    {
+      question: '3000 Việc Thiện có mất phí không?',
+      answer:
+        'Không. Website được định hướng miễn phí vĩnh viễn cho người dùng, không thu phí để sử dụng các chức năng cốt lõi.',
+    },
+    {
+      question: 'Tôi có thể dùng trên điện thoại không?',
+      answer:
+        'Có. Bạn có thể mở trực tiếp bằng trình duyệt trên iPhone hoặc Android, sau đó lưu ra màn hình chính để dùng nhanh như một web app.',
+    },
+    {
+      question: 'Tôi có cần tải ứng dụng từ App Store hoặc CH Play không?',
+      answer:
+        'Không bắt buộc. Bạn có thể truy cập trực tiếp bằng trình duyệt và vẫn có trải nghiệm đầy đủ cho nhu cầu theo dõi việc tốt hằng ngày.',
+    },
+    {
+      question: '3000 Việc Thiện phù hợp với ai?',
+      answer:
+        'Phù hợp với mọi người muốn xây dựng thói quen làm việc tốt, từ cá nhân mới bắt đầu đến nhóm cộng đồng muốn lan tỏa điều tích cực.',
+    },
+  ]
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '3000 Việc Thiện',
+    url: siteUrl,
+    inLanguage: 'vi-VN',
+  }
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: '3000 Việc Thiện',
+    url: siteUrl,
+    logo: `${siteUrl}/images/og-cover-3000-viec-thien.webp`,
+  }
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
   const showcasePlaceholders = [
     {
       fileName: 'hero-dashboard-mobile.webp',
@@ -243,28 +294,32 @@ export default function Home() {
 
         <SectionBlock id='faq' tone='muted' title='Câu hỏi thường gặp'>
           <div className='mt-6 space-y-6'>
-            <FaqItem
-              question='3000 Việc Thiện có mất phí không?'
-              answer='Không. Website được định hướng miễn phí vĩnh viễn cho người dùng, không thu phí để sử dụng các chức năng cốt lõi.'
-            />
-            <FaqItem
-              question='Tôi có thể dùng trên điện thoại không?'
-              answer='Có. Bạn có thể mở trực tiếp bằng trình duyệt trên iPhone hoặc Android, sau đó lưu ra màn hình chính để dùng nhanh như một web app.'
-            />
-            <FaqItem
-              question='Tôi có cần tải ứng dụng từ App Store hoặc CH Play không?'
-              answer='Không bắt buộc. Bạn có thể truy cập trực tiếp bằng trình duyệt và vẫn có trải nghiệm đầy đủ cho nhu cầu theo dõi việc tốt hằng ngày.'
-            />
-            <FaqItem
-              question='3000 Việc Thiện phù hợp với ai?'
-              answer='Phù hợp với mọi người muốn xây dựng thói quen làm việc tốt, từ cá nhân mới bắt đầu đến nhóm cộng đồng muốn lan tỏa điều tích cực.'
-            />
+            {faqItems.map((item) => (
+              <FaqItem
+                key={item.question}
+                question={item.question}
+                answer={item.answer}
+              />
+            ))}
             <div className='mt-6'>
               <CtaButton href={webAppUrl} label='Mở web app 3000 Việc Thiện' />
             </div>
           </div>
         </SectionBlock>
       </main>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
       <footer className='border-t border-slate-200 bg-white'>
         <div className='mx-auto w-full max-w-6xl px-6 py-8 text-sm text-slate-600'>
