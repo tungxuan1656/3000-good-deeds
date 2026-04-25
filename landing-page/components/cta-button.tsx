@@ -21,10 +21,9 @@ export function CtaButton({
     <a
       className={`${baseClassName} ${variantClassName}`}
       href={href}
-      target='_blank'
-      rel='noopener noreferrer'>
+      target="_blank"
+      rel="noopener noreferrer">
       {label}
     </a>
   )
 }
-

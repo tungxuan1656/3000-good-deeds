@@ -1,6 +1,7 @@
+import './globals.css'
+
 import type { Metadata } from 'next'
 import { Be_Vietnam_Pro, Sora } from 'next/font/google'
-import './globals.css'
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
@@ -82,10 +83,9 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang='vi'
+      lang="vi"
       className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}>
-      <body className='min-h-full flex flex-col'>{children}</body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   )
 }
-

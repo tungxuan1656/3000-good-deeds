@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint ./app ./components --ext .js,.ts,.tsx,.jsx --fix",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "format": "prettier --write \"{app,components}/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"{app,components}/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
     "next": "16.2.4",
@@ -20,8 +23,16 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "typescript-eslint": "^8.54.0",
     "zod": "^3.25.76"
   }
 }
