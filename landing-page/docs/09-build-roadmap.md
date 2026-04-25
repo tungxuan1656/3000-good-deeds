@@ -21,7 +21,7 @@
 - Chốt kế hoạch Next.js + Vercel.
 - Chốt hướng dẫn kiểm tra SEO và việc manual.
 
-### Bước 2 - Scaffold Next.js
+### Bước 2 - Scaffold Next.js (Đã hoàn thành)
 
 - Khởi tạo app Next.js + TypeScript + Tailwind.
 - Thiết lập cấu trúc thư mục theo kế hoạch.

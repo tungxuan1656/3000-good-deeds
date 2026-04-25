@@ -13,7 +13,7 @@ Thư mục này là điểm khởi đầu cho dự án landing page bằng Next.
 ## Trạng thái hiện tại
 
 - `Bước 1` đã hoàn thành: tạo bộ tài liệu nền cho toàn dự án.
-- Chưa scaffold code Next.js trong bước này.
+- `Bước 2` đã hoàn thành task đầu tiên: scaffold Next.js + TypeScript + Tailwind trong `landing-page`.
 
 ## Bộ tài liệu
 

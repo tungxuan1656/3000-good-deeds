@@ -150,4 +150,5 @@ Tài liệu này chia dự án thành các task có kích thước cân bằng: 
 ## Trạng thái cập nhật hiện tại
 
 - Đã hoàn thành: tài liệu planning (Bước 1).
-- Chưa bắt đầu triển khai code: LP-01 trở đi.
+- Đã hoàn thành: LP-01 (Bootstrap Next.js project).
+- Chưa bắt đầu: LP-02 trở đi.
