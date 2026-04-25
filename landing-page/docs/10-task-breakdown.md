@@ -156,4 +156,5 @@ Tài liệu này chia dự án thành các task có kích thước cân bằng: 
 - Đã hoàn thành: LP-04 (Viết nội dung tiếng Việt chuẩn SEO).
 - Đã hoàn thành: LP-05 (Tích hợp placeholder ảnh + media slots).
 - Đã hoàn thành: LP-06 (SEO metadata và schema).
-- Chưa bắt đầu: LP-07 trở đi.
+- Đã hoàn thành: LP-07 (SEO technical endpoints).
+- Chưa bắt đầu: LP-08 trở đi.

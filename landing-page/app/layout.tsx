@@ -3,9 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Be_Vietnam_Pro, Sora } from 'next/font/google'
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
-  'https://3000-viec-thien-landing.vercel.app'
+import { SITE_URL } from '@/lib/site-config'
 
 const bodyFont = Be_Vietnam_Pro({
   variable: '--font-body',
@@ -22,7 +20,7 @@ const headingFont = Sora({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: '3000 Việc Thiện | Theo dõi việc tốt mỗi ngày',
     template: '%s | 3000 Việc Thiện',

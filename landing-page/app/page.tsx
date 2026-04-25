@@ -4,12 +4,10 @@ import { FeatureCard } from '@/components/feature-card'
 import { ImagePlaceholder } from '@/components/image-placeholder'
 import { SectionBlock } from '@/components/section-block'
 import { SiteHeader } from '@/components/site-header'
+import { SITE_URL } from '@/lib/site-config'
 
 export default function Home() {
   const webAppUrl = 'https://3000-viec-thien.web.app/'
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
-    'https://3000-viec-thien-landing.vercel.app'
   const faqItems = [
     {
       question: '3000 Việc Thiện có mất phí không?',
@@ -36,15 +34,15 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: '3000 Việc Thiện',
-    url: siteUrl,
+    url: SITE_URL,
     inLanguage: 'vi-VN',
   }
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: '3000 Việc Thiện',
-    url: siteUrl,
-    logo: `${siteUrl}/images/og-cover-3000-viec-thien.webp`,
+    url: SITE_URL,
+    logo: `${SITE_URL}/images/og-cover-3000-viec-thien.webp`,
   }
   const faqSchema = {
     '@context': 'https://schema.org',
