@@ -318,6 +318,9 @@ importers:
 
   landing-page:
     dependencies:
+      lucide-react:
+        specifier: ^1.11.0
+        version: 1.11.0(react@19.2.4)
       next:
         specifier: 16.2.4
         version: 16.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -4819,6 +4822,11 @@ packages:
     resolution: {integrity: sha512-6YyBnn91GB45VuVT96bYCOKElbJzUHqp65vX8cDcu55MQL9T969v4dhGClpljamuI/+KMO9P6w9Acq1CVQGvIQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
+
+  lucide-react@1.11.0:
+    resolution: {integrity: sha512-UOhjdztXCgdBReRcIhsvz2siIBogfv/lhJEIViCpLt924dO+GDms9T7DNoucI23s6kEPpe988m5N0D2ajnzb2g==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
@@ -10704,6 +10712,10 @@ snapshots:
       yallist: 3.1.1
 
   lucide-react@0.344.0(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+
+  lucide-react@1.11.0(react@19.2.4):
     dependencies:
       react: 19.2.4
 

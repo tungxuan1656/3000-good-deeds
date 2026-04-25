@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Be_Vietnam_Pro, Sora } from 'next/font/google'
+import { Be_Vietnam_Pro, Noto_Serif } from 'next/font/google'
 
 import { SITE_URL } from '@/lib/site-config'
 
@@ -12,10 +12,10 @@ const bodyFont = Be_Vietnam_Pro({
   display: 'swap',
 })
 
-const headingFont = Sora({
+const headingFont = Noto_Serif({
   variable: '--font-heading',
-  weight: ['600', '700', '800'],
-  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  subsets: ['latin', 'vietnamese'],
   display: 'swap',
 })
 

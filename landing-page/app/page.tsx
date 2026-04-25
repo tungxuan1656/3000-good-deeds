@@ -1,339 +1,243 @@
-import { CtaButton } from '@/components/cta-button'
-import { FaqItem } from '@/components/faq-item'
-import { FeatureCard } from '@/components/feature-card'
-import { ImagePlaceholder } from '@/components/image-placeholder'
-import { SectionBlock } from '@/components/section-block'
-import { SiteHeader } from '@/components/site-header'
-import { buildWebAppCtaUrl } from '@/lib/cta-links'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Heart, Sprout, Sun, Users, Star, ArrowRight, CheckCircle2, Shield } from 'lucide-react'
+
 import { SITE_URL } from '@/lib/site-config'
 
 export default function Home() {
-  const ctaLinks = {
-    header: buildWebAppCtaUrl('header_main'),
-    heroPrimary: buildWebAppCtaUrl('hero_primary'),
-    heroSecondary: buildWebAppCtaUrl('hero_secondary'),
-    faqFinal: buildWebAppCtaUrl('faq_final'),
-  }
-  const faqItems = [
-    {
-      question: '3000 Việc Thiện có mất phí không?',
-      answer:
-        'Không. Website được định hướng miễn phí vĩnh viễn cho người dùng, không thu phí để sử dụng các chức năng cốt lõi.',
-    },
-    {
-      question: 'Tôi có thể dùng trên điện thoại không?',
-      answer:
-        'Có. Bạn có thể mở trực tiếp bằng trình duyệt trên iPhone hoặc Android, sau đó lưu ra màn hình chính để dùng nhanh như một web app.',
-    },
-    {
-      question: 'Tôi có cần tải ứng dụng từ App Store hoặc CH Play không?',
-      answer:
-        'Không bắt buộc. Bạn có thể truy cập trực tiếp bằng trình duyệt và vẫn có trải nghiệm đầy đủ cho nhu cầu theo dõi việc tốt hằng ngày.',
-    },
-    {
-      question: '3000 Việc Thiện phù hợp với ai?',
-      answer:
-        'Phù hợp với mọi người muốn xây dựng thói quen làm việc tốt, từ cá nhân mới bắt đầu đến nhóm cộng đồng muốn lan tỏa điều tích cực.',
-    },
-  ]
-  const websiteSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: '3000 Việc Thiện',
-    url: SITE_URL,
-    inLanguage: 'vi-VN',
-  }
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: '3000 Việc Thiện',
-    url: SITE_URL,
-    logo: `${SITE_URL}/images/og-cover-3000-viec-thien.webp`,
-  }
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  }
-  const showcasePlaceholders = [
-    {
-      fileName: 'hero-dashboard-mobile.webp',
-      alt: 'Ảnh giao diện webapp 3000 Việc Thiện trên iPhone',
-      ratio: '4 / 5',
-      description:
-        'Ảnh màn hình iPhone đang dùng webapp thật, thể hiện rõ khu vực theo dõi hành trình việc thiện.',
-    },
-    {
-      fileName: 'hero-dashboard-desktop.webp',
-      alt: 'Ảnh giao diện webapp 3000 Việc Thiện trên máy tính',
-      ratio: '16 / 10',
-      description:
-        'Ảnh desktop hiển thị dashboard tổng quan, giúp người dùng mới hình dung ngay cách sử dụng.',
-    },
-    {
-      fileName: 'feature-tracking-list.webp',
-      alt: 'Màn hình danh sách việc thiện đã hoàn thành',
-      ratio: '16 / 10',
-      description:
-        'Ảnh thể hiện danh sách việc thiện theo ngày, nhấn mạnh khả năng theo dõi thói quen rõ ràng.',
-    },
-    {
-      fileName: 'feature-progress-view.webp',
-      alt: 'Màn hình theo dõi tiến trình làm việc thiện mỗi ngày',
-      ratio: '16 / 10',
-      description:
-        'Ảnh thống kê tiến trình hoặc chuỗi duy trì để tăng tính thuyết phục về lợi ích dài hạn.',
-    },
-    {
-      fileName: 'social-proof-community.webp',
-      alt: 'Ảnh cộng đồng tham gia hoạt động thiện nguyện',
-      ratio: '3 / 2',
-      description:
-        'Ảnh social proof về cộng đồng, giúp tăng niềm tin và ý nghĩa xã hội của dự án.',
-    },
-  ]
-  const installPlaceholders = [
-    {
-      fileName: 'ios-install-step-1.webp',
-      alt: 'Safari iOS mở webapp và hiển thị nút Share',
-      ratio: '9 / 19.5',
-      description: 'Bước 1 iOS: mở webapp trên Safari và nhấn Share.',
-    },
-    {
-      fileName: 'ios-install-step-2.webp',
-      alt: 'Menu iOS hiển thị Add to Home Screen',
-      ratio: '9 / 19.5',
-      description: 'Bước 2 iOS: chọn Add to Home Screen.',
-    },
-    {
-      fileName: 'ios-install-step-3.webp',
-      alt: 'Icon webapp xuất hiện ở màn hình chính iPhone',
-      ratio: '9 / 19.5',
-      description:
-        'Bước 3 iOS: xác nhận icon webapp đã có trên màn hình chính.',
-    },
-    {
-      fileName: 'android-install-step-1.webp',
-      alt: 'Chrome Android mở webapp và hiển thị menu cài app',
-      ratio: '9 / 19.5',
-      description: 'Bước 1 Android: mở webapp bằng Chrome và mở menu cài đặt.',
-    },
-    {
-      fileName: 'android-install-step-2.webp',
-      alt: 'Popup Add to Home screen trên Android',
-      ratio: '9 / 19.5',
-      description: 'Bước 2 Android: chọn Add to Home screen hoặc Install app.',
-    },
-    {
-      fileName: 'android-install-step-3.webp',
-      alt: 'Icon webapp xuất hiện trong launcher Android',
-      ratio: '9 / 19.5',
-      description:
-        'Bước 3 Android: xác nhận icon webapp đã xuất hiện trong launcher.',
-    },
-  ]
-
   return (
-    <div className="bg-background min-h-screen text-slate-900">
-      <SiteHeader ctaHref={ctaLinks.header} />
+    <div className="flex min-h-screen flex-col bg-background text-foreground selection:bg-primary/20">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+        <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Heart className="h-5 w-5 fill-current" />
+            </div>
+            <span className="font-headline text-xl font-bold tracking-tight">3000 Việc Thiện</span>
+          </div>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
+            <Link href="#ve-chung-toi" className="hover:text-foreground transition-colors">Về chúng tôi</Link>
+            <Link href="#y-nghia" className="hover:text-foreground transition-colors">Ý nghĩa</Link>
+            <Link href="#tinh-nang" className="hover:text-foreground transition-colors">Tính năng</Link>
+          </nav>
+          <div className="flex items-center gap-4">
+            <Link
+              href={`${SITE_URL}/login`}
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              Đăng nhập
+            </Link>
+            <Link
+              href={`${SITE_URL}/register`}
+              className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
+            >
+              Bắt đầu ngay
+            </Link>
+          </div>
+        </div>
+      </header>
 
-      <main id="top">
-        <section className="relative overflow-hidden">
-          <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-(--brand-accent)/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-(--brand-primary)/15 blur-3xl" />
-
-          <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
-            <p className="text-xs font-semibold tracking-[0.22em] text-(--brand-primary) uppercase">
-              Nền tảng cộng đồng miễn phí
-            </p>
-            <h1 className="mt-4 max-w-4xl text-4xl leading-tight font-bold tracking-tight md:text-6xl">
-              3000 Việc Thiện - Theo dõi việc tốt mỗi ngày, miễn phí vĩnh viễn
-            </h1>
-            <p className="mt-6 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">
-              3000 Việc Thiện là nền tảng giúp bạn xây dựng thói quen làm việc
-              tốt mỗi ngày bằng cách ghi nhận các hành động tích cực, theo dõi
-              tiến trình và duy trì động lực. Dự án được phát triển để lan tỏa
-              tinh thần sẻ chia trong cộng đồng, không thu phí sử dụng và giữ
-              cam kết miễn phí vĩnh viễn.
-            </p>
-            <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">
-              Nếu bạn đang tìm một app việc thiện miễn phí, dễ dùng trên điện
-              thoại và máy tính, đây là điểm bắt đầu phù hợp để hình thành hành
-              trình tử tế bền vững cho chính bạn và những người xung quanh.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <CtaButton
-                href={ctaLinks.heroPrimary}
-                label="Bắt đầu dùng miễn phí"
-              />
-              <CtaButton
-                href={ctaLinks.heroSecondary}
-                label="Mở webapp chính"
-                variant="secondary"
-              />
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden pt-24 pb-32">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(82,99,71,0.15),rgba(255,255,255,0))]" />
+          
+          <div className="container mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+                <Sprout className="h-4 w-4" />
+                <span>Gieo mầm thiện, gặt bình an</span>
+              </div>
+              <h1 className="font-headline text-5xl font-bold tracking-tight text-foreground sm:text-6xl/tight md:text-7xl/tight">
+                Hành Trình Gieo Hạt <br />
+                <span className="text-primary">Giống Thiện</span>
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+                Mỗi hành động nhỏ bé hôm nay là một đóa hoa nở rộ ngày mai. 3000 Việc Thiện là nơi tĩnh lặng để bạn theo dõi, nuôi dưỡng lòng trắc ẩn và lan tỏa những điều tốt đẹp mỗi ngày.
+              </p>
+              
+              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <Link
+                  href={`${SITE_URL}/register`}
+                  className="group flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all"
+                >
+                  Bắt đầu hành trình
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="#y-nghia"
+                  className="flex items-center justify-center rounded-full bg-surface-container px-8 py-4 text-base font-medium text-foreground hover:bg-surface-container-high transition-colors"
+                >
+                  Tìm hiểu thêm
+                </Link>
+              </div>
+              
+              <div className="mt-12 flex items-center justify-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  <span>Miễn phí vĩnh viễn</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Shield className="h-4 w-4 text-primary" />
+                  <span>Bảo mật dữ liệu</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <SectionBlock
-          id="y-nghia-du-an"
-          tone="muted"
-          title="Vì sao dự án 3000 Việc Thiện ra đời?"
-          description="Nhiều người muốn làm việc tốt nhưng thiếu một hệ thống đơn giản để bắt đầu và duy trì đều đặn. 3000 Việc Thiện ra đời để biến những hành động tử tế nhỏ hằng ngày thành một hành trình rõ ràng, có thể theo dõi và duy trì lâu dài."
-        />
-
-        <SectionBlock
-          id="loi-ich"
-          title="Lợi ích khi dùng webapp 3000 Việc Thiện">
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            <article className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold tracking-tight text-slate-900">
-                Theo dõi việc tốt rõ ràng, dễ duy trì
-              </h3>
-              <p className="mt-3 text-base leading-7 text-slate-700">
-                Bạn có thể ghi lại từng hành động tích cực trong ngày để thấy
-                tiến trình của mình. Khi nhìn thấy chuỗi việc tốt được duy trì
-                liên tục, động lực sẽ tăng lên một cách tự nhiên.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold tracking-tight text-slate-900">
-                Dùng ngay trên điện thoại, không rào cản
-              </h3>
-              <p className="mt-3 text-base leading-7 text-slate-700">
-                Không cần cài đặt phức tạp hay trả phí. Bạn mở trình duyệt là
-                dùng được, có thể lưu ra màn hình chính như web app để truy cập
-                nhanh mỗi ngày.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold tracking-tight text-slate-900">
-                Miễn phí vĩnh viễn cho cộng đồng
-              </h3>
-              <p className="mt-3 text-base leading-7 text-slate-700">
-                Dự án được định hướng phục vụ cộng đồng lâu dài, giúp mọi người
-                dễ dàng tham gia hành trình việc thiện mà không bị giới hạn bởi
-                chi phí.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 className="text-lg font-semibold tracking-tight text-slate-900">
-                Phù hợp cho cá nhân và nhóm
-              </h3>
-              <p className="mt-3 text-base leading-7 text-slate-700">
-                Từ học sinh, sinh viên đến người đi làm đều có thể áp dụng để
-                xây thói quen tử tế mỗi ngày và lan tỏa tác động tích cực trong
-                môi trường sống.
-              </p>
-            </article>
-          </div>
-        </SectionBlock>
-
-        <SectionBlock id="cach-hoat-dong" title="Cách bắt đầu trong 3 bước">
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
-            <FeatureCard
-              step="Bước 01"
-              title="Mở web app"
-              description="Truy cập nền tảng từ trình duyệt trên điện thoại hoặc máy tính để bắt đầu hành trình việc thiện."
-            />
-            <FeatureCard
-              step="Bước 02"
-              title="Ghi nhận việc tốt"
-              description="Lưu lại các hành động tích cực trong ngày để thấy bạn đã làm được gì và duy trì thói quen."
-            />
-            <FeatureCard
-              step="Bước 03"
-              title="Duy trì đều đặn"
-              description="Tiếp tục thực hiện các việc tốt nhỏ mỗi ngày để tạo ảnh hưởng bền vững cho bản thân và cộng đồng."
-            />
-          </div>
-        </SectionBlock>
-
-        <SectionBlock
-          id="hinh-anh-thuc-te"
-          title="Trải nghiệm giao diện webapp qua ảnh thực tế">
-          <p className="max-w-3xl text-base leading-7 text-slate-700">
-            Các khối dưới đây là placeholder đã gắn đúng tỉ lệ để tránh nhảy
-            layout. Khi có ảnh thật, chỉ cần thay đúng tên file tương ứng trong
-            thư mục ảnh.
-          </p>
-          <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {showcasePlaceholders.map((item) => (
-              <ImagePlaceholder
-                key={item.fileName}
-                fileName={item.fileName}
-                alt={item.alt}
-                ratio={item.ratio}
-                description={item.description}
-              />
-            ))}
-          </div>
-        </SectionBlock>
-
-        <SectionBlock
-          id="cai-webapp"
-          tone="muted"
-          title="Hướng dẫn cài web app trên iOS và Android">
-          <p className="max-w-3xl text-base leading-7 text-slate-700">
-            Bạn có thể cài nhanh 3000 Việc Thiện ra màn hình chính để dùng như
-            ứng dụng. Bên dưới là các placeholder cho chuỗi ảnh hướng dẫn từng
-            bước.
-          </p>
-          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
-            {installPlaceholders.map((item) => (
-              <ImagePlaceholder
-                key={item.fileName}
-                fileName={item.fileName}
-                alt={item.alt}
-                ratio={item.ratio}
-                description={item.description}
-              />
-            ))}
-          </div>
-        </SectionBlock>
-
-        <SectionBlock id="faq" tone="muted" title="Câu hỏi thường gặp">
-          <div className="mt-6 space-y-6">
-            {faqItems.map((item) => (
-              <FaqItem
-                key={item.question}
-                question={item.question}
-                answer={item.answer}
-              />
-            ))}
-            <div className="mt-6">
-              <CtaButton
-                href={ctaLinks.faqFinal}
-                label="Mở web app 3000 Việc Thiện"
-              />
+        {/* Philosophy Section */}
+        <section id="y-nghia" className="bg-surface-container py-24">
+          <div className="container mx-auto max-w-6xl px-6">
+            <div className="grid gap-16 md:grid-cols-2 md:items-center">
+              <div>
+                <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  Tích tiểu thành đại,<br />nước chảy đá mòn
+                </h2>
+                <div className="mt-6 space-y-6 text-lg leading-relaxed text-muted-foreground">
+                  <p>
+                    Làm việc thiện không cần phải là những điều to lớn. Đó có thể là một nụ cười trao đi, một lời động viên đúng lúc, hay đơn giản là nhặt một mẩu rác trên đường.
+                  </p>
+                  <p>
+                    Chúng tôi tin rằng, khi bạn chú tâm ghi nhận những điều tốt đẹp mình làm mỗi ngày, tâm hồn bạn sẽ trở nên thanh thản hơn, và thế giới xung quanh cũng vì thế mà rực rỡ hơn.
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <div className="inline-flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/30 text-accent-foreground">
+                      <Sun className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">Sống chánh niệm</p>
+                      <p className="text-sm text-muted-foreground">Trân trọng từng khoảnh khắc</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-3xl bg-primary/10 blur-2xl" />
+                <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary/30 p-8 flex items-center justify-center shadow-inner">
+                  <div className="grid grid-cols-2 gap-4 w-full">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="rounded-2xl bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <Heart className={`h-8 w-8 mb-4 ${i % 2 === 0 ? 'text-primary' : 'text-accent-foreground'}`} />
+                        <div className="h-2 w-20 rounded-full bg-surface-container-high mb-2" />
+                        <div className="h-2 w-12 rounded-full bg-surface-container" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </SectionBlock>
+        </section>
+
+        {/* Features Section */}
+        <section id="tinh-nang" className="py-24">
+          <div className="container mx-auto max-w-6xl px-6">
+            <div className="text-center mb-16">
+              <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Người bạn đồng hành tận tâm
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Giao diện tối giản, tập trung vào trải nghiệm của bạn.
+              </p>
+            </div>
+            
+            <div className="grid gap-8 md:grid-cols-3">
+              {[
+                {
+                  icon: Sprout,
+                  title: 'Ghi chú nhanh chóng',
+                  description: 'Ghi lại những việc tốt mỗi ngày một cách đơn giản, giúp bạn dễ dàng duy trì thói quen.'
+                },
+                {
+                  icon: Star,
+                  title: 'Nhìn lại chặng đường',
+                  description: 'Biểu đồ trực quan giúp bạn xem lại sự tiến bộ của bản thân qua từng tuần, từng tháng.'
+                },
+                {
+                  icon: Users,
+                  title: 'Cộng đồng tích cực',
+                  description: 'Lan tỏa năng lượng tích cực và nhận cảm hứng từ những người cùng chung chí hướng.'
+                }
+              ].map((feature, i) => (
+                <div key={i} className="group rounded-3xl border border-border bg-card p-8 shadow-sm transition-all hover:shadow-md hover:border-primary/30">
+                  <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <feature.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mb-3 text-xl font-bold text-foreground">{feature.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="relative py-24 overflow-hidden bg-primary text-primary-foreground">
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,1)_0%,transparent_100%)]" />
+          <div className="container relative mx-auto max-w-4xl px-6 text-center">
+            <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+              Bạn đã sẵn sàng gieo hạt giống thiện hôm nay?
+            </h2>
+            <p className="mt-6 text-lg text-primary-foreground/80 md:text-xl">
+              Hàng ngàn người đã bắt đầu. Hãy tham gia cùng chúng tôi để tạo nên một thế giới ấm áp hơn.
+            </p>
+            <div className="mt-10">
+              <Link
+                href={`${SITE_URL}/register`}
+                className="inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-base font-bold text-primary shadow-lg hover:bg-surface-container transition-all hover:scale-105"
+              >
+                Tạo tài khoản miễn phí
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-8 text-sm text-slate-600">
-          © 3000 Việc Thiện
+      {/* Footer */}
+      <footer className="border-t border-border bg-surface-container-lowest py-12">
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="grid gap-8 md:grid-cols-2">
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Heart className="h-5 w-5 fill-current" />
+                </div>
+                <span className="font-headline text-xl font-bold text-foreground">3000 Việc Thiện</span>
+              </div>
+              <p className="text-muted-foreground max-w-sm mb-6">
+                Nền tảng miễn phí giúp bạn xây dựng thói quen làm việc tốt, nuôi dưỡng lòng biết ơn và sự bình yên trong tâm hồn.
+              </p>
+              <div className="text-sm text-foreground font-medium">
+                Liên hệ: <a href="mailto:tungxuan.work10@gmail.com" className="text-primary hover:underline">tungxuan.work10@gmail.com</a>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-8 md:justify-items-end">
+              <div>
+                <h4 className="font-bold text-foreground mb-4">Sản phẩm</h4>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li><Link href="#tinh-nang" className="hover:text-primary transition-colors">Tính năng</Link></li>
+                  <li><Link href="#y-nghia" className="hover:text-primary transition-colors">Ý nghĩa</Link></li>
+                  <li><Link href={`${SITE_URL}/login`} className="hover:text-primary transition-colors">Đăng nhập</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold text-foreground mb-4">Pháp lý</h4>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li><Link href="/terms" className="hover:text-primary transition-colors">Điều khoản sử dụng</Link></li>
+                  <li><Link href="/privacy" className="hover:text-primary transition-colors">Chính sách bảo mật</Link></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
+            <p>&copy; {new Date().getFullYear()} 3000 Việc Thiện. Mọi quyền được bảo lưu.</p>
+          </div>
         </div>
       </footer>
     </div>
