@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Heart, Sprout, Sun, Users, Star, ArrowRight, CheckCircle2, Shield } from 'lucide-react'
+import { Heart, Sprout, Sun, Users, Star, ArrowRight, CheckCircle2, Shield, BookOpen, Target, Quote, Leaf, ShieldCheck, HeartHandshake } from 'lucide-react'
 
 import { SITE_URL } from '@/lib/site-config'
 
@@ -138,39 +138,88 @@ export default function Home() {
           <div className="container mx-auto max-w-6xl px-6">
             <div className="text-center mb-16">
               <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                Người bạn đồng hành tận tâm
+                Những công cụ nuôi dưỡng tâm hồn
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Giao diện tối giản, tập trung vào trải nghiệm của bạn.
+              <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+                Một không gian riêng tư, không phán xét, không bảng xếp hạng. Chỉ có bạn và hành trình trở thành phiên bản tốt hơn mỗi ngày.
               </p>
             </div>
             
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {[
                 {
                   icon: Sprout,
-                  title: 'Ghi chú nhanh chóng',
-                  description: 'Ghi lại những việc tốt mỗi ngày một cách đơn giản, giúp bạn dễ dàng duy trì thói quen.'
+                  title: 'Ghi nhận việc tốt',
+                  description: 'Ghi lại những hành động tử tế mỗi ngày một cách nhanh chóng và gắn nhãn cảm xúc (an vui, biết ơn, nhẹ lòng...).'
                 },
                 {
-                  icon: Star,
-                  title: 'Nhìn lại chặng đường',
-                  description: 'Biểu đồ trực quan giúp bạn xem lại sự tiến bộ của bản thân qua từng tuần, từng tháng.'
+                  icon: BookOpen,
+                  title: 'Sổ tay quán chiếu',
+                  description: 'Dành thời gian tĩnh lặng để viết nhật ký biết ơn hoặc sám hối, giúp bạn nhìn nhận lại bản thân với sự trung thực.'
                 },
                 {
-                  icon: Users,
-                  title: 'Cộng đồng tích cực',
-                  description: 'Lan tỏa năng lượng tích cực và nhận cảm hứng từ những người cùng chung chí hướng.'
+                  icon: Target,
+                  title: 'Mục tiêu & Thống kê',
+                  description: 'Đặt mục tiêu thực hành cho tuần, tháng, năm và theo dõi hành trình của bạn qua biểu đồ trực quan, lịch tháng.'
+                },
+                {
+                  icon: Quote,
+                  title: 'Gợi ý & Cảm hứng',
+                  description: 'Nhận những câu nói truyền cảm hứng ngẫu nhiên và các gợi ý việc tốt để luôn có ý tưởng gieo mầm thiện.'
                 }
               ].map((feature, i) => (
-                <div key={i} className="group rounded-3xl border border-border bg-card p-8 shadow-sm transition-all hover:shadow-md hover:border-primary/30">
+                <div key={i} className="group rounded-3xl border border-border bg-card p-8 shadow-sm transition-all hover:shadow-md hover:border-primary/30 flex flex-col">
                   <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <feature.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mb-3 text-xl font-bold text-foreground">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                  <p className="text-muted-foreground leading-relaxed flex-1">{feature.description}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Core Values Section */}
+        <section className="bg-surface-container py-24">
+          <div className="container mx-auto max-w-6xl px-6">
+            <div className="grid gap-16 md:grid-cols-2 md:items-center">
+              <div className="order-2 md:order-1 relative">
+                <div className="absolute -inset-4 rounded-3xl bg-secondary/20 blur-2xl" />
+                <div className="relative aspect-square overflow-hidden rounded-3xl bg-white p-8 shadow-sm border border-border">
+                  <div className="flex flex-col h-full justify-between">
+                    {[
+                      { icon: ShieldCheck, text: "Hướng vào bên trong thay vì tìm kiếm sự công nhận bên ngoài" },
+                      { icon: HeartHandshake, text: "Sự khiêm tốn quan trọng hơn việc thể hiện" },
+                      { icon: Leaf, text: "Sự kiên trì đều đặn ý nghĩa hơn những nỗ lực bùng phát" },
+                      { icon: Sun, text: "Sự trung thực với bản thân là cốt lõi của sự phát triển" }
+                    ].map((val, idx) => (
+                      <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-surface-container hover:bg-surface-container-high transition-colors">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <val.icon className="h-5 w-5" />
+                        </div>
+                        <p className="text-foreground font-medium mt-2">{val.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="order-1 md:order-2">
+                <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  Giá trị cốt lõi của chúng tôi
+                </h2>
+                <div className="mt-6 space-y-6 text-lg leading-relaxed text-muted-foreground">
+                  <p>
+                    3000 Việc Thiện <strong>không phải</strong> là một mạng xã hội ganh đua, không có bảng xếp hạng, và không có hệ thống tính điểm đạo đức. 
+                  </p>
+                  <p>
+                    Đó là một không gian kỹ thuật số riêng tư và bình yên. Chúng tôi chống lại việc game hóa quá mức (gamification) hay việc giữ chân người dùng bằng cảm giác tội lỗi.
+                  </p>
+                  <p>
+                    Mọi tính năng đều được thiết kế để bảo vệ không gian tĩnh lặng của bạn, giúp bạn xây dựng thói quen từ bi một cách bền vững.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
