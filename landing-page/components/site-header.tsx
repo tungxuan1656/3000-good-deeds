@@ -1,10 +1,10 @@
 import { CtaButton } from './cta-button'
 
 type SiteHeaderProps = {
-  webAppUrl: string
+  ctaHref: string
 }
 
-export function SiteHeader({ webAppUrl }: SiteHeaderProps) {
+export function SiteHeader({ ctaHref }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200/90 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
@@ -34,7 +34,7 @@ export function SiteHeader({ webAppUrl }: SiteHeaderProps) {
           </a>
         </nav>
 
-        <CtaButton href={webAppUrl} label="Mở web app" />
+        <CtaButton href={ctaHref} label="Mở web app" />
       </div>
     </header>
   )

@@ -4,10 +4,16 @@ import { FeatureCard } from '@/components/feature-card'
 import { ImagePlaceholder } from '@/components/image-placeholder'
 import { SectionBlock } from '@/components/section-block'
 import { SiteHeader } from '@/components/site-header'
+import { buildWebAppCtaUrl } from '@/lib/cta-links'
 import { SITE_URL } from '@/lib/site-config'
 
 export default function Home() {
-  const webAppUrl = 'https://3000-viec-thien.web.app/'
+  const ctaLinks = {
+    header: buildWebAppCtaUrl('header_main'),
+    heroPrimary: buildWebAppCtaUrl('hero_primary'),
+    heroSecondary: buildWebAppCtaUrl('hero_secondary'),
+    faqFinal: buildWebAppCtaUrl('faq_final'),
+  }
   const faqItems = [
     {
       question: '3000 Việc Thiện có mất phí không?',
@@ -136,7 +142,7 @@ export default function Home() {
 
   return (
     <div className="bg-background min-h-screen text-slate-900">
-      <SiteHeader webAppUrl={webAppUrl} />
+      <SiteHeader ctaHref={ctaLinks.header} />
 
       <main id="top">
         <section className="relative overflow-hidden">
@@ -163,9 +169,12 @@ export default function Home() {
               trình tử tế bền vững cho chính bạn và những người xung quanh.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <CtaButton href={webAppUrl} label="Bắt đầu dùng miễn phí" />
               <CtaButton
-                href={webAppUrl}
+                href={ctaLinks.heroPrimary}
+                label="Bắt đầu dùng miễn phí"
+              />
+              <CtaButton
+                href={ctaLinks.heroSecondary}
                 label="Mở webapp chính"
                 variant="secondary"
               />
@@ -300,7 +309,10 @@ export default function Home() {
               />
             ))}
             <div className="mt-6">
-              <CtaButton href={webAppUrl} label="Mở web app 3000 Việc Thiện" />
+              <CtaButton
+                href={ctaLinks.faqFinal}
+                label="Mở web app 3000 Việc Thiện"
+              />
             </div>
           </div>
         </SectionBlock>
