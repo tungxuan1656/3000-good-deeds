@@ -158,4 +158,5 @@ Tài liệu này chia dự án thành các task có kích thước cân bằng: 
 - Đã hoàn thành: LP-06 (SEO metadata và schema).
 - Đã hoàn thành: LP-07 (SEO technical endpoints).
 - Đã hoàn thành: LP-08 (CTA linking và tracking conventions).
-- Chưa bắt đầu: LP-09 trở đi.
+- Đã hoàn thành: LP-09 (QA chất lượng toàn trang).
+- Chưa bắt đầu: LP-10 trở đi.
