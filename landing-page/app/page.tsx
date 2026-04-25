@@ -1,11 +1,89 @@
 import { CtaButton } from '@/components/cta-button'
 import { FaqItem } from '@/components/faq-item'
 import { FeatureCard } from '@/components/feature-card'
+import { ImagePlaceholder } from '@/components/image-placeholder'
 import { SectionBlock } from '@/components/section-block'
 import { SiteHeader } from '@/components/site-header'
 
 export default function Home() {
   const webAppUrl = 'https://3000-viec-thien.web.app/'
+  const showcasePlaceholders = [
+    {
+      fileName: 'hero-dashboard-mobile.webp',
+      alt: 'Ảnh giao diện webapp 3000 Việc Thiện trên iPhone',
+      ratio: '4 / 5',
+      description:
+        'Ảnh màn hình iPhone đang dùng webapp thật, thể hiện rõ khu vực theo dõi hành trình việc thiện.',
+    },
+    {
+      fileName: 'hero-dashboard-desktop.webp',
+      alt: 'Ảnh giao diện webapp 3000 Việc Thiện trên máy tính',
+      ratio: '16 / 10',
+      description:
+        'Ảnh desktop hiển thị dashboard tổng quan, giúp người dùng mới hình dung ngay cách sử dụng.',
+    },
+    {
+      fileName: 'feature-tracking-list.webp',
+      alt: 'Màn hình danh sách việc thiện đã hoàn thành',
+      ratio: '16 / 10',
+      description:
+        'Ảnh thể hiện danh sách việc thiện theo ngày, nhấn mạnh khả năng theo dõi thói quen rõ ràng.',
+    },
+    {
+      fileName: 'feature-progress-view.webp',
+      alt: 'Màn hình theo dõi tiến trình làm việc thiện mỗi ngày',
+      ratio: '16 / 10',
+      description:
+        'Ảnh thống kê tiến trình hoặc chuỗi duy trì để tăng tính thuyết phục về lợi ích dài hạn.',
+    },
+    {
+      fileName: 'social-proof-community.webp',
+      alt: 'Ảnh cộng đồng tham gia hoạt động thiện nguyện',
+      ratio: '3 / 2',
+      description:
+        'Ảnh social proof về cộng đồng, giúp tăng niềm tin và ý nghĩa xã hội của dự án.',
+    },
+  ]
+  const installPlaceholders = [
+    {
+      fileName: 'ios-install-step-1.webp',
+      alt: 'Safari iOS mở webapp và hiển thị nút Share',
+      ratio: '9 / 19.5',
+      description: 'Bước 1 iOS: mở webapp trên Safari và nhấn Share.',
+    },
+    {
+      fileName: 'ios-install-step-2.webp',
+      alt: 'Menu iOS hiển thị Add to Home Screen',
+      ratio: '9 / 19.5',
+      description: 'Bước 2 iOS: chọn Add to Home Screen.',
+    },
+    {
+      fileName: 'ios-install-step-3.webp',
+      alt: 'Icon webapp xuất hiện ở màn hình chính iPhone',
+      ratio: '9 / 19.5',
+      description:
+        'Bước 3 iOS: xác nhận icon webapp đã có trên màn hình chính.',
+    },
+    {
+      fileName: 'android-install-step-1.webp',
+      alt: 'Chrome Android mở webapp và hiển thị menu cài app',
+      ratio: '9 / 19.5',
+      description: 'Bước 1 Android: mở webapp bằng Chrome và mở menu cài đặt.',
+    },
+    {
+      fileName: 'android-install-step-2.webp',
+      alt: 'Popup Add to Home screen trên Android',
+      ratio: '9 / 19.5',
+      description: 'Bước 2 Android: chọn Add to Home screen hoặc Install app.',
+    },
+    {
+      fileName: 'android-install-step-3.webp',
+      alt: 'Icon webapp xuất hiện trong launcher Android',
+      ratio: '9 / 19.5',
+      description:
+        'Bước 3 Android: xác nhận icon webapp đã xuất hiện trong launcher.',
+    },
+  ]
 
   return (
     <div className='min-h-screen bg-background text-slate-900'>
@@ -117,6 +195,49 @@ export default function Home() {
               title='Duy trì đều đặn'
               description='Tiếp tục thực hiện các việc tốt nhỏ mỗi ngày để tạo ảnh hưởng bền vững cho bản thân và cộng đồng.'
             />
+          </div>
+        </SectionBlock>
+
+        <SectionBlock
+          id='hinh-anh-thuc-te'
+          title='Trải nghiệm giao diện webapp qua ảnh thực tế'>
+          <p className='max-w-3xl text-base leading-7 text-slate-700'>
+            Các khối dưới đây là placeholder đã gắn đúng tỉ lệ để tránh nhảy
+            layout. Khi có ảnh thật, chỉ cần thay đúng tên file tương ứng trong
+            thư mục ảnh.
+          </p>
+          <div className='mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3'>
+            {showcasePlaceholders.map((item) => (
+              <ImagePlaceholder
+                key={item.fileName}
+                fileName={item.fileName}
+                alt={item.alt}
+                ratio={item.ratio}
+                description={item.description}
+              />
+            ))}
+          </div>
+        </SectionBlock>
+
+        <SectionBlock
+          id='cai-webapp'
+          tone='muted'
+          title='Hướng dẫn cài web app trên iOS và Android'>
+          <p className='max-w-3xl text-base leading-7 text-slate-700'>
+            Bạn có thể cài nhanh 3000 Việc Thiện ra màn hình chính để dùng như
+            ứng dụng. Bên dưới là các placeholder cho chuỗi ảnh hướng dẫn từng
+            bước.
+          </p>
+          <div className='mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6'>
+            {installPlaceholders.map((item) => (
+              <ImagePlaceholder
+                key={item.fileName}
+                fileName={item.fileName}
+                alt={item.alt}
+                ratio={item.ratio}
+                description={item.description}
+              />
+            ))}
           </div>
         </SectionBlock>
 
