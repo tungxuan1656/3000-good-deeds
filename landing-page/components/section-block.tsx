@@ -17,8 +17,8 @@ export function SectionBlock({
 }: SectionBlockProps) {
   const sectionClassName =
     tone === 'muted'
-      ? 'border-y border-slate-200 bg-[var(--surface-muted)]'
-      : 'bg-[var(--surface)]'
+      ? 'border-y border-slate-200 bg-(--surface-muted)'
+      : 'bg-(--surface)'
 
   return (
     <section id={id} className={sectionClassName}>

@@ -153,4 +153,5 @@ Tài liệu này chia dự án thành các task có kích thước cân bằng: 
 - Đã hoàn thành: LP-01 (Bootstrap Next.js project).
 - Đã hoàn thành: LP-02 (Thiết lập kiến trúc trang landing).
 - Đã hoàn thành: LP-03 (Thiết kế UI system và component lõi).
-- Chưa bắt đầu: LP-04 trở đi.
+- Đã hoàn thành: LP-04 (Viết nội dung tiếng Việt chuẩn SEO).
+- Chưa bắt đầu: LP-05 trở đi.

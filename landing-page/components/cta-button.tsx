@@ -14,7 +14,7 @@ export function CtaButton({
 
   const variantClassName =
     variant === 'primary'
-      ? 'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-strong)] focus-visible:ring-[var(--brand-primary)]'
+      ? 'bg-(--brand-primary) text-white hover:bg-(--brand-primary-strong) focus-visible:ring-(--brand-primary)'
       : 'border border-slate-300 bg-white text-slate-900 hover:border-slate-500 hover:bg-slate-50 focus-visible:ring-slate-500'
 
   return (

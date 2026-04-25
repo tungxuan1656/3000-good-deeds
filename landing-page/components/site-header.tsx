@@ -18,17 +18,17 @@ export function SiteHeader({ webAppUrl }: SiteHeaderProps) {
           aria-label='Điều hướng chính'
           className='hidden items-center gap-6 text-sm md:flex'>
           <a
-            className='text-slate-700 hover:text-[var(--brand-primary-strong)] cursor-pointer'
+            className='text-slate-700 hover:text-(--brand-primary-strong) cursor-pointer'
             href='#y-nghia-du-an'>
             Ý nghĩa dự án
           </a>
           <a
-            className='text-slate-700 hover:text-[var(--brand-primary-strong)] cursor-pointer'
+            className='text-slate-700 hover:text-(--brand-primary-strong) cursor-pointer'
             href='#cach-hoat-dong'>
             Cách hoạt động
           </a>
           <a
-            className='text-slate-700 hover:text-[var(--brand-primary-strong)] cursor-pointer'
+            className='text-slate-700 hover:text-(--brand-primary-strong) cursor-pointer'
             href='#faq'>
             FAQ
           </a>
