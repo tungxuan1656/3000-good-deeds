@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Heart, Sprout, Sun, Users, Star, ArrowRight, CheckCircle2, Shield, BookOpen, Target, Quote, Leaf, ShieldCheck, HeartHandshake } from 'lucide-react'
+import { Heart, Sprout, Sun, Users, Star, ArrowRight, CheckCircle2, Shield, BookOpen, Target, Quote, Leaf, ShieldCheck, HeartHandshake, HelpCircle, ChevronDown } from 'lucide-react'
 
 import { SITE_URL } from '@/lib/site-config'
 
@@ -20,6 +20,7 @@ export default function Home() {
             <Link href="#ve-chung-toi" className="hover:text-foreground transition-colors">Về chúng tôi</Link>
             <Link href="#y-nghia" className="hover:text-foreground transition-colors">Ý nghĩa</Link>
             <Link href="#tinh-nang" className="hover:text-foreground transition-colors">Tính năng</Link>
+            <Link href="#faq" className="hover:text-foreground transition-colors">Hỏi đáp</Link>
           </nav>
           <div className="flex items-center gap-4">
             <Link
@@ -100,6 +101,9 @@ export default function Home() {
                     Làm việc thiện không cần phải là những điều to lớn. Đó có thể là một nụ cười trao đi, một lời động viên đúng lúc, hay đơn giản là nhặt một mẩu rác trên đường.
                   </p>
                   <p>
+                    Theo triết lý phương Đông, con số 3000 tượng trưng cho sự trọn vẹn và viên mãn. Tích lũy 3000 việc thiện không phải là một áp lực, mà là một hành trình dài để rèn luyện tâm tính.
+                  </p>
+                  <p>
                     Chúng tôi tin rằng, khi bạn chú tâm ghi nhận những điều tốt đẹp mình làm mỗi ngày, tâm hồn bạn sẽ trở nên thanh thản hơn, và thế giới xung quanh cũng vì thế mà rực rỡ hơn.
                   </p>
                 </div>
@@ -133,8 +137,39 @@ export default function Home() {
           </div>
         </section>
 
+        {/* How It Works Section */}
+        <section className="py-24 relative overflow-hidden">
+          <div className="container mx-auto max-w-6xl px-6">
+            <div className="text-center mb-16">
+              <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Hành trình nuôi dưỡng sự bình an
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+                Chỉ cần vài phút mỗi ngày, bạn sẽ nhận thấy sự thay đổi tích cực từ sâu bên trong.
+              </p>
+            </div>
+
+            <div className="relative grid gap-8 md:grid-cols-3">
+              <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-border -z-10" />
+              {[
+                { step: '01', title: 'Hành động nhỏ', desc: 'Làm một việc tốt dù là nhỏ nhất: Mỉm cười, giúp đỡ, lắng nghe, hay tự bao dung với chính mình.' },
+                { step: '02', title: 'Ghi nhận tĩnh lặng', desc: 'Mở ứng dụng và dành 1 phút để ghi lại việc tốt đó, kèm theo cảm xúc bạn nhận được.' },
+                { step: '03', title: 'Quán chiếu tâm hồn', desc: 'Mỗi cuối tuần, hãy dùng Sổ tay quán chiếu để viết lời biết ơn và cảm nhận sự lớn lên của tâm hồn.' }
+              ].map((item, idx) => (
+                <div key={idx} className="relative flex flex-col items-center text-center bg-background">
+                  <div className="w-24 h-24 rounded-full bg-surface-container border-4 border-background flex items-center justify-center text-2xl font-bold font-headline text-primary mb-6 shadow-sm">
+                    {item.step}
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Features Section */}
-        <section id="tinh-nang" className="py-24">
+        <section id="tinh-nang" className="bg-surface-container py-24">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="text-center mb-16">
               <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -181,7 +216,7 @@ export default function Home() {
         </section>
 
         {/* Core Values Section */}
-        <section className="bg-surface-container py-24">
+        <section className="py-24">
           <div className="container mx-auto max-w-6xl px-6">
             <div className="grid gap-16 md:grid-cols-2 md:items-center">
               <div className="order-2 md:order-1 relative">
@@ -220,6 +255,46 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section id="faq" className="bg-surface-container py-24">
+          <div className="container mx-auto max-w-3xl px-6">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 text-primary mb-6">
+                <HelpCircle className="h-6 w-6" />
+              </div>
+              <h2 className="font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Câu hỏi thường gặp
+              </h2>
+            </div>
+
+            <div className="space-y-6">
+              {[
+                {
+                  q: '"Việc tốt" có cần phải là điều gì đó lớn lao không?',
+                  a: 'Hoàn toàn không. Một nụ cười thân thiện, dắt tay người già qua đường, lắng nghe một người bạn đang buồn, hay thậm chí là tự tha thứ cho bản thân cũng là những việc tốt vô giá. Chúng tôi tin vào sức mạnh của những điều nhỏ bé.'
+                },
+                {
+                  q: 'Ai có thể xem được nhật ký việc thiện của tôi?',
+                  a: 'Dữ liệu của bạn là hoàn toàn riêng tư. Không ai khác có thể xem được ngoài chính bạn. Chúng tôi không xây dựng tính năng chia sẻ cộng đồng hay bảng xếp hạng để bảo vệ tuyệt đối không gian tĩnh lặng của bạn.'
+                },
+                {
+                  q: 'Tại sao ứng dụng lại miễn phí vĩnh viễn?',
+                  a: 'Bởi vì lòng tốt nên được lan tỏa mà không có bất kỳ rào cản nào. Chúng tôi phát triển và duy trì dự án này từ niềm vui được cống hiến cho cộng đồng.'
+                },
+                {
+                  q: 'Tôi có thể sử dụng ứng dụng trên điện thoại không?',
+                  a: 'Có. Giao diện của 3000 Việc Thiện được tối ưu hóa đặc biệt cho trải nghiệm trên điện thoại thông minh (mobile-first), giúp bạn dễ dàng ghi nhận việc tốt mọi lúc mọi nơi.'
+                }
+              ].map((faq, i) => (
+                <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-border">
+                  <h3 className="text-lg font-bold text-foreground mb-3">{faq.q}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -271,6 +346,7 @@ export default function Home() {
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   <li><Link href="#tinh-nang" className="hover:text-primary transition-colors">Tính năng</Link></li>
                   <li><Link href="#y-nghia" className="hover:text-primary transition-colors">Ý nghĩa</Link></li>
+                  <li><Link href="#faq" className="hover:text-primary transition-colors">Hỏi đáp</Link></li>
                   <li><Link href={`${SITE_URL}/login`} className="hover:text-primary transition-colors">Đăng nhập</Link></li>
                 </ul>
               </div>
