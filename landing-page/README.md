@@ -26,6 +26,7 @@ Thư mục này là điểm khởi đầu cho dự án landing page bằng Next.
 - [07-seo-validation-guide.md](./docs/07-seo-validation-guide.md)
 - [08-manual-work-checklist.md](./docs/08-manual-work-checklist.md)
 - [09-build-roadmap.md](./docs/09-build-roadmap.md)
+- [10-task-breakdown.md](./docs/10-task-breakdown.md)
 
 ## Ghi chú
 
