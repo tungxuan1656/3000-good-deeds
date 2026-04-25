@@ -28,6 +28,8 @@ Thư mục này là điểm khởi đầu cho dự án landing page bằng Next.
 - [09-build-roadmap.md](./docs/09-build-roadmap.md)
 - [10-task-breakdown.md](./docs/10-task-breakdown.md)
 - [11-qa-report-lp09.md](./docs/11-qa-report-lp09.md)
+- [12-search-console-execution.md](./docs/12-search-console-execution.md)
+- [13-handover-operations.md](./docs/13-handover-operations.md)
 
 ## Ghi chú
 

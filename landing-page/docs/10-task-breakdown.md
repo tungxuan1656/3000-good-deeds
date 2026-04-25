@@ -159,4 +159,6 @@ Tài liệu này chia dự án thành các task có kích thước cân bằng: 
 - Đã hoàn thành: LP-07 (SEO technical endpoints).
 - Đã hoàn thành: LP-08 (CTA linking và tracking conventions).
 - Đã hoàn thành: LP-09 (QA chất lượng toàn trang).
-- Chưa bắt đầu: LP-10 trở đi.
+- Đã hoàn thành: LP-10 (Deploy production trên Vercel) - xác nhận bởi người triển khai.
+- LP-11 (Google Search Console): chờ thao tác manual theo `12-search-console-execution.md`.
+- LP-12 (Handover & vận hành): đã có tài liệu bàn giao, chờ đóng sau khi LP-11 hoàn tất.
