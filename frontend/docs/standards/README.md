@@ -13,6 +13,7 @@ Official frontend standards and review references:
 - `i18n-label-pattern.md`
 - `color-guide.md`
 - `code-review-guide.md`
+- `responsive-navigation-shell-pattern.md`
 
 Review helper scripts:
 - `frontend/scripts/review/review-check.sh`
