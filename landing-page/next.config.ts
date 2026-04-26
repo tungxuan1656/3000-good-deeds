@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
       {
@@ -17,6 +18,15 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/app",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/app/",
         headers: [
           {
             key: "X-Robots-Tag",
