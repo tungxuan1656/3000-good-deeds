@@ -19,9 +19,11 @@ import {
 import Link from 'next/link'
 
 import { FaqSection } from '@/components/faq-section'
-import { SITE_URL } from '@/lib/site-config'
+import { buildWebAppCtaUrl, getWebAppLoginUrl } from '@/lib/cta-links'
 
 export default function Home() {
+  const appLoginUrl = getWebAppLoginUrl()
+
   return (
     <div className="bg-background text-foreground selection:bg-primary/20 flex min-h-screen flex-col">
       {/* Navigation */}
@@ -64,12 +66,12 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-4">
             <Link
-              href={`${SITE_URL}/login`}
+              href={appLoginUrl}
               className="hover:text-primary text-sm font-medium transition-colors">
               Đăng nhập
             </Link>
             <Link
-              href={`${SITE_URL}/register`}
+              href={buildWebAppCtaUrl('header_get_started', 'login')}
               className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 py-2 text-sm font-medium shadow-sm transition-all hover:scale-105 active:scale-95">
               Bắt đầu ngay
             </Link>
@@ -100,7 +102,7 @@ export default function Home() {
 
               <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Link
-                  href={`${SITE_URL}/register`}
+                  href={buildWebAppCtaUrl('hero_start_journey', 'login')}
                   className="group bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90 flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-semibold shadow-lg transition-all">
                   Bắt đầu hành trình
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -427,7 +429,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Link
-                  href={`${SITE_URL}/register`}
+                  href={buildWebAppCtaUrl('install_try_free')}
                   className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-11 items-center justify-center rounded-full px-6 text-sm font-semibold">
                   Dùng thử miễn phí
                 </Link>
@@ -518,7 +520,7 @@ export default function Home() {
             </p>
             <div className="mt-10">
               <Link
-                href={`${SITE_URL}/register`}
+                href={buildWebAppCtaUrl('bottom_create_account', 'login')}
                 className="text-primary hover:bg-surface-container inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-base font-bold shadow-lg transition-all hover:scale-105">
                 Tạo tài khoản miễn phí
               </Link>
@@ -581,7 +583,7 @@ export default function Home() {
                   </li>
                   <li>
                     <Link
-                      href={`${SITE_URL}/login`}
+                      href={appLoginUrl}
                       className="hover:text-primary transition-colors">
                       Đăng nhập
                     </Link>
