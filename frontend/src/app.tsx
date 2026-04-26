@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { AppBack, AppLayout, ScrollToTop } from '@/components/layout'
 import { ErrorBoundary } from '@/components/shared'
 import { PATHS } from '@/lib/constants'
+import { APP_BASE_PATH } from '@/lib/utils/base-path'
 import HandbookPage from '@/pages/handbook-page'
 import HomePage from '@/pages/home-page'
 import LoginPage from '@/pages/login-page'
@@ -16,7 +17,7 @@ import { Toaster } from './components/ui/sonner'
 function App() {
   return (
     <ErrorBoundary>
-      <Router>
+      <Router basename={APP_BASE_PATH || undefined}>
         <ScrollToTop />
         <Routes>
           <Route element={<LoginPage />} path={PATHS.LOGIN} />

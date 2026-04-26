@@ -13,6 +13,10 @@ const APP_VERSION = packageJson.version ?? '0.0.0'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: '/app/',
+  build: {
+    outDir: 'dist/app',
+  },
   define: {
     __APP_VERSION__: JSON.stringify(APP_VERSION),
   },
@@ -37,9 +41,9 @@ export default defineConfig(({ mode }) => ({
       },
 
       manifest: {
-        id: '/',
-        start_url: '/',
-        scope: '/',
+        id: '/app/',
+        start_url: '/app/',
+        scope: '/app/',
         display: 'standalone',
         name: '3000 Việc Thiện',
         short_name: '3000 Việc Thiện',

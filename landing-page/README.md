@@ -1,6 +1,6 @@
 # Landing Page SEO - 3000 Việc Thiện
 
-Thư mục này là điểm khởi đầu cho dự án landing page bằng Next.js, mục tiêu SEO để dẫn traffic về web chính: `https://3000-viec-thien.web.app/`.
+Thư mục này là điểm khởi đầu cho dự án landing page bằng Next.js, mục tiêu SEO để dẫn traffic về webapp chính qua đường dẫn `/app` trên domain landing (`https://3000-viec-thien.vercel.app/app`), đồng thời vẫn hỗ trợ fallback Firebase (`https://3000-viec-thien.web.app/app`).
 
 ## Mục tiêu
 
