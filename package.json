@@ -4,8 +4,15 @@
   "scripts": {
     "dev:frontend": "pnpm --filter frontend dev",
     "build:frontend": "pnpm --filter frontend build",
+    "dev:landing": "pnpm --filter landing-page dev",
+    "build:landing": "pnpm --filter landing-page build",
     "dev:backend": "pnpm --filter backend dev",
     "deploy:backend": "pnpm --filter backend deploy",
     "typegen:backend": "pnpm --filter backend cf-typegen"
+  },
+  "pnpm": {
+    "overrides": {
+      "zod-validation-error": "^4.0.2"
+    }
   }
 }
