@@ -6,7 +6,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/app",
-        destination: "https://3000-viec-thien.web.app/app",
+        destination: "https://3000-viec-thien.web.app/app/",
+      },
+      {
+        source: "/app/",
+        destination: "https://3000-viec-thien.web.app/app/",
       },
       {
         source: "/app/:path*",
