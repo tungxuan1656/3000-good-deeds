@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import { authTokenStorage } from '@/lib/auth-tokens'
 import { PATHS } from '@/lib/constants'
+import { withBasePath } from '@/lib/utils/base-path'
 import { authActions } from '@/stores/auth.store'
 
 import type { ApiResponse, RefreshTokenResponse } from '../types/api'
@@ -155,6 +156,6 @@ function redirectToLogin() {
   authActions.reset()
 
   if (!window.location.pathname.includes(PATHS.LOGIN)) {
-    window.location.href = PATHS.LOGIN
+    window.location.href = withBasePath(PATHS.LOGIN)
   }
 }

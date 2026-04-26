@@ -1,4 +1,8 @@
-const SERVICE_WORKER_URL = import.meta.env.DEV ? '/dev-sw.js?dev-sw' : '/sw.js'
+import { withBasePath } from './base-path'
+
+const SERVICE_WORKER_URL = import.meta.env.DEV
+  ? withBasePath('/dev-sw.js?dev-sw')
+  : withBasePath('/sw.js')
 
 const toUint8Array = (value: ArrayBuffer | Uint8Array | null | undefined) => {
   if (!value) return null
