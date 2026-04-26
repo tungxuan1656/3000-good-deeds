@@ -18,6 +18,7 @@ const app = new Hono<{ Bindings: Env }>()
 // Middleware
 const allowedOrigins = [
   'https://3000-viec-thien.web.app',
+  'https://3000-viec-thien.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
