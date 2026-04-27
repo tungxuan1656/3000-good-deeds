@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -24,6 +25,13 @@ export const BottomTab = () => {
     return () => setMounted(false)
   }, [])
 
+  useEffect(() => {
+    for (const { path } of BOTTOM_TAB_ITEMS) {
+      if (path === pathname) continue
+      router.prefetch(path)
+    }
+  }, [pathname, router])
+
   if (!mounted) {
     return null
   }
@@ -36,11 +44,11 @@ export const BottomTab = () => {
             const active = isPathActive(pathname, path)
 
             return (
-              <button
+              <Link
                 key={label}
+                prefetch
                 className='flex flex-1 touch-manipulation flex-col items-center justify-center gap-1.5 transition-all duration-300'
-                type='button'
-                onClick={() => router.push(path)}>
+                href={path}>
                 <Icon
                   className={cn(
                     'size-5 transition-colors duration-300',
@@ -56,7 +64,7 @@ export const BottomTab = () => {
                   )}>
                   {label}
                 </span>
-              </button>
+              </Link>
             )
           })}
         </div>

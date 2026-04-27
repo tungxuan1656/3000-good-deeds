@@ -68,7 +68,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
         )}>
         <AppSidebar />
         <SidebarInset className='flex flex-1 flex-col overflow-hidden'>
-          <div className='flex flex-1 flex-col overflow-y-auto px-4 pt-6 sm:px-6 md:px-8'>
+          <div className='flex flex-1 flex-col overflow-y-auto px-4 pt-3 sm:px-6 md:px-8'>
             <main className='flex flex-col gap-6 pb-32 md:pb-12'>
               {children}
             </main>

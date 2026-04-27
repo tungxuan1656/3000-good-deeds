@@ -1,12 +1,28 @@
 import '../index.css'
 
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import { Be_Vietnam_Pro, Noto_Serif } from 'next/font/google'
 
 import { AppProviders } from '@/components/providers/app-providers'
 import { SITE_URL } from '@/lib/site-config'
 
+const beVietnamPro = Be_Vietnam_Pro({
+  variable: '--font-be-vietnam-pro',
+  subsets: ['latin', 'vietnamese'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+const notoSerif = Noto_Serif({
+  variable: '--font-noto-serif',
+  subsets: ['latin', 'vietnamese'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: '3000 Việc Thiện',
   title: {
     default: '3000 Việc Thiện | Theo dõi việc tốt mỗi ngày',
     template: '%s | 3000 Việc Thiện',
@@ -22,6 +38,24 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/',
+  },
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      { url: '/appicon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '48x48' },
+    ],
+    apple: [
+      {
+        url: '/apple-touch-icon-180x180.png',
+        sizes: '180x180',
+      },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: '3000 Việc Thiện',
   },
   openGraph: {
     title: '3000 Việc Thiện | Theo dõi việc tốt mỗi ngày',
@@ -47,6 +81,20 @@ export const metadata: Metadata = {
       'Nền tảng miễn phí vĩnh viễn giúp bạn xây dựng thói quen làm việc tốt mỗi ngày.',
     images: ['/appicon.png'],
   },
+  other: {
+    HandheldFriendly: 'true',
+    'mobile-web-app-capable': 'yes',
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({
@@ -55,7 +103,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html className='h-full antialiased' lang='vi'>
+    <html
+      className={`${beVietnamPro.variable} ${notoSerif.variable} h-full antialiased`}
+      lang='vi'>
       <body suppressHydrationWarning className='flex min-h-full flex-col'>
         <AppProviders>{children}</AppProviders>
       </body>

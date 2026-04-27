@@ -5,10 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
-  --font-headline: 'Noto Serif', Georgia, 'Times New Roman', serif;
-  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
-  --font-label: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
+  --font-headline: var(--font-noto-serif), Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
+  --font-label: var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
 
   --radius: 0.875rem;
 

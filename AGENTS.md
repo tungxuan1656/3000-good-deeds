@@ -41,7 +41,7 @@ Before marking work as done:
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **3000-good-deeds** (2807 symbols, 4022 relationships, 28 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **3000-good-deeds** (2675 symbols, 3880 relationships, 29 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
 
