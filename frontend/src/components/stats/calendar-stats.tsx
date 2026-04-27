@@ -52,7 +52,8 @@ export const CalendarStats = () => {
   }, [])
 
   const effectiveReferenceDate = referenceDate ?? new Date(0)
-  const effectiveCurrentMonth = currentMonth ?? startOfMonth(effectiveReferenceDate)
+  const effectiveCurrentMonth =
+    currentMonth ?? startOfMonth(effectiveReferenceDate)
 
   const monthStart = startOfMonth(effectiveCurrentMonth)
   const monthEnd = endOfMonth(effectiveCurrentMonth)

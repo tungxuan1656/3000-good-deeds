@@ -56,7 +56,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className='h-full antialiased' lang='vi'>
-      <body className='flex min-h-full flex-col'>
+      <body suppressHydrationWarning className='flex min-h-full flex-col'>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
