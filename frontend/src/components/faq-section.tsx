@@ -1,4 +1,4 @@
-import { HelpCircle } from 'lucide-react'
+import { ChevronDown, HelpCircle } from 'lucide-react'
 
 export const LANDING_FAQS = [
   {
@@ -45,30 +45,42 @@ export const LANDING_FAQS = [
 
 export function FaqSection() {
   return (
-    <section className='bg-surface-container py-24' id='faq'>
-      <div className='container mx-auto max-w-3xl px-6'>
-        <div className='mb-16 text-center'>
+    <section
+      className='bg-surface-container scroll-mt-24 py-16 md:py-20 lg:py-24'
+      id='faq'>
+      <div className='container mx-auto max-w-4xl px-4 sm:px-6'>
+        <div className='mb-12 text-center md:mb-16'>
           <div className='bg-primary/10 text-primary mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl'>
             <HelpCircle className='h-6 w-6' />
           </div>
           <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
             Câu hỏi thường gặp
           </h2>
-          <p className='text-muted-foreground mt-4 text-lg'>
+          <p className='text-muted-foreground mt-4 text-base leading-7 md:text-lg'>
             Giải đáp những thắc mắc phổ biến về hành trình 3000 Việc Thiện.
           </p>
         </div>
 
-        <div className='space-y-6'>
-          {LANDING_FAQS.map((faq) => (
-            <div
+        <div className='space-y-4'>
+          {LANDING_FAQS.map((faq, index) => (
+            <details
               key={faq.q}
-              className='border-border hover:border-primary/30 rounded-2xl border bg-white p-6 shadow-sm transition-all hover:shadow-md'>
-              <h3 className='text-foreground mb-3 text-lg font-bold'>
-                {faq.q}
-              </h3>
-              <p className='text-muted-foreground leading-relaxed'>{faq.a}</p>
-            </div>
+              className='group border-border/80 open:border-primary/40 rounded-2xl border bg-white shadow-sm transition-all open:shadow-md'
+              open={index === 0}>
+              <summary className='flex cursor-pointer list-none items-start justify-between gap-4 p-5 md:p-6 [&::-webkit-details-marker]:hidden'>
+                <h4 className='text-foreground text-md leading-7 font-bold'>
+                  {faq.q}
+                </h4>
+                <span className='bg-surface-container text-primary mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform group-open:rotate-180'>
+                  <ChevronDown className='h-4 w-4' />
+                </span>
+              </summary>
+              <div className='px-5 pb-5 md:px-6 md:pb-6'>
+                <p className='text-muted-foreground text-base leading-7'>
+                  {faq.a}
+                </p>
+              </div>
+            </details>
           ))}
         </div>
       </div>

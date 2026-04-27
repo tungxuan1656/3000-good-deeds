@@ -47,17 +47,17 @@ const LandingPage = () => {
 
   return (
     <div className='bg-background text-foreground selection:bg-primary/20 flex min-h-screen flex-col'>
-      <header className='border-border/40 bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur-md'>
-        <div className='container mx-auto flex h-16 max-w-6xl items-center justify-between px-6'>
+      <header className='border-border/50 bg-background/90 sticky top-0 z-50 w-full border-b backdrop-blur-md'>
+        <div className='container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6'>
           <div className='flex items-center gap-2'>
             <div className='bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-lg'>
               <Heart className='h-5 w-5 fill-current' />
             </div>
-            <span className='font-headline text-xl font-bold tracking-tight'>
+            <span className='font-headline text-lg font-bold tracking-tight sm:text-xl'>
               3000 Việc Thiện
             </span>
           </div>
-          <nav className='text-muted-foreground hidden items-center gap-8 text-sm font-medium md:flex'>
+          <nav className='text-muted-foreground hidden items-center gap-8 text-sm font-medium lg:flex'>
             <Link
               className='hover:text-foreground transition-colors'
               href='#ve-du-an'>
@@ -84,14 +84,14 @@ const LandingPage = () => {
               Hỏi đáp
             </Link>
           </nav>
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center gap-2 sm:gap-3'>
             <Link
-              className='hover:text-primary text-sm font-medium transition-colors'
+              className='hover:text-primary hidden text-sm font-medium transition-colors sm:inline-flex'
               href={appLoginUrl}>
               Đăng nhập
             </Link>
             <Link
-              className='bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 py-2 text-sm font-medium shadow-sm transition-all hover:scale-105 active:scale-95'
+              className='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center rounded-full px-4 text-sm font-semibold shadow-sm transition-all hover:scale-105 active:scale-95 sm:px-5'
               href={buildWebAppCtaUrl('header_get_started', 'login')}>
               Bắt đầu ngay
             </Link>
@@ -100,37 +100,37 @@ const LandingPage = () => {
       </header>
 
       <main className='flex-1'>
-        <section className='relative overflow-hidden pt-24 pb-32'>
+        <section className='relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28 lg:pt-28 lg:pb-32'>
           <div className='absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(82,99,71,0.15),rgba(255,255,255,0))]' />
-          <div className='container mx-auto max-w-6xl px-6'>
-            <div className='mx-auto max-w-3xl text-center'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
+            <div className='mx-auto max-w-4xl text-center'>
               <div className='border-primary/20 bg-primary/5 text-primary mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium'>
                 <Sprout className='h-4 w-4' />
                 <span>Gieo mầm thiện, gặt bình an</span>
               </div>
-              <h1 className='font-headline text-foreground text-5xl font-bold tracking-tight sm:text-6xl/tight md:text-7xl/tight'>
+              <h1 className='font-headline text-foreground text-5xl/tight font-bold tracking-tight sm:text-6xl/tight lg:text-7xl/tight'>
                 Hành Trình Gieo Hạt <br />
                 <span className='text-primary'>Giống Thiện</span>
               </h1>
-              <p className='text-muted-foreground mx-auto mt-6 max-w-2xl text-lg leading-relaxed md:text-xl'>
+              <p className='text-muted-foreground mx-auto mt-6 max-w-2xl text-base leading-7 md:text-lg md:leading-relaxed'>
                 Mỗi hành động nhỏ bé hôm nay là một đóa hoa nở rộ ngày mai. 3000
                 Việc Thiện là nơi tĩnh lặng để bạn theo dõi, nuôi dưỡng lòng
                 trắc ẩn và lan tỏa những điều tốt đẹp mỗi ngày.
               </p>
-              <div className='mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row'>
+              <div className='mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4'>
                 <Link
-                  className='group bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90 flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-semibold shadow-lg transition-all'
+                  className='group bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90 inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-base font-semibold shadow-lg transition-all'
                   href={buildWebAppCtaUrl('hero_start_journey', 'login')}>
                   Bắt đầu hành trình
                   <ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
                 </Link>
                 <Link
-                  className='bg-surface-container text-foreground hover:bg-surface-container-high flex items-center justify-center rounded-full px-8 py-4 text-base font-medium transition-colors'
+                  className='bg-surface-container text-foreground hover:bg-surface-container-high inline-flex h-12 items-center justify-center rounded-full px-7 text-base font-medium transition-colors'
                   href='#y-nghia'>
                   Tìm hiểu thêm
                 </Link>
               </div>
-              <div className='text-muted-foreground mt-12 flex items-center justify-center gap-4 text-sm'>
+              <div className='text-muted-foreground mt-8 flex flex-wrap items-center justify-center gap-3 text-sm sm:mt-10 sm:gap-5'>
                 <div className='flex items-center gap-1'>
                   <CheckCircle2 className='text-primary h-4 w-4' />
                   <span>Miễn phí vĩnh viễn</span>
@@ -144,14 +144,16 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section className='py-24' id='ve-du-an'>
-          <div className='container mx-auto max-w-6xl px-6'>
-            <div className='grid gap-12 md:grid-cols-2 md:items-start'>
+        <section
+          className='bg-surface-container-low scroll-mt-24 py-16 md:py-20 lg:py-24'
+          id='ve-du-an'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
+            <div className='grid gap-10 md:grid-cols-2 md:items-start md:gap-12'>
               <div>
                 <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
                   Vì sao dự án 3000 Việc Thiện ra đời?
                 </h2>
-                <div className='text-muted-foreground mt-6 space-y-5 text-lg leading-relaxed'>
+                <div className='text-muted-foreground mt-6 space-y-5 text-base leading-7 md:text-lg md:leading-relaxed'>
                   <p>
                     Chúng tôi xây dự án này để giúp bạn giữ thói quen làm điều
                     tốt theo cách đơn giản, nhẹ nhàng và bền vững.
@@ -172,16 +174,18 @@ const LandingPage = () => {
                       key={item}
                       className='bg-surface-container flex items-start gap-3 rounded-xl px-4 py-3'>
                       <CheckCircle2 className='text-primary mt-0.5 h-5 w-5 shrink-0' />
-                      <p className='text-foreground'>{item}</p>
+                      <p className='text-foreground text-sm leading-6 md:text-base'>
+                        {item}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className='border-border bg-surface-container rounded-3xl border p-8'>
+              <div className='border-border bg-surface-container rounded-3xl border p-6 md:p-8'>
                 <div className='bg-primary/10 text-primary mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl'>
                   <Users className='h-6 w-6' />
                 </div>
-                <h3 className='text-foreground text-2xl font-bold'>
+                <h3 className='text-foreground text-2xl leading-tight font-bold'>
                   Ai nên dùng 3000 Việc Thiện?
                 </h3>
                 <div className='mt-6 grid gap-4'>
@@ -193,7 +197,7 @@ const LandingPage = () => {
                     <div
                       key={item}
                       className='text-muted-foreground rounded-2xl bg-white p-4 shadow-sm'>
-                      {item}
+                      <p className='text-sm leading-6 md:text-base'>{item}</p>
                     </div>
                   ))}
                 </div>
@@ -202,16 +206,18 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section className='bg-surface-container py-24' id='y-nghia'>
-          <div className='container mx-auto max-w-6xl px-6'>
-            <div className='grid gap-16 md:grid-cols-2 md:items-center'>
+        <section
+          className='bg-surface-container scroll-mt-24 py-16 md:py-20 lg:py-24'
+          id='y-nghia'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
+            <div className='grid gap-10 md:grid-cols-2 md:items-center md:gap-16'>
               <div>
                 <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
                   Tích tiểu thành đại,
                   <br />
                   nước chảy đá mòn
                 </h2>
-                <div className='text-muted-foreground mt-6 space-y-6 text-lg leading-relaxed'>
+                <div className='text-muted-foreground mt-6 space-y-6 text-base leading-7 md:text-lg md:leading-relaxed'>
                   <p>
                     Làm việc thiện không cần phải là những điều to lớn. Đó có
                     thể là một nụ cười trao đi, một lời động viên đúng lúc, hay
@@ -230,13 +236,13 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className='relative'>
-                <div className='bg-primary/10 absolute -inset-4 rounded-3xl blur-2xl' />
-                <div className='bg-secondary/30 relative flex aspect-square items-center justify-center overflow-hidden rounded-3xl p-8 shadow-inner'>
+                <div className='bg-primary/10 absolute -inset-3 rounded-3xl blur-2xl' />
+                <div className='bg-secondary/30 relative flex aspect-square items-center justify-center overflow-hidden rounded-3xl p-6 shadow-inner md:p-8'>
                   <div className='grid w-full grid-cols-2 gap-4'>
                     {[1, 2, 3, 4].map((item) => (
                       <div
                         key={item}
-                        className='rounded-2xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md'>
+                        className='rounded-2xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md md:p-6'>
                         <Heart
                           className={`mb-4 h-8 w-8 ${item % 2 === 0 ? 'text-primary' : 'text-accent-foreground'}`}
                         />
@@ -251,18 +257,18 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section className='relative overflow-hidden py-24'>
-          <div className='container mx-auto max-w-6xl px-6'>
-            <div className='mb-16 text-center'>
+        <section className='relative overflow-hidden py-16 md:py-20 lg:py-24'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
+            <div className='mb-12 text-center md:mb-16'>
               <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
                 Hành trình nuôi dưỡng sự bình an
               </h2>
-              <p className='text-muted-foreground mx-auto mt-4 max-w-2xl text-lg'>
+              <p className='text-muted-foreground mx-auto mt-4 max-w-2xl text-base leading-7 md:text-lg'>
                 Chỉ cần vài phút mỗi ngày, bạn sẽ nhận thấy sự thay đổi tích cực
                 từ sâu bên trong.
               </p>
             </div>
-            <div className='relative grid gap-8 md:grid-cols-3'>
+            <div className='relative grid gap-10 md:grid-cols-3 md:gap-8'>
               <div className='bg-border absolute top-12 right-[16%] left-[16%] -z-10 hidden h-0.5 md:block' />
               {[
                 {
@@ -284,30 +290,34 @@ const LandingPage = () => {
                 <div
                   key={item.step}
                   className='bg-background relative flex flex-col items-center text-center'>
-                  <div className='bg-surface-container border-background font-headline text-primary mb-6 flex h-24 w-24 items-center justify-center rounded-full border-4 text-2xl font-bold shadow-sm'>
+                  <div className='bg-surface-container border-background font-headline text-primary mb-6 flex h-20 w-20 items-center justify-center rounded-full border-4 text-2xl font-bold shadow-sm md:h-24 md:w-24'>
                     {item.step}
                   </div>
                   <h3 className='text-foreground mb-3 text-xl font-bold'>
                     {item.title}
                   </h3>
-                  <p className='text-muted-foreground'>{item.desc}</p>
+                  <p className='text-muted-foreground max-w-xs text-sm leading-6 md:text-base'>
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className='bg-surface-container py-24' id='tinh-nang'>
-          <div className='container mx-auto max-w-6xl px-6'>
-            <div className='mb-16 text-center'>
+        <section
+          className='bg-surface-container-low scroll-mt-24 py-16 md:py-20 lg:py-24'
+          id='tinh-nang'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
+            <div className='mb-12 text-center md:mb-16'>
               <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
                 Những công cụ nuôi dưỡng tâm hồn
               </h2>
-              <p className='text-muted-foreground mx-auto mt-4 max-w-2xl text-lg'>
+              <p className='text-muted-foreground mx-auto mt-4 max-w-2xl text-base leading-7 md:text-lg'>
                 Một không gian riêng tư, không phán xét, không bảng xếp hạng.
               </p>
             </div>
-            <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
+            <div className='grid gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-4 lg:gap-8'>
               {[
                 {
                   icon: Sprout,
@@ -336,14 +346,14 @@ const LandingPage = () => {
               ].map((feature) => (
                 <div
                   key={feature.title}
-                  className='group border-border bg-card hover:border-primary/30 flex flex-col rounded-3xl border p-8 shadow-sm transition-all hover:shadow-md'>
+                  className='group border-border bg-card hover:border-primary/30 flex flex-col rounded-3xl border p-6 shadow-sm transition-all hover:shadow-md md:p-8'>
                   <div className='bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl transition-colors'>
                     <feature.icon className='h-6 w-6' />
                   </div>
-                  <h3 className='text-foreground mb-3 text-xl font-bold'>
+                  <h3 className='text-foreground mb-3 text-2xl leading-tight font-bold md:text-xl'>
                     {feature.title}
                   </h3>
-                  <p className='text-muted-foreground flex-1 leading-relaxed'>
+                  <p className='text-muted-foreground flex-1 text-sm leading-6 md:text-base md:leading-relaxed'>
                     {feature.description}
                   </p>
                 </div>
@@ -352,23 +362,25 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section className='py-24' id='cai-dat'>
-          <div className='container mx-auto max-w-6xl px-6'>
+        <section
+          className='bg-background scroll-mt-24 py-16 md:py-20 lg:py-24'
+          id='cai-dat'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
             <div className='text-center'>
               <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
                 Cài web app trên iPhone và Android trong 1 phút
               </h2>
-              <p className='text-muted-foreground mx-auto mt-4 max-w-3xl text-lg'>
+              <p className='text-muted-foreground mx-auto mt-4 max-w-3xl text-base leading-7 md:text-lg'>
                 Bạn không cần tải từ App Store hay CH Play. Chỉ cần mở trình
                 duyệt, đăng nhập, rồi thêm vào màn hình chính để dùng như một
                 app.
               </p>
             </div>
-            <div className='mt-12 grid gap-8 md:grid-cols-2'>
+            <div className='mt-10 grid gap-5 md:mt-12 md:grid-cols-2 md:gap-8'>
               {INSTALL_OPTIONS.map((item) => (
                 <div
                   key={item.title}
-                  className='border-border bg-card rounded-3xl border p-8 shadow-sm'>
+                  className='border-border bg-card rounded-3xl border p-6 shadow-sm md:p-8'>
                   <div className='bg-primary/10 text-primary mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl'>
                     <item.icon className='h-6 w-6' />
                   </div>
@@ -381,7 +393,9 @@ const LandingPage = () => {
                         <span className='bg-primary/10 text-primary mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-sm font-semibold'>
                           {index + 1}
                         </span>
-                        <span>{step}</span>
+                        <span className='text-sm leading-6 md:text-base'>
+                          {step}
+                        </span>
                       </li>
                     ))}
                   </ol>
@@ -392,13 +406,13 @@ const LandingPage = () => {
               <div className='flex flex-col gap-4 md:flex-row md:items-start md:justify-between'>
                 <div className='flex items-start gap-3'>
                   <Cloud className='text-primary mt-1 h-5 w-5 shrink-0' />
-                  <p className='text-muted-foreground'>
+                  <p className='text-muted-foreground text-sm leading-6 md:text-base'>
                     Dữ liệu được lưu theo tài khoản, nên bạn có thể dùng nhiều
                     thiết bị mà tiến trình vẫn đồng bộ.
                   </p>
                 </div>
                 <Link
-                  className='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-11 items-center justify-center rounded-full px-6 text-sm font-semibold'
+                  className='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-11 w-full items-center justify-center rounded-full px-6 text-sm font-semibold md:w-auto'
                   href={buildWebAppCtaUrl('install_try_free')}>
                   Dùng thử miễn phí
                 </Link>
@@ -407,13 +421,13 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section className='py-24'>
-          <div className='container mx-auto max-w-6xl px-6'>
-            <div className='grid gap-16 md:grid-cols-2 md:items-center'>
+        <section className='bg-surface-container-low py-16 md:py-20 lg:py-24'>
+          <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
+            <div className='grid gap-10 md:grid-cols-2 md:items-center md:gap-16'>
               <div className='relative order-2 md:order-1'>
                 <div className='bg-secondary/20 absolute -inset-4 rounded-3xl blur-2xl' />
-                <div className='border-border relative aspect-square overflow-hidden rounded-3xl border bg-white p-8 shadow-sm'>
-                  <div className='flex h-full flex-col justify-between'>
+                <div className='border-border relative overflow-hidden rounded-3xl border bg-white p-6 shadow-sm md:aspect-square md:p-8'>
+                  <div className='flex h-full flex-col gap-3 md:justify-between'>
                     {[
                       {
                         icon: ShieldCheck,
@@ -434,11 +448,11 @@ const LandingPage = () => {
                     ].map((item) => (
                       <div
                         key={item.text}
-                        className='bg-surface-container hover:bg-surface-container-high flex items-start gap-4 rounded-2xl p-4 transition-colors'>
+                        className='bg-surface-container hover:bg-surface-container-high flex items-start gap-4 rounded-2xl p-3 transition-colors md:p-4'>
                         <div className='bg-primary/10 text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full'>
                           <item.icon className='h-5 w-5' />
                         </div>
-                        <p className='text-foreground mt-2 font-medium'>
+                        <p className='text-foreground mt-2 text-sm font-medium md:text-base'>
                           {item.text}
                         </p>
                       </div>
@@ -450,7 +464,7 @@ const LandingPage = () => {
                 <h2 className='font-headline text-foreground text-3xl font-bold tracking-tight sm:text-4xl'>
                   Giá trị cốt lõi của chúng tôi
                 </h2>
-                <div className='text-muted-foreground mt-6 space-y-6 text-lg leading-relaxed'>
+                <div className='text-muted-foreground mt-6 space-y-5 text-base leading-7 md:space-y-6 md:text-lg md:leading-relaxed'>
                   <p>
                     3000 Việc Thiện <strong>không phải</strong> là một mạng xã
                     hội ganh đua, không có bảng xếp hạng, và không có hệ thống
@@ -474,19 +488,19 @@ const LandingPage = () => {
 
         <FaqSection />
 
-        <section className='bg-primary text-primary-foreground relative overflow-hidden py-24'>
+        <section className='bg-primary text-primary-foreground relative overflow-hidden py-16 md:py-20 lg:py-24'>
           <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,1)_0%,transparent_100%)] opacity-10' />
-          <div className='relative container mx-auto max-w-4xl px-6 text-center'>
+          <div className='relative container mx-auto max-w-4xl px-4 text-center sm:px-6'>
             <h2 className='font-headline text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl'>
               Bạn đã sẵn sàng gieo hạt giống thiện hôm nay?
             </h2>
-            <p className='text-primary-foreground/80 mt-6 text-lg md:text-xl'>
+            <p className='text-primary-foreground/85 mx-auto mt-6 max-w-2xl text-base leading-7 md:text-xl'>
               Hàng ngàn người đã bắt đầu. Hãy tham gia cùng chúng tôi để tạo nên
               một thế giới ấm áp hơn.
             </p>
             <div className='mt-10'>
               <Link
-                className='text-primary hover:bg-surface-container inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-base font-bold shadow-lg transition-all hover:scale-105'
+                className='text-primary hover:bg-surface-container inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-base font-bold shadow-lg transition-all hover:scale-105'
                 href={buildWebAppCtaUrl('bottom_create_account', 'login')}>
                 Tạo tài khoản miễn phí
               </Link>
@@ -496,7 +510,7 @@ const LandingPage = () => {
       </main>
 
       <footer className='border-border bg-surface-container-lowest border-t py-12'>
-        <div className='container mx-auto max-w-6xl px-6'>
+        <div className='container mx-auto max-w-6xl px-4 sm:px-6'>
           <div className='grid gap-8 md:grid-cols-2'>
             <div>
               <div className='mb-6 flex items-center gap-2'>
@@ -522,7 +536,9 @@ const LandingPage = () => {
             </div>
             <div className='grid grid-cols-2 gap-8 md:justify-items-end'>
               <div>
-                <h4 className='text-foreground mb-4 font-bold'>Sản phẩm</h4>
+                <h3 className='text-foreground mb-4 text-lg font-bold'>
+                  Sản phẩm
+                </h3>
                 <ul className='text-muted-foreground space-y-3 text-sm'>
                   <li>
                     <Link
@@ -555,7 +571,9 @@ const LandingPage = () => {
                 </ul>
               </div>
               <div>
-                <h4 className='text-foreground mb-4 font-bold'>Pháp lý</h4>
+                <h3 className='text-foreground mb-4 text-lg font-bold'>
+                  Pháp lý
+                </h3>
                 <ul className='text-muted-foreground space-y-3 text-sm'>
                   <li>
                     <Link
