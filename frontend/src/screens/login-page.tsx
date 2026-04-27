@@ -1,6 +1,8 @@
+'use client'
+
 import { EyeIcon, EyeOffIcon, LogIn } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { type FormEvent, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import {
   AuthBrand,
@@ -21,7 +23,7 @@ import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
 
 const LoginPage = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const isAuthenticated = useAuthStore.use.isAuthenticated()
   const {
     loginWithEmailPassword,
@@ -42,9 +44,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(PATHS.HOME, { replace: true })
+      router.replace(PATHS.HOME)
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, router])
 
   const resetMessages = () => {
     setError(null)
@@ -62,7 +64,7 @@ const LoginPage = () => {
 
     try {
       await loginWithGoogle()
-      navigate(PATHS.HOME, { replace: true })
+      router.replace(PATHS.HOME)
     } catch (error) {
       setError(
         getFirebaseErrorMessage(error, t('auth.login.errors.googleConnection')),
@@ -98,13 +100,13 @@ const LoginPage = () => {
           displayName.trim(),
         )
 
-        navigate(PATHS.HOME, { replace: true })
+        router.replace(PATHS.HOME)
 
         return
       }
 
       await loginWithEmailPassword(email.trim(), password)
-      navigate(PATHS.HOME, { replace: true })
+      router.replace(PATHS.HOME)
     } catch (error) {
       setError(getFirebaseErrorMessage(error, t('auth.login.errors.failed')))
     } finally {

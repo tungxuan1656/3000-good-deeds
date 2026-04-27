@@ -1,7 +1,9 @@
+'use client'
+
 import { LogOutIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import type React from 'react'
 import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { logout } from '@/api/auth'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
@@ -15,7 +17,7 @@ import { ConfirmDialog, type ConfirmDialogHandle } from '../shared'
 import { Button } from '../ui/button'
 
 export const LogoutButton = (props: React.ComponentProps<typeof Button>) => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const logoutDialogRef = useRef<ConfirmDialogHandle>(null)
   const { logoutProvider } = useAuthProvider()
 
@@ -28,7 +30,7 @@ export const LogoutButton = (props: React.ComponentProps<typeof Button>) => {
       // Ignore logout errors and still clear local state
     } finally {
       authActions.logout()
-      navigate(PATHS.LOGIN, { replace: true })
+      router.replace(PATHS.LOGIN)
     }
   }
 

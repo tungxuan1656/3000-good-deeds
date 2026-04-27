@@ -1,2 +1,2 @@
-export const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || ''
-export const APP_VERSION = __APP_VERSION__
+export const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || ''
+export const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || '0.2.0'

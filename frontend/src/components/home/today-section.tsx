@@ -1,7 +1,9 @@
+'use client'
+
 import { endOfDay, format, startOfDay } from 'date-fns'
 import { vi } from 'date-fns/locale'
+import { useRouter } from 'next/navigation'
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { EmptyDataView, GoodDeedCard, SkeletonList } from '@/components/shared'
 import { Button } from '@/components/ui/button'
@@ -10,7 +12,7 @@ import { PATHS } from '@/lib/constants'
 import { t } from '@/lib/i18n'
 
 export const TodaySection = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const todayRange = React.useMemo(() => {
     const now = new Date()
@@ -47,7 +49,7 @@ export const TodaySection = () => {
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
-          onClick={() => navigate(PATHS.TIMELINE)}>
+          onClick={() => router.push(PATHS.TIMELINE)}>
           {t('common.actions.viewAll')}
         </Button>
       </div>

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useMemo, useRef } from 'react'
 
 import { useIsMobile } from '@/hooks/shared/use-mobile'

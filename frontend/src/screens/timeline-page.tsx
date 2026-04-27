@@ -1,3 +1,5 @@
+'use client'
+
 import { format, isToday, isYesterday } from 'date-fns'
 import { vi } from 'date-fns/locale'
 import { LeafyGreenIcon, Loader2Icon } from 'lucide-react'

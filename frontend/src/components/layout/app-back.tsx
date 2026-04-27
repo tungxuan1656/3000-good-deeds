@@ -1,12 +1,14 @@
+'use client'
+
 import { ArrowLeftIcon } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
 
 import { useIsMobile } from '@/hooks/shared/use-mobile'
 import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
 
 export const AppBack = () => {
   const isMobile = useIsMobile()
-  const path = useLocation().pathname
+  const path = usePathname()
 
   if (
     !isMobile ||
@@ -19,6 +21,7 @@ export const AppBack = () => {
   return (
     <button
       className='t-safe bg-card border-border/45 fixed left-3 rounded-full border p-2 shadow-sm'
+      type='button'
       onClick={() => window.history.back()}>
       <ArrowLeftIcon className='size-5' />
     </button>

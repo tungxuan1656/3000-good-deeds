@@ -9,7 +9,7 @@ import type { ApiResponse, RefreshTokenResponse } from '../types/api'
 import { API_ENDPOINTS } from './endpoints'
 
 // Get API URL from env or default
-export const API_URL = import.meta.env.VITE_API_URL || '/api/v1'
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api/v1'
 
 export const client = axios.create({
   baseURL: API_URL,

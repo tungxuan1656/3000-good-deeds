@@ -1,3 +1,5 @@
+'use client'
+
 import { GoalHistoryCard, GoalSettingCard } from '@/components/goals'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {

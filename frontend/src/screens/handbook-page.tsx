@@ -1,3 +1,5 @@
+'use client'
+
 import { ReflectionHistory } from '@/components/inner/reflection-history'
 import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {

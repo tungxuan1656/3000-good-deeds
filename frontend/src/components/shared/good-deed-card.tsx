@@ -1,3 +1,5 @@
+'use client'
+
 import { LeafIcon, MoreHorizontalIcon, Pencil, Trash2 } from 'lucide-react'
 import { useRef } from 'react'
 import { toast } from 'sonner'

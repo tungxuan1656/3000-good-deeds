@@ -1,8 +1,9 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
-import { Outlet } from 'react-router-dom'
 import { toast } from 'sonner'
 
-import { AppSidebar, BottomTab } from '@/components/layout'
+import { AppSidebar, BottomTab, ScrollToTop } from '@/components/layout'
 import { GoodDeedFormSheet } from '@/components/shared'
 import {
   ConfirmDialog,
@@ -18,7 +19,7 @@ import {
 } from '@/lib/utils/push-notifications'
 import { useAuthStore } from '@/stores/auth.store'
 
-export const AppLayout = () => {
+export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuthStore.use.user()
   const refNotificationDialog = useRef<ConfirmDialogHandle>(null)
 
@@ -59,6 +60,7 @@ export const AppLayout = () => {
 
   return (
     <div className='min-h-screen md:flex md:items-center md:justify-center'>
+      <ScrollToTop />
       <SidebarProvider
         className={cn(
           'group/sidebar-wrapper flex h-full w-full flex-col md:flex-row',
@@ -68,7 +70,7 @@ export const AppLayout = () => {
         <SidebarInset className='flex flex-1 flex-col overflow-hidden'>
           <div className='flex flex-1 flex-col overflow-y-auto px-4 pt-6 sm:px-6 md:px-8'>
             <main className='flex flex-col gap-6 pb-32 md:pb-12'>
-              <Outlet />
+              {children}
             </main>
           </div>
           <BottomTab />

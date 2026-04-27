@@ -1,7 +1,9 @@
+'use client'
+
 import { addDays, format, isAfter, isToday, startOfWeek } from 'date-fns'
 import { vi } from 'date-fns/locale'
+import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { useCalendar } from '@/hooks/api/use-activities'
@@ -22,7 +24,7 @@ const defaultDays = [
 ]
 
 export const WeeklyRhythmCard = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const startOfCurrentWeek = startOfWeek(new Date(), { weekStartsOn: 1 })
 
   const from = startOfCurrentWeek.setHours(0, 0, 0, 0)
@@ -65,7 +67,7 @@ export const WeeklyRhythmCard = () => {
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
-          onClick={() => navigate(PATHS.PROGRESS)}>
+          onClick={() => router.push(PATHS.PROGRESS)}>
           {t('common.actions.viewAll')}
         </Button>
       </div>

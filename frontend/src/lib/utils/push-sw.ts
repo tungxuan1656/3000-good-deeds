@@ -1,8 +1,6 @@
 import { withBasePath } from './base-path'
 
-const SERVICE_WORKER_URL = import.meta.env.DEV
-  ? withBasePath('/dev-sw.js?dev-sw')
-  : withBasePath('/sw.js')
+const SERVICE_WORKER_URL = withBasePath('/sw.js')
 
 const toUint8Array = (value: ArrayBuffer | Uint8Array | null | undefined) => {
   if (!value) return null
@@ -60,7 +58,7 @@ export const getOrRegisterServiceWorker = async () => {
   }
 
   await navigator.serviceWorker.register(SERVICE_WORKER_URL, {
-    type: import.meta.env.DEV ? 'module' : 'classic',
+    type: 'classic',
   })
 
   return await navigator.serviceWorker.ready

@@ -1,5 +1,7 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { deleteMe } from '@/api/user'
@@ -29,7 +31,7 @@ import { authActions, useAuthStore } from '@/stores/auth.store'
 import { executeDeleteAccountFlow } from './settings-page-account-deletion'
 
 const MorePage = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const { deleteCurrentFirebaseUser } = useAuthProvider()
   const userFromStore = useAuthStore.use.user()
   const { data: userResponse } = useUser()
@@ -56,7 +58,7 @@ const MorePage = () => {
         unsubscribeFromPushNotifications,
         deleteMe,
         logout: authActions.logout,
-        navigateToLogin: () => navigate(PATHS.LOGIN, { replace: true }),
+        navigateToLogin: () => router.replace(PATHS.LOGIN),
         toastSuccess: toast.success,
         toastError: toast.error,
       })
