@@ -1,5 +1,6 @@
 import '../index.css'
 
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Be_Vietnam_Pro, Noto_Serif } from 'next/font/google'
 
@@ -114,6 +115,7 @@ export default function RootLayout({
       lang='vi'>
       <body suppressHydrationWarning className='flex min-h-full flex-col'>
         <AppProviders>{children}</AppProviders>
+        <Analytics />
       </body>
     </html>
   )
