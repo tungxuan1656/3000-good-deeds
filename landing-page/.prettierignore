@@ -1,8 +1,0 @@
-**/node_modules
-**/build
-**/dist
-.next/**
-coverage/**
-public/**
-docs/**
-.vscode/**
