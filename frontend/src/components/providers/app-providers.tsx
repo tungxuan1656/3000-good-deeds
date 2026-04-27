@@ -8,6 +8,7 @@ import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import { useEffect } from 'react'
 
 import { Toaster } from '@/components/ui/sonner'
+import { registerServiceWorker } from '@/lib/utils/push-sw'
 
 const SIX_HOURS = 1000 * 60 * 60 * 6
 
@@ -39,6 +40,10 @@ export const AppProviders = ({ children }: { children: React.ReactNode }) => {
     })
 
     hasPersistedQueryClient = true
+  }, [])
+
+  useEffect(() => {
+    void registerServiceWorker()
   }, [])
 
   return (

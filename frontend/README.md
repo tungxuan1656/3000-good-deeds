@@ -57,6 +57,19 @@ pnpm --filter frontend type-check
 pnpm --filter frontend build
 ```
 
+## PWA Setup
+
+- Manifest: `src/app/manifest.ts`
+- Service worker: `public/sw.js`
+- Service worker registration: `src/components/providers/app-providers.tsx`
+- Service worker headers: `next.config.ts` (`/sw.js` + global security headers)
+
+For local push/PWA testing, run Next.js with HTTPS:
+
+```bash
+pnpm --filter frontend dev -- --experimental-https
+```
+
 ## Frontend Documentation
 
 - `frontend/docs/README.md`

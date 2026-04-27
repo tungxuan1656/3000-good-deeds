@@ -1,11 +1,16 @@
-self.addEventListener('install', (event) => {
-  self.skipWaiting()
-  event.waitUntil(Promise.resolve())
-})
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim())
-})
+const APP_SHELL_CACHE = 'app-shell-v2'
+const STATIC_ASSET_CACHE = 'static-assets-v2'
+const CACHES_TO_KEEP = [APP_SHELL_CACHE, STATIC_ASSET_CACHE]
+const APP_SHELL_ASSETS = [
+  '/',
+  '/manifest.webmanifest',
+  '/favicon.ico',
+  '/appicon.png',
+  '/apple-touch-icon-180x180.png',
+  '/pwa-192x192.png',
+  '/pwa-512x512.png',
+  '/maskable-icon-512x512.png',
+]
 
 const DEFAULT_PUSH_TITLE = 'Nhắc nhở việc thiện'
 const DEFAULT_PUSH_BODY = 'Đến giờ ghi nhận việc thiện 🌱'
@@ -22,6 +27,87 @@ const resolveTargetUrl = (url) => {
     return `${self.location.origin}/home`
   }
 }
+
+const isSameOrigin = (requestUrl) => {
+  return new URL(requestUrl).origin === self.location.origin
+}
+
+const isStaticAssetRequest = (request) => {
+  const staticDestinations = ['script', 'style', 'font', 'image']
+
+  return staticDestinations.includes(request.destination)
+}
+
+self.addEventListener('install', (event) => {
+  self.skipWaiting()
+  event.waitUntil(
+    caches
+      .open(APP_SHELL_CACHE)
+      .then((cache) => cache.addAll(APP_SHELL_ASSETS))
+      .catch(() => undefined),
+  )
+})
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    Promise.all([
+      self.clients.claim(),
+      caches.keys().then((cacheNames) =>
+        Promise.all(
+          cacheNames
+            .filter((cacheName) => !CACHES_TO_KEEP.includes(cacheName))
+            .map((cacheName) => caches.delete(cacheName)),
+        ),
+      ),
+    ]),
+  )
+})
+
+self.addEventListener('fetch', (event) => {
+  const { request } = event
+  if (request.method !== 'GET' || !isSameOrigin(request.url)) {
+    return
+  }
+
+  const requestUrl = new URL(request.url)
+  if (requestUrl.pathname.startsWith('/api/')) {
+    return
+  }
+
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(async () => {
+        return (await caches.match('/')) || Response.error()
+      }),
+    )
+
+    return
+  }
+
+  if (!isStaticAssetRequest(request)) {
+    return
+  }
+
+  event.respondWith(
+    caches.match(request).then(async (cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse
+      }
+
+      try {
+        const response = await fetch(request)
+        if (response.ok && response.type === 'basic') {
+          const cache = await caches.open(STATIC_ASSET_CACHE)
+          await cache.put(request, response.clone())
+        }
+
+        return response
+      } catch {
+        return Response.error()
+      }
+    }),
+  )
+})
 
 self.addEventListener('push', (event) => {
   let payload = {}
