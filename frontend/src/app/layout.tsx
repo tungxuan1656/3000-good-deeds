@@ -1,6 +1,7 @@
 import '../index.css'
 
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata, Viewport } from 'next'
 import { Be_Vietnam_Pro, Noto_Serif } from 'next/font/google'
 
@@ -116,6 +117,7 @@ export default function RootLayout({
       <body suppressHydrationWarning className='flex min-h-full flex-col'>
         <AppProviders>{children}</AppProviders>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
