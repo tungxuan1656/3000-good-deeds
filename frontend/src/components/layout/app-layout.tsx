@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 
-import { AppSidebar, BottomTab, ScrollToTop } from '@/components/layout'
+import { AppBack, AppSidebar, BottomTab, ScrollToTop } from '@/components/layout'
 import { GoodDeedFormSheet } from '@/components/shared'
 import {
   ConfirmDialog,
@@ -77,6 +77,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <GoodDeedFormSheet />
         </SidebarInset>
       </SidebarProvider>
+      <AppBack />
 
       <ConfirmDialog
         ref={refNotificationDialog}

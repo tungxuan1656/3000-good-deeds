@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import { useEffect } from 'react'
 
-import { AppBack } from '@/components/layout/app-back'
 import { Toaster } from '@/components/ui/sonner'
 
 const SIX_HOURS = 1000 * 60 * 60 * 6
@@ -46,7 +45,6 @@ export const AppProviders = ({ children }: { children: React.ReactNode }) => {
     <QueryClientProvider client={queryClient}>
       {children}
       <Toaster position='top-center' />
-      <AppBack />
     </QueryClientProvider>
   )
 }
