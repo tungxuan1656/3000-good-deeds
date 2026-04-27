@@ -26,3 +26,4 @@ dev-dist
 .firebase
 .next
 tsconfig.tsbuildinfo
+.vercel
