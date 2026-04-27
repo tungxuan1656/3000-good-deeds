@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: '3000 Việc Thiện',
     short_name: '3000 Việc Thiện',
     description: '3000 Việc Thiện - Nơi để bạn tu tập',
-    start_url: '/',
+    start_url: '/home',
     scope: '/',
     dir: 'ltr',
     display: 'standalone',
