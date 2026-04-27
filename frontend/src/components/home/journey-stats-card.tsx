@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '../ui/card'
 import { Progress } from '../ui/progress'
 
 const GOAL_TOTAL = 3000
+const NUMBER_LOCALE = 'vi-VN'
 
 export const JourneyStatsCard = () => {
   const { data: statsResponse, isLoading } = useStatsSummary()
@@ -22,7 +23,7 @@ export const JourneyStatsCard = () => {
       <CardContent className='space-y-4'>
         <div className='flex items-baseline justify-between'>
           <span className='text-5xl font-medium tracking-tighter text-stone-800'>
-            {isLoading ? '--' : totalDeeds.toLocaleString()}
+            {isLoading ? '--' : totalDeeds.toLocaleString(NUMBER_LOCALE)}
           </span>
           <span className='text-xss font-bold tracking-[0.2em] text-stone-400 uppercase'>
             {t('journey.stats.card.deedsLogged')}
@@ -38,7 +39,7 @@ export const JourneyStatsCard = () => {
             {t('journey.stats.card.progressPrefix')}
             {progress.toFixed(1)}
             {t('journey.stats.card.progressSuffix', {
-              total: GOAL_TOTAL.toLocaleString(),
+              total: GOAL_TOTAL.toLocaleString(NUMBER_LOCALE),
             })}
           </p>
         </div>

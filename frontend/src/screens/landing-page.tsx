@@ -577,8 +577,9 @@ const LandingPage = () => {
           </div>
           <div className='border-border text-muted-foreground mt-12 border-t pt-8 text-center text-sm'>
             <p>
-              &copy; {new Date().getFullYear()} 3000 Việc Thiện. Mọi quyền được
-              bảo lưu.
+              &copy;{' '}
+              <span suppressHydrationWarning>{new Date().getFullYear()}</span>{' '}
+              3000 Việc Thiện. Mọi quyền được bảo lưu.
             </p>
           </div>
         </div>

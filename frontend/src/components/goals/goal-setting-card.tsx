@@ -119,7 +119,7 @@ export const GoalSettingCard = () => {
       </div>
       <div className='grid gap-2 md:self-end'>
         {goalTypes.map((type) => (
-          <InputGroup className='px-3'>
+          <InputGroup key={type} className='px-3'>
             <p className='text-muted-foreground text-sm font-medium'>
               {GOAL_LABELS[type]}:
             </p>

@@ -1,24 +1,9 @@
 import '../index.css'
 
 import type { Metadata } from 'next'
-import { Be_Vietnam_Pro, Noto_Serif } from 'next/font/google'
 
 import { AppProviders } from '@/components/providers/app-providers'
 import { SITE_URL } from '@/lib/site-config'
-
-const bodyFont = Be_Vietnam_Pro({
-  variable: '--font-body',
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin', 'vietnamese'],
-  display: 'swap',
-})
-
-const headingFont = Noto_Serif({
-  variable: '--font-heading',
-  weight: ['400', '600', '700'],
-  subsets: ['latin', 'vietnamese'],
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -70,9 +55,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}
-      lang='vi'>
+    <html className='h-full antialiased' lang='vi'>
       <body className='flex min-h-full flex-col'>
         <AppProviders>{children}</AppProviders>
       </body>

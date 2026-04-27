@@ -14,7 +14,7 @@ import {
 } from 'date-fns'
 import { vi } from 'date-fns/locale'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useCalendar } from '@/hooks/api/use-activities'
 import { t } from '@/lib/i18n'
@@ -42,12 +42,20 @@ const intensityLabels = [
 ]
 
 export const CalendarStats = () => {
-  const [currentMonth, setCurrentMonth] = useState(() =>
-    startOfMonth(new Date()),
-  )
+  const [referenceDate, setReferenceDate] = useState<Date | null>(null)
+  const [currentMonth, setCurrentMonth] = useState<Date | null>(null)
 
-  const monthStart = startOfMonth(currentMonth)
-  const monthEnd = endOfMonth(currentMonth)
+  useEffect(() => {
+    const now = new Date()
+    setReferenceDate(now)
+    setCurrentMonth(startOfMonth(now))
+  }, [])
+
+  const effectiveReferenceDate = referenceDate ?? new Date(0)
+  const effectiveCurrentMonth = currentMonth ?? startOfMonth(effectiveReferenceDate)
+
+  const monthStart = startOfMonth(effectiveCurrentMonth)
+  const monthEnd = endOfMonth(effectiveCurrentMonth)
   const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 })
   const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 })
 
@@ -103,12 +111,16 @@ export const CalendarStats = () => {
     'bg-primary',
   ]
 
+  if (!referenceDate || !currentMonth) {
+    return <Card />
+  }
+
   return (
     <div>
       <div className='mx-2 mt-4 mb-4 flex flex-wrap items-center justify-between gap-3'>
         <h2 className='text-foreground text-2xl leading-tight font-medium tracking-tight'>
           {t('stats.calendar.activityTitle', {
-            month: format(currentMonth, 'M', { locale: vi }),
+            month: format(effectiveCurrentMonth, 'M', { locale: vi }),
           })}
         </h2>
         <div className='mb-2 flex items-center gap-1'>
@@ -116,14 +128,22 @@ export const CalendarStats = () => {
             className='text-muted-foreground h-9 w-9 rounded-full border-none bg-transparent shadow-none hover:bg-stone-100 hover:text-stone-700'
             size='icon'
             variant='outline'
-            onClick={() => setCurrentMonth((prev) => subMonths(prev, 1))}>
+            onClick={() =>
+              setCurrentMonth((prev) =>
+                subMonths(prev ?? effectiveCurrentMonth, 1),
+              )
+            }>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
           <Button
             className='text-muted-foreground h-9 w-9 rounded-full border-none bg-transparent shadow-none hover:bg-stone-100 hover:text-stone-700'
             size='icon'
             variant='outline'
-            onClick={() => setCurrentMonth((prev) => addMonths(prev, 1))}>
+            onClick={() =>
+              setCurrentMonth((prev) =>
+                addMonths(prev ?? effectiveCurrentMonth, 1),
+              )
+            }>
             <ChevronRightIcon className='h-4 w-4' />
           </Button>
         </div>
@@ -141,8 +161,8 @@ export const CalendarStats = () => {
             {days.map((day) => {
               const key = format(day, 'yyyy-MM-dd')
               const count = counts.get(key) ?? 0
-              const isCurrentMonth = isSameMonth(day, currentMonth)
-              const isFuture = isAfter(day, new Date())
+              const isCurrentMonth = isSameMonth(day, effectiveCurrentMonth)
+              const isFuture = isAfter(day, effectiveReferenceDate)
               const isCurrentDay = isToday(day)
 
               return (

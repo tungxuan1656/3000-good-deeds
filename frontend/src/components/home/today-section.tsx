@@ -13,6 +13,7 @@ import { t } from '@/lib/i18n'
 
 export const TodaySection = () => {
   const router = useRouter()
+  const [todayLabel, setTodayLabel] = React.useState<string | null>(null)
 
   const todayRange = React.useMemo(() => {
     const now = new Date()
@@ -21,6 +22,10 @@ export const TodaySection = () => {
       from: startOfDay(now).getTime(),
       to: endOfDay(now).getTime(),
     }
+  }, [])
+
+  React.useEffect(() => {
+    setTodayLabel(format(new Date(), 'dd/MM', { locale: vi }))
   }, [])
 
   const {
@@ -43,7 +48,9 @@ export const TodaySection = () => {
     <div>
       <div className='mb-2 flex items-start justify-between gap-3 px-2'>
         <h3 className='font-headline text-primary text-lg italic md:text-xl'>
-          {`${t('home.todaySection.title')} - ${format(new Date(), 'dd/MM', { locale: vi })}`}
+          {todayLabel
+            ? `${t('home.todaySection.title')} - ${todayLabel}`
+            : t('home.todaySection.title')}
         </h3>
         <Button
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
