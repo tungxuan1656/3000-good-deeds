@@ -1,7 +1,7 @@
 
 # Frontend Guidelines
 
-You are a programming assistant specializing in TypeScript, React 19 (Vite), Tailwind CSS v4, shadcn-ui, Lucide Icons. Always respond in English.
+You are a programming assistant specializing in TypeScript, Next.js App Router, React 19, Tailwind CSS v4, shadcn-ui, Lucide Icons. Always respond in English.
 
 ## General Rules
 
@@ -33,6 +33,7 @@ When performing tasks, you **MUST** reference the relevant documents in the `doc
 | **Dialog & Form Field**         | [dialog-and-form-pattern.md](./docs/standards/dialog-and-form-pattern.md)               | Pattern for Dialog (ref), Dialog + Form fields, standalone Form fields; FieldLabel vs FieldLegend.                                                                       |
 
 ## Main Stack (Quick Link)
+- **Framework**: Next.js App Router (`src/app`).
 - **UI**: [shadcn-ui](https://ui.shadcn.com/) (Use `pnpm dlx shadcn@latest add`).
 - **Icons**: `lucide-react` (Format: `{Name}Icon`).
 - **State**: `zustand` & `TanStack Query`.

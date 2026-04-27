@@ -11,6 +11,13 @@ Frontend application built with Next.js App Router + React 19.
 - TanStack Query + Zustand
 - Web Push + PWA manifest via root-scoped service worker
 
+## Source Layout
+
+- `src/app` -> Next.js App Router entrypoints and route groups
+- `src/screens` -> reusable screen components mounted by route files
+- `src/components` -> shared and feature components
+- `src/api`, `src/hooks`, `src/stores`, `src/lib` -> app data/runtime layers
+
 ## Environment Variables
 
 Create `frontend/.env` from `frontend/.env.example`:

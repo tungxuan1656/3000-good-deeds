@@ -2,27 +2,30 @@
 
 ## 1) Kiến trúc route sau refactor
 - `GET /login` -> `login-page.tsx`
-- `GET /` -> `home-page.tsx`
+- `GET /` -> `landing-page.tsx`
+- `GET /home` -> `home-page.tsx`
 - `GET /timeline` -> `timeline-page.tsx`
 - `GET /handbook` -> `handbook-page.tsx`
 - `GET /progress` -> `progress-page.tsx`
 - `GET /more` -> `more-page.tsx`
 
 ## 2) App shell
-- Router trung tâm: `frontend/src/app.tsx`
+- App Router: `frontend/src/app/**`
+- Authenticated shell route group: `frontend/src/app/(app-shell)/layout.tsx`
 - Layout: `frontend/src/components/layout/app-layout.tsx`
 - Sidebar desktop: `frontend/src/components/layout/app-sidebar.tsx`
 - Bottom tab mobile: `frontend/src/components/layout/bottom-tab.tsx`
-- Breadcrumb: `frontend/src/components/layout/header-breadcrumbs.tsx`
+- Root providers: `frontend/src/components/providers/app-providers.tsx`
 
 ## 3) Inventory page/component chính đang dùng
-### Pages
-- `frontend/src/pages/login-page.tsx`
-- `frontend/src/pages/home-page.tsx`
-- `frontend/src/pages/timeline-page.tsx`
-- `frontend/src/pages/handbook-page.tsx`
-- `frontend/src/pages/progress-page.tsx`
-- `frontend/src/pages/more-page.tsx`
+### Screens
+- `frontend/src/screens/landing-page.tsx`
+- `frontend/src/screens/login-page.tsx`
+- `frontend/src/screens/home-page.tsx`
+- `frontend/src/screens/timeline-page.tsx`
+- `frontend/src/screens/handbook-page.tsx`
+- `frontend/src/screens/progress-page.tsx`
+- `frontend/src/screens/more-page.tsx`
 
 ### Feature components
 - Home: `components/home/today-section.tsx`, `components/shared/check-in-*`
@@ -38,7 +41,7 @@
 
 ## 4) Styling foundation
 - Global token: `frontend/src/index.css`
-- Font load: `frontend/index.html`
+- Root layout: `frontend/src/app/layout.tsx`
 - UI primitive layer: `frontend/src/components/ui/*`
 
 ## 5) API hooks mapping khả dụng

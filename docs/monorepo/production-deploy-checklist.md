@@ -2,7 +2,7 @@
 
 ## Access and Environment
 
-- [ ] Cloudflare and Firebase production access confirmed.
+- [ ] Cloudflare and Vercel production access confirmed.
 - [ ] Correct environment variables and secrets configured.
 - [ ] Correct backend DB and worker targets confirmed.
 
@@ -22,7 +22,7 @@
 ## Frontend Deploy
 
 - [ ] Build production frontend.
-- [ ] Deploy to Firebase Hosting.
+- [ ] Deploy to Vercel.
 - [ ] Validate production env configuration.
 
 ## Post-Deploy Smoke Test

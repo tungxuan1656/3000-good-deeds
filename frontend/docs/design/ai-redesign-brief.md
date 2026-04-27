@@ -37,7 +37,7 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 ## 3) Current Frontend Context (for AI grounding)
 
 ### Tech and structure
-- React 19 + Vite + Tailwind v4 + shadcn UI + Lucide.
+- Next.js App Router + React 19 + Tailwind v4 + shadcn UI + Lucide.
 - Current mobile breakpoint: `< 768px`.
 - Existing layout:
   - Desktop: sidebar + content.

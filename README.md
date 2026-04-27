@@ -4,7 +4,7 @@ Monorepo for a kindness-tracking web application.
 
 ## Packages
 
-- `frontend`: React 19 + Vite + Firebase Hosting
+- `frontend`: Next.js App Router + React 19 + Vercel
 - `backend`: Cloudflare Workers + D1
 - `docs`: shared documentation for product, architecture, and governance
 
@@ -33,7 +33,7 @@ pnpm dev:frontend
 ```
 
 - Backend: `http://localhost:8787`
-- Frontend: `http://localhost:5173`
+- Frontend: `http://localhost:3000`
 
 ## Documentation Index
 
@@ -120,4 +120,3 @@ Example:
 
 These skills help AI assistants produce **consistent, maintainable, and production-ready code**
 aligned with this project's architecture.
-

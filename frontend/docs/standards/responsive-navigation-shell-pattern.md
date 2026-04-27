@@ -341,7 +341,7 @@ function AppLayout() {
 ## 17) Mapping to This Repository
 
 - Shell composition:
-- `frontend/src/app.tsx`
+- `frontend/src/app/(app-shell)/layout.tsx`
 - `frontend/src/components/layout/app-layout.tsx`
 - Desktop nav:
 - `frontend/src/components/layout/app-sidebar.tsx`
