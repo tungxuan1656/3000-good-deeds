@@ -1,6 +1,6 @@
 import { HelpCircle } from 'lucide-react'
 
-const faqs = [
+export const LANDING_FAQS = [
   {
     q: '3000 Việc Thiện có mất phí không?',
     a: 'Không. Nền tảng miễn phí vĩnh viễn cho các tính năng cốt lõi như ghi nhận việc tốt, theo dõi tiến trình và sổ tay quán chiếu.',
@@ -60,7 +60,7 @@ export function FaqSection() {
         </div>
 
         <div className='space-y-6'>
-          {faqs.map((faq) => (
+          {LANDING_FAQS.map((faq) => (
             <div
               key={faq.q}
               className='border-border hover:border-primary/30 rounded-2xl border bg-white p-6 shadow-sm transition-all hover:shadow-md'>

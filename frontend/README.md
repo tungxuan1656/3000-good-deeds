@@ -30,6 +30,7 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_SUPPORT_EMAIL=
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
 ```
 
 Legacy `VITE_*` variables are still bridged in `next.config.ts` during migration, but new setup should use `NEXT_PUBLIC_*`.
@@ -37,6 +38,7 @@ Legacy `VITE_*` variables are still bridged in `next.config.ts` during migration
 ## Routes
 
 - `/` -> landing page
+- `/terms`, `/privacy` -> legal public pages
 - `/login` -> auth page
 - `/home` -> authenticated home page
 - `/timeline`, `/handbook`, `/progress`, `/more` -> authenticated app routes

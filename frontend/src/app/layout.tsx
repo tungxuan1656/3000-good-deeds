@@ -23,6 +23,7 @@ const notoSerif = Noto_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: '3000 Việc Thiện',
+  referrer: 'origin-when-cross-origin',
   title: {
     default: '3000 Việc Thiện | Theo dõi việc tốt mỗi ngày',
     template: '%s | 3000 Việc Thiện',
@@ -38,6 +39,14 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/',
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
   },
   manifest: '/manifest.webmanifest',
   icons: {
@@ -67,9 +76,9 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/appicon.png',
-        width: 512,
-        height: 512,
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
         alt: '3000 Việc Thiện',
       },
     ],
@@ -79,7 +88,7 @@ export const metadata: Metadata = {
     title: '3000 Việc Thiện | Theo dõi việc tốt mỗi ngày',
     description:
       'Nền tảng miễn phí vĩnh viễn giúp bạn xây dựng thói quen làm việc tốt mỗi ngày.',
-    images: ['/appicon.png'],
+    images: ['/twitter-image'],
   },
   other: {
     HandheldFriendly: 'true',
@@ -90,9 +99,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  minimumScale: 1,
-  userScalable: false,
   viewportFit: 'cover',
   themeColor: '#ffffff',
 }
