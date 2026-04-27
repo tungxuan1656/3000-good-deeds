@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import type { InnerJournalType } from '@/lib/constants'
+import type { InnerJournalType } from '@/lib/constants/journal'
 import { t } from '@/lib/i18n'
 
 // NOTE: Using module-level t() is safe in this project because language change forces a full page reload.

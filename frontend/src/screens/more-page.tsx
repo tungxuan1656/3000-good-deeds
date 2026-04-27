@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { deleteMe } from '@/api/user'
-import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
+import {
+  MainColumn,
+  MainContainer,
+  SideColumn,
+} from '@/components/layout/main-container'
 import {
   AccountProfileCard,
   DeleteAccountCard,
@@ -14,16 +18,14 @@ import {
   PWASuggestion,
   SessionCard,
 } from '@/components/settings'
-import {
-  DailyQuoteCard,
-  KindnessSuggestionCard,
-  MiniCheckInCard,
-  PageHeader,
-  WeeklyRhythmCard,
-} from '@/components/shared'
+import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { KindnessSuggestionCard } from '@/components/shared/kindness-suggestion-card'
+import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
+import { PageHeader } from '@/components/shared/page-header'
+import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { useUser } from '@/hooks/api/use-user'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { unsubscribeFromPushNotifications } from '@/lib/utils/push-notifications'
 import { authActions, useAuthStore } from '@/stores/auth.store'

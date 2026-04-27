@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
 import { useGoals, useUpsertGoals } from '@/hooks/api/use-goals'
-import { GOAL_LABELS } from '@/lib/constants'
+import { GOAL_LABELS } from '@/lib/constants/goals'
 import { t } from '@/lib/i18n'
 import type { GoalType } from '@/types/api'
 

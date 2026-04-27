@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
 

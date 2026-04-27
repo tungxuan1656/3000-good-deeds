@@ -1,13 +1,15 @@
 'use client'
 
 import { GoalHistoryCard, GoalSettingCard } from '@/components/goals'
-import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
-  DailyQuoteCard,
-  KindnessSuggestionCard,
-  MiniCheckInCard,
-  PageHeader,
-} from '@/components/shared'
+  MainColumn,
+  MainContainer,
+  SideColumn,
+} from '@/components/layout/main-container'
+import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { KindnessSuggestionCard } from '@/components/shared/kindness-suggestion-card'
+import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
+import { PageHeader } from '@/components/shared/page-header'
 import { CalendarStats, StatsCard } from '@/components/stats'
 import { t } from '@/lib/i18n'
 

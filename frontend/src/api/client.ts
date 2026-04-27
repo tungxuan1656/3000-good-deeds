@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { authTokenStorage } from '@/lib/auth-tokens'
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { withBasePath } from '@/lib/utils/base-path'
 import { authActions } from '@/stores/auth.store'
 

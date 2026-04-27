@@ -1,15 +1,9 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 
-import {
-  AppBack,
-  AppSidebar,
-  BottomTab,
-  ScrollToTop,
-} from '@/components/layout'
-import { GoodDeedFormSheet } from '@/components/shared'
 import {
   ConfirmDialog,
   type ConfirmDialogHandle,
@@ -23,6 +17,19 @@ import {
   syncPushSubscription,
 } from '@/lib/utils/push-notifications'
 import { useAuthStore } from '@/stores/auth.store'
+
+import { AppBack } from './app-back'
+import { AppSidebar } from './app-sidebar'
+import { BottomTab } from './bottom-tab'
+import { ScrollToTop } from './scroll-to-top'
+
+const GoodDeedFormSheet = dynamic(
+  () =>
+    import('@/components/shared/good-deed-form-sheet').then(
+      (module) => module.GoodDeedFormSheet,
+    ),
+  { ssr: false },
+)
 
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuthStore.use.user()

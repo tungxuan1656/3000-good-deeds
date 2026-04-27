@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { useAuthStore } from '@/stores/auth.store'
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {

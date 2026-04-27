@@ -5,10 +5,12 @@ import { vi } from 'date-fns/locale'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
 
-import { EmptyDataView, GoodDeedCard, SkeletonList } from '@/components/shared'
+import { EmptyDataView } from '@/components/shared/empty-data-view'
+import { GoodDeedCard } from '@/components/shared/good-deed-card'
+import { SkeletonList } from '@/components/shared/skeleton-list'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 
 export const TodaySection = () => {

@@ -5,7 +5,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
+import { BOTTOM_TAB_ITEMS } from '@/lib/constants/navigation'
+import { PATHS } from '@/lib/constants/paths'
 import { cn } from '@/lib/utils'
 
 const isPathActive = (pathname: string, targetPath: string) => {

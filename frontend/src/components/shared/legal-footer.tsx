@@ -1,7 +1,7 @@
 import { CopyIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { APP_VERSION, SUPPORT_EMAIL } from '@/lib/constants'
+import { APP_VERSION, SUPPORT_EMAIL } from '@/lib/constants/app-meta'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 

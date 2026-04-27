@@ -4,7 +4,8 @@ import { ArrowLeftIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
 import { useIsMobile } from '@/hooks/shared/use-mobile'
-import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
+import { BOTTOM_TAB_ITEMS } from '@/lib/constants/navigation'
+import { PATHS } from '@/lib/constants/paths'
 
 export const AppBack = () => {
   const isMobile = useIsMobile()

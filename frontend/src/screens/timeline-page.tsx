@@ -5,17 +5,19 @@ import { vi } from 'date-fns/locale'
 import { LeafyGreenIcon, Loader2Icon } from 'lucide-react'
 import * as React from 'react'
 
-import { MainColumn, MainContainer, SideColumn } from '@/components/layout'
 import {
-  DailyQuoteCard,
-  EmptyDataView,
-  GoodDeedCard,
-  InfoButton,
-  MiniCheckInCard,
-  PageHeader,
-  SkeletonList,
-  WeeklyRhythmCard,
-} from '@/components/shared'
+  MainColumn,
+  MainContainer,
+  SideColumn,
+} from '@/components/layout/main-container'
+import { DailyQuoteCard } from '@/components/shared/daily-quote-card'
+import { EmptyDataView } from '@/components/shared/empty-data-view'
+import { GoodDeedCard } from '@/components/shared/good-deed-card'
+import { InfoButton } from '@/components/shared/info-button'
+import { MiniCheckInCard } from '@/components/shared/mini-check-in-card'
+import { PageHeader } from '@/components/shared/page-header'
+import { SkeletonList } from '@/components/shared/skeleton-list'
+import { WeeklyRhythmCard } from '@/components/shared/weekly-rhythm-card'
 import { Button } from '@/components/ui/button'
 import { useDeeds } from '@/hooks/api/use-deeds'
 import { INFO_COPY } from '@/lib/constants/info-copy'

@@ -1,6 +1,7 @@
 'use client'
 
 import { EyeIcon, EyeOffIcon, LogIn } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { type FormEvent, useEffect, useState } from 'react'
 
@@ -12,15 +13,23 @@ import {
   AuthTabs,
   SocialAuth,
 } from '@/components/auth'
-import { PWAGuideDialog } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
-import { APP_VERSION, PATHS } from '@/lib/constants'
+import { APP_VERSION } from '@/lib/constants/app-meta'
+import { PATHS } from '@/lib/constants/paths'
 import { getFirebaseErrorMessage } from '@/lib/firebase-errors'
 import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
+
+const PWAGuideDialog = dynamic(
+  () =>
+    import('@/components/layout/pwa-guide-dialog').then(
+      (module) => module.PWAGuideDialog,
+    ),
+  { ssr: false },
+)
 
 const LoginPage = () => {
   const router = useRouter()
@@ -41,6 +50,10 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+
+  useEffect(() => {
+    router.prefetch(PATHS.HOME)
+  }, [router])
 
   useEffect(() => {
     if (isAuthenticated) {

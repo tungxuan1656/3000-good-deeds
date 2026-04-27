@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { useCalendar } from '@/hooks/api/use-activities'
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 

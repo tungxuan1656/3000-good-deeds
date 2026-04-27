@@ -8,12 +8,15 @@ import { useRef } from 'react'
 import { logout } from '@/api/auth'
 import { useAuthProvider } from '@/hooks/auth/use-auth-provider'
 import { authTokenStorage } from '@/lib/auth-tokens'
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { unsubscribeFromPushNotifications } from '@/lib/utils/push-notifications'
 import { authActions } from '@/stores/auth.store'
 
-import { ConfirmDialog, type ConfirmDialogHandle } from '../shared'
+import {
+  ConfirmDialog,
+  type ConfirmDialogHandle,
+} from '../shared/confirm-dialog'
 import { Button } from '../ui/button'
 
 export const LogoutButton = (props: React.ComponentProps<typeof Button>) => {

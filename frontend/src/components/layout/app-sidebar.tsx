@@ -1,6 +1,7 @@
 'use client'
 
 import { Edit3Icon } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -15,13 +16,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
+import { APP_MENU_ITEMS } from '@/lib/constants/navigation'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { useGoodDeedStore } from '@/stores/good-deed.store'
 
-import { LogoutButton } from '../settings/logout-button'
 import { Button } from '../ui/button'
+
+const LogoutButton = dynamic(
+  () =>
+    import('../settings/logout-button').then((module) => module.LogoutButton),
+  { ssr: false },
+)
 
 export const AppSidebar = () => {
   const pathname = usePathname()
