@@ -1,5 +1,9 @@
+'use client'
+
 import { Edit3Icon } from 'lucide-react'
-import { Link, useLocation } from 'react-router-dom'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import {
   Sidebar,
@@ -12,16 +16,22 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { APP_MENU_ITEMS, PATHS } from '@/lib/constants'
+import { APP_MENU_ITEMS } from '@/lib/constants/navigation'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { useGoodDeedStore } from '@/stores/good-deed.store'
 
-import { LogoutButton } from '../settings/logout-button'
 import { Button } from '../ui/button'
 
+const LogoutButton = dynamic(
+  () =>
+    import('../settings/logout-button').then((module) => module.LogoutButton),
+  { ssr: false },
+)
+
 export const AppSidebar = () => {
-  const location = useLocation()
+  const pathname = usePathname()
   const openCreateDeed = useGoodDeedStore.use.openCreate()
 
   return (
@@ -42,10 +52,9 @@ export const AppSidebar = () => {
             <SidebarMenu className='gap-0'>
               {APP_MENU_ITEMS.map(({ label, path, icon: Icon }) => {
                 const isActive = (() => {
-                  if (path === PATHS.HOME)
-                    return location.pathname === PATHS.HOME
+                  if (path === PATHS.HOME) return pathname === PATHS.HOME
 
-                  return location.pathname.startsWith(path)
+                  return pathname.startsWith(path)
                 })()
 
                 return (
@@ -60,7 +69,7 @@ export const AppSidebar = () => {
                       )}
                       isActive={isActive}
                       tooltip={label}>
-                      <Link className='flex items-center gap-4' to={path}>
+                      <Link className='flex items-center gap-4' href={path}>
                         {isActive && (
                           <div className='bg-primary absolute top-1/2 left-0 h-4/5 w-1 -translate-y-1/2 rounded-r-full' />
                         )}

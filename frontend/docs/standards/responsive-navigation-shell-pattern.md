@@ -286,12 +286,12 @@ src/
 function AppLayout() {
   return (
     <ShellProvider>
-      <Sidebar className="hidden md:block" />
+      <Sidebar className='hidden md:block' />
       <ContentInset>
-        <main className="pb-mobile-tabs md:pb-desktop">
+        <main className='pb-mobile-tabs md:pb-desktop'>
           <Outlet />
         </main>
-        <BottomTabs className="fixed bottom-0 md:hidden" />
+        <BottomTabs className='fixed bottom-0 md:hidden' />
         <GlobalSheet />
       </ContentInset>
     </ShellProvider>
@@ -341,7 +341,7 @@ function AppLayout() {
 ## 17) Mapping to This Repository
 
 - Shell composition:
-- `frontend/src/app.tsx`
+- `frontend/src/app/(app-shell)/layout.tsx`
 - `frontend/src/components/layout/app-layout.tsx`
 - Desktop nav:
 - `frontend/src/components/layout/app-sidebar.tsx`

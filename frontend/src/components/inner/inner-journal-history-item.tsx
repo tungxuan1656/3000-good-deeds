@@ -2,7 +2,10 @@ import { LeafIcon, MoreHorizontalIcon, Trash2Icon } from 'lucide-react'
 import * as React from 'react'
 import { toast } from 'sonner'
 
-import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
+import {
+  ConfirmDialog,
+  type ConfirmDialogHandle,
+} from '@/components/shared/confirm-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useDeleteInnerJournalEntry } from '@/hooks/api/use-inner-journal'
-import { type InnerJournalType } from '@/lib/constants'
+import { type InnerJournalType } from '@/lib/constants/journal'
 import { t } from '@/lib/i18n'
 import type { JournalEntryDTO } from '@/types/api'
 

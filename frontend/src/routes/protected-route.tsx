@@ -1,22 +1,31 @@
-import { Navigate, Outlet } from 'react-router-dom'
+'use client'
 
-import { PATHS } from '@/lib/constants'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+
+import { PATHS } from '@/lib/constants/paths'
 import { useAuthStore } from '@/stores/auth.store'
 
-const ProtectedRoute = () => {
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter()
   const isAuthenticated = useAuthStore.use.isAuthenticated()
   const hasHydrated = useAuthStore.use._hasHydrated()
+
+  useEffect(() => {
+    if (hasHydrated && !isAuthenticated) {
+      router.replace(PATHS.LOGIN)
+    }
+  }, [hasHydrated, isAuthenticated, router])
 
   if (!hasHydrated) {
     return null
   }
 
   if (!isAuthenticated) {
-    // Redirect to login if not authenticated
-    return <Navigate replace to={PATHS.LOGIN} />
+    return null
   }
 
-  return <Outlet />
+  return <>{children}</>
 }
 
 export default ProtectedRoute

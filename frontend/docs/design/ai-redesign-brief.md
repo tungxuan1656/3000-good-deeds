@@ -5,6 +5,7 @@
 This document is a complete input package for AI (or design teams) to redesign the **3000 Good Deeds** frontend.
 
 Scope:
+
 - Redesign for **two versions**: Web (desktop/tablet) and Mobile responsive.
 - Preserve product essence: private, reflective, calm, non-gamified.
 - Visual direction: **modern, warm, minimal, flat design** (avoid heavy shadows).
@@ -16,17 +17,20 @@ Scope:
 Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 
 ### Product identity
+
 - A personal kindness journal with inward focus.
 - A daily tool to record and reflect on kind actions.
 - Not a social network, not a leaderboard, not a moral scoring app.
 
 ### Required design tone
+
 - Calm, warm, humane.
 - Privacy-first cues must be visible.
 - No pressure-driven interaction patterns.
 - Encourage small, consistent progress.
 
 ### Anti-patterns to avoid
+
 - Gamified visuals (badges, flashy streaks, confetti).
 - Aggressive colors and distracting motion.
 - Layered heavy shadows that feel noisy.
@@ -37,13 +41,15 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 ## 3) Current Frontend Context (for AI grounding)
 
 ### Tech and structure
-- React 19 + Vite + Tailwind v4 + shadcn UI + Lucide.
+
+- Next.js App Router + React 19 + Tailwind v4 + shadcn UI + Lucide.
 - Current mobile breakpoint: `< 768px`.
 - Existing layout:
   - Desktop: sidebar + content.
   - Mobile: bottom tab navigation.
 
 ### Existing primary screens
+
 - Login
 - Home
 - Timeline
@@ -57,6 +63,7 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 - Settings
 
 ### Required state coverage for every screen
+
 - Loading
 - Empty
 - Success/content
@@ -64,6 +71,7 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 - Permission-required (when relevant, e.g., push notifications)
 
 ### What should remain stable
+
 - Fast, low-friction deed logging flow.
 - All user-facing text through i18n.
 - Consistent semantic token usage.
@@ -73,10 +81,12 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 ## 4) New Visual System Direction (Modern + Warm + Minimal + Flat)
 
 ## Aesthetic direction
+
 - **Warm Minimal Serenity**
 - Keywords: paper-like, breathable spacing, gentle contrast, restrained ornament.
 
 ## Proposed color system
+
 - Main background: `#F7F3EC`
 - Surface/card: `#FFFDF9`
 - Primary text: `#2C2A28`
@@ -88,10 +98,12 @@ Sources: `docs/product/*`, `frontend/docs/product/*`, `frontend/docs/design/*`.
 - Border: `#E8E1D8`
 
 Flat design rules:
+
 - Use borders + tonal contrast for hierarchy.
 - Use only very light shadow for selective emphasis (single level only).
 
 ## Proposed typography
+
 - Display/headings: `Source Serif 4` (reflective, warm tone).
 - Body/UI: `Be Vietnam Pro` (clear modern UI reading, strong Vietnamese support).
 - Hierarchy:
@@ -101,12 +113,14 @@ Flat design rules:
   - Caption: 13/18
 
 ## Spacing, shape, border
+
 - 8pt spacing system.
 - Card radius: 20–24px.
 - Button radius: pill or 14px depending on context.
 - Border mostly 1px; active/emphasis up to 2px.
 
 ## Motion
+
 - Purposeful, calm motion only:
   - 150–220ms for hover/press.
   - 220–320ms for panel/sheet transitions.
@@ -117,6 +131,7 @@ Flat design rules:
 ## 5) Information Architecture (IA) for Redesign
 
 ### Global navigation
+
 - Primary:
   - Home
   - Timeline
@@ -129,6 +144,7 @@ Flat design rules:
   - Random Acts
 
 ### Screen-group goals
+
 - Login: safe, warm, easy start.
 - Home: daily action hub (check-in + today entries).
 - Timeline: reflective review by day.
@@ -141,6 +157,7 @@ Flat design rules:
 ## 6) Version 1: Web (Desktop/Tablet)
 
 ### Layout blueprint
+
 - 12-column grid, content max width 1200–1280.
 - Persistent left sidebar on desktop.
 - Main area split into:
@@ -148,21 +165,25 @@ Flat design rules:
   - Reflection rail (4 cols) for quote/weekly rhythm/mini check-in.
 
 ### Header
+
 - Lightweight breadcrumb.
 - Reflective page title + concise description.
 - Info action on the right.
 
 ### Screen structure pattern
+
 - Header section
 - Primary action card
 - Supporting cards (insights, helper content, history)
 
 ### Card behavior (desktop)
+
 - No heavy shadows.
 - Prefer gentle borders and subtle surface contrast.
 - Hover should be subtle (border/tint), no strong lift effect.
 
 ### Web-specific optimization
+
 - Timeline grouped clearly by date.
 - Stats with readable monthly overview and calendar.
 - Goals/Settings segmented into clear functional blocks.
@@ -172,21 +193,25 @@ Flat design rules:
 ## 7) Version 2: Mobile Responsive
 
 ### Layout blueprint
+
 - Mobile-first single-column layout.
 - Bottom tab as primary navigation.
 - Compact header to prioritize core content.
 
 ### Interaction pattern
+
 - Primary actions in thumb-friendly zones.
 - Use sheets/drawers for secondary actions.
 - Primary CTA as full-width or near full-width.
 
 ### Mobile spacing
+
 - Horizontal padding: 16px.
 - Vertical rhythm: 12/16/20px by hierarchy.
 - Keep card radius around 20px for consistency.
 
 ### Mobile-specific optimization
+
 - Home: make check-in prominent above the first fold.
 - Timeline: short, scan-friendly cards.
 - Inner Journal: prioritize writing area over decorative elements.
@@ -225,6 +250,7 @@ AI should design around this component system:
   - Info dialog
 
 Component principles:
+
 - Reuse first, screen-specific second.
 - Explicit states: default, hover, active, disabled, loading, error.
 
@@ -233,6 +259,7 @@ Component principles:
 ## 9) State Matrix Required in Design Handoff
 
 For every screen, include:
+
 - Loading state
 - Empty state
 - Content state
@@ -240,6 +267,7 @@ For every screen, include:
 - Permission state (if applicable)
 
 Mandatory examples:
+
 - Home empty: gentle message + “suggest a small start” CTA.
 - Timeline empty: neutral/supportive tone (no failure framing).
 - Reminder permission denied: clear guidance, no coercion.
@@ -268,6 +296,7 @@ Mandatory examples:
 ## 12) What AI Needs to Design a Full Website
 
 ## Minimum required package
+
 1. Product brief (vision, users, anti-goals).
 2. IA + sitemap + navigation logic.
 3. Screen inventory + required states.
@@ -280,6 +309,7 @@ Mandatory examples:
 10. Acceptance criteria (UX + visual + implementation).
 
 ## Recommended additions
+
 - Lightweight personas + key jobs-to-be-done.
 - Journey maps for core flows (login, check-in, timeline review, journal).
 - Example data + edge-case content.
@@ -290,15 +320,19 @@ Mandatory examples:
 ## 13) Prompt Kit for AI Design
 
 ## Master prompt
+
 "Redesign a private kindness journal product UI with a calm, warm, minimal, flat design direction. Avoid gamification. Deliver a complete design system and all key screens for desktop and mobile responsive, including loading/empty/error/content states."
 
 ## Web prompt
+
 "Design a desktop layout with a left sidebar, main content area, and a reflection side rail. Prioritize whitespace, soft borders, and minimal shadows. Optimize for quick deed logging and readable reflection history."
 
 ## Mobile prompt
+
 "Design a single-column mobile layout with fixed bottom tabs, one-hand-friendly interactions, and clear primary CTA placement in thumb-friendly zones. Keep the experience private, calm, and non-pressuring."
 
 ## Visual-style prompt
+
 "Use a warm neutral palette with sage primary and soft amber accent. Use reflective heading typography and highly readable body typography. Avoid heavy shadows and flashy visual effects."
 
 ---
@@ -306,6 +340,7 @@ Mandatory examples:
 ## 14) Redesign Acceptance Criteria
 
 A redesign is considered successful when:
+
 - The interface feels warm, calm, and modern within first impression.
 - A new user can complete first check-in in <= 30 seconds.
 - No competitive/leaderboard visual language appears.

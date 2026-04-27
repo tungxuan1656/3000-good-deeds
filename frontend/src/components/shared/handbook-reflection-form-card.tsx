@@ -6,7 +6,10 @@ import { Card } from '@/components/ui'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateInnerJournalEntry } from '@/hooks/api/use-inner-journal'
-import { INNER_JOURNAL_TYPES, type InnerJournalType } from '@/lib/constants'
+import {
+  INNER_JOURNAL_TYPES,
+  type InnerJournalType,
+} from '@/lib/constants/journal'
 import { innerJournalSchema } from '@/lib/forms/form-schemas'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'

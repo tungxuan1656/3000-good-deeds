@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react'
 
-import { ConfirmDialog, type ConfirmDialogHandle } from '@/components/shared'
+import {
+  ConfirmDialog,
+  type ConfirmDialogHandle,
+} from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { t } from '@/lib/i18n'

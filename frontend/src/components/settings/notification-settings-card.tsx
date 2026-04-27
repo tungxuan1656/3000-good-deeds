@@ -1,6 +1,6 @@
 import { CheckCircle2Icon, XCircleIcon } from 'lucide-react'
 
-import { InfoButton } from '@/components/shared'
+import { InfoButton } from '@/components/shared/info-button'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'

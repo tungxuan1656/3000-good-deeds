@@ -14,7 +14,7 @@ import {
 import { TagButton } from '@/components/ui/tag'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateDeed, useUpdateDeed } from '@/hooks/api/use-deeds'
-import { MOOD_TAGS } from '@/lib/constants'
+import { MOOD_TAGS } from '@/lib/constants/moods'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import type { CreateDeedRequest, DeedDTO } from '@/types/api'

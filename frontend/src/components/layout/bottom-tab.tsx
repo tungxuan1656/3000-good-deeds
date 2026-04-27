@@ -1,8 +1,12 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
 
-import { BOTTOM_TAB_ITEMS, PATHS } from '@/lib/constants'
+import { BOTTOM_TAB_ITEMS } from '@/lib/constants/navigation'
+import { PATHS } from '@/lib/constants/paths'
 import { cn } from '@/lib/utils'
 
 const isPathActive = (pathname: string, targetPath: string) => {
@@ -12,8 +16,8 @@ const isPathActive = (pathname: string, targetPath: string) => {
 }
 
 export const BottomTab = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const router = useRouter()
+  const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -21,6 +25,13 @@ export const BottomTab = () => {
 
     return () => setMounted(false)
   }, [])
+
+  useEffect(() => {
+    for (const { path } of BOTTOM_TAB_ITEMS) {
+      if (path === pathname) continue
+      router.prefetch(path)
+    }
+  }, [pathname, router])
 
   if (!mounted) {
     return null
@@ -31,14 +42,14 @@ export const BottomTab = () => {
       <div className='pb-safe bg-surface-container/50 border-border/50 pointer-events-auto rounded-t-3xl border-t shadow-md backdrop-blur-lg'>
         <div className='flex items-center justify-between px-1 py-3'>
           {BOTTOM_TAB_ITEMS.map(({ label, path, icon: Icon }) => {
-            const active = isPathActive(location.pathname, path)
+            const active = isPathActive(pathname, path)
 
             return (
-              <button
+              <Link
                 key={label}
+                prefetch
                 className='flex flex-1 touch-manipulation flex-col items-center justify-center gap-1.5 transition-all duration-300'
-                type='button'
-                onClick={() => navigate(path)}>
+                href={path}>
                 <Icon
                   className={cn(
                     'size-5 transition-colors duration-300',
@@ -54,7 +65,7 @@ export const BottomTab = () => {
                   )}>
                   {label}
                 </span>
-              </button>
+              </Link>
             )
           })}
         </div>

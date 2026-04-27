@@ -22,6 +22,18 @@ const initialState: AuthState = {
   _hasHydrated: false,
 }
 
+const createAuthStorage = () => {
+  if (typeof window === 'undefined') {
+    return {
+      getItem: () => null,
+      setItem: () => undefined,
+      removeItem: () => undefined,
+    }
+  }
+
+  return localStorage
+}
+
 const applyAuthenticatedSession = (payload: {
   accessToken: string
   refreshToken: string
@@ -44,7 +56,7 @@ const _useAuthStore = create<AuthState>()(
   devtools(
     persist(() => initialState, {
       name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(createAuthStorage),
       partialize: (state) => ({
         isAuthenticated: state.isAuthenticated,
         user: state.user,
@@ -67,15 +79,17 @@ const syncTokenStorageFromStore = () => {
   authTokenStorage.clear()
 }
 
-if (_useAuthStore.persist.hasHydrated()) {
+if (typeof window !== 'undefined' && _useAuthStore.persist.hasHydrated()) {
   syncTokenStorageFromStore()
   _useAuthStore.setState({ _hasHydrated: true })
 }
 
-_useAuthStore.persist.onFinishHydration(() => {
-  syncTokenStorageFromStore()
-  _useAuthStore.setState({ _hasHydrated: true })
-})
+if (typeof window !== 'undefined') {
+  _useAuthStore.persist.onFinishHydration(() => {
+    syncTokenStorageFromStore()
+    _useAuthStore.setState({ _hasHydrated: true })
+  })
+}
 
 export const authActions = {
   login: (authResponse: AuthResponse) => {

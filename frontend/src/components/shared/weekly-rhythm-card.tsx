@@ -1,11 +1,13 @@
+'use client'
+
 import { addDays, format, isAfter, isToday, startOfWeek } from 'date-fns'
 import { vi } from 'date-fns/locale'
-import { useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { useCalendar } from '@/hooks/api/use-activities'
-import { PATHS } from '@/lib/constants'
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
@@ -22,8 +24,17 @@ const defaultDays = [
 ]
 
 export const WeeklyRhythmCard = () => {
-  const navigate = useNavigate()
-  const startOfCurrentWeek = startOfWeek(new Date(), { weekStartsOn: 1 })
+  const router = useRouter()
+  const [referenceDate, setReferenceDate] = useState<Date | null>(null)
+
+  useEffect(() => {
+    setReferenceDate(new Date())
+  }, [])
+
+  const effectiveReferenceDate = referenceDate ?? new Date(0)
+  const startOfCurrentWeek = startOfWeek(effectiveReferenceDate, {
+    weekStartsOn: 1,
+  })
 
   const from = startOfCurrentWeek.setHours(0, 0, 0, 0)
   const to = addDays(startOfCurrentWeek, 6).setHours(23, 59, 59, 999)
@@ -50,6 +61,10 @@ export const WeeklyRhythmCard = () => {
 
   const activeCount = days.filter((day) => day.count > 0).length
 
+  if (!referenceDate) {
+    return <Card padding='md' />
+  }
+
   return (
     <Card padding='md'>
       <div className='flex items-start justify-between gap-3'>
@@ -65,14 +80,14 @@ export const WeeklyRhythmCard = () => {
           className='text-foreground/80 hover:text-foreground -mr-2 h-8 px-2 text-xs'
           size='sm'
           variant='ghost'
-          onClick={() => navigate(PATHS.PROGRESS)}>
+          onClick={() => router.push(PATHS.PROGRESS)}>
           {t('common.actions.viewAll')}
         </Button>
       </div>
       <div className='mt-4 flex gap-0.5'>
         {days.map((day, index) => {
           const date = new Date(day.date)
-          const isFuture = isAfter(date, new Date())
+          const isFuture = isAfter(date, effectiveReferenceDate)
           const isActive = day.count > 0
           const isCurrentDay = isToday(date)
 

@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+'use client'
 
-import { PATHS } from '@/lib/constants'
+import Link from 'next/link'
+
+import { PATHS } from '@/lib/constants/paths'
 import { t } from '@/lib/i18n'
 import { useAuthStore } from '@/stores/auth.store'
 
@@ -21,7 +23,7 @@ export const ReminderSuggestCard = () => {
       <p className='text-muted-foreground mt-2 text-sm leading-relaxed'>
         {t('reminder.card.quote')}
       </p>
-      <Link to={PATHS.MORE}>
+      <Link href={PATHS.MORE}>
         <Button className='text-foreground bg-card hover:bg-card/80 border-border/45 mt-4 h-11 w-full rounded-full border text-sm font-medium'>
           {t('reminder.card.action')}
         </Button>

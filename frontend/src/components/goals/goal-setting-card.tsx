@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
 import { useGoals, useUpsertGoals } from '@/hooks/api/use-goals'
-import { GOAL_LABELS } from '@/lib/constants'
+import { GOAL_LABELS } from '@/lib/constants/goals'
 import { t } from '@/lib/i18n'
 import type { GoalType } from '@/types/api'
 
@@ -119,7 +119,7 @@ export const GoalSettingCard = () => {
       </div>
       <div className='grid gap-2 md:self-end'>
         {goalTypes.map((type) => (
-          <InputGroup className='px-3'>
+          <InputGroup key={type} className='px-3'>
             <p className='text-muted-foreground text-sm font-medium'>
               {GOAL_LABELS[type]}:
             </p>

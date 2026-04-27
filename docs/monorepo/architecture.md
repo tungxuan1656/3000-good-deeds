@@ -2,10 +2,10 @@
 
 ## Stack
 
-- Frontend: React 19 + Vite + Firebase Auth provider
+- Frontend: Next.js App Router + React 19 + Firebase Auth provider
 - Backend: Cloudflare Workers (Hono)
 - Database: Cloudflare D1 (SQLite)
-- Hosting: Firebase Hosting (frontend), Cloudflare Workers (backend)
+- Hosting: Vercel (frontend), Cloudflare Workers (backend)
 
 ## Data Flow
 
@@ -21,7 +21,8 @@
 
 ## Monorepo Layout
 
-- `frontend/` application UI and client-side logic
+- `frontend/` application UI, App Router, and client-side logic
 - `backend/` API and data logic
 - `docs/` shared project documentation
 - `scripts/` root-level utilities
+

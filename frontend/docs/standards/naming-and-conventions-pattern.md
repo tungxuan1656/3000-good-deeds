@@ -3,7 +3,8 @@
 ## 1) File Naming
 
 - Files use `kebab-case`.
-- Page: `<feature>-page.tsx`.
+- Screen: `<feature>-page.tsx` in `src/screens/`.
+- App Router route entry: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx` in `src/app/**`.
 - API Hook: `use-<feature>.ts`.
 - Store: `<feature>.store.ts`.
 - API: `<feature>.ts`, endpoint registry at `endpoints.ts`.
@@ -12,7 +13,8 @@
 
 ## 2) Export Convention
 
-- Page: `const XPage = () => {}` + `export default XPage`.
+- Screen: `const XPage = () => {}` + `export default XPage`.
+- App Router file entrypoints can export default inline if the file is a thin route wrapper.
 - Child component: `export const X = () => {}`.
 - Hook/store helpers: named export.
 
@@ -62,7 +64,8 @@ import { A, B } from '@/stores/foo'
 
 ## 8) Project References
 
-- Page default export: [src/pages/goals-page.tsx](../../src/pages/goals-page.tsx)
+- Screen default export: `src/screens/<feature>-page.tsx`
+- App Router route entry: `src/app/**/page.tsx`
 - Component named export: [src/components/stats/stats-card.tsx](../../src/components/stats/stats-card.tsx)
 - Type naming: [src/types/api.ts](../../src/types/api.ts)
 - Query key naming: [src/hooks/api/use-deeds.ts](../../src/hooks/api/use-deeds.ts)

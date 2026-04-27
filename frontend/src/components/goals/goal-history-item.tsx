@@ -1,7 +1,7 @@
 import { formatDate } from 'date-fns'
 import { CheckCircle2Icon, GoalIcon } from 'lucide-react'
 
-import { GOAL_LABELS } from '@/lib/constants'
+import { GOAL_LABELS } from '@/lib/constants/goals'
 import { t } from '@/lib/i18n'
 import type { GoalHistoryDTO } from '@/types/api'
 

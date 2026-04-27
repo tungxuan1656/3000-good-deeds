@@ -4,8 +4,11 @@
 
 ```text
 src/
-  app.tsx
-  main.tsx
+  app/
+    (marketing)/
+    (auth)/
+    (app-shell)/
+  screens/
 
   api/
     client.ts
@@ -39,7 +42,7 @@ src/
     storages/
     utils/
 
-  pages/
+  screens/
     feature*/
     ...
 
@@ -60,11 +63,13 @@ src/
 - `lib/utils`: pure utility functions shared across the entire app.
 
 Do not place in `lib`:
+
 - `hooks` (place in `src/hooks/shared` or `src/hooks/feature*`),
 - `stores` (place in `src/stores/feature*.store.ts`),
 - logic specific to 1 feature.
 
 Do not put in `lib`:
+
 - UI components for 1 feature,
 - API handlers for 1 feature.
 
@@ -76,7 +81,7 @@ Do not put in `lib`:
 - `stores/<feature>.store.ts`: zustand store per feature, placed **directly** in `stores/`, no subfolders.
 - `lib/forms/form-schemas.ts`: **all form schemas must be here** (do not create `*.schema.ts` in feature folders).
 - `components/<feature>`: components belonging to that feature.
-- `pages/<feature>`: pages for the feature.
+- `screens/<feature>`: screen components consumed by App Router route files in `src/app`.
 - `types`: shared types or API contracts.
 
 ## 4) Import Rules
@@ -89,7 +94,7 @@ Do not put in `lib`:
 ## 5) Application Checklist
 
 - [ ] Has `api/client.ts`, `api/endpoints.ts` as shared resources
-- [ ] Each feature has its own branch in `api/hooks/components/stores/pages`
+- [ ] Each feature has its own branch in `api/hooks/components/stores/screens`
 - [ ] `hooks` separates `shared/` and `feature*/`
 - [ ] `stores` placed outside `lib`, flat files as `stores/feature*.store.ts`
 - [ ] `lib` only contains `constants`, `forms`, `i18n`, `storages`, `utils`

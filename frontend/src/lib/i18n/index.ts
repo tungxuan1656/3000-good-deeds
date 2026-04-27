@@ -9,6 +9,14 @@ const localesResource = {
   vi: { translation: translationVI },
 }
 
+const getAppLanguage = () => {
+  if (typeof window === 'undefined') {
+    return 'vi'
+  }
+
+  return localStorage.getItem('appLanguage') || 'vi'
+}
+
 declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'translation'
@@ -17,14 +25,12 @@ declare module 'i18next' {
   }
 }
 
-const appLanguage = localStorage.getItem('appLanguage') || 'vi'
-
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: localesResource,
-    lng: appLanguage,
+    lng: getAppLanguage(),
     fallbackLng: 'vi',
     interpolation: {
       escapeValue: false,
@@ -45,6 +51,10 @@ export const t = (
 
 /** Change language and reload the page (language changes are rare). */
 export const changeLanguage = (lang: string) => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
   localStorage.setItem('appLanguage', lang)
   window.location.reload()
 }
