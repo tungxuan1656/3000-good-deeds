@@ -92,7 +92,7 @@ const LandingPage = () => {
             </Link>
             <Link
               className='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center rounded-full px-4 text-sm font-semibold shadow-sm transition-all hover:scale-105 active:scale-95 sm:px-5'
-              href={buildWebAppCtaUrl('header_get_started', 'login')}>
+              href={buildWebAppCtaUrl('header_get_started', 'home')}>
               Bắt đầu ngay
             </Link>
           </div>
@@ -120,7 +120,7 @@ const LandingPage = () => {
               <div className='mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4'>
                 <Link
                   className='group bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90 inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-base font-semibold shadow-lg transition-all'
-                  href={buildWebAppCtaUrl('hero_start_journey', 'login')}>
+                  href={buildWebAppCtaUrl('hero_start_journey', 'home')}>
                   Bắt đầu hành trình
                   <ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
                 </Link>
@@ -501,7 +501,7 @@ const LandingPage = () => {
             <div className='mt-10'>
               <Link
                 className='text-primary hover:bg-surface-container inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-base font-bold shadow-lg transition-all hover:scale-105'
-                href={buildWebAppCtaUrl('bottom_create_account', 'login')}>
+                href={buildWebAppCtaUrl('bottom_create_account', 'home')}>
                 Tạo tài khoản miễn phí
               </Link>
             </div>
