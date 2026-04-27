@@ -8,7 +8,8 @@
   --font-sans: var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
   --font-headline: var(--font-noto-serif), Georgia, 'Times New Roman', serif;
   --font-body: var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
-  --font-label: var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
+  --font-label:
+    var(--font-be-vietnam-pro), system-ui, -apple-system, sans-serif;
 
   --radius: 0.875rem;
 

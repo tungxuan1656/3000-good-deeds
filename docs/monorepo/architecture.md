@@ -25,3 +25,4 @@
 - `backend/` API and data logic
 - `docs/` shared project documentation
 - `scripts/` root-level utilities
+

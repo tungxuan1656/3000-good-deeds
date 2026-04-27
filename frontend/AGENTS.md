@@ -1,4 +1,3 @@
-
 # Frontend Guidelines
 
 You are a programming assistant specializing in TypeScript, Next.js App Router, React 19, Tailwind CSS v4, shadcn-ui, Lucide Icons. Always respond in English.
@@ -18,8 +17,8 @@ You are a programming assistant specializing in TypeScript, Next.js App Router, 
 
 When performing tasks, you **MUST** reference the relevant documents in the `docs/` directory to follow project patterns:
 
-| Use Case                        | Reference Document                                                          | Description                                                                                                                                                              |
-| :------------------------------ | :-------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Use Case                        | Reference Document                                                                      | Description                                                                                                                                                              |
+| :------------------------------ | :-------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Folder Structure**            | [project-folder-structure.md](./docs/standards/project-folder-structure.md)             | Standard folder structure, feature separation, and import/export rules.                                                                                                  |
 | **Component Organization**      | [component-structure-pattern.md](./docs/standards/component-structure-pattern.md)       | Rules for organizing Pages and child Components, public vs internal barrel exports, file size limits.                                                                    |
 | **Naming**                      | [naming-and-conventions-pattern.md](./docs/standards/naming-and-conventions-pattern.md) | File naming conventions (kebab-case), mock files, comments (English), import ordering, TODO patterns.                                                                    |
@@ -33,6 +32,7 @@ When performing tasks, you **MUST** reference the relevant documents in the `doc
 | **Dialog & Form Field**         | [dialog-and-form-pattern.md](./docs/standards/dialog-and-form-pattern.md)               | Pattern for Dialog (ref), Dialog + Form fields, standalone Form fields; FieldLabel vs FieldLegend.                                                                       |
 
 ## Main Stack (Quick Link)
+
 - **Framework**: Next.js App Router (`src/app`).
 - **UI**: [shadcn-ui](https://ui.shadcn.com/) (Use `pnpm dlx shadcn@latest add`).
 - **Icons**: `lucide-react` (Format: `{Name}Icon`).

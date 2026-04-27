@@ -63,11 +63,13 @@ src/
 - `lib/utils`: pure utility functions shared across the entire app.
 
 Do not place in `lib`:
+
 - `hooks` (place in `src/hooks/shared` or `src/hooks/feature*`),
 - `stores` (place in `src/stores/feature*.store.ts`),
 - logic specific to 1 feature.
 
 Do not put in `lib`:
+
 - UI components for 1 feature,
 - API handlers for 1 feature.
 

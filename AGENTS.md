@@ -39,6 +39,7 @@ Before marking work as done:
 - Use environment variables for all secret configuration.
 
 <!-- gitnexus:start -->
+
 # GitNexus — Code Intelligence
 
 This project is indexed by GitNexus as **3000-good-deeds** (2700 symbols, 3908 relationships, 29 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
@@ -62,22 +63,23 @@ This project is indexed by GitNexus as **3000-good-deeds** (2700 symbols, 3908 r
 
 ## Resources
 
-| Resource | Use for |
-|----------|---------|
-| `gitnexus://repo/3000-good-deeds/context` | Codebase overview, check index freshness |
-| `gitnexus://repo/3000-good-deeds/clusters` | All functional areas |
-| `gitnexus://repo/3000-good-deeds/processes` | All execution flows |
-| `gitnexus://repo/3000-good-deeds/process/{name}` | Step-by-step execution trace |
+| Resource                                         | Use for                                  |
+| ------------------------------------------------ | ---------------------------------------- |
+| `gitnexus://repo/3000-good-deeds/context`        | Codebase overview, check index freshness |
+| `gitnexus://repo/3000-good-deeds/clusters`       | All functional areas                     |
+| `gitnexus://repo/3000-good-deeds/processes`      | All execution flows                      |
+| `gitnexus://repo/3000-good-deeds/process/{name}` | Step-by-step execution trace             |
 
 ## CLI
 
-| Task | Read this skill file |
-|------|---------------------|
-| Understand architecture / "How does X work?" | `.agents/skills/gitnexus/gitnexus-exploring/SKILL.md` |
-| Blast radius / "What breaks if I change X?" | `.agents/skills/gitnexus/gitnexus-impact-analysis/SKILL.md` |
-| Trace bugs / "Why is X failing?" | `.agents/skills/gitnexus/gitnexus-debugging/SKILL.md` |
-| Rename / extract / split / refactor | `.agents/skills/gitnexus/gitnexus-refactoring/SKILL.md` |
-| Tools, resources, schema reference | `.agents/skills/gitnexus/gitnexus-guide/SKILL.md` |
-| Index, status, clean, wiki CLI commands | `.agents/skills/gitnexus/gitnexus-cli/SKILL.md` |
+| Task                                         | Read this skill file                                        |
+| -------------------------------------------- | ----------------------------------------------------------- |
+| Understand architecture / "How does X work?" | `.agents/skills/gitnexus/gitnexus-exploring/SKILL.md`       |
+| Blast radius / "What breaks if I change X?"  | `.agents/skills/gitnexus/gitnexus-impact-analysis/SKILL.md` |
+| Trace bugs / "Why is X failing?"             | `.agents/skills/gitnexus/gitnexus-debugging/SKILL.md`       |
+| Rename / extract / split / refactor          | `.agents/skills/gitnexus/gitnexus-refactoring/SKILL.md`     |
+| Tools, resources, schema reference           | `.agents/skills/gitnexus/gitnexus-guide/SKILL.md`           |
+| Index, status, clean, wiki CLI commands      | `.agents/skills/gitnexus/gitnexus-cli/SKILL.md`             |
 
 <!-- gitnexus:end -->
+
