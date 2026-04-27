@@ -27,3 +27,6 @@ dev-dist
 .next
 tsconfig.tsbuildinfo
 .vercel
+.env
+.env.*
+!.env.example
