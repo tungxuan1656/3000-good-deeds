@@ -47,7 +47,7 @@ export default defineConfig([
         version: 'detect',
       },
     },
-    extends: [reactRefresh.configs.vite],
+    extends: [reactRefresh.configs.next],
     rules: {
       // General rules
       indent: 'off',
